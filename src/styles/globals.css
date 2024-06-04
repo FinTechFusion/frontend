@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+   transition: all ease-in-out .2s;
+   -webkit-transition: all ease-in-out .2s;
+   -moz-transition: all ease-in-out .2s;
+   -ms-transition: all ease-in-out .2s;
+   -o-transition: all ease-in-out .2s;
+}
+
+html,
+body {
+   overflow-x: hidden;
+   max-width: 100%;
+}
+
+header+div {
+   margin-top: 100px;
+}

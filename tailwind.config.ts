@@ -1,0 +1,26 @@
+import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    darkMode: false,
+    colors: {
+      primary: colors.teal,
+      secondary: colors.white,
+      dark: colors.black,
+      gray: colors.gray
+    },
+    variants: {
+      extend: {
+        textColor: ['group-hover'],
+      },
+    },
+
+  },
+  plugins: [],
+};
+export default config;
