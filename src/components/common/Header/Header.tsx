@@ -3,38 +3,22 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { IoCloseSharp } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
-import Image from 'next/image';
+import Logo from '../Logo';
 
 export default function Header() {
    const [toggle, settoggle] = useState(false);
-   const [isHovered, setIsHovered] = useState(false);
    return (
       <>
-         <header className='bg-secondary flex justify-between items-center md:px-12 px-3 py-2 shadow fixed left-0 right-0 top-0 z-50'>
-            <div className="logo">
-               <Link href='/' className='flex justify-center items-center text-xl font-bold tracking-widest'>
-                  <Image
-                     src='assets/images/logo.svg'
-                     alt='Wesbsite Logo'
-                     width='230'
-                     height='120'
-                  />
-               </Link>
-            </div>
+         <header className='bg-secondary flex justify-between items-center md:px-12 px-3 py-2 shadow z-50'>
+            <Logo />
             <div className={`lg:flex lg:items-center lg:justify-center fixed lg:static right-0 z-10 bottom-0 transform transition-transform ease-in-out duration-300 top-20 min-h-screen lg:min-h-0 bg-teal-700 w-52 lg:w-auto lg:bg-transparent ${toggle ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}>
                <ul className={`w-full lg:w-auto flex flex-col lg:flex-row items-center justify-center text-secondary lg:text-black h-full lg:h-auto space-y-12 lg:space-y-0 lg:space-x-5`}>
-                  <Link className={`home-link mb-6 lg:mb-0 text-center text-xl capitalize ${isHovered ? 'text-black' : 'text-teal-700'}`} href='/'>home</Link>
-                  {['bot-analysis', 'bot-ai', 'plans', 'about-us', 'faq'].map((link, index) => (
-                     <Link
-                        key={index}
-                        className='mb-6 lg:mb-0 text-center text-xl capitalize hover:text-teal-700'
-                        href={`/${link}`}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                     >
-                        {link.replace('-', ' ')}
-                     </Link>
-                  ))}
+                  <Link href='/' className='mb-6 lg:mb-0 text-center text-xl capitalize text-dark hover:text-primary-700'>home</Link>
+                  <Link href='/botanalysis' className='mb-6 lg:mb-0 text-center text-xl capitalize text-dark hover:text-primary-700'>bot analysis</Link>
+                  <Link href='/botai' className='mb-6 lg:mb-0 text-center text-xl capitalize text-dark hover:text-primary-700'>bot ai</Link>
+                  <Link href='/plans' className='mb-6 lg:mb-0 text-center text-xl capitalize text-dark hover:text-primary-700'>plans</Link>
+                  <Link href='/about' className='mb-6 lg:mb-0 text-center text-xl capitalize text-dark hover:text-primary-700'>about us</Link>
+                  <Link href='/faq' className='mb-6 lg:mb-0 text-center text-xl capitalize text-dark hover:text-primary-700'>FAQ</Link>
                </ul>
             </div>
             <div className='auth flex justify-center items-center gap-5'>

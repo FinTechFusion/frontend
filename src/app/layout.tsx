@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto } from 'next/font/google'
 import "../styles/globals.css";
-import dynamic from 'next/dynamic';
-
-const Header = dynamic(() => import('@/components/common/Header/Header'), { ssr: false });
+import Header from "@/components/common/Header/Header";
+import Footer from "@/components/common/Footer/Footer";
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["100", "300", "400", "500", "700"] });
 
@@ -19,9 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={`${roboto.className}`}>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

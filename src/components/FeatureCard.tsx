@@ -1,11 +1,21 @@
 import { FeatureCard } from "@/utils/types";
+import Image from "next/image";
+import MainBtn from "./common/Buttons/MainBtn";
 
-const Featurecard = ({ title, description, buttonContent }: FeatureCard) => {
+const Featurecard = ({ title, description, buttonContent, cardImg, altText }: FeatureCard) => {
    return (
-      <div className="feature-card bg-gray-100 rounded p-8 shadow group">
+      <div className="feature-card relative bg-gray-100 rounded p-8 shadow group">
          <h3 className="text-2xl font-bold line-clamp-1 group-hover:text-primary-700">{title}</h3>
          <p className="py-5 text-lg leading-relaxed">{description}</p>
-         <button className="bg-primary-600 hover:bg-primary-700 rounded-md px-4 py-2 text-secondary capitalize text-xl">{buttonContent}</button>
+         <MainBtn content={buttonContent} />
+         {/* <Image
+            src={}
+            alt={altText}
+            width="80"
+            height="80"
+            className="positive bottom-0 right-0"
+            priority
+         /> */}
       </div>
    )
 }

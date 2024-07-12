@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
+import colors, { blue, pink } from "tailwindcss/colors";
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,11 +12,18 @@ const config: Config = {
       primary: colors.teal,
       secondary: colors.white,
       dark: colors.black,
-      gray: colors.gray
+      gray: colors.gray,
+      blue: colors.blue,
+      pink: colors.pink,
+      red: colors.red,
     },
     variants: {
       extend: {
         textColor: ['group-hover'],
+        backgroundImage: {
+          'notfound-pattern': "url('/assets/images/pattern-lines.png')",
+          'contact-backgroud': "url('/assets/images/contact-backgroud.jpeg')"
+        }
       },
     },
 
