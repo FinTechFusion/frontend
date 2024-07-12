@@ -42,7 +42,7 @@ export default function page() {
                            <li className='py-1 text-gray-800 hover:text-primary-700 font-normal text-lg'>Risk management tools and alerts</li>
                            <li className='py-1 text-gray-800 hover:text-primary-700 font-normal text-lg'>Backtesting and performance tracking</li>
                         </ul>
-                        <MainBtn content="Explore Bot AI" />
+                        <MainBtn content="Explore Bot AI" btnWidth='w-fit' />
                      </div>
                      <div className='bot-ai-states md:mx-auto md:text-center'>
                         <div className="state-1 my-4">

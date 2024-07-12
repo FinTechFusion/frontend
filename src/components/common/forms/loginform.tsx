@@ -29,8 +29,8 @@ export default function Loginform() {
                      onPaste={handlePast}
                   />
                </div>
-               <div className="login-btn w-full mx-auto">
-                  <MainBtn content="Login" />
+               <div className="login-btn">
+                  <MainBtn content="Login" btnWidth="w-full" />
                </div>
             </div>
          </div>
