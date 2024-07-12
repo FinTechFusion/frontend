@@ -28,7 +28,7 @@ export default function Register() {
       resolver: zodResolver(registerSchema)
    });
    const [phone, setPhone] = useState('');
-   const [countryCode, setCountryCode] = useState('SA');
+   // const [countryCode, setCountryCode] = useState('SA');
    // const handlePhoneChange = (phone: string, countryData: any) => {
    //    setPhone(phone);
    //    setCountryCode(countryData.countryCode);

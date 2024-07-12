@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MainBtn from "@/components/common/Buttons/MainBtn";
-import Binance from "@/components/common/binance";
+import Binance from "@/components/common/Binance";
 import binanceImg from "/public/assets/images/binanice.png"
 
 export default function page() {
