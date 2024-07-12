@@ -1,9 +1,9 @@
 "use client"
 import Textbox from "@/components/common/Text/Textbox";
-import Hero from "./(roots)/(Home)/page";
 import SectionHeading from "@/components/common/Text/Heading";
 import Featurecard from "@/components/FeatureCard";
 import { tradingPlatformData } from "@/utils/data";
+import Hero from "@/components/Hero";
 
 export default function Component() {
   return (
