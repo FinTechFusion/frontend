@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import 'react-phone-input-2/lib/style.css';
 import Textbox from "@/components/common/Text/Textbox";
 import MainBtn from "@/components/common/Buttons/MainBtn";
-import { useState, useEffect } from "react";
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { useState } from "react";
+// import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import PhoneInput from 'react-phone-input-2';
 import Script from 'next/script';
 
@@ -29,40 +29,26 @@ export default function Register() {
    });
    const [phone, setPhone] = useState('');
    const [countryCode, setCountryCode] = useState('SA');
-
-   const validatePhoneNumber = (phoneNum: string, country: string) => {
-      const phoneNumber = parsePhoneNumberFromString(phoneNum, country.toUpperCase());
-      return phoneNumber?.isValid() || false;
-   };
-
-   const handlePhoneChange = (phone: string, countryData: any) => {
-      setPhone(phone);
-      setCountryCode(countryData.countryCode);
-      const isValid = validatePhoneNumber(phone, countryData.countryCode);
-      if (isValid) {
-         clearErrors('phone');
-      } else {
-         setError('phone', {
-            type: 'manual',
-            message: 'Enter a valid phone number'
-         });
-      }
-      setValue('phone', phone, { shouldValidate: true });
-   };
+   // const handlePhoneChange = (phone: string, countryData: any) => {
+   //    setPhone(phone);
+   //    setCountryCode(countryData.countryCode);
+   //    const isValid = validatePhoneNumber(phone, countryData.countryCode);
+   //    if (isValid) {
+   //       clearErrors('phone');
+   //    } else {
+   //       setError('phone', {
+   //          type: 'manual',
+   //          message: 'Enter a valid phone number'
+   //       });
+   //    }
+   //    setValue('phone', phone, { shouldValidate: true });
+   // };
 
    const submitForm: SubmitHandler<TFormInputs> = (data) => {
       console.log({ ...data, phone });
    };
 
-   useEffect(() => {
-      // Ensure the Turnstile script is loaded and initialize the widget
-      const turnstileScript = document.querySelector('script[src="https://challenges.cloudflare.com/turnstile/v0/api.js"]');
-      if (turnstileScript) {
-         turnstileScript.onload = () => {
-            window.turnstile?.render('.cf-turnstile');
-         };
-      }
-   }, []);
+
 
    return (
       <>
@@ -128,7 +114,7 @@ export default function Register() {
                   <PhoneInput
                      country={'sa'}
                      value={phone}
-                     onChange={handlePhoneChange}
+                     // onChange={handlePhoneChange}
                      enableSearch={true}
                      inputProps={{
                         required: true,
