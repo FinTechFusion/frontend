@@ -134,7 +134,8 @@ export default function Register() {
                   {errors.password && <span className="text-red-600 text-sm pt-2">{errors.password?.message}</span>}
                </div>
                {/* 0x4AAAAAAAaTEPkTQRU9GjKy */}
-               <div className="cf-turnstile w-100" data-sitekey="1x00000000000000000000AA" data-theme="light"></div>
+               {/* 1x00000000000000000000AA */}
+               <div className="cf-turnstile w-100" data-sitekey="0x4AAAAAAAaTEPkTQRU9GjKy" data-theme="light"></div>
                <div className="pb-4 my-2">
                   <MainBtn btnWidth="w-full" content="create" />
                </div>
