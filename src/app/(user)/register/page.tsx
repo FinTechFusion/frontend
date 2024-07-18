@@ -5,11 +5,12 @@ import { registerSchema, registerType } from "@/validation/registerSchema";
 import 'react-phone-input-2/lib/style.css';
 import Textbox from "@/components/common/Text/Textbox";
 import MainBtn from "@/components/common/Buttons/MainBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from 'react-phone-input-2';
 import Script from 'next/script';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { Input } from "@/components/common/forms";
+import useTurnstile from "@/hooks/useTurnstile";
 
 export default function Register() {
    const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<registerType>({
@@ -40,24 +41,18 @@ export default function Register() {
          turnstileToken
       };
       console.log(payload);
-      // Send payload to your API
    };
+   const sitekey = process.env.NEXT_PUBLIC_SITEKEY;
+   const callback = (token: string) => {
+      console.log(`${token}`);
+   };
+
+   useTurnstile(sitekey, callback, "light");
+
 
    return (
       <>
-         <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
-         {/* <Script id="turnstile-init" strategy="lazyOnload">
-            {`
-               function onTurnstileCallback(token) {
-                  const event = new CustomEvent('turnstile-token', { detail: { token } });
-                  window.dispatchEvent(event);
-               }
-               window.addEventListener('turnstile-token', function(event) {
-                  const { token } = event.detail;
-                  setTurnstileToken(token);
-               });
-            `}
-         </Script> */}
+         {/* <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" /> */}
          <div className="bg-gradient-to-r from-primary-600 to-primary-500 h-92 px-2 py-8">
             <div className="container mx-auto">
                <Textbox
@@ -101,7 +96,8 @@ export default function Register() {
                </div>
                <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
 
-               <div className="cf-turnstile w-100" data-sitekey="1x00000000000000000000AA" data-callback="onTurnstileCallback" data-theme="light"></div>
+               <div id="turnstile-container" className="cf-turnstile w-100"></div>
+
                <div className="pb-4 my-2">
                   <MainBtn btnWidth="w-full" content="create" />
                </div>
