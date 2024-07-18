@@ -42,7 +42,7 @@ export default function Register() {
       };
       console.log(payload);
    };
-   const sitekey = process.env.NEXT_PUBLIC_SITEKEY;
+   const sitekey = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
    const callback = (token: string) => {
       console.log(`${token}`);
    };
