@@ -1,5 +1,5 @@
 import { FeatureCard } from "@/utils/types";
-import MainBtn from "./common/Buttons/MainBtn";
+import { MainBtn } from "./common/Buttons/MainBtn";
 
 const Featurecard = ({ title, description, buttonContent }: FeatureCard) => {
    return (

@@ -1,33 +1,33 @@
 "use client";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
 import 'react-phone-input-2/lib/style.css';
 import Textbox from "@/components/common/Text/Textbox";
-import MainBtn from "@/components/common/Buttons/MainBtn";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PhoneInput from 'react-phone-input-2';
-import Script from 'next/script';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { Input } from "@/components/common/forms";
 import useTurnstile from "@/hooks/useTurnstile";
+import { SpinBtn } from "@/components/common/Buttons/MainBtn";
 
 export default function Register() {
    const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema)
    });
-   const [phone, setPhone] = useState('');
-   const [turnstileToken,] = useState('');
+   const [phone_number, setPhoneNumber] = useState('');
+   const [turnstileToken, setTurnstileToken] = useState('');
 
    const handlePhoneChange = (phone: string, countryData: any) => {
-      setPhone(phone);
-      setValue('phone', phone, { shouldValidate: true });
+      setPhoneNumber(phone);
+      setValue('phone_number', phone, { shouldValidate: true });
       const phoneNumber = parsePhoneNumberFromString(phone, countryData.countryCode);
       if (phoneNumber?.isValid()) {
-         clearErrors('phone');
+         clearErrors('phone_number');
       } else {
-         setError('phone', {
+         setError('phone_number', {
             type: 'manual',
             message: 'Enter a valid phone number'
          });
@@ -37,22 +37,22 @@ export default function Register() {
    const submitForm: SubmitHandler<registerType> = (data) => {
       const payload = {
          ...data,
-         phone,
+         phone_number,
          turnstileToken
       };
-      console.log(payload);
+      console.log("Form Data:", payload);
    };
-   const sitekey = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
+
+   const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
    const callback = (token: string) => {
-      console.log(`${token}`);
+      console.log("Turnstile Token:", token);
+      setTurnstileToken(token);
    };
 
    useTurnstile(sitekey, callback, "light");
 
-
    return (
       <>
-         {/* <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" /> */}
          <div className="bg-gradient-to-r from-primary-600 to-primary-500 h-92 px-2 py-8">
             <div className="container mx-auto">
                <Textbox
@@ -64,7 +64,7 @@ export default function Register() {
                />
             </div>
          </div>
-         <section className="container mx-auto px-2 grid md:grid-cols-2 grid-cols-1 gap-12">
+         <section className="container mx-auto px-2 grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-12">
             <div className="form-description">
                <span className="bg-dark text-secondary p-2 rounded-md">Secure Your Crypto</span>
                <Textbox
@@ -83,7 +83,7 @@ export default function Register() {
                <div className="pb-4">
                   <PhoneInput
                      country={'sa'}
-                     value={phone}
+                     value={phone_number}
                      onChange={handlePhoneChange}
                      enableSearch={true}
                      inputProps={{
@@ -92,15 +92,11 @@ export default function Register() {
                         style: { paddingLeft: '45px' }
                      }}
                   />
-                  {errors.phone && <span className="text-red-500 text-sm pt-2">{errors.phone.message}</span>}
+                  {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
                </div>
                <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
-
                <div id="turnstile-container" className="cf-turnstile w-100"></div>
-
-               <div className="pb-4 my-2">
-                  <MainBtn btnWidth="w-full" content="create" />
-               </div>
+               <SpinBtn content="register" />
             </form>
          </section>
       </>

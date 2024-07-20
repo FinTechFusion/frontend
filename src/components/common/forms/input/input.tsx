@@ -7,16 +7,16 @@ type InputProps<TFieldValue extends FieldValues> = {
    placeholder: string;
    register: UseFormRegister<TFieldValue>;
    error?: string;
-
 };
 
-const input = <TFieldValue extends FieldValues>({
+const Input = <TFieldValue extends FieldValues>({
    label,
    type = "text",
    register,
    name,
    placeholder,
    error,
+   ...rest
 }: InputProps<TFieldValue>) => {
    return (
       <div className="pb-4">
@@ -27,10 +27,11 @@ const input = <TFieldValue extends FieldValues>({
             {...register(name)}
             id={name}
             placeholder={placeholder}
+            {...rest}
          />
          {error && <span className="text-red-600 text-sm pt-2">{error}</span>}
       </div>
    )
 }
 
-export default input
+export default Input;

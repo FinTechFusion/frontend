@@ -4,12 +4,12 @@ declare global {
    interface Window {
       onloadTurnstileCallback: () => void;
       turnstile: {
-         render: (selector: string, options: { sitekey: any; callback: (token: string) => void, theme?: string }) => void;
+         render: (selector: string, options: { sitekey: string; callback: (token: string) => void, theme?: string }) => void;
       };
    }
 }
 
-const useTurnstile = (sitekey: any, callback: (token: string) => void, theme: string = 'light') => {
+const useTurnstile = (sitekey: string, callback: (token: string) => void, theme: string = 'light') => {
    useEffect(() => {
       const script = document.createElement('script');
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
@@ -37,7 +37,7 @@ const useTurnstile = (sitekey: any, callback: (token: string) => void, theme: st
       return () => {
          document.body.removeChild(script);
       };
-   }, [sitekey, callback]);
+   }, [sitekey, callback, theme]);
 };
 
 export default useTurnstile;
