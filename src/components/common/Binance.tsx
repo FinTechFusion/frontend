@@ -10,17 +10,18 @@ export default function Binance() {
             <div className="binance-heading">
                <h2 className="text-3xl py-5 font-medium tracking-wide leading-10 text-dark ">Connect Account To Start Trading</h2>
             </div>
-            <div className="binance-logo">
-               <Image
-                  src={binanceImg}
-                  alt="binance-logo"
-                  width="160"
-                  height="160"
-               />
-            </div>
+            <Link href='/exchange/connect'>
+               <div className="binance-logo">
+                  <Image
+                     src={binanceImg}
+                     alt="binance-logo"
+                     width="160"
+                     height="160"
+                  />
+               </div></Link>
             <div className="connect-info">
                <span className="block py-3 text-lg">I don’t have an exchange</span>
-               <Link href="/binance/connect">
+               <Link href="/">
                   <b className="text-primary-700 text-xl cursor-pointer">Start Trading on the Demo</b>
                </Link>
             </div>

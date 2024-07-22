@@ -1,5 +1,4 @@
 "use client";
-
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
@@ -10,7 +9,9 @@ import PhoneInput from 'react-phone-input-2';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { Input } from "@/components/common/forms";
 import useTurnstile from "@/hooks/useTurnstile";
-import { SpinBtn } from "@/components/common/Buttons/MainBtn";
+import { MainBtn, SpinBtn } from "@/components/common/Buttons/MainBtn";
+import registerImg from "/public/assets/images/registerImg.webp"
+import Image from "next/image";
 
 export default function Register() {
    const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<registerType>({
@@ -69,9 +70,14 @@ export default function Register() {
                <span className="bg-dark text-secondary p-2 rounded-md">Secure Your Crypto</span>
                <Textbox
                   mainClass="pt-6"
-                  titleClass="text-4xl "
+                  titleClass="text-4xl"
                   title="Unlock the Future of Finance"
                   description="Join the Crypto Vault and take control of your digital assets. Secure, simple, and seamless."
+               />
+               <Image
+                  src={registerImg}
+                  alt="register-img"
+                  className="rounded"
                />
             </div>
             <form onSubmit={handleSubmit(submitForm)}>
@@ -96,7 +102,8 @@ export default function Register() {
                </div>
                <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
                <div id="turnstile-container" className="cf-turnstile w-100"></div>
-               <SpinBtn content="register" />
+               {/* <SpinBtn content="creating" btnWidth="w-full" /> */}
+               <MainBtn content="creating" btnWidth="w-full" />
             </form>
          </section>
       </>

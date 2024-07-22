@@ -2,9 +2,9 @@ import Textbox from "@/components/common/Text/Textbox";
 import Image from "next/image";
 import botanaylsisImg from "/public/assets/images/robot-analysis.png";
 import TextInfo from "@/components/common/Text/TextInfo";
-import MainBtn from "@/components/common/Buttons/MainBtn";
 import InvestingScenario from "@/components/common/InvestingScenario";
 import Link from "next/link";
+import { MainBtn } from "@/components/common/Buttons/MainBtn";
 export default function page() {
    return (
       <section className="container mx-auto px-2">

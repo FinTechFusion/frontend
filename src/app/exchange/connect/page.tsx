@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import MainBtn from "@/components/common/Buttons/MainBtn";
 import Binance from "@/components/common/Binance";
 import binanceImg from "/public/assets/images/binanice.png"
+import { MainBtn } from "@/components/common/Buttons/MainBtn";
 
 export default function page() {
    return (
@@ -41,7 +41,7 @@ export default function page() {
                <Link href="/">
                   <MainBtn content="connect binance" btnWidth="w-fit" />
                </Link>
-               <p className=" py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href="/binance/connect" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
+               <p className=" py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href="https://accounts.binance.com/ar/register" target="_blank" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
             </div>
          </aside>
       </div>

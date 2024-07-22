@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, loginType } from "@/validation/loginSchema";
 import { MainBtn } from "../Buttons/MainBtn";
 import { Input } from "@/components/common/forms";
+import Link from "next/link";
 
 export default function Loginform() {
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
@@ -26,6 +27,7 @@ export default function Loginform() {
                <div className="login-btn">
                   <MainBtn content="Login" btnWidth="w-full" />
                </div>
+               <p>Don't have an account? <Link href="/register" className="text-primary-600 underline">Create</Link></p>
             </div>
          </div>
       </form>

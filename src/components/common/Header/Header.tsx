@@ -23,7 +23,7 @@ export default function Header() {
             </div>
             <div className='auth flex justify-center items-center gap-5'>
                <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow'>Login</Link>
-               <Link href='/register' className='hidden md:block rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>Register</Link>
+               <Link href='/register' className='hidden md:block rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>Free Trial</Link>
                <div className="block md:hidden cursor-pointer text-4xl" onClick={() => settoggle(prev => (!prev))}>
                   {toggle ? <IoCloseSharp /> : <FaBars />}
                </div>
