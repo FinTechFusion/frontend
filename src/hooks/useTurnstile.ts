@@ -2,9 +2,8 @@ import { useEffect } from 'react';
 
 declare global {
    interface Window {
-      onloadTurnstileCallback: () => void;
       turnstile: {
-         render: (selector: string, options: { sitekey: string; callback: (token: string) => void, theme?: string }) => void;
+         render: (selector: string, options: { sitekey: string; callback: (token: string) => void; theme?: string }) => void;
       };
    }
 }
@@ -37,7 +36,7 @@ const useTurnstile = (sitekey: string, callback: (token: string) => void, theme:
       return () => {
          document.body.removeChild(script);
       };
-   }, [sitekey, callback, theme]);
+   }, []);
 };
 
 export default useTurnstile;

@@ -6,8 +6,7 @@ import { registerSchema, registerType } from "@/validation/registerSchema";
 import PhoneInput from 'react-phone-input-2';
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
-import { useState } from "react";
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { useState, useEffect } from "react";
 import 'react-phone-input-2/lib/style.css';
 import { MainBtn } from "../Buttons/MainBtn";
 
@@ -18,21 +17,10 @@ export default function Registerform() {
    });
    const [phone_number, setPhoneNumber] = useState('');
    const [turnstileToken, setTurnstileToken] = useState('');
-   const [captchaToken, setCaptchaToken] = useState(null);
-
 
    const handlePhoneChange = (phone: string, countryData: any) => {
       setPhoneNumber(phone);
       setValue('phone_number', phone, { shouldValidate: true });
-      const phoneNumber = parsePhoneNumberFromString(phone, countryData.countryCode);
-      if (phoneNumber?.isValid()) {
-         clearErrors('phone_number');
-      } else {
-         setError('phone_number', {
-            type: 'manual',
-            message: 'Enter a valid phone number'
-         });
-      }
    };
 
    const submitForm: SubmitHandler<registerType> = (data) => {
@@ -41,16 +29,12 @@ export default function Registerform() {
          phone_number,
          turnstileToken
       };
-      console.log("Form Data:", payload);
+      console.log(payload);
    };
 
    const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
-   const callback = (token: string) => {
-      console.log("Turnstile Token:", token);
-      setTurnstileToken(token);
-   };
 
-   useTurnstile(sitekey, callback, "light");
+   useTurnstile(sitekey, (token: string) => setTurnstileToken(token), "light");
 
    return (
       <form onSubmit={handleSubmit(submitForm)}>
@@ -77,12 +61,10 @@ export default function Registerform() {
          <div
             id="turnstile-container"
             className="cf-turnstile w-100"
-            data-sitekey={sitekey}
-            data-callback={(token: any) => setCaptchaToken(token)}
-            data-expired-callback={() => setCaptchaToken(null)}
          ></div>
-         {captchaToken === null && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
+         {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
          {/* <SpinBtn content="creating" btnWidth="w-full" /> */}
          <MainBtn content="creating" btnWidth="w-full" />
-      </form>)
+      </form>
+   );
 }
