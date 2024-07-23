@@ -6,11 +6,26 @@ import { registerSchema, registerType } from "@/validation/registerSchema";
 import PhoneInput from 'react-phone-input-2';
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import 'react-phone-input-2/lib/style.css';
 import { MainBtn } from "../Buttons/MainBtn";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Registerform() {
+   <ToastContainer
+      position="top-left"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+   />
    const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema)
@@ -18,18 +33,23 @@ export default function Registerform() {
    const [phone_number, setPhoneNumber] = useState('');
    const [turnstileToken, setTurnstileToken] = useState('');
 
-   const handlePhoneChange = (phone: string, countryData: any) => {
+   const handlePhoneChange = (phone: string) => {
       setPhoneNumber(phone);
       setValue('phone_number', phone, { shouldValidate: true });
    };
 
    const submitForm: SubmitHandler<registerType> = (data) => {
-      const payload = {
-         ...data,
-         phone_number,
-         turnstileToken
-      };
-      console.log(payload);
+      if (turnstileToken) {
+         const payload = {
+            ...data,
+            phone_number,
+            turnstileToken
+         };
+         console.log(payload);
+      }
+      else {
+         toast.error("Turnstile verification required.");
+      }
    };
 
    const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
@@ -37,34 +57,47 @@ export default function Registerform() {
    useTurnstile(sitekey, (token: string) => setTurnstileToken(token), "light");
 
    return (
-      <form onSubmit={handleSubmit(submitForm)}>
-         <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-            <Input label="first name" register={register} name="first_name" error={errors.first_name?.message} placeholder="First Name" />
-            <Input label="last name" register={register} name="last_name" error={errors.last_name?.message} placeholder="Last Name" />
-         </div>
-         <Input label="email" register={register} name="email" error={errors.email?.message} placeholder="Email" />
-         <div className="pb-4">
-            <PhoneInput
-               country={'sa'}
-               value={phone_number}
-               onChange={handlePhoneChange}
-               enableSearch={true}
-               inputProps={{
-                  required: true,
-                  className: "w-full auth_input border-2",
-                  style: { paddingLeft: '45px' }
-               }}
-            />
-            {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
-         </div>
-         <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
-         <div
-            id="turnstile-container"
-            className="cf-turnstile w-100"
-         ></div>
-         {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
-         {/* <SpinBtn content="creating" btnWidth="w-full" /> */}
-         <MainBtn content="creating" btnWidth="w-full" />
-      </form>
+      <>
+         <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light"
+         />
+         <form onSubmit={handleSubmit(submitForm)}>
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+               <Input label="first name" register={register} name="first_name" error={errors.first_name?.message} placeholder="First Name" />
+               <Input label="last name" register={register} name="last_name" error={errors.last_name?.message} placeholder="Last Name" />
+            </div>
+            <Input label="email" register={register} name="email" error={errors.email?.message} placeholder="Email" />
+            <div className="pb-4">
+               <PhoneInput
+                  country={'sa'}
+                  value={phone_number}
+                  onChange={handlePhoneChange}
+                  enableSearch={true}
+                  inputProps={{
+                     required: true,
+                     className: "w-full auth_input border-2",
+                     style: { paddingLeft: '45px' }
+                  }}
+               />
+               {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
+            </div>
+            <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
+            <div
+               id="turnstile-container"
+               className="cf-turnstile w-100"
+            ></div>
+            {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
+            {/* <SpinBtn content="creating" btnWidth="w-full" /> */}
+            <MainBtn content="creating" btnWidth="w-full" />
+         </form>
+      </>
    );
 }
