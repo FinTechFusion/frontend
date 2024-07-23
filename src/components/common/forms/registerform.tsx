@@ -4,12 +4,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
 import PhoneInput from 'react-phone-input-2';
-import { MainBtn, SpinBtn } from "@/components/common/Buttons/MainBtn";
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
 import { useState } from "react";
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import 'react-phone-input-2/lib/style.css';
+import { MainBtn } from "../Buttons/MainBtn";
 
 export default function Registerform() {
    const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<registerType>({
