@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto } from 'next/font/google'
 import "../styles/globals.css";
-import Header from "@/components/common/Header/Header";
-import Footer from "@/components/common/Footer/Footer";
+import Header from "@/app/_components/common/Header/Header";
+import Footer from "@/app/_components/common/Footer/Footer";
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["100", "300", "400", "500", "700"] });
 

@@ -1,5 +1,5 @@
-import Loginform from "@/components/common/forms/loginform";
-import Logo from "@/components/common/Logo";
+import Loginform from "@/app/_components/common/forms/loginform";
+import Logo from "@/app/_components/common/Logo";
 export default function page() {
    return (
       <section className="w-full mx-auto md:px-0 px-2">

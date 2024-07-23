@@ -1,7 +1,7 @@
-import Textbox from "@/components/common/Text/Textbox";
+import Textbox from "@/app/_components/common/Text/Textbox";
 import registerImg from "/public/assets/images/registerImg.webp"
 import Image from "next/image";
-import Registerform from "@/components/common/forms/registerform";
+import Registerform from "@/app/_components/common/forms/registerform";
 
 export default function Register() {
 

@@ -1,6 +1,6 @@
-import { MainBtn } from "@/components/common/Buttons/MainBtn"
-import VerifyInput from "@/components/common/inputs/VerifyInput";
-import Textbox from "@/components/common/Text/Textbox"
+import { MainBtn } from "@/app/_components/common/Buttons/MainBtn"
+import VerifyInput from "@/app/_components/common/inputs/VerifyInput";
+import Textbox from "@/app/_components/common/Text/Textbox"
 
 const VerifyEmail = () => {
    return (

@@ -1,4 +1,4 @@
-import { MainBtn } from "@/components/common/Buttons/MainBtn";
+import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 import Link from "next/link";
 
 export function Error() {

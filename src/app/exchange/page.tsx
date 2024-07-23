@@ -1,6 +1,6 @@
 // import Binance from "@/components/common/binance";
 
-import Binance from "@/components/common/Binance";
+import Binance from "@/app/_components/common/Binance";
 
 export default function page() {
    return (

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import Binance from "@/components/common/Binance";
+import Binance from "@/app/_components/common/Binance";
 import binanceImg from "/public/assets/images/binanice.png"
-import { MainBtn } from "@/components/common/Buttons/MainBtn";
+import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 
 export default function page() {
    return (

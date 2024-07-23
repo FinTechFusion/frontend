@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import TextInfo from '@/components/common/Text/TextInfo'
-import Textbox from '@/components/common/Text/Textbox'
+import TextInfo from '@/app/_components/common/Text/TextInfo'
+import Textbox from '@/app/_components/common/Text/Textbox'
 import botaiImg from "/public/assets/images/botaiImg.webp";
 import { CgTrending } from "react-icons/cg";
 import { MdAnalytics } from "react-icons/md";
 import { GiBriefcase } from "react-icons/gi";
-import { MainBtn } from '@/components/common/Buttons/MainBtn';
+import { MainBtn } from '@/app/_components/common/Buttons/MainBtn';
 
 export default function page() {
    return (

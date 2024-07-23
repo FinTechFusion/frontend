@@ -1,5 +1,5 @@
-import According from "@/components/According";
-import Textbox from "@/components/common/Text/Textbox";
+import According from "@/app/_components/According";
+import Textbox from "@/app/_components/common/Text/Textbox";
 
 export default function page() {
    return (

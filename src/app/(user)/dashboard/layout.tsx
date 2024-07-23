@@ -1,4 +1,4 @@
-import Sidebar from "@/components/common/dashboad/sidebar/SideBar"
+import Sidebar from "@/app/_components/common/dashboad/sidebar/SideBar"
 import React from "react"
 
 type DashboardLayoutProps = {

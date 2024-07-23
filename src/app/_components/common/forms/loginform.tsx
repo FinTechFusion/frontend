@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, loginType } from "@/validation/loginSchema";
 import { MainBtn } from "../Buttons/MainBtn";
-import { Input } from "@/components/common/forms";
+import { Input } from "@/app/_components/common/forms";
 import Link from "next/link";
 
 export default function Loginform() {

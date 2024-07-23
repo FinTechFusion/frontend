@@ -1,35 +1,26 @@
-"use client"
+"use client";
 
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
 import PhoneInput from 'react-phone-input-2';
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
-import { useState } from "react";
 import 'react-phone-input-2/lib/style.css';
 import { MainBtn } from "../Buttons/MainBtn";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { API_BASE_URL } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 export default function Registerform() {
-   <ToastContainer
-      position="top-left"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
-   />
-   const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<registerType>({
+   const route = useRouter();
+   const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema)
    });
+
    const [phone_number, setPhoneNumber] = useState('');
    const [turnstileToken, setTurnstileToken] = useState('');
 
@@ -38,16 +29,33 @@ export default function Registerform() {
       setValue('phone_number', phone, { shouldValidate: true });
    };
 
-   const submitForm: SubmitHandler<registerType> = (data) => {
+   const submitForm: SubmitHandler<registerType> = async (data) => {
       if (turnstileToken) {
-         const payload = {
-            ...data,
-            phone_number,
-            turnstileToken
-         };
-         console.log(payload);
-      }
-      else {
+         try {
+            const response = await fetch(`${API_BASE_URL}/register?token=${turnstileToken}`, {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({
+                  email: data.email,
+                  phone_number,
+                  turnstileToken
+               })
+            });
+
+            if (!response.ok) {
+               throw new Error('Failed to send OTP');
+            }
+
+            // Redirect to the /verify-email page with email and Turnstile token
+            // route.push(href);
+
+         } catch (error) {
+            console.error('Error:', error);
+            toast.error("An error occurred. Please try again.");
+         }
+      } else {
          toast.error("Turnstile verification required.");
       }
    };

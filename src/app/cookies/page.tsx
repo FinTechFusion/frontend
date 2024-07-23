@@ -1,6 +1,6 @@
-import SectionHeading from "@/components/common/Text/Heading";
-import TextInfo from "@/components/common/Text/TextInfo";
-import Textbox from "@/components/common/Text/Textbox";
+import SectionHeading from "@/app/_components/common/Text/Heading";
+import TextInfo from "@/app/_components/common/Text/TextInfo";
+import Textbox from "@/app/_components/common/Text/Textbox";
 
 export default function page() {
    return (

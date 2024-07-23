@@ -1,5 +1,5 @@
 import { IoIosCheckmark } from "react-icons/io";
-import Textbox from "@/components/common/Text/Textbox";
+import Textbox from "@/app/_components/common/Text/Textbox";
 
 export default function page() {
    return (

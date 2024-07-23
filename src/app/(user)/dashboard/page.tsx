@@ -1,6 +1,6 @@
-import { MainBtn } from "@/components/common/Buttons/MainBtn";
-import { Input } from "@/components/common/forms";
-import TextInfo from "@/components/common/Text/TextInfo";
+import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
+import { Input } from "@/app/_components/common/forms";
+import TextInfo from "@/app/_components/common/Text/TextInfo";
 
 
 export default function page() {
