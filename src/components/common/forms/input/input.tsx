@@ -6,6 +6,7 @@ type InputProps<TFieldValue extends FieldValues> = {
    type?: string;
    placeholder: string;
    register: UseFormRegister<TFieldValue>;
+   onPaste?: (e: React.ClipboardEvent) => void; // Add onPaste prop
    error?: string;
 };
 
@@ -16,6 +17,7 @@ const Input = <TFieldValue extends FieldValues>({
    name,
    placeholder,
    error,
+   onPaste,
    ...rest
 }: InputProps<TFieldValue>) => {
    return (

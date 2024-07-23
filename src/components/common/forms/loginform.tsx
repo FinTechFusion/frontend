@@ -16,18 +16,22 @@ export default function Loginform() {
    const submitForm: SubmitHandler<loginType> = (data) => {
       console.log(data);
    };
+   const preventPaste = (e: React.ClipboardEvent) => {
+      e.preventDefault()
+   }
 
    return (
       <form onSubmit={handleSubmit(submitForm)}>
          <div className="pb-3">
             <div className="grid grid-cols-1 gap-4">
                <Input label="email" type="email" register={register} name="email" error={errors.email?.message} placeholder="Email" />
-               <Input label="password" type="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" onPaste={(e) => { e.preventDefault() }}
+               <Input label="password" type="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" onPaste={preventPaste}
+
                />
                <div className="login-btn">
                   <MainBtn content="Login" btnWidth="w-full" />
                </div>
-               <p>Don't have an account? <Link href="/register" className="text-primary-600 underline">Create</Link></p>
+               <p>Don&apos;t have an account? <Link href="/register" className="text-primary-600 underline">Create</Link></p>
             </div>
          </div>
       </form>
