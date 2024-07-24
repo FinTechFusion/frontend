@@ -1,4 +1,3 @@
-"use client"
 import VerifyInput from "@/app/_components/common/inputs/VerifyInput";
 import Textbox from "@/app/_components/common/Text/Textbox"
 
