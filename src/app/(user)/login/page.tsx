@@ -4,7 +4,7 @@ export default function page() {
    return (
       <section className="w-full mx-auto md:px-0 px-2">
          <Logo />
-         <div className="form-card rounded-md border-2 md:w-1/3 w-full px-5 py-8 mx-auto">
+         <div className="form-card rounded-md border-2 lg:w-1/3 md:w-2/3 w-full px-5 py-8 mx-auto">
             <div className="card">
                <div className="card-content text-center pb-5">
                   <h2 className="text-2xl font-bold capitalize text-dark">Sign in to your account</h2>

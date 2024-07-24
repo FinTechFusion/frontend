@@ -10,7 +10,7 @@ export default function Hero() {
             <p className="text-gray-500 py-6 text-xl">Meet your new trading edge Bot Analysis and Bot AI. Simple, smart,
                and secure. Bot Analysis finds opportunities. Bot AI predicts the market.
                Both designed to boost your profits with ease and safety in mind.</p>
-            <Link href="/register">
+            <Link href="/login">
                <MainBtn content="start trial" btnWidth="w-fit" />
             </Link>
          </div>

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,10 +8,12 @@ import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
 import 'react-phone-input-2/lib/style.css';
 import { MainBtn } from "../Buttons/MainBtn";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { API_BASE_URL } from "@/utils/api";
 import { useRouter } from "next/navigation";
+import Toast from "../Tostify/Toast";
+
 
 export default function Registerform() {
    const route = useRouter();
@@ -25,40 +26,43 @@ export default function Registerform() {
    const [turnstileToken, setTurnstileToken] = useState('');
 
    const handlePhoneChange = (phone: string) => {
-      setPhoneNumber(phone);
-      setValue('phone_number', phone, { shouldValidate: true });
+      const formattedPhone = `+${phone}`;
+      setPhoneNumber(formattedPhone);
+      setValue('phone_number', formattedPhone, { shouldValidate: true });
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
       if (turnstileToken) {
          try {
-            const response = await fetch(`${API_BASE_URL}/register?token=${turnstileToken}`, {
+            const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}`, {
                method: 'POST',
                headers: {
                   'Content-Type': 'application/json'
                },
-               body: JSON.stringify({
-                  email: data.email,
-                  phone_number,
-                  turnstileToken
-               })
+               body: JSON.stringify(data) // Send the data directly
             });
 
+            const responseData = await response.json();
+            console.log('response data:', responseData);
+            if (!responseData.success) {
+               toast.error(responseData.detail[0].msg || responseData.detail);
+            }
+            else {
+               toast.success("Acouunt created successfully");
+               route.push(`/verifyemail?email=${data.email}`);
+            }
             if (!response.ok) {
-               throw new Error('Failed to send OTP');
+               throw new Error("An error has occurred");
             }
 
-            // Redirect to the /verify-email page with email and Turnstile token
-            // route.push(href);
-
-         } catch (error) {
-            console.error('Error:', error);
-            toast.error("An error occurred. Please try again.");
+         } catch (error: any) {
+            console.error(error);
          }
       } else {
          toast.error("Turnstile verification required.");
       }
    };
+
 
    const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
 
@@ -66,17 +70,7 @@ export default function Registerform() {
 
    return (
       <>
-         <ToastContainer
-            position="top-left"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            theme="light"
-         />
+         <Toast />
          <form onSubmit={handleSubmit(submitForm)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                <Input label="first name" register={register} name="first_name" error={errors.first_name?.message} placeholder="First Name" />
