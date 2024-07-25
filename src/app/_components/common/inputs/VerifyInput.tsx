@@ -1,5 +1,5 @@
-
-// import { useRouter } from "next/navigation";
+"use client"
+import { useRouter } from "next/navigation";
 import { API_BASE_URL } from '@/utils/api';
 import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import { useSearchParams } from 'next/navigation'
@@ -8,6 +8,7 @@ import Toast from '../Tostify/Toast';
 
 
 function VerifyInput() {
+   const route=useRouter();
    const searchParams = useSearchParams()
    const email = searchParams.get('email');
 
@@ -44,6 +45,7 @@ function VerifyInput() {
          }
          else {
             toast.success("Account is verified Successfully");
+            
          }
          if (!response.ok) {
             throw new Error("An error has occurred");
