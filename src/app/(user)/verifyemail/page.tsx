@@ -1,4 +1,4 @@
-import VerifyInput from "@/app/_components/common/inputs/VerifyInput";
+import SuspendedVerifyInput from "@/app/_components/common/inputs/VerifyInput"
 import Textbox from "@/app/_components/common/Text/Textbox"
 
 const VerifyEmail = () => {
@@ -9,7 +9,7 @@ const VerifyEmail = () => {
             <Textbox title="Verify Your Email" description="Enter the 6-digit code sent to your email to confirm your identity." />
             <form className="space-y-4">
                <div className="flex justify-center gap-2 mb-4 mt-2">
-                  <VerifyInput />
+                  <SuspendedVerifyInput />
                </div>
             </form>
          </div>

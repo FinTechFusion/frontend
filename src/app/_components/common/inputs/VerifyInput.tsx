@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation";
 import { API_BASE_URL } from '@/utils/api';
-import { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, ChangeEvent, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
@@ -91,4 +91,12 @@ function VerifyInput() {
    );
 }
 
-export default VerifyInput;
+function SuspendedVerifyInput() {
+   return (
+      <Suspense fallback={<div>Loading...</div>}>
+         <VerifyInput />
+      </Suspense>
+   );
+}
+
+export default SuspendedVerifyInput;
