@@ -8,8 +8,8 @@ import Toast from '../Tostify/Toast';
 
 
 function VerifyInput() {
-   const route=useRouter();
-   const searchParams = useSearchParams()
+   const route = useRouter();
+   const searchParams = useSearchParams();
    const email = searchParams.get('email');
 
    const [values, setValues] = useState<string[]>(Array(6).fill('')); // Assuming 6 input fields
@@ -45,7 +45,7 @@ function VerifyInput() {
          }
          else {
             toast.success("Account is verified Successfully");
-            
+            route.push('/login')
          }
          if (!response.ok) {
             throw new Error("An error has occurred");
