@@ -1,14 +1,15 @@
 "use client"
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 import { API_BASE_URL } from '@/utils/api';
-import { useState, useRef, useEffect, ChangeEvent, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation'
+import { useState, useRef, useEffect, ChangeEvent, KeyboardEvent, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
 
-
 function VerifyInput() {
    const route = useRouter();
+
    const searchParams = useSearchParams();
    const email = searchParams.get('email');
 
@@ -33,35 +34,59 @@ function VerifyInput() {
          inputRefs.current[index + 1]?.focus();
       }
    };
-   async function sendCodeToApi(code: number) {
-      try {
-         const response = await fetch(`${API_BASE_URL}/auth/verify?otp_code=${code}&email=${email}`, {
-            method: 'POST',
-         })
-         const responseData = await response.json();
-         console.log(responseData);
-         if (!responseData.success) {
-            toast.error(responseData.detail[0].msg || responseData.detail);
-         }
-         else {
-            toast.success("Account is verified Successfully");
-            route.push('/login')
-         }
-         if (!response.ok) {
-            throw new Error("An error has occurred");
+
+   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+      if (e.key === 'Backspace' && values[index] === '') {
+         if (index > 0) {
+            inputRefs.current[index - 1]?.focus();
          }
       }
-      catch (error: any) {
+   };
+
+   async function sendCodeToApi(code: number) {
+
+      try {
+         if (!email) {
+            return toast.error("Invalid Email");
+         }
+
+         const response = await fetch(`${API_BASE_URL}/auth/verify?otp_code=${code}&email=${email}`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+         });
+
+         if (!response.ok) {
+            const responseData = await response.json();
+            return toast.error(responseData.detail || "An error has occurred");
+         }
+
+         const responseData = await response.json();
+         if (responseData) {
+            const { access_token, refresh_token } = responseData;
+            Cookies.set("access_token", access_token, { secure: true, sameSite: 'Strict' });
+            Cookies.set("refresh_token", refresh_token, { secure: true, sameSite: 'Strict' });
+            route.push('/dashboard');
+            return toast.success("Account is verified Successfully");
+         } else {
+            return toast.error(responseData.detail);
+         }
+      } catch (error: any) {
          console.error(error);
+         toast.error("An error has occurred");
       }
    }
 
    const handleVerify = (e: React.FormEvent) => {
       e.preventDefault();
       const combinedValue = values.join('');
-      sendCodeToApi(Number(combinedValue))
-      console.log(Number(combinedValue));
-   }
+      if (!combinedValue) {
+         return toast.error("Enter Full OPT code");
+      }
+      sendCodeToApi(Number(combinedValue));
+   };
+
    return (
       <>
          <Toast />
@@ -75,7 +100,9 @@ function VerifyInput() {
                      value={val}
                      ref={(el) => { inputRefs.current[index] = el; }}
                      onChange={(e) => handleChange(e, index)}
+                     onKeyDown={(e) => handleKeyDown(e, index)}
                      className="w-10 h-10 bg-gray-200 rounded text-center text-lg font-bold focus:outline-none focus:ring-1 focus:ring-primary-700"
+                     required
                   />
                ))}
             </div>
@@ -87,13 +114,12 @@ function VerifyInput() {
             </button>
          </div>
       </>
-
    );
 }
 
 function SuspendedVerifyInput() {
    return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
          <VerifyInput />
       </Suspense>
    );

@@ -9,7 +9,6 @@ import useTurnstile from "@/hooks/useTurnstile";
 import 'react-phone-input-2/lib/style.css';
 import { MainBtn } from "../Buttons/MainBtn";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { API_BASE_URL } from "@/utils/api";
 import { useRouter } from "next/navigation";
 import Toast from "../Tostify/Toast";
@@ -96,7 +95,8 @@ export default function Registerform() {
                id="turnstile-container"
                className="cf-turnstile w-100"
             ></div>
-            {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
+            {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>
+            }
             {/* <SpinBtn content="creating" btnWidth="w-full" /> */}
             <MainBtn content="creating" btnWidth="w-full" />
          </form>
