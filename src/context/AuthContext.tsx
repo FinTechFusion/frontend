@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             const accessToken = localStorage.getItem('access_token');
             const expireTokenTime = localStorage.getItem('expire_data_token');
             if (!accessToken) {
-               router.push('/login');
+               // router.push('/login');
                setIsLoading(false);
                return;
             }
