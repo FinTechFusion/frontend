@@ -1,11 +1,21 @@
 "use client"
 import { useAuth } from '@/context/AuthContext';
-
 import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 import { CiUser } from "react-icons/ci";
+import Loading from '@/app/_components/common/loading/Loading';
+import { toast } from 'react-toastify';
 
-export default function page() {
+export default function Page() {
    const { user, isLoading, error } = useAuth();
+   if (error) {
+      console.log(error)
+      toast.error(error);
+      return null; // Returning null to avoid rendering further
+   }
+
+   if (isLoading) {
+      return <Loading />;
+   }
    return (
       <div className="container mx-auto px-5">
          <div className="my-8">
@@ -31,7 +41,7 @@ export default function page() {
                <div className="flex justify-between items-center pb-3">
                   <div>
                      <p className="text-xl pb-2">plan</p>
-                     <b>{user?.plan == null ? "No plan" : user?.plan }</b>
+                     <b>{user?.plan == null ? "No plan" : user?.plan}</b>
                   </div>
                   <span className="border rounded-md p-2">active</span>
                </div>
@@ -47,7 +57,7 @@ export default function page() {
                <div className="flex justify-between items-center">
                   <div>
                      <p className="text-xl pb-2">Strategy</p>
-                     <b>{user?.strategy == null ? "No Strategy" :user?.strategy}</b>
+                     <b>{user?.strategy == null ? "No Strategy" : user?.strategy}</b>
                   </div>
                </div>
                <div className="flex justify-between items-center mt-4">
@@ -57,11 +67,11 @@ export default function page() {
                   </div>
                   <div>
                      <p className="pb-2">Verified</p>
-                     <b>{user?.is_verified ? "verified" :"false"}</b>
+                     <b>{user?.is_verified ? "verified" : "false"}</b>
                   </div>
                   <div>
                      <p className="pb-2">Active</p>
-                     <b>{user?.is_active ? "active" :"false"}</b>
+                     <b>{user?.is_active ? "active" : "false"}</b>
                   </div>
                </div>
             </div>

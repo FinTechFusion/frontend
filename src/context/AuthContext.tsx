@@ -19,17 +19,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
+   const currentTime = Date.now();
 
    useEffect(() => {
-      const fetchUserData = async () => {
+      const fetchUserData = async (accessToken: string) => {
+         const TokenTime = localStorage.getItem('expire_data_token');
          try {
-            const accessToken = Cookies.get('access_token');
-            if (!accessToken) {
-               router.push('/login');
-               setIsLoading(false);
-               return;
-            }
-
             const response = await fetch(`${API_BASE_URL}/users/me`, {
                method: 'GET',
                headers: {
@@ -40,7 +35,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             if (!response.ok) {
                throw new Error('Failed to fetch user data');
             }
-
             const { data } = await response.json();
             setUser(data);
          } catch (error) {
@@ -49,46 +43,62 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             toast.error('Failed to fetch user data');
          } finally {
             setIsLoading(false);
+         }g
+      };
+
+      const checkAndFetchUserData = async () => {
+         try {
+            const accessToken = localStorage.getItem('access_token');
+            const expireTokenTime = localStorage.getItem('expire_data_token');
+            if (!accessToken) {
+               router.push('/login');
+               setIsLoading(false);
+               return;
+            }
+
+            if (expireTokenTime && (Number(currentTime) > Number(expireTokenTime))) {
+               const newAccessToken = await refreshAccessToken();
+               fetchUserData(newAccessToken);
+            } else {
+               fetchUserData(accessToken);
+            }
+         } catch (error) {
+            console.error('Error in checkAndFetchUserData', error);
+            setIsLoading(false);
          }
       };
 
-      fetchUserData();
+      checkAndFetchUserData();
    }, []);
 
-   const login = async (tokens: Tokens, userData: User) => {
-      try {
-         Cookies.set('access_token', tokens.accessToken);
-         Cookies.set('refresh_token', tokens.refreshToken);
-         setUser(userData);
-         toast.success('Login successful');
-      } catch (error) {
-         console.error('Login failed', error);
-         toast.error('Login failed');
-      }
-   };
-
    const logout = () => {
-      Cookies.remove('access_token');
-      Cookies.remove('refresh_token');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('expire_data_token');
       setUser(null);
       router.push('/login');
-      toast.success('Logged out');
+      toast.success('Logged out');  
    };
 
    const refreshAccessToken = async () => {
       try {
          const refreshToken = Cookies.get('refresh_token');
          if (!refreshToken) {
-            router.push('/login')
+            router.push('/login');
             throw new Error('Refresh token not found');
          }
 
-         const response = await fetch('/api/auth/refresh', {
+         const body = new URLSearchParams({
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+         });
+
+         const response = await fetch(`${API_BASE_URL}/oauth/token`, {
             method: 'POST',
             headers: {
-               'Content-Type': 'application/json',
+               'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify({ refreshToken }),
+            body: body.toString(),
          });
 
          if (!response.ok) {
@@ -96,8 +106,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          }
 
          const newTokens = (await response.json()) as Tokens;
-         Cookies.set('access_token', newTokens.accessToken);
-         Cookies.set('refresh_token', newTokens.refreshToken);
+         Cookies.set('access_token', newTokens.accessToken, { secure: true, sameSite: 'Strict' });
+         Cookies.set('refresh_token', newTokens.refreshToken, { secure: true, sameSite: 'Strict' });
+
+         localStorage.setItem('access_token', newTokens.accessToken);
+         localStorage.setItem('expire_data_token', String(currentTime + 3600 * 1000)); // Assuming token is valid for 1 hour
 
          return newTokens.accessToken;
       } catch (error) {
@@ -107,26 +120,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
    };
 
-   const useRefreshToken = <T,>(fn: (...args: any[]) => Promise<T>) => {
-      return async (...args: any[]) => {
-         try {
-            const response = await fn(...args);
-            return response;
-         } catch (error: any) {
-            if (error.response && error.status === 401) {
-               const newAccessToken = await refreshAccessToken();
-               // Retry the original request with the new access token
-               const response = await fn(...args);
-               return response;
-            } else {
-               throw error;
-            }
-         }
-      };
-   };
-
    return (
-      <AuthContext.Provider value={{ user, login, logout, isLoading, error, useRefreshToken }}>
+      <AuthContext.Provider value={{ user, logout, isLoading, error }}>
          <Toast />
          {children}
       </AuthContext.Provider>

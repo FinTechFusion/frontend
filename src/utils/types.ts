@@ -46,9 +46,9 @@ export interface Tokens {
 
 export interface AuthContextType {
    user: User | null;
-   login: (tokens: Tokens, userData: User) => void;
+   // login: (tokens: Tokens, userData: User) => void;
    logout: () => void;
    isLoading: boolean;
    error: string | null;
-   useRefreshToken: <T>(fn: (...args: any[]) => Promise<T>) => (...args: any[]) => Promise<T>;
+   // useRefreshToken: <T>(fn: (...args: any[]) => Promise<T>) => (...args: any[]) => Promise<T>;
 }

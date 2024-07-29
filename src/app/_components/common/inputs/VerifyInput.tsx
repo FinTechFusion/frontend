@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { API_BASE_URL } from '@/utils/api';
 import { useState, useRef, useEffect, ChangeEvent, KeyboardEvent, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -66,12 +66,12 @@ function VerifyInput() {
          if (responseData) {
             const { access_token, refresh_token } = responseData;
             const currentTime = Date.now();
-            const thirtyMinutesInMilliseconds = 29 * 60 * 1000;
+            const thirtyMinutesInMilliseconds = 10 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
 
-            Cookies.set("expire_data_token", newTime.toString());
-            Cookies.set("access_token", access_token, { secure: true, sameSite: 'Strict' });
-            Cookies.set("refresh_token", refresh_token, { secure: true, sameSite: 'Strict' });
+            localStorage.set("expire_data_token", newTime.toString());
+            localStorage.set("access_token", access_token);
+            localStorage.set("refresh_token", refresh_token);
             route.push('/dashboard');
             return toast.success("Account is verified Successfully");
          } else {
