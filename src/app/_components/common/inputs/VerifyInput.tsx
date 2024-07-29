@@ -65,6 +65,11 @@ function VerifyInput() {
          const responseData = await response.json();
          if (responseData) {
             const { access_token, refresh_token } = responseData;
+            const currentTime = Date.now();
+            const thirtyMinutesInMilliseconds = 29 * 60 * 1000;
+            const newTime: number = currentTime + thirtyMinutesInMilliseconds;
+
+            Cookies.set("expire_data_token", newTime.toString());
             Cookies.set("access_token", access_token, { secure: true, sameSite: 'Strict' });
             Cookies.set("refresh_token", refresh_token, { secure: true, sameSite: 'Strict' });
             route.push('/dashboard');

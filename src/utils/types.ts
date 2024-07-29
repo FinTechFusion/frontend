@@ -21,3 +21,34 @@ export interface PlatformFeature {
    title: string;
    description: string;
 }
+// utils/types.ts
+
+export interface User {
+   first_name: string;
+   last_name?: string;
+   phone_number?: string;
+   email?: string;
+   id?: string; // Assuming UUID is a string
+   plan?: string;
+   cycles_count_remaining?: number;
+   strategy?: string;
+   email_preferences?: string[];
+   allowed_scopes?: string[];
+   is_demo?: boolean;
+   is_verified?: boolean;
+   is_active?: boolean;
+}
+
+export interface Tokens {
+   accessToken: string;
+   refreshToken: string;
+}  
+
+export interface AuthContextType {
+   user: User | null;
+   login: (tokens: Tokens, userData: User) => void;
+   logout: () => void;
+   isLoading: boolean;
+   error: string | null;
+   useRefreshToken: <T>(fn: (...args: any[]) => Promise<T>) => (...args: any[]) => Promise<T>;
+}

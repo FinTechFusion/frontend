@@ -1,8 +1,11 @@
+// app/layout.tsx
 import type { Metadata } from "next";
-import { Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google';
 import "../styles/globals.css";
 import Header from "@/app/_components/common/Header/Header";
 import Footer from "@/app/_components/common/Footer/Footer";
+// import { AuthProvider } from '@/context/AuthContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["100", "300", "400", "500", "700"] });
 
@@ -19,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className}`}>
+        {/* <AuthProvider> */}
         <Header />
         {children}
         <Footer />
+        {/* </AuthProvider> */}
       </body>
     </html>
   );

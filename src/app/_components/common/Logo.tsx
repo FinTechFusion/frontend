@@ -11,6 +11,7 @@ export default function Logo() {
                width='230'
                height='120'
                className="w-auto h-auto"
+               priority={true}
             />
          </Link>
       </div>)

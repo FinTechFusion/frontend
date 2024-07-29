@@ -13,7 +13,7 @@ export default function Sidebar() {
                } content='Dashboard' weight='font-semibold' path='/binance/connect/apikey/' />
 
                <SidebarLink icon={<FaUser />
-               } content='My Portfolio' weight='font-normal' path='/binance/connect/apikey/portfolio' />
+               } content='My Portfolio' weight='font-normal' path='/dashboard/profile' />
 
                <p className="text-gray-700 text-xl py-3">Trading</p>
 
