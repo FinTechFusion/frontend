@@ -27,16 +27,15 @@ const submitForm: SubmitHandler<loginType> = async (data) => {
          },
          body: JSON.stringify(data)
       });
-      console.log('Response:', response);
 
       const responseData = await response.json();
       console.log('Response Data:', responseData);
 
       if (response.ok) {
+         route.push('/dashboard');
          const { access_token, refresh_token } = responseData;
          
          if (access_token && refresh_token) {
-            route.push('/dashboard');
             const currentTime = Date.now();
             const thirtyMinutesInMilliseconds = 10 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;

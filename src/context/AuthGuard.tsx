@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 interface AuthGuardProps {
    children: React.ReactNode;
@@ -18,7 +18,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
       } else if (!user.is_verified) {
          router.push('/register');
       }
-   }, [user, router]);
+   }, []);
 
 
    if (error) {

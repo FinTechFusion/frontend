@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { User, Tokens, AuthContextType } from '@/utils/types';
@@ -20,10 +19,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
    const currentTime = Date.now();
-
    useEffect(() => {
       const fetchUserData = async (accessToken: string) => {
-         const TokenTime = localStorage.getItem('expire_data_token');
+         // const TokenTime = localStorage.getItem('expire_data_token');
          try {
             const response = await fetch(`${API_BASE_URL}/users/me`, {
                method: 'GET',
@@ -82,7 +80,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
    const refreshAccessToken = async () => {
       try {
-         const refreshToken = Cookies.get('refresh_token');
+         const refreshToken = localStorage.getItem('refresh_token');
          if (!refreshToken) {
             router.push('/login');
             throw new Error('Refresh token not found');
@@ -106,11 +104,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          }
 
          const newTokens = (await response.json()) as Tokens;
-         Cookies.set('access_token', newTokens.accessToken, { secure: true, sameSite: 'Strict' });
-         Cookies.set('refresh_token', newTokens.refreshToken, { secure: true, sameSite: 'Strict' });
+         localStorage.setItem('access_token', newTokens.accessToken);
+         localStorage.setItem('refresh_token', newTokens.refreshToken);
 
          localStorage.setItem('access_token', newTokens.accessToken);
-         localStorage.setItem('expire_data_token', String(currentTime + 3600 * 1000)); // Assuming token is valid for 1 hour
+         localStorage.setItem('expire_data_token', String(currentTime));
 
          return newTokens.accessToken;
       } catch (error) {
