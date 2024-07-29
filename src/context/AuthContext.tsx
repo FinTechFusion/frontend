@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             toast.error('Failed to fetch user data');
          } finally {
             setIsLoading(false);
-         }g
+         }
       };
 
       const checkAndFetchUserData = async () => {
