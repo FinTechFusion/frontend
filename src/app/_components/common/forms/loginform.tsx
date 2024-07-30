@@ -8,54 +8,44 @@ import { Input } from "@/app/_components/common/forms";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
-import { useRouter } from "next/navigation";
-// import Cookies from 'js-cookie';
+import { useAuth } from "@/context/AuthContext";
 
 export default function Loginform() {
-   const route = useRouter();
+   const { login } = useAuth();
+
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
       resolver: zodResolver(loginSchema),
    });
 
-const submitForm: SubmitHandler<loginType> = async (data) => {
-   try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify(data)
-      });
+   const submitForm: SubmitHandler<loginType> = async (data) => {
+      try {
+         const response = await fetch(`${API_BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+         });
 
-      const responseData = await response.json();
-      console.log('Response Data:', responseData);
+         const responseData = await response.json();
 
-      if (response.ok) {
-         route.push('/dashboard');
-         const { access_token, refresh_token } = responseData;
-         
-         if (access_token && refresh_token) {
+         if (responseData) {
+            const { access_token, refresh_token } = responseData;
+            console.log(access_token, refresh_token)
             const currentTime = Date.now();
-            const thirtyMinutesInMilliseconds = 10 * 60 * 1000;
+            const thirtyMinutesInMilliseconds = 9 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
-
-            localStorage.setItem ("expire_data_token", newTime.toString());
-            localStorage.setItem("access_token", access_token);
-            localStorage.setItem("refresh_token", refresh_token);
+            localStorage.setItem("expire_data_token", newTime.toString());
+            login(access_token, refresh_token);
          } else {
-            console.error('Access token or refresh token is missing in the response');
-            toast.error('Access token or refresh token is missing');
+            toast.error('Error At Login');
          }
-      } else {
-         toast.error(responseData.detail[0]?.msg || responseData.detail || 'An error has occurred');
+      } catch (error: any) {
+         console.error('Error:', error);
+         toast.error('An error occurred while logging in');
       }
-   } catch (error: any) {
-      console.error('Error:', error);
-      toast.error('An error occurred while logging in');
-   }
-};
-
+   };
 
    const preventPaste = (e: React.ClipboardEvent) => {
       e.preventDefault();

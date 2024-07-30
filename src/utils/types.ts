@@ -40,13 +40,14 @@ export interface User {
 }
 
 export interface Tokens {
-   accessToken: string;
-   refreshToken: string;
+   access_token: string;
+   refresh_token: string;
 }  
 
 export interface AuthContextType {
    user: User | null;
    // login: (tokens: Tokens, userData: User) => void;
+   login: (access_token: string, refresh_token: string) => void;
    logout: () => void;
    isLoading: boolean;
    error: string | null;

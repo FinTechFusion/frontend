@@ -9,21 +9,16 @@ interface AuthGuardProps {
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-   const { user, error } = useAuth();
+   const { error } = useAuth();
    const router = useRouter();
-
+   const token = localStorage.getItem("access_token")
+   console.log(error)
    useEffect(() => {
-      if (!user) {
+      if (!token || error) {
          router.push('/login');
-      } else if (!user.is_verified) {
-         router.push('/register');
-      }
+      } 
    }, []);
 
-
-   if (error) {
-      return <div>Error: {error}</div>;
-   }
 
    return <>{children}</>;
 };

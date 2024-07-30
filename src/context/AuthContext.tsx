@@ -14,60 +14,92 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-   const [user, setUser] = useState<User | null>(null);
+   const [user, setUser] = useState(null);
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
    const currentTime = Date.now();
-   useEffect(() => {
-      const fetchUserData = async (accessToken: string) => {
-         // const TokenTime = localStorage.getItem('expire_data_token');
-         try {
-            const response = await fetch(`${API_BASE_URL}/users/me`, {
-               method: 'GET',
-               headers: {
-                  authorization: `Bearer ${accessToken}`,
-               },
-            });
+   const fetchUserData = async (accessToken: string) => {
+      try {
+         const response = await fetch(`${API_BASE_URL}/users/me`, {
+            method: 'GET',
+            headers: {
+               authorization: `Bearer ${accessToken}`,
+            },
+         });
 
-            if (!response.ok) {
-               throw new Error('Failed to fetch user data');
-            }
-            const { data } = await response.json();
-            setUser(data);
-         } catch (error) {
-            console.error('Failed to fetch user data', error);
-            setError('Failed to fetch user data');
-            toast.error('Failed to fetch user data');
-         } finally {
-            setIsLoading(false);
+         if (!response.ok) {
+            throw new Error('Failed to fetch user data');
          }
-      };
+         const { data } = await response.json();
+         setUser(data);
+         return data;
+      } catch (error) {
+         console.error('Failed to fetch user data', error);
+         setError('Failed to fetch user data');
+         // toast.error('Failed to fetch user data');
+         router.push('/login')
+      } finally {
+         setIsLoading(false);
+      }
+   };
 
-      const checkAndFetchUserData = async () => {
+
+   const checkAndFetchUserData = async () => {
+      try {
+         const accessToken = localStorage.getItem('access_token');
+         const expireTokenTime = localStorage.getItem('expire_data_token');
+         if (!accessToken) {
+            setIsLoading(false);
+            return;
+         }
+
+         if (expireTokenTime && (Number(currentTime) > Number(expireTokenTime))) {
+            const access_token = await refreshAccessToken();
+            fetchUserData(access_token);
+         }
+      } catch (error) {
+         console.error('Error in checkAndFetchUserData', error);
+         setIsLoading(false);
+      }
+   };
+   useEffect(() => {
+      const loadUserData = async () => {
          try {
             const accessToken = localStorage.getItem('access_token');
-            const expireTokenTime = localStorage.getItem('expire_data_token');
-            if (!accessToken) {
-               // router.push('/login');
-               setIsLoading(false);
-               return;
+            if (accessToken) {
+               const data = await fetchUserData(accessToken);
+               console.log("from hook", data);
+               setUser(data);
             }
-
-            if (expireTokenTime && (Number(currentTime) > Number(expireTokenTime))) {
-               const newAccessToken = await refreshAccessToken();
-               fetchUserData(newAccessToken);
-            } else {
-               fetchUserData(accessToken);
-            }
+            checkAndFetchUserData(); // Ensure token expiration is checked
          } catch (error) {
-            console.error('Error in checkAndFetchUserData', error);
-            setIsLoading(false);
+            console.error('Error loading user data:', error);
          }
       };
 
-      checkAndFetchUserData();
+      loadUserData();
    }, []);
+
+
+
+   const login = async (access_token: string, refresh_token: string) => {
+      try {
+         // Store tokens
+         localStorage.setItem('access_token', access_token);
+         localStorage.setItem('refresh_token', refresh_token);
+         localStorage.setItem('expire_data_token', String(currentTime));
+
+         // Fetch user data after storing tokens
+         const data = await fetchUserData(access_token);
+         setUser(data);
+         console.log(data)
+         router.push("/dashboard");
+      } catch (error) {
+         console.error('Login failed', error);
+         toast.error('Login failed');
+      }
+   };
 
    const logout = () => {
       localStorage.removeItem('access_token');
@@ -75,7 +107,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       localStorage.removeItem('expire_data_token');
       setUser(null);
       router.push('/login');
-      toast.success('Logged out');  
+      toast.success('Logged out');
    };
 
    const refreshAccessToken = async () => {
@@ -104,13 +136,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          }
 
          const newTokens = (await response.json()) as Tokens;
-         localStorage.setItem('access_token', newTokens.accessToken);
-         localStorage.setItem('refresh_token', newTokens.refreshToken);
 
-         localStorage.setItem('access_token', newTokens.accessToken);
+         localStorage.setItem('access_token', newTokens.access_token);
+         localStorage.setItem('refresh_token', newTokens.refresh_token);
          localStorage.setItem('expire_data_token', String(currentTime));
-
-         return newTokens.accessToken;
+         return newTokens.access_token;
       } catch (error) {
          console.error('Failed to refresh access token', error);
          logout(); // Handle token refresh failure
@@ -119,8 +149,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    };
 
    return (
-      <AuthContext.Provider value={{ user, logout, isLoading, error }}>
-         <Toast />
+      <AuthContext.Provider value={{ user, logout, isLoading, error, login }}>
+         {/* <Toast /> */}
          {children}
       </AuthContext.Provider>
    );
