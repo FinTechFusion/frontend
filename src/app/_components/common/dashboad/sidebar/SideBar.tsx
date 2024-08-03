@@ -48,7 +48,7 @@ export default function Sidebar() {
                   icon={<FaGear className="px-2 text-4xl" />}
                   content="Settings"
                   weight='font-normal'
-                  path="/dashboard/profile"
+                  path="/dashboard/settings"
                />
 
                <div className="text-center my-5 w-100">
