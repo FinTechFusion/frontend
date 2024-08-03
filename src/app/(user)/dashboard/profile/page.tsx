@@ -55,7 +55,7 @@ export default function Page() {
             <div className="account-setting border shadow-sm col-span-6 p-5 rounded-md ">
                <h3 className="text-2xl font-bold pb-8">Account Settings</h3>
                <div className="flex justify-between items-center">
-                  <div>
+                  <div >
                      <p className="text-xl pb-2">Strategy</p>
                      <b>{user?.strategy == null ? "No Strategy" : user?.strategy}</b>
                   </div>
@@ -73,8 +73,13 @@ export default function Page() {
                      <p className="pb-2">Active</p>
                      <b>{user?.is_active ? "active" : "false"}</b>
                   </div>
+                  <div>
+                     <p className="pb-2">Binance Connected</p>
+                     <b>{user?.is_binance_active ? "active" : "false"}</b>
+                  </div>
                </div>
             </div>
+            <MainBtn btnWidth='w-fit bg-red-600 hover:bg-red-700' content="Logout" />
          </div>
       </div>
    )

@@ -69,9 +69,9 @@ function VerifyInput() {
             const thirtyMinutesInMilliseconds = 10 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
 
-            localStorage.set("expire_data_token", newTime.toString());
-            localStorage.set("access_token", access_token);
-            localStorage.set("refresh_token", refresh_token);
+            localStorage.setItem("expire_data_token", newTime.toString());
+            localStorage.setItem("access_token", access_token);
+            localStorage.setItem("refresh_token", refresh_token);
             route.push('/dashboard');
             return toast.success("Account is verified Successfully");
          } else {

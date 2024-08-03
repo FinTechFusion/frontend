@@ -9,6 +9,7 @@ import Link from "next/link";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
+import Toast from "../Tostify/Toast";
 
 export default function Loginform() {
    const { login } = useAuth();
@@ -29,7 +30,10 @@ export default function Loginform() {
          });
 
          const responseData = await response.json();
-
+         console.log(responseData);
+         if (!responseData.success) {
+            return toast.error(responseData.detail)
+         }
          if (responseData) {
             const { access_token, refresh_token } = responseData;
             console.log(access_token, refresh_token)
@@ -52,6 +56,8 @@ export default function Loginform() {
    };
 
    return (
+      <>
+         <Toast />
       <form onSubmit={handleSubmit(submitForm)}>
          <div className="pb-3">
             <div className="grid grid-cols-1 gap-4">
@@ -81,5 +87,6 @@ export default function Loginform() {
             </div>
          </div>
       </form>
+      </>
    );
 }

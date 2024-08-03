@@ -37,6 +37,7 @@ export interface User {
    is_demo?: boolean;
    is_verified?: boolean;
    is_active?: boolean;
+   is_binance_active?: boolean;
 }
 
 export interface Tokens {

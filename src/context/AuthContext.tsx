@@ -3,9 +3,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { User, Tokens, AuthContextType } from '@/utils/types';
+import { Tokens, AuthContextType } from '@/utils/types';
 import { API_BASE_URL } from '@/utils/api';
-import Toast from '@/app/_components/common/Tostify/Toast';
+// import Toast from '@/app/_components/common/Tostify/Toast';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -26,7 +26,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             headers: {
                authorization: `Bearer ${accessToken}`,
             },
+            next: { revalidate: 30 }
          });
+
 
          if (!response.ok) {
             throw new Error('Failed to fetch user data');
@@ -57,6 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          if (expireTokenTime && (Number(currentTime) > Number(expireTokenTime))) {
             const access_token = await refreshAccessToken();
             fetchUserData(access_token);
+            console.log("Refresh Token Worked Sucessfully");   
          }
       } catch (error) {
          console.error('Error in checkAndFetchUserData', error);
@@ -69,7 +72,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             const accessToken = localStorage.getItem('access_token');
             if (accessToken) {
                const data = await fetchUserData(accessToken);
-               console.log("from hook", data);
                setUser(data);
             }
             checkAndFetchUserData(); // Ensure token expiration is checked
@@ -88,12 +90,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          // Store tokens
          localStorage.setItem('access_token', access_token);
          localStorage.setItem('refresh_token', refresh_token);
-         localStorage.setItem('expire_data_token', String(currentTime));
 
          // Fetch user data after storing tokens
          const data = await fetchUserData(access_token);
          setUser(data);
-         console.log(data)
          router.push("/dashboard");
       } catch (error) {
          console.error('Login failed', error);
@@ -143,7 +143,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          return newTokens.access_token;
       } catch (error) {
          console.error('Failed to refresh access token', error);
-         logout(); // Handle token refresh failure
+         // logout(); // Handle token refresh failure
          throw error;
       }
    };

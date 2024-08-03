@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface AuthGuardProps {
@@ -9,15 +8,16 @@ interface AuthGuardProps {
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-   const { error } = useAuth();
    const router = useRouter();
-   const token = localStorage.getItem("access_token")
-   console.log(error)
+   const [_, setToken] = useState<string | null>(null);
+
    useEffect(() => {
-      if (!token || error) {
+      const accessToken = localStorage.getItem("access_token");
+      setToken(accessToken);
+      if (!accessToken) {
          router.push('/login');
-      } 
-   }, []);
+      }
+   }, [router]);
 
 
    return <>{children}</>;
