@@ -6,7 +6,8 @@ import Loading from '@/app/_components/common/loading/Loading';
 import { toast } from 'react-toastify';
 
 export default function Page() {
-   const { user, isLoading, error } = useAuth();
+   const { user, isLoading, error,logout } = useAuth();
+   // console.log(user?.data)
    if (error) {
       console.log(error)
       toast.error(error);
@@ -36,7 +37,7 @@ export default function Page() {
             </div>
          </div>
          <div className="grid grid-cols-12 justify-between items-center gap-8">
-            <div className="subscription-box border shadow-sm col-span-6 p-5 rounded-md">
+            <div className="subscription-box border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md">
                <h3 className="text-2xl font-bold pb-8">Subscription</h3>
                <div className="flex justify-between items-center pb-3">
                   <div>
@@ -52,7 +53,7 @@ export default function Page() {
                   </div>
                </div>
             </div>
-            <div className="account-setting border shadow-sm col-span-6 p-5 rounded-md ">
+            <div className="account-setting border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md ">
                <h3 className="text-2xl font-bold pb-8">Account Settings</h3>
                <div className="flex justify-between items-center">
                   <div >
@@ -79,7 +80,7 @@ export default function Page() {
                   </div>
                </div>
             </div>
-            <MainBtn btnWidth='w-fit bg-red-600 hover:bg-red-700' content="Logout" />
+            <button className='bg-red-600 hover:bg-red-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide w-fit' onClick={logout}>logout</button>
          </div>
       </div>
    )

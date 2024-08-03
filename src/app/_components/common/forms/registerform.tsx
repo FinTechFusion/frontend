@@ -1,3 +1,4 @@
+
 "use client";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,8 +14,7 @@ import { API_BASE_URL } from "@/utils/api";
 import { useRouter } from "next/navigation";
 import Toast from "../Tostify/Toast";
 
-
-export default function Registerform() {
+export default function RegisterForm() {
    const route = useRouter();
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
@@ -47,7 +47,7 @@ export default function Registerform() {
                toast.error(responseData.detail[0].msg || responseData.detail);
             }
             else {
-               toast.success("Acouunt created successfully");
+               toast.success("Account created successfully");
                route.push(`/verifyemail?email=${data.email}`);
             }
             if (!response.ok) {
@@ -61,7 +61,6 @@ export default function Registerform() {
          toast.error("Turnstile verification required.");
       }
    };
-
 
    const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
 
@@ -97,7 +96,6 @@ export default function Registerform() {
             ></div>
             {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>
             }
-            {/* <SpinBtn content="creating" btnWidth="w-full" /> */}
             <MainBtn content="creating" btnWidth="w-full" />
          </form>
       </>

@@ -17,9 +17,10 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
       setToken(accessToken);
 
       if (!accessToken) {
-         if (pathname !== '/login') {
+         if (pathname.startsWith('/dashboard')) {
             router.push('/login');
          }
+
       } else {
          if (pathname == '/login') {
             router.push('/dashboard/profile');

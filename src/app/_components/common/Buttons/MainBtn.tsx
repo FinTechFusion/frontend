@@ -1,6 +1,7 @@
 type buttonContent = {
    content: string
    btnWidth?: string
+
 }
 function MainBtn({ content, btnWidth }: buttonContent) {
    return (
