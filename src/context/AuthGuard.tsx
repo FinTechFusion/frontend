@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface AuthGuardProps {
    children: React.ReactNode;
@@ -9,15 +9,23 @@ interface AuthGuardProps {
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const router = useRouter();
-   const [_, setToken] = useState<string | null>(null);
+   const pathname = usePathname();
+   const [token, setToken] = useState<string | null>(null);
 
    useEffect(() => {
       const accessToken = localStorage.getItem("access_token");
       setToken(accessToken);
+
       if (!accessToken) {
-         router.push('/login');
+         if (pathname !== '/login') {
+            router.push('/login');
+         }
+      } else {
+         if (pathname == '/login') {
+            router.push('/dashboard/profile');
+         }
       }
-   }, [router]);
+   }, [router, pathname]);
 
 
    return <>{children}</>;

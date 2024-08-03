@@ -6,6 +6,7 @@ import Header from "@/app/_components/common/Header/Header";
 import Footer from "@/app/_components/common/Footer/Footer";
 import { AuthProvider } from '@/context/AuthContext';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthGuard from "@/context/AuthGuard";
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["100", "300", "400", "500", "700"] });
 
@@ -23,9 +24,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.className}`}>
         <AuthProvider>
-        <Header />
-        {children}
-        <Footer />
+          <AuthGuard>
+            <Header />
+            {children}
+            <Footer />
+          </AuthGuard>
         </AuthProvider>
       </body>
     </html>

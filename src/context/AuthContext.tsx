@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             headers: {
                authorization: `Bearer ${accessToken}`,
             },
-            next: { revalidate: 30 }
+            next: { revalidate: 120 }
          });
 
 
