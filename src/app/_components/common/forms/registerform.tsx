@@ -42,7 +42,7 @@ export default function RegisterForm() {
             });
 
             const responseData = await response.json();
-            console.log('response data:', responseData);
+            // console.log('response data:', responseData);
             if (!responseData.success) {
                toast.error(responseData.detail[0].msg || responseData.detail);
             }

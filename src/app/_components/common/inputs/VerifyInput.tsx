@@ -1,50 +1,19 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
-// import Cookies from 'js-cookie';
 import { API_BASE_URL } from '@/utils/api';
-import { useState, useRef, useEffect, ChangeEvent, KeyboardEvent, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
+import { useOTPInput } from "@/hooks/useOTPInput";
 
 function VerifyInput() {
    const route = useRouter();
-
    const searchParams = useSearchParams();
    const email = searchParams.get('email');
 
-   const [values, setValues] = useState<string[]>(Array(6).fill('')); // Assuming 6 input fields
-   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null));
-
-   useEffect(() => {
-      // Focus on the first input when the component mounts
-      inputRefs.current[0]?.focus();
-   }, []);
-
-   const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
-      const { value } = e.target;
-      if (value.length > 1) return; // Ensure only single character is allowed
-
-      const newValues = [...values];
-      newValues[index] = value;
-      setValues(newValues);
-
-      // Move focus to the next input if the current one is filled
-      if (value && index < inputRefs.current.length - 1) {
-         inputRefs.current[index + 1]?.focus();
-      }
-   };
-
-   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
-      if (e.key === 'Backspace' && values[index] === '') {
-         if (index > 0) {
-            inputRefs.current[index - 1]?.focus();
-         }
-      }
-   };
+   const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
 
    async function sendCodeToApi(code: number) {
-
       try {
          if (!email) {
             return toast.error("Invalid Email");
@@ -87,7 +56,7 @@ function VerifyInput() {
       e.preventDefault();
       const combinedValue = values.join('');
       if (!combinedValue) {
-         return toast.error("Enter Full OPT code");
+         return toast.error("Enter Full OTP code");
       }
       sendCodeToApi(Number(combinedValue));
    };
@@ -124,9 +93,7 @@ function VerifyInput() {
 
 function SuspendedVerifyInput() {
    return (
-      <Suspense>
-         <VerifyInput />
-      </Suspense>
+      <VerifyInput />
    );
 }
 

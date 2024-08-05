@@ -1,13 +1,15 @@
 import { Path, FieldValues, UseFormRegister } from "react-hook-form";
 
 type InputProps<TFieldValue extends FieldValues> = {
-   label: string;
+   label?: string;
    name: Path<TFieldValue>;
    type?: string;
    placeholder: string;
    register: UseFormRegister<TFieldValue>;
+   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onPaste?: (e: React.ClipboardEvent) => void; // Add onPaste prop
    error?: string;
+   value?:string;
 };
 
 const Input = <TFieldValue extends FieldValues>({
@@ -17,7 +19,9 @@ const Input = <TFieldValue extends FieldValues>({
    name,
    placeholder,
    error,
+   onChange,
    onPaste,
+   value,
    ...rest
 }: InputProps<TFieldValue>) => {
    return (

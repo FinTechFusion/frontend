@@ -10,10 +10,13 @@ import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import Toast from "../Tostify/Toast";
+import { useState } from "react";
 // import { useState } from "react";
 
 export default function Loginform() {
    const { login, isLoading } = useAuth();
+   const [email, setEmail] = useState('');
+
    //   const [isLoading, setisLoading] = useState(false);
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
@@ -39,11 +42,9 @@ export default function Loginform() {
          }
          if (!responseData.success) {
             return toast.error(responseData.detail);
-         }else{
+         } else {
             toast.success("Login Successfully")
          }
-
-
       } catch (error) {
          console.error('Error:', error);
          toast.error('An error occurred while logging in');
@@ -53,7 +54,11 @@ export default function Loginform() {
    const preventPaste = (e: React.ClipboardEvent) => {
       e.preventDefault();
    };
-
+   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(e.target.value);
+      console.log(email)
+   };
+   console.log("email : " + email)
    return (
       <>
          <Toast />
@@ -67,6 +72,7 @@ export default function Loginform() {
                      name="email"
                      error={errors.email?.message}
                      placeholder="Email"
+                     onChange={handleEmailChange}
                   />
                   <Input
                      label="password"
@@ -81,9 +87,12 @@ export default function Loginform() {
                      {isLoading ? <SpinBtn content="Login" btnWidth="w-full" />
                         : <MainBtn content="Login" btnWidth="w-full" />}
                   </div>
-                  <p>
-                     Don&apos;t have an account? <Link href="/register" className="text-primary-600 underline">Create</Link>
-                  </p>
+                  <div className="flex justify-between items-center">
+                     <p className="md:pb-0 pb-3">
+                        Don&apos;t have an account? <Link href="/register" className="text-primary-600 underline">Create</Link>
+                     </p>
+                     <Link href={`forget-password?email=${email}`} className="text-primary-600 capitalize ">forget password?</Link>
+                  </div>
                </div>
             </div>
          </form>
