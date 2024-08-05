@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
 import { useOTPInput } from "@/hooks/useOTPInput";
+import React, { Suspense } from 'react';
+import Loading from "../loading/Loading";
 
 function VerifyInput() {
    const route = useRouter();
@@ -91,10 +93,12 @@ function VerifyInput() {
    );
 }
 
-function SuspendedVerifyInput() {
+function WrappedVerifyInput() {
    return (
-      <VerifyInput />
+      <Suspense fallback={<div><Loading /></div>}>
+         <VerifyInput />
+      </Suspense>
    );
 }
 
-export default SuspendedVerifyInput;
+export default WrappedVerifyInput;

@@ -1,7 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 import Textbox from "@/app/_components/common/Text/Textbox";
@@ -11,8 +11,9 @@ import { toast } from "react-toastify";
 import { API_BASE_URL } from "@/utils/api";
 import { Input } from "@/app/_components/common/forms";
 import Toast from "@/app/_components/common/Tostify/Toast";
+import Loading from "../../_components/common/loading/Loading";
 
-export default function Page() {
+function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState<string>("");
@@ -93,5 +94,13 @@ export default function Page() {
         </div>
       </form>
     </section>
+  );
+}
+
+export default function WrappedPage() {
+  return (
+    <Suspense fallback={<div><Loading/></div>}>
+      <Page />
+    </Suspense>
   );
 }

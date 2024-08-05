@@ -10,6 +10,8 @@ import Textbox from "@/app/_components/common/Text/Textbox";
 import { passwordSchema, passwordType } from "@/validation/passwordSchema";
 import { Input } from "@/app/_components/common/forms";
 import { MainBtn } from '@/app/_components/common/Buttons/MainBtn';
+import React, { Suspense } from 'react';
+import Loading from "@/app/_components/common/loading/Loading";
 
 function ResetPasswordPage() {
    const route = useRouter();
@@ -96,4 +98,12 @@ function ResetPasswordPage() {
    );
 }
 
-export default ResetPasswordPage;
+function WrappedResetPasswordPage() {
+   return (
+      <Suspense fallback={<div><Loading /></div>}>
+         <ResetPasswordPage />
+      </Suspense>
+   );
+}
+
+export default WrappedResetPasswordPage;
