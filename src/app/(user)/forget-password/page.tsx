@@ -34,7 +34,6 @@ export default function Page() {
   };
 
   const submitForm: SubmitHandler<emailType> = async (data) => {
-    console.log(turnstileToken)
 
     if (!turnstileToken) {
       toast.error("Please complete the Turnstile challenge.");
@@ -51,8 +50,6 @@ export default function Page() {
         }
       );
       const responseData = await response.json();
-      console.log(responseData);
-      console.log(response)
       if (response.ok) {
         router.push(`/reset-password?email=${data.email}`)
         return toast.success("Reset Code Sent To Email");

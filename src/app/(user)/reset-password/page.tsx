@@ -15,7 +15,6 @@ function ResetPasswordPage() {
    const route = useRouter();
    const searchParams = useSearchParams();
    const email = searchParams.get('email')
-   console.log(email)
    const { register, handleSubmit, formState: { errors } } = useForm<passwordType>({
       mode: "onBlur",
       resolver: zodResolver(passwordSchema),
@@ -30,9 +29,7 @@ function ResetPasswordPage() {
                'Content-Type': 'application/json',
             },
          });
-         console.log(response)
          const responseData = await response.json();
-         console.log(responseData)
          if (!response.ok) {
             return toast.error(responseData.detail || "An error has occurred");
          }

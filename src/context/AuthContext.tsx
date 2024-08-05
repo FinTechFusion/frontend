@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          setUser(data);
          return data;
       } catch (error) {
-         console.error('Failed to fetch user data', error);
          setError('Failed to fetch user data');
          router.push('/login');
       } finally {
