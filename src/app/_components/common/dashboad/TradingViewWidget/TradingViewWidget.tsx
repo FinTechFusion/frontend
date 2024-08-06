@@ -26,7 +26,7 @@ const TradingViewWidget: React.FC = () => {
          });
          container.current.appendChild(script);
       }
-   }, [container]);
+   }, []);
 
    return (
       <div className="tradingview-widget-container" ref={container} style={{ height: '100%', width: '100%' }}>
