@@ -18,10 +18,10 @@ export default function Sidebar() {
                <p className="text-gray-700 text-xl py-3">Trading</p>
 
                <SidebarLink icon={<FaChartLine />
-               } content='Bot Analysis' weight='font-normal' path='/binance/connect/apikey/portfolio-botanalysis' />
+               } content='Bot Analysis' weight='font-normal' path='/dashboard/botanalysis' />
 
                <SidebarLink icon={<FaRobot />
-               } content='Bot AI' weight='font-normal' path='/binance/connect/apikey/portfolio-botai' />
+               } content='Bot AI' weight='font-normal' path='/dashboard/botai' />
 
                <p className="text-gray-700 text-xl py-3">Other</p>
 
