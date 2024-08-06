@@ -5,7 +5,7 @@ type InputProps<TFieldValue extends FieldValues> = {
    name: Path<TFieldValue>;
    type?: string;
    placeholder: string;
-   register?: UseFormRegister<TFieldValue>;
+   register: UseFormRegister<TFieldValue>;
    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onPaste?: (e: React.ClipboardEvent) => void; // Add onPaste prop
    error?: string;
