@@ -6,8 +6,8 @@ import SidebarLink from './SidebarLink';
 
 export default function Sidebar() {
    return (
-      <div className="min-h-screen">
-         <div className="sideBar  bg-gray-100 lg:col-span-2 md:col-span-3 col-span-12">
+      <div className="min-h-screen bg-gray-100">
+         <div className="sideBar  lg:col-span-2 md:col-span-3 col-span-12">
             <ul className="sideBar-List px-3 py-5">
                <SidebarLink icon={<FaHouse />
                } content='Dashboard' weight='font-semibold' path='/binance/connect/apikey/' />
