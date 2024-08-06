@@ -16,17 +16,20 @@ const metadata: Metadata = {
 
 type RootLayoutProps = {
   children: React.ReactNode;
+  show?: boolean;
+
 };
 
 export default function RootLayout({
   children,
+  show = true,
 }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`${roboto.className}`}>
         <AuthProvider>
           <AuthGuard>
-            <Header/>
+            {show && <Header />}
             {children}
             <Footer/>
           </AuthGuard>

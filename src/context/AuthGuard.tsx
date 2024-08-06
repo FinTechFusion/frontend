@@ -2,32 +2,36 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Loading from '@/app/_components/common/loading/Loading';
 
 interface AuthGuardProps {
    children: React.ReactNode;
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
+   const [isLoading, setIsLoading] = useState(true);
    const router = useRouter();
    const pathname = usePathname();
-   const [token, setToken] = useState<string | null>(null);
 
    useEffect(() => {
       const accessToken = localStorage.getItem("access_token");
-      setToken(accessToken);
 
       if (!accessToken) {
          if (pathname.startsWith('/dashboard')) {
             router.push('/login');
          }
-
       } else {
          if (pathname == '/login' || pathname == "/forget-password" || pathname == "/reset-password") {
             router.push('/dashboard/settings');
          }
       }
+
+      setIsLoading(false);
    }, [router, pathname]);
 
+   if (isLoading) {
+      return <Loading />;
+   }
 
    return <>{children}</>;
 };

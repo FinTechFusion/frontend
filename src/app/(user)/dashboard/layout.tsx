@@ -1,6 +1,5 @@
 "use client"
 import Sidebar from "@/app/_components/common/dashboad/sidebar/SideBar";
-// import AuthGuard from "@/context/AuthGuard";
 import React from "react";
 // import RootLayout from "@/app/layout";
 
