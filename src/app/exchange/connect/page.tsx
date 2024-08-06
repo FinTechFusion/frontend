@@ -1,10 +1,40 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import Binance from "@/app/_components/common/Binance";
 import binanceImg from "/public/assets/images/binanice.png"
 import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
+import { API_BASE_URL } from '@/utils/api';
+import { useEffect, useState } from "react";
 
-export default function page() {
+export default function Page() {
+   const [binanceUrl, setbinanceUrl] = useState("");
+   async function fetchBincanceLink() {
+      try {
+         const response = await fetch(`${API_BASE_URL}/auth/sso/binance`, {
+            method: "GET",
+            next: { revalidate: 300 },
+
+         });
+
+         if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+         }
+
+         const { data } = await response.json();
+         if(data.success){
+            const externalLink = data.authorization_url;
+            setbinanceUrl(externalLink);
+         }
+
+
+      } catch (error) {
+         console.error('Error fetching external link:', error);
+      }
+   }
+   useEffect(() => {
+      fetchBincanceLink()
+   }, [])
    return (
       <div className="relative">
          <div className="opacity-25">
@@ -38,10 +68,10 @@ export default function page() {
             </div>
             <div className="connection mx-auto text-center">
                <p className="py-4 text-lg tracking-wider">Avalabile account types</p>
-               <Link href="/">
+               <Link href={`${binanceUrl}`}>
                   <MainBtn content="connect binance" btnWidth="w-fit" />
                </Link>
-               <p className=" py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href="https://accounts.binance.com/ar/register" target="_blank" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
+               <p className=" py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href='' target="_blank" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
             </div>
          </aside>
       </div>
