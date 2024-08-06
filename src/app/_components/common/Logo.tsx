@@ -6,7 +6,7 @@ export default function Logo() {
       <div className="logo">
          <Link href='/' className='flex justify-center items-center text-xl font-bold tracking-widest'>
             <Image
-               src='assets/images/logo.svg'
+               src='/assets/images/logo.webp'
                alt='Wesbsite Logo'
                width='230'
                height='120'

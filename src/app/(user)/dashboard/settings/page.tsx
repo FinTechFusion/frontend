@@ -6,7 +6,7 @@ import Loading from '@/app/_components/common/loading/Loading';
 import { toast } from 'react-toastify';
 
 export default function Page() {
-   const { user, isLoading, error,logout } = useAuth();
+   const { user, isLoading, error, logout } = useAuth();
    // console.log(user?.data)
    if (error) {
       console.log(error)
@@ -14,9 +14,10 @@ export default function Page() {
       return null; // Returning null to avoid rendering further
    }
 
-   if (isLoading) {
+   if (isLoading || user?.first_name === undefined) {
       return <Loading />;
    }
+
    return (
       <div className="container mx-auto px-5">
          <div className="my-8">

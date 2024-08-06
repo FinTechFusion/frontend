@@ -26,7 +26,6 @@ export default function Component() {
           <Featurecard title="Bot Strategies at Your Fingertips" description="New to trading bots? Use FinTechFusion's strategy presets inspired by experienced traders to bypass the initial learning phase and start optimizing your trades right away." buttonContent="Select a Trading Bot" altText="cardImage-3" />
           <Featurecard title="Harness the Power of AI" description="Maximize your trading potential with FinTechFusion's AI bot. Leverage advanced algorithms and the collective wisdom of seasoned traders to refine your strategy and enhance your market position." buttonContent="Select a Trading Bot" altText="cardImage-4" />
         </div>
-        {/* <SectionHeading title="The right tools for every kind of market" /> */}
         <Textbox mainClass="capitalize" title="why choose our crypto trading platform ? " description="discover the key features that make our platform the best choise for your crypto trading needs" />
         <section className="trading-platform">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
