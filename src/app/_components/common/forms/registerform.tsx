@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -8,7 +7,7 @@ import PhoneInput from 'react-phone-input-2';
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
 import 'react-phone-input-2/lib/style.css';
-import { MainBtn } from "../Buttons/MainBtn";
+import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
 import { useRouter } from "next/navigation";
@@ -18,11 +17,12 @@ export default function RegisterForm() {
    const route = useRouter();
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
-      resolver: zodResolver(registerSchema)
+      resolver: zodResolver(registerSchema),
    });
 
    const [phone_number, setPhoneNumber] = useState('');
    const [turnstileToken, setTurnstileToken] = useState('');
+   const [isLoading, setIsLoading] = useState(false);
 
    const handlePhoneChange = (phone: string) => {
       const formattedPhone = `+${phone}`;
@@ -31,34 +31,38 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      if (turnstileToken) {
-         try {
-            const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}`, {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/json'
-               },
-               body: JSON.stringify(data) // Send the data directly
-            });
-
-            const responseData = await response.json();
-            // console.log('response data:', responseData);
-            if (!responseData.success) {
-               toast.error(responseData.detail[0].msg || responseData.detail);
-            }
-            else {
-               toast.success("Account created successfully");
-               route.push(`/verifyemail?email=${data.email}`);
-            }
-            if (!response.ok) {
-               throw new Error("An error has occurred");
-            }
-
-         } catch (error: any) {
-            console.error(error);
-         }
-      } else {
+      if (!turnstileToken) {
          toast.error("Turnstile verification required.");
+         return;
+      }
+
+      setIsLoading(true);
+      try {
+         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+         });
+
+         const responseData = await response.json();
+
+         if (!response.ok) {
+            throw new Error(responseData.detail || "An error has occurred");
+         }
+
+         if (!responseData.success) {
+            toast.error(responseData.detail[0]?.msg || responseData.detail);
+         } else {
+            toast.success("Account created successfully");
+            route.push(`/verifyemail?email=${data.email}`);
+         }
+      } catch (error: any) {
+         console.error('Error:', error);
+         toast.error(error.message || 'An error occurred while registering');
+      } finally {
+         setIsLoading(false);
       }
    };
 
@@ -90,13 +94,11 @@ export default function RegisterForm() {
                {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
             </div>
             <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
-            <div
-               id="turnstile-container"
-               className="cf-turnstile w-100"
-            ></div>
-            {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>
-            }
-            <MainBtn content="creating" btnWidth="w-full" />
+            <div id="turnstile-container" className="cf-turnstile w-100"></div>
+            {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
+            <div className="register-btn">
+               {isLoading ? <SpinBtn content="creating" btnWidth="w-full" /> : <MainBtn content="create" btnWidth="w-full" />}
+            </div>
          </form>
       </>
    );

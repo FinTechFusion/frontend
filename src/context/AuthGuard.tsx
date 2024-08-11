@@ -22,7 +22,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
          }
       } else {
          if (pathname == '/login' || pathname == "/forget-password" || pathname == "/reset-password") {
-            router.push('/');
+            router.push('/dashboard');
          }
       }
 

@@ -7,14 +7,13 @@ import SidebarLink from './SidebarLink';
 export default function Sidebar() {
    return (
       <div className="min-h-screen bg-gray-100">
-         <div className="">   
             <div className="sideBar lg:col-span-2 md:col-span-3 col-span-12">
                <ul className="sideBar-List px-3 py-5">
                   <SidebarLink icon={<FaHouse />
-                  } content='Dashboard' weight='font-semibold' path='/binance/connect/apikey/' />
+                  } content='Dashboard' weight='font-semibold' path='/dashboard' />
 
                   <SidebarLink icon={<FaUser />
-                  } content='My Portfolio' weight='font-normal' path='/dashboard/profile' />
+                  } content='My Portfolio' weight='font-normal' path='/' />
 
                   <p className="text-gray-700 text-xl py-3">Trading</p>
 
@@ -62,7 +61,6 @@ export default function Sidebar() {
                      </div>
                   </div>
                </ul>
-            </div>
          </div>
       </div>
    );

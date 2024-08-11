@@ -28,11 +28,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.className}`}>
         <AuthProvider>
-          <AuthGuard>
+          {/* <AuthGuard> */}
             {show && <Header />}
             {children}
             <Footer/>
-          </AuthGuard>
+          {/* </AuthGuard> */}
         </AuthProvider>
       </body>
     </html>

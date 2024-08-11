@@ -14,15 +14,17 @@ import { useState } from "react";
 // import { useState } from "react";
 
 export default function Loginform() {
-   const { login, isLoading } = useAuth();
+   const { login } = useAuth();
    const [email, setEmail] = useState('');
 
-   //   const [isLoading, setisLoading] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
       resolver: zodResolver(loginSchema),
    });
+
    const submitForm: SubmitHandler<loginType> = async (data) => {
+      setIsLoading(true);
       try {
          const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
@@ -31,34 +33,36 @@ export default function Loginform() {
             },
             body: JSON.stringify(data)
          });
+
          const responseData = await response.json();
          if (response.ok) {
             const { access_token, refresh_token } = responseData;
             const currentTime = Date.now();
-            const thirtyMinutesInMilliseconds = 9 * 60 * 1000;
+            const thirtyMinutesInMilliseconds = 30 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
             localStorage.setItem("expire_data_token", newExpireTime.toString());
             login(access_token, refresh_token);
-         }
-         if (!responseData.success) {
-            return toast.error(responseData.detail);
+            toast.success("Login Successfully");
          } else {
-            toast.success("Login Successfully")
+            toast.error(responseData.detail || 'Login failed');
          }
       } catch (error) {
          console.error('Error:', error);
          toast.error('An error occurred while logging in');
+      } finally {
+         setIsLoading(false);
       }
    };
 
    const preventPaste = (e: React.ClipboardEvent) => {
       e.preventDefault();
    };
+
    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
-      console.log(email)
    };
-   console.log("email : " + email)
+
+
    return (
       <>
          <Toast />
@@ -87,8 +91,8 @@ export default function Loginform() {
                      {isLoading ? <SpinBtn content="Login" btnWidth="w-full" />
                         : <MainBtn content="Login" btnWidth="w-full" />}
                   </div>
-                  <div className="flex justify-between items-center">
-                     <p className="md:pb-0 pb-3">
+                  <div className="flex justify-between items-start">
+                     <p className="md:pb-0 pb-3 w-1/2">
                         Don&apos;t have an account? <Link href="/register" className="text-primary-600 underline">Create</Link>
                      </p>
                      <Link href={`forget-password?email=${email}`} className="text-primary-600 capitalize ">forget password?</Link>

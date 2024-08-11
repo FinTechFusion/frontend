@@ -55,3 +55,12 @@ export interface AuthContextType {
    error: string | null;
    // useRefreshToken: <T>(fn: (...args: any[]) => Promise<T>) => (...args: any[]) => Promise<T>;
 }
+export type Strategy = {
+   id: string;
+   name: string;
+   type: string;
+   bot_type: string;
+   description: string;
+   whats_new: string[];
+   banner_url: string;
+};
