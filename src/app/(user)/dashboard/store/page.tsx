@@ -42,7 +42,7 @@ export default function Page() {
                   <h2 className="text-2xl font-medium pt-2">{el.name}</h2>
                   <p className="line-clamp-3 text-lg text-gray-800 py-2 overflow-hidden">{el.description}</p>
                   <Link href={`store/${el.id}`}>
-                     <MainBtn content="install" btnWidth="w-fit my-2 rounded-sm p-0 text-lg" />
+                     <MainBtn content="install" btnWidth="w-fit my-2 rounded-md p-0 text-lg" />
                   </Link>
                </div>
             ))}

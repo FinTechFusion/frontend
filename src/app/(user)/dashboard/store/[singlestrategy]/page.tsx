@@ -44,7 +44,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         </div>
         <div className="right mt-4 md:mt-0">
           <Link href="">
-            <MainBtn content="Get Free" btnWidth="w-fit" />
+            <MainBtn content="Install" btnWidth="w-fit" />
           </Link>
         </div>
       </div>

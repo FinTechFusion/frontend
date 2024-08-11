@@ -14,7 +14,6 @@ export default function page() {
           <BotLogs />
         </div>
       </div>
-
     </>
   )
 } 
