@@ -87,7 +87,7 @@ export default function RegisterForm() {
                   enableSearch={true}
                   inputProps={{
                      required: true,
-                     className: "w-full auth_input border-2",
+                     className: "w-full main_input border-2",
                      style: { paddingLeft: '45px' }
                   }}
                />

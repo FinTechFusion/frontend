@@ -38,7 +38,7 @@ const Input = <TFieldValue extends FieldValues>({
          )}
          <input
             type={type}
-            className={`auth_input border-2 ${error && 'border-red-600 shadow'}`}
+            className={`main_input border-2 ${error && 'border-red-600 shadow'}`}
             {...register(name, { valueAsNumber: type === 'number' })}
             id={name}
             placeholder={placeholder}

@@ -22,7 +22,7 @@ section {
    margin: 48px 0px;
 }
 
-.auth_input {
+.main_input {
    padding: 6px 8px;
    outline: none;
    color: black;
@@ -36,7 +36,7 @@ section {
    height: 40px;
 }
 
-.auth_input::placeholder {
+.main_input::placeholder {
    color: #54575B;
 }
 /* width */
