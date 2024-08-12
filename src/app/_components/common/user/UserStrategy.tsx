@@ -54,6 +54,21 @@ export default function UserStrategy() {
                   <div className="strategy-card p-4 shadow-sm">
                      <h3 className="text-3xl font-bold tracking-wide capitalize">{user.strategy}</h3>
                      <span className="block py-5 text-lg">Spot Strategy</span>
+                     <div className="pb-4">
+                        <span id="ProgressLabel" className="sr-only">Loading</span>
+                        <span
+                           role="progressbar"
+                           aria-labelledby="ProgressLabel"
+                           aria-valuenow={50}
+                           aria-valuemin={0}
+                           aria-valuemax={100}
+                           className="block rounded-full bg-gray-200"
+                        >
+                           <span className="block h-4 rounded-full bg-indigo-600 text-center text-xs leading-none w-1/2 bg-primary-700">
+                           </span>
+                        </span>
+                     </div>
+
                      <button
                         className="bg-primary-600 hover:bg-primary-700 rounded-md px-2 py-1 text-secondary capitalize text-lg cursor-pointer tracking-wide"
                         onClick={UnInstallStrategy}
