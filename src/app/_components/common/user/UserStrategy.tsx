@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 export default function UserStrategy() {
    const { user } = useAuth();
    const router = useRouter();
+   
    const accessToken = localStorage.getItem('access_token');
 
    async function UnInstallStrategy() {

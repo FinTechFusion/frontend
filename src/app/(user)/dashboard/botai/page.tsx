@@ -1,3 +1,4 @@
+"use client"
 import TradingViewWidget from "@/app/_components/common/dashboad/TradingViewWidget/TradingViewWidget";
 import TradningBotForm from "../../../_components/common/forms/Tradingbot/Tradningbot";
 import BotLogs from "@/app/_components/common/dashboad/BotLogs/Botlogs";
