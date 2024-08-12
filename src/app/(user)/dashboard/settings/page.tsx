@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 export default function Page() {
    const { user, isLoading, error, logout } = useAuth();
-   // console.log(user?.data)
    if (error) {
       console.log(error)
       toast.error(error);
@@ -59,7 +58,7 @@ export default function Page() {
                <div className="flex justify-between items-center">
                   <div >
                      <p className="text-xl pb-2">Strategy</p>
-                     <b>{user?.strategy == null ? "No Strategy" : user?.strategy}</b>
+                     <b className="capitalize text-lg">{user?.strategy == null ? "No " : user?.strategy } Strategy</b>
                   </div>
                </div>
                <div className="flex justify-between items-center mt-4">

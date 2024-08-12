@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { Tokens, AuthContextType } from '@/utils/types';
 import { API_BASE_URL } from '@/utils/api';
@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
+   const pathname = usePathname();
 
    const login = async (access_token: string, refresh_token: string) => {
       try {
@@ -26,9 +27,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          const data = await fetchUserData(access_token);
          setUser(data);
          router.push("/dashboard");
-         console.log("end login")
       } catch (error) {
-         console.error('Login failed', error);
          toast.error('Login failed');
       }
    };
@@ -51,7 +50,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          return data;
       } catch (error) {
          setError('Failed to fetch user data');
-         router.push('/login');
+         // router.push('/login');
       } finally {
          setIsLoading(false);
       }
@@ -92,7 +91,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       };
 
       loadUserData();
-   }, []);
+   }, [pathname]);
 
    const logout = () => {
       localStorage.removeItem('access_token');
