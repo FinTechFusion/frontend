@@ -6,13 +6,12 @@ import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import Toast from "../Tostify/Toast";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function UserStrategy() {
    const { user } = useAuth();
+   const [accessToken, setAccessToken] = useState<string | null>(null);
    const router = useRouter();
-
-   const accessToken = localStorage.getItem('access_token');
-
 
    async function UnInstallStrategy() {
       if (accessToken) {
@@ -41,7 +40,10 @@ export default function UserStrategy() {
          }
       }
    }
-
+   useEffect(() => {
+      const storedAccessToken = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
+      setAccessToken(storedAccessToken);
+   }, []);
    return (
       <>
          <Toast />
