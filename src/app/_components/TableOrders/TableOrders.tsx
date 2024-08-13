@@ -14,7 +14,7 @@ export default function TableOrders() {
       },
    });
 
-   const [rowData, setRowData] = useState([]);
+   const [rowData, setRowData] = useState<any[]>([]);
    const [colDefs, setColDefs] = useState<any[]>([]);
 
    useEffect(() => {
