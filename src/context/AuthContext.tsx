@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
          localStorage.setItem('access_token', access_token);
          localStorage.setItem('refresh_token', refresh_token);
-         // Fetch user data after storing tokens
          const data = await fetchUserData(access_token);
          setUser(data);
          router.push("/dashboard");
