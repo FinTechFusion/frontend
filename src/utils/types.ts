@@ -64,3 +64,14 @@ export type Strategy = {
    whats_new: string[];
    banner_url: string;
 };
+
+export interface Data {
+   symbol: string;
+   quantity: number;
+   profit_threshold: number;
+   trailing_stop_loss: number;
+   cycles_count: number;
+   strategy: string;
+   status: string;
+   created_at: string;
+}

@@ -16,7 +16,6 @@ const useFetch = (url: string, options?: FetchOptions): any => {
 
    useEffect(() => {
       const fetchData = async () => {
-
          try {
             setLoading(true);
             const response = await fetch(url, options);

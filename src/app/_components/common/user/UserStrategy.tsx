@@ -10,32 +10,35 @@ import { useRouter } from "next/navigation";
 export default function UserStrategy() {
    const { user } = useAuth();
    const router = useRouter();
-   
+
    const accessToken = localStorage.getItem('access_token');
 
+
    async function UnInstallStrategy() {
-      try {
-         const response = await fetch(`${API_BASE_URL}/users/me/strategy/uninstall`, {
-            method: "POST",
-            headers: {
-               authorization: `Bearer ${accessToken}`,
-            },
-         });
+      if (accessToken) {
+         try {
+            const response = await fetch(`${API_BASE_URL}/users/me/strategy/uninstall`, {
+               method: "POST",
+               headers: {
+                  authorization: `Bearer ${accessToken}`,
+               },
+            });
 
-         if (!response.ok) {
-            throw new Error('Failed to uninstall strategy');
+            if (!response.ok) {
+               throw new Error('Failed to uninstall strategy');
+            }
+
+            const responseData = await response.json();
+
+            if (responseData.success) {
+               router.push('/dashboard/store');
+               return toast.success('Strategy uninstalled successfully');
+            } else {
+               toast.error('Failed to uninstall strategy');
+            }
+         } catch (error) {
+            console.log(error);
          }
-
-         const responseData = await response.json();
-
-         if (responseData.success) {
-            router.push('/dashboard/store');
-            return toast.success('Strategy uninstalled successfully');
-         } else {
-            toast.error('Failed to uninstall strategy');
-         }
-      } catch (error) {
-         console.log(error);
       }
    }
 

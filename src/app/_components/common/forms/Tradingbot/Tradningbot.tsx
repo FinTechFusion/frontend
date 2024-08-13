@@ -27,9 +27,9 @@ export default function TradningBotForm() {
             error={errors.quantity?.message}
           />
           <label>Side</label>
-          <input type="text" readOnly={true} value="Buy" className="auth_input border-2 my-2" />
+          <input type="text" readOnly={true} value="Buy" className="main_input border-2 my-2" />
           <label>Order Type</label>
-          <input type="text" readOnly={true} value="Spot" className="auth_input border-2 my-2" />
+          <input type="text" readOnly={true} value="Spot" className="main_input border-2 my-2" />
           <Input
             label="Profit threshold"
             name="profit_threshold"
