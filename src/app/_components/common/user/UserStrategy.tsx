@@ -76,7 +76,7 @@ export default function UserStrategy() {
                      </div>
 
                      <button
-                        className="bg-primary-600 hover:bg-primary-700 rounded-md px-2 py-1 text-secondary capitalize text-lg cursor-pointer tracking-wide"
+                        className="bg-primary-600 hover:bg-primary-700 rounded-md p-2 text-secondary capitalize text-lg cursor-pointer tracking-wide"
                         onClick={UnInstallStrategy}
                      >
                         uninstall
