@@ -1,19 +1,19 @@
-"use client"
-import Sidebar from "@/app/_components/common/dashboad/sidebar/SideBar";
+// app/dashboard/layout.tsx
 import React from "react";
 // import RootLayout from "@/app/layout";
+import Sidebar from "@/app/_components/common/dashboad/sidebar/SideBar";
 
 type DashboardLayoutProps = {
-   children: React.ReactNode,
-}
+   children: React.ReactNode;
+};
 
 export default function UserDashboardLayout({ children }: DashboardLayoutProps) {
    return (
-      <div className="grid grid-cols-12 ">
-            <div className="lg:col-span-2 md:col-span-3 col-span-10">
+         <div className="grid grid-cols-12">
+            <div className="lg:col-span-2 md:col-span-3 col-span-10 bg-gray-100">
                <Sidebar />
             </div>
-         <div className="lg:col-span-10 md:col-span-9 col-span-12 px-5">
+            <div className="lg:col-span-10 md:col-span-9 col-span-12 px-5">
                {children}
             </div>
          </div>

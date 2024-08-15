@@ -58,7 +58,7 @@ export default function TableOrders() {
                      headerName: 'Created At',
                      filter: 'agDateColumnFilter',
                      valueFormatter: (params: any) => formatDate(params.value),
-                  }, { field: 'updated_at', headerName: 'Updated At', filter: 'agDateColumnFilter' },
+                  },
                   {
                      field: 'updated_at',
                      headerName: 'Updated At',

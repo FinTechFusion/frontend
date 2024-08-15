@@ -2,11 +2,12 @@ import Textbox from "@/app/_components/common/Text/Textbox";
 import { FaPhone } from "react-icons/fa6";
 import { IoMailUnread } from "react-icons/io5";
 import { MdOutlineSupportAgent } from "react-icons/md";
+import ContactForm from "../_components/common/forms/contact/ContactForm";
 
 export default function page() {
    return (
       <section className="container mx-auto">
-         <Textbox mainClass="text-center" titleClass="text-4xl w-fit mx-auto " title="Contact Us" descriptionClass="capitalize" description="Any questions or remarks? Just write us a messaage!" />
+         <Textbox mainClass="text-center" titleClass="text-4xl w-fit mx-auto " title="Contact Us" descriptionClass="capitalize text-lg" description="Any questions or remarks? Just write us a messaage!" />
          <div className="grid lg:grid-cols-2 grid-cols-1 gap-12 my-8">
             <div className="contactInformation bg-gray-900 px-8 py-12 rounded-md">
                <div className="text-info">
@@ -19,6 +20,7 @@ export default function page() {
                   </ul>
                </div>
             </div>
+            <ContactForm />
          </div>
       </section>
    )
