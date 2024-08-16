@@ -6,7 +6,7 @@ export default function page() {
       <div className="py-5 my-5 shadow rounded-md">
          <div className="flex justify-between items-center px-3" >
             <h4 className='text-xl font-meduim'>Dashboard</h4>
-            <MainBtn content='Product Tour' />
+            <MainBtn content='Product Tour' btnWidth="text-lg" />
          </div>
          <Tradingopportunity />
       </div>

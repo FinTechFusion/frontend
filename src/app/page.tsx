@@ -4,10 +4,13 @@ import SectionHeading from "@/app/_components/common/Text/Heading";
 import Featurecard from "@/app/_components/FeatureCard";
 import { tradingPlatformData } from "@/utils/data";
 import Hero from "@/app/_components/Hero";
+import Header from "./_components/common/Header/Header";
+import Footer from "./_components/common/Footer/Footer";
 
 export default function Component() {
   return (
-    <div className="px-3">
+    <div>
+      <Header />
       <Hero />
       <div className="container mx-auto">
         <Textbox title="FinTechFusion: Profit in Any Market Condition"
@@ -42,9 +45,10 @@ export default function Component() {
                 </div>
               )
             })}
-        </div>
+          </div>
         </section>
       </div>
+      <Footer/>
     </div>
   );
 }

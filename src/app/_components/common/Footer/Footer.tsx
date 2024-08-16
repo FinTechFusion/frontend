@@ -12,13 +12,13 @@ export default function Footer() {
                      <h3 className="capitalize text-2xl font-medium">trading</h3>
                      <ul className="py-3">
                         <li className="py-3">
-                           <Link href="/botai" className="capitalize text-lg hover:text-primary-500">bot ai</Link>
+                           <Link href="/site/botai" className="capitalize text-lg hover:text-primary-500">bot ai</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/botanalysis" className="capitalize text-lg hover:text-primary-500">bot analysis</Link>
+                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot analysis</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/plans" className="capitalize text-lg hover:text-primary-500">plans</Link>
+                           <Link href="/site/plans" className="capitalize text-lg hover:text-primary-500">plans</Link>
                         </li>
                      </ul>
                   </div>
@@ -26,13 +26,13 @@ export default function Footer() {
                      <h3 className="capitalize text-2xl font-medium">Information</h3>
                      <ul className="py-3">
                         <li className="py-3">
-                           <Link href="/faq" className="capitalize text-lg hover:text-primary-500">FAQ</Link>
+                           <Link href="/site/faq" className="capitalize text-lg hover:text-primary-500">FAQ</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/blog" className="capitalize text-lg hover:text-primary-500">blog</Link>
+                           <Link href="" className="capitalize text-lg hover:text-primary-500">blog</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/support" className="capitalize text-lg hover:text-primary-500">support</Link>
+                           <Link href="" className="capitalize text-lg hover:text-primary-500">support</Link>
                         </li>
                      </ul>
                   </div>
@@ -40,13 +40,13 @@ export default function Footer() {
                      <h3 className="capitalize text-2xl font-medium">Company</h3>
                      <ul className="py-3">
                         <li className="py-3">
-                           <Link href="/about" className="capitalize text-lg hover:text-primary-500">about us</Link>
+                           <Link href="/site/about" className="capitalize text-lg hover:text-primary-500">about us</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/botanalysis" className="capitalize text-lg hover:text-primary-500">bot analysis</Link>
+                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot analysis</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/contact" className="capitalize text-lg hover:text-primary-500">contact us</Link>
+                           <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">contact us</Link>
                         </li>
                      </ul>
                   </div>
@@ -77,13 +77,13 @@ export default function Footer() {
                </div>
                <ul className="flex text-primary-50 space-x-6">
                   <li>
-                     <Link href="/terms" className="capitalize text-lg hover:text-primary-500">terms</Link>
+                     <Link href="/site/terms" className="capitalize text-lg hover:text-primary-500">terms</Link>
                   </li>
                   <li>
-                     <Link href="/privacy" className="capitalize text-lg hover:text-primary-500">privacy</Link>
+                     <Link href="/site/privacy" className="capitalize text-lg hover:text-primary-500">privacy</Link>
                   </li>
                   <li>
-                     <Link href="/cookies" className="capitalize text-lg hover:text-primary-500">cookies</Link>
+                     <Link href="/site/cookies" className="capitalize text-lg hover:text-primary-500">cookies</Link>
                   </li>
                </ul>
             </div>

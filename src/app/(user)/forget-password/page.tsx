@@ -12,6 +12,8 @@ import { API_BASE_URL } from "@/utils/api";
 import { Input } from "@/app/_components/common/forms";
 import Toast from "@/app/_components/common/Tostify/Toast";
 import Loading from "../../_components/common/loading/Loading";
+import Image from "next/image";
+import forgetImg from '/public/assets/images/forgot.png';
 
 function Page() {
   const router = useRouter();
@@ -67,16 +69,23 @@ function Page() {
   useTurnstile(sitekey, (token: string) => setTurnstileToken(token), "light");
 
   return (
-    <section className="container mx-auto py-10 lg:w-1/3 md:2/3 w-full">
+    <div className="min-h-screen bg-gray-100 w-full flex justify-center items-center ">
+      <div className="md:w-1/2 w-full bg-secondary container mx-auto p-8 rounded flex flex-col items-start">
       <Toast />
+        <Image
+          src={forgetImg}
+          alt="forget image"
+          width={30}
+          height={30}
+        />
       <Textbox
-        mainClass="text-center"
+        mainClass="pt-3"
         title="Forgot Password"
         titleClass="hover:text-dark"
         description="Enter your email to receive a OTP code reset your password."
-        descriptionClass="text-lg"
+          descriptionClass="text-lg pb-4"
       />
-      <form className="mx-3" onSubmit={handleSubmit(submitForm)}>
+        <form className="" onSubmit={handleSubmit(submitForm)}>
         <div className="w-50">
           <Input
             type="email"
@@ -88,12 +97,13 @@ function Page() {
             onChange={handleEmailChange}
           />
         </div>
-        <div className="text-center">
+          <div>
           <div id="turnstile-container" className="cf-turnstile w-100"></div>
-          <MainBtn content="Send Reset Code" btnWidth="md:w-1/2 w-full" />
+            <MainBtn content="Send Reset Code" btnWidth="w-fit" />
         </div>
       </form>
-    </section>
+      </div>
+    </div>
   );
 }
 

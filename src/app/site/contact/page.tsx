@@ -1,8 +1,8 @@
+import ContactForm from "@/app/_components/common/forms/contact/ContactForm";
 import Textbox from "@/app/_components/common/Text/Textbox";
 import { FaPhone } from "react-icons/fa6";
 import { IoMailUnread } from "react-icons/io5";
 import { MdOutlineSupportAgent } from "react-icons/md";
-import ContactForm from "../_components/common/forms/contact/ContactForm";
 
 export default function page() {
    return (
