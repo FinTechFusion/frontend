@@ -32,7 +32,7 @@ export default function Page() {
                   </div>
                </div>
                <div className="col-span-4 text-end">
-                  <MainBtn content="Edit Profile" btnWidth="w-fit" />
+                  <MainBtn content="Edit Profile" btnProps="w-fit" />
                </div>
             </div>
          </div>
