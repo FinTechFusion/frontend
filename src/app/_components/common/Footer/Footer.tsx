@@ -4,7 +4,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 
 export default function Footer() {
    return (
-      <div className="bg-dark md:px-0 px-3 py-6 ">
+      <div className="bg-dark md:px-0 px-3  py-6 ">
          <div className="border-b-2 border-gray-600 my-6">
             <div className="container mx-auto pb-6">
                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">

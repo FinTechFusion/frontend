@@ -17,7 +17,7 @@ interface SingleStrategyItemProps {
 }
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies/${params.singlestrategy}`, {
     method: "GET",
     next: { revalidate: 300 },
@@ -56,11 +56,12 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
 
       const responseData = await response.json();
       if (responseData.success) {
-        toast.success("strategy installed successfully")
+        toast.success("strategy installed successfully");
       }
     } catch (error) {
       toast.error("An error occurred while installing the strategy.");
     }
+
   }
 
   return (
@@ -79,7 +80,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         </div>
         <div className="right mt-4 md:mt-0">
           <button onClick={InstallStrategy}>
-            <MainBtn content="Install" btnWidth="w-fit" />
+            <MainBtn content="Install" btnProps="w-fit" />
           </button>
         </div>
       </div>

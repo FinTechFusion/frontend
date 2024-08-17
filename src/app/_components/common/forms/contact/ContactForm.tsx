@@ -52,8 +52,8 @@ export default function ContactForm() {
          >
          </textarea>
          <div className="send-btn">
-            {isLoading ? <SpinBtn content="Send Message" btnWidth="w-fit" />
-               : <MainBtn content="Send Message" btnWidth="w-fit" />}
+            {isLoading ? <SpinBtn content="Send Message" btnProps="w-fit" />
+               : <MainBtn content="Send Message" btnProps="w-fit" />}
          </div>
       </form>
    )

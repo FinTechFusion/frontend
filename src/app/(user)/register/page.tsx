@@ -19,7 +19,7 @@ export default function Register() {
                />
             </div>
          </div>
-         <section className="container mx-auto px-2 grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-12">
+         <section className="container mx-auto px-2 grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-12 justify-center items-start">
             <div className="form-description">
                <span className="bg-dark text-secondary p-2 rounded-md">Secure Your Crypto</span>
                <Textbox

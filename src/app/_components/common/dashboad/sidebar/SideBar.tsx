@@ -9,7 +9,6 @@ import { useSidebar } from '@/context/SidebarContext';
 
 export default function Sidebar() {
    const { isVisible, toggleVisibility } = useSidebar();
-   console.log(isVisible);
    return (
          <div className={`min-h-screen bg-gray-100 px-6 md:flex fixed transform ${isVisible ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
             <div className="sideBar lg:col-span-2 md:col-span-3 col-span-12 ">
@@ -56,7 +55,7 @@ export default function Sidebar() {
                   />
 
                   <div className="text-center my-5 w-100">
-                     <Link className="text-xl text-primary-600 hover:text-primary-700" href="/contact">
+                  <Link className="text-xl text-primary-600 hover:text-primary-700" href="/site/contact">
                         Contact Us
                      </Link>
                      <div className="flex justify-around items-center py-8">

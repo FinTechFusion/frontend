@@ -9,7 +9,7 @@ import Footer from "./_components/common/Footer/Footer";
 
 export default function Component() {
   return (
-    <div>
+    <>
       <Header />
       <Hero />
       <div className="container mx-auto">
@@ -49,6 +49,6 @@ export default function Component() {
         </section>
       </div>
       <Footer/>
-    </div>
+    </>
   );
 }

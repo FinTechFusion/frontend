@@ -69,7 +69,7 @@ export default function Page() {
             <div className="connection mx-auto text-center">
                <p className="py-4 text-lg tracking-wider">Avalabile account types</p>
                <Link href={`${binanceUrl}`}>
-                  <MainBtn content="connect binance" btnWidth="w-fit" />
+                  <MainBtn content="connect binance" btnProps="w-fit" />
                </Link>
                <p className=" py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href='' target="_blank" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
             </div>

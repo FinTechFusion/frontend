@@ -3,11 +3,6 @@ import { useState, useEffect } from 'react';
 
 type FetchOptions = RequestInit;
 
-// type FetchHookResult<T> = {
-//    data: T | null;
-//    loading: boolean;
-//    error: string | null;
-// };
 
 const useFetch = (url: string, options?: FetchOptions): any => {
    const [data, setData] = useState<null>(null);

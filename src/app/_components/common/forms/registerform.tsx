@@ -97,7 +97,7 @@ export default function RegisterForm() {
             <div id="turnstile-container" className="cf-turnstile w-100"></div>
             {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
             <div className="register-btn">
-               {isLoading ? <SpinBtn content="creating" btnWidth="w-full" /> : <MainBtn content="create" btnWidth="w-full" />}
+               {isLoading ? <SpinBtn content="creating" btnProps="w-full" /> : <MainBtn content="create" btnProps="w-full" />}
             </div>
          </form>
       </>

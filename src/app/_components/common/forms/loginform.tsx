@@ -89,8 +89,8 @@ export default function Loginform() {
                      onPaste={preventPaste}
                   />
                   <div className="login-btn">
-                     {isLoading ? <SpinBtn content="Login" btnWidth="w-full" />
-                        : <MainBtn content="Login" btnWidth="w-full" />}
+                     {isLoading ? <SpinBtn content="Login" btnProps="w-full" />
+                        : <MainBtn content="Login" btnProps="w-full" />}
                   </div>
                   <div className="flex justify-between items-start">
                      <p className="md:pb-0 pb-3 w-1/2">

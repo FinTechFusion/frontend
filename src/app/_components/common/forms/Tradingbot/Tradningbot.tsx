@@ -55,7 +55,7 @@ export default function TradningBotForm() {
             error={errors.cycles_count?.message}
           />
         </div>
-        <MainBtn content="Start" btnWidth="w-fit" />
+        <MainBtn content="Start" btnProps="w-fit" />
       </form>
     </>
   )

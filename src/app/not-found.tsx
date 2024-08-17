@@ -11,7 +11,7 @@ export function Error() {
                the page or come back later.
             </p>
             <Link href="/" className="text-center">
-               <MainBtn content="back home" btnWidth="w-fit" />
+               <MainBtn content="back home" btnProps="w-fit" />
             </Link>
          </div>
       </div>

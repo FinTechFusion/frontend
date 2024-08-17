@@ -10,10 +10,10 @@ export default function Tradingopportunity() {
          </div>
          <div className="flex justify-start items-center">
             <Link href="/dashboard/botai">
-               <MainBtn content="Bot AI" btnWidth="w-fit me-3" />
+               <MainBtn content="Bot AI" btnProps="w-fit me-3" />
             </Link>
             <Link href="/dashboard/botanalysis">
-               <MainBtn content="Bot Analysis" btnWidth="w-fit" />
+               <MainBtn content="Bot Analysis" btnProps="w-fit" />
             </Link>
          </div>
       </div>

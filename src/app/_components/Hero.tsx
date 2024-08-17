@@ -11,7 +11,7 @@ export default function Hero() {
                and secure. Bot Analysis finds opportunities. Bot AI predicts the market.
                Both designed to boost your profits with ease and safety in mind.</p>
             <Link href="/login">
-               <MainBtn content="start trial" btnWidth="w-fit" />
+               <MainBtn content="start trial" btnProps="w-fit" />
             </Link>
          </div>
          <div className="w-3/4 mx-auto md:h-fit h-full">

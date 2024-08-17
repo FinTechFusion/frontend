@@ -11,8 +11,7 @@ import { useEffect, useState } from "react";
 export default function UserStrategy() {
    const { user } = useAuth();
    const [accessToken, setAccessToken] = useState<string | null>(null);
-   const router = useRouter();
-
+   
    async function UnInstallStrategy() {
       if (accessToken) {
          try {
@@ -28,9 +27,8 @@ export default function UserStrategy() {
             }
 
             const responseData = await response.json();
-
             if (responseData.success) {
-               router.push('/dashboard/store');
+               // router.push('/dashboard/store');
                return toast.success('Strategy uninstalled successfully');
             } else {
                toast.error('Failed to uninstall strategy');
@@ -51,7 +49,7 @@ export default function UserStrategy() {
             <div className="flex justify-between items-center py-3">
                <h3 className="text-2xl font-medium">Strategy Used</h3>
                <Link href="/dashboard/store">
-                  <MainBtn content="choose strategy" btnWidth="w-fit" />
+                  <MainBtn content="choose strategy" btnProps="w-fit" />
                </Link>
             </div>
             <hr />

@@ -91,7 +91,7 @@ function ResetPasswordPage() {
                   type="password"
                   error={errors.password?.message}
                />
-               <MainBtn content="Reset" btnWidth="w-full" />
+               <MainBtn content="Reset" btnProps="w-full" />
             </div>
          </form>
       </section>

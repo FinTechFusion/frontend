@@ -18,7 +18,7 @@ export default function page() {
                <TextInfo content="Bot Analysis, however, segments your strategy over time, whether for quick trades or month-long investments. It analyzes and suggests entry and exit points, smoothing out market
                volatility and aiming for the best average entry and exit prices, thus safeguarding your investments against market unpredictability." />
                <Link href="/">
-                  <MainBtn content="try Bot Analysis" btnWidth="w-fit" />
+                  <MainBtn content="try Bot Analysis" btnProps="w-fit" />
                </Link>
             </div>
             <div className="botanylasis-Image md:w-1/3 w-full">
