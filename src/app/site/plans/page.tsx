@@ -16,11 +16,9 @@ const Page = () => {
       <div className="pb-6 text-center mx-auto">
         <PlansToggle onTabChange={handleTabChange} />
       </div>
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-6">
-        <PlanCard planType={selectedPlanType} />
-        <PlanCard planType={selectedPlanType} />
-        <PlanCard planType={selectedPlanType} />
-      </div>
+      <>
+        <PlanCard selectedPlanType={selectedPlanType} />
+      </>
     </section>
   );
 };
