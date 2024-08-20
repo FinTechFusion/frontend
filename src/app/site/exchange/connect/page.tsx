@@ -11,7 +11,7 @@ export default function Page() {
    const [binanceUrl, setbinanceUrl] = useState("");
    async function fetchBincanceLink() {
       try {
-         const response = await fetch(`${API_BASE_URL}/auth/sso/binance`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/binance/link`, {
             method: "GET",
             next: { revalidate: 300 },
 
