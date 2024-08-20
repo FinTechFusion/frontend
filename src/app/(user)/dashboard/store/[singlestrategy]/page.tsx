@@ -20,7 +20,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user } = useAuth();
   const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies/${params.singlestrategy}`, {
     method: "GET",
-    next: { revalidate: 300 },
+    next: { revalidate: 180 },
   });
 
   if (loading) {
@@ -55,10 +55,12 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       }
 
       const responseData = await response.json();
+      console.log(responseData)
       if (responseData.success) {
         toast.success("strategy installed successfully");
       }
     } catch (error) {
+      console.log(error);
       toast.error("An error occurred while installing the strategy.");
     }
 

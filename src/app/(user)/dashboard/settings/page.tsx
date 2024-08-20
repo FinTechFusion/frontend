@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 export default function Page() {
    const { user, isLoading, error, logout } = useAuth();
    if (error) {
-      console.log(error)
       toast.error(error);
       return null; // Returning null to avoid rendering further
    }
@@ -37,7 +36,7 @@ export default function Page() {
             </div>
          </div>
          <div className="grid grid-cols-12 justify-between items-center gap-8">
-            <div className="subscription-box border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md">
+            <div className="subscription-box border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md line-calmp-6">
                <h3 className="text-2xl font-bold pb-8">Subscription</h3>
                <div className="flex justify-between items-center pb-3">
                   <div>
@@ -53,7 +52,7 @@ export default function Page() {
                   </div>
                </div>
             </div>
-            <div className="account-setting border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md ">
+            <div className="account-setting border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md line-calmp-6">
                <h3 className="text-2xl font-bold pb-8">Account Settings</h3>
                <div className="flex justify-between items-center">
                   <div >

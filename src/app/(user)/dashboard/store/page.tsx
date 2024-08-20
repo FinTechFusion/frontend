@@ -11,9 +11,8 @@ export default function Page() {
 
    const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies`, {
       method: "GET",
-      next: { revalidate: 300 },
+      next: { revalidate: 180 },
    });
-
    if (loading) {
       return <Loading />;
    }
