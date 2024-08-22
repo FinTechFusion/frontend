@@ -29,9 +29,9 @@ function BinanceConnectionStatus() {
                </Link>
             </> : <>
                <MdError className="p-3 bg-red-600 text-secondary text-6xl rounded-full my-5 " />
-               <Textbox title="Binance Account Connection Failed" description="We're sorry, but there was an error connecting your Binance account. Please try again later or contact support if the issue persists." descriptionClass="md:w-1/2 w-full mx-auto text-lg" />
+               <Textbox titleClass="hover:text-red-700" title="Binance Account Connection Failed" description="We're sorry, but there was an error connecting your Binance account. Please try again later or contact support if the issue persists." descriptionClass="md:w-1/2 w-full mx-auto text-lg" />
                <Link href='/site/exchange/connect'>
-                  <MainBtn content="try again" btnProps="w-fit" />
+                     <MainBtn content="try again" btnProps="w-fit bg-red-600 hover:bg-red-700" />
                </Link>
             </>
             }</div>   
