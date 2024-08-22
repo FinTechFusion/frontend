@@ -43,7 +43,7 @@ function VerifyInput() {
             localStorage.setItem("expire_data_token", newTime.toString());
             localStorage.setItem("access_token", access_token);
             localStorage.setItem("refresh_token", refresh_token);
-            route.push('/dashboard');
+            route.push('/site/exchange');
             return toast.success("Account is verified Successfully");
          } else {
             return toast.error(responseData.detail);
