@@ -1,4 +1,3 @@
-"use client";
 import { useRouter } from "next/navigation";
 import { API_BASE_URL } from '@/utils/api';
 import { useSearchParams } from 'next/navigation';
@@ -7,6 +6,7 @@ import Toast from '../Tostify/Toast';
 import { useOTPInput } from "@/hooks/useOTPInput";
 import React, { Suspense } from 'react';
 import Loading from "../loading/Loading";
+import { saveTokenToStorage } from "@/context/AuthContext";
 
 function VerifyInput() {
    const route = useRouter();
@@ -40,9 +40,9 @@ function VerifyInput() {
             const thirtyMinutesInMilliseconds = 10 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
 
-            localStorage.setItem("expire_data_token", newTime.toString());
-            localStorage.setItem("access_token", access_token);
-            localStorage.setItem("refresh_token", refresh_token);
+            saveTokenToStorage("expire_data_token", newTime.toString());
+            saveTokenToStorage("access_token", access_token);
+            saveTokenToStorage("refresh_token", refresh_token);
             route.push('/site/exchange');
             return toast.success("Account is verified Successfully");
          } else {

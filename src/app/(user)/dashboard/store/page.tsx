@@ -8,7 +8,6 @@ import Strategies from "@/app/_components/strategies/Strategies";
 
 export default function Page() {
 
-
    const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies`, {
       method: "GET",
       next: { revalidate: 180 },

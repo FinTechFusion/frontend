@@ -7,14 +7,14 @@ import { toast } from 'react-toastify';
 
 export default function Page() {
    const { user, isLoading, error, logout } = useAuth();
-   if (error) {
-      toast.error(error);
-      return null; // Returning null to avoid rendering further
-   }
-
-   if (isLoading || user?.first_name === undefined) {
+   
+   if (isLoading) {
       return <Loading />;
    }
+   if (error) {
+      toast.error(error);
+   }
+
 
    return (
       <div className="container mx-auto px-5">

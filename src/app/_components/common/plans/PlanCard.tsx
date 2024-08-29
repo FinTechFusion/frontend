@@ -30,7 +30,6 @@ export default function PlanCard({ selectedPlanType }: PlanCardProps) {
    }
 
    const filteredPlans = data?.filter((plan: PlanType) => {
-      // Show plans that match the selectedPlanType or are a "trial" if "monthly" is selected
       return plan.frequency === selectedPlanType ||
          (selectedPlanType === "monthly" && plan.frequency === "trial");
    }).filter((plan: PlanType) => plan.id != 'beginner_monthly');
@@ -40,8 +39,8 @@ export default function PlanCard({ selectedPlanType }: PlanCardProps) {
          {filteredPlans?.map((plan: PlanType, index: number) => {
             return (
                <div className="planCard shadow-sm border border-gray-200 px-8 py-10 rounded-[14px]" key={index}>
-                  <h2 className="text-2xl font-medium pb-4">{plan.name}</h2>
-                  <span className="text-gray-500 text-lg pt-5"><b className="text-gray-950 text-3xl">${plan.price}/{plan.frequency === "monthly" || plan.frequency === "trial" ? "mo" : "yearly"}</b></span>
+                  <h2 className="text-2xl font-medium pb-4">{plan.id === "beginner_trial" ? "Free Trial" : plan.name}</h2>
+                  <span className="text-gray-500 text-lg pt-5"><b className="text-gray-950 text-3xl"><span className="text-2xl text-gray-600">AED</span> {" "}{plan.price}/{plan.frequency === "monthly" || plan.frequency === "trial" ? "mo" : "yearly"}</b></span>
                   <p className="info text-gray-500 pb-3 pt-4">{plan.description} </p>
                   <MainBtn content='purchase plan' btnProps="w-full capitalize" />
                   <div className="plan-include">

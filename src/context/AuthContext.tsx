@@ -3,34 +3,58 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { Tokens, AuthContextType } from '@/utils/types';
+import { Tokens, AuthContextType, User } from '@/utils/types';
 import { API_BASE_URL } from '@/utils/api';
 
+// Auth Context
 const AuthContext = createContext<AuthContextType | null>(null);
 
+// Auth Provider Props Interface
 interface AuthProviderProps {
    children: ReactNode;
 }
 
+export const getTokenFromStorage = (key: string): string | null => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem(key);
+  }
+  return null;
+};
+
+export const saveTokenToStorage = (key: string, value: string): void => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(key, value);
+  }
+};
+
+// Utility function to remove tokens from localStorage
+const clearTokensFromStorage = (): void => {
+   localStorage.removeItem('access_token');
+   localStorage.removeItem('refresh_token');
+   localStorage.removeItem('expire_data_token');
+};
+
+// Auth Provider Component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-   const [user, setUser] = useState(null);
-   const [isLoading, setIsLoading] = useState(false);
+   const [user, setUser] = useState<User | null>(null);
+   const [isLoading, setIsLoading] = useState<boolean>(false);
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
 
-   const login = async (access_token: string, refresh_token: string) => {
+   const login = async (accessToken: string, refreshToken: string) => {
       try {
-         localStorage.setItem('access_token', access_token);
-         localStorage.setItem('refresh_token', refresh_token);
-         const data = await fetchUserData(access_token);
-         setUser(data);
+         saveTokenToStorage('access_token', accessToken);
+         saveTokenToStorage('refresh_token', refreshToken);
+         const userData = await fetchUserData(accessToken);
+         setUser(userData);
          router.push("/dashboard");
-      } catch (error) {
+      } catch (err) {
          toast.error('Login failed');
+         console.error('Login error:', err);
       }
    };
 
-   const fetchUserData = async (accessToken: string) => {
+   const fetchUserData = async (accessToken: string): Promise<User | null> => {
       setIsLoading(true);
       try {
          const response = await fetch(`${API_BASE_URL}/users/me`, {
@@ -43,65 +67,54 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          if (!response.ok) {
             throw new Error('Failed to fetch user data');
          }
-         const {data} = await response.json();
+
+         const { data } = await response.json();
          setUser(data);
          return data;
-      } catch (error) {
+      } catch (err) {
          setError('Failed to fetch user data');
+         console.error('Error fetching user data:', err);
+         return null;
       } finally {
          setIsLoading(false);
       }
    };
 
    const checkAndFetchUserData = async () => {
-      try {
-         const accessToken = localStorage.getItem('access_token');
-         const expireTokenTime = localStorage.getItem('expire_data_token');
-         if (!accessToken) {
-            setIsLoading(false);
-            return;
-         }
+      const accessToken = getTokenFromStorage('access_token');
+      const expireTokenTime = getTokenFromStorage('expire_data_token');
 
-         const currentTime = Date.now();
-         if (expireTokenTime && (Number(currentTime) > Number(expireTokenTime))) {
-            const newAccessToken = await refreshAccessToken();
-            await fetchUserData(newAccessToken);
-         }
-      } catch (error) {
-         console.error('Error in checkAndFetchUserData', error);
-         setIsLoading(false);
+      if (!accessToken) return;
+
+      const currentTime = Date.now();
+      if (expireTokenTime && currentTime > Number(expireTokenTime)) {
+         const newAccessToken = await refreshAccessToken();
+         await fetchUserData(newAccessToken);
       }
    };
 
    useEffect(() => {
       const loadUserData = async () => {
-         try {
-            const accessToken = localStorage.getItem('access_token');
-            if (accessToken) {
-               const data = await fetchUserData(accessToken);
-               setUser(data);
-            }
-            checkAndFetchUserData(); // Ensure token expiration is checked
-         } catch (error) {
-            console.error('Error loading user data:', error);
+         const accessToken = getTokenFromStorage('access_token');
+         if (accessToken) {
+            await fetchUserData(accessToken);
          }
+         checkAndFetchUserData();
       };
 
       loadUserData();
    }, []);
 
    const logout = () => {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('expire_data_token');
+      clearTokensFromStorage();
       setUser(null);
-      router.push('/login');
+      router.push('/');
       toast.success('Logged out');
    };
 
-   const refreshAccessToken = async () => {
+   const refreshAccessToken = async (): Promise<string> => {
       try {
-         const refreshToken = localStorage.getItem('refresh_token');
+         const refreshToken = getTokenFromStorage('refresh_token');
          if (!refreshToken) {
             router.push('/login');
             throw new Error('Refresh token not found');
@@ -125,27 +138,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          }
 
          const newTokens = (await response.json()) as Tokens;
+         saveTokenToStorage('access_token', newTokens.access_token);
+         saveTokenToStorage('refresh_token', newTokens.refresh_token);
 
-         localStorage.setItem('access_token', newTokens.access_token);
-         localStorage.setItem('refresh_token', newTokens.refresh_token);
-         const currentTime = Date.now();
-         const thirtyMinutesInMilliseconds = 9 * 60 * 1000;
-         const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
-         localStorage.setItem('expire_data_token', newExpireTime.toString());
+         const newExpireTime = Date.now() + 9 * 60 * 1000;
+         saveTokenToStorage('expire_data_token', newExpireTime.toString());
+
          return newTokens.access_token;
-      } catch (error) {
-         console.error('Failed to refresh access token', error);
-         throw error;
+      } catch (err) {
+         console.error('Failed to refresh access token:', err);
+         throw err;
       }
    };
 
    return (
-      <AuthContext.Provider value={{ user, logout, isLoading, error, login, fetchUserData }}>
+      <AuthContext.Provider value={{ user, isLoading, error, login, logout, fetchUserData }}>
          {children}
       </AuthContext.Provider>
    );
 };
 
+// Custom hook to use the Auth context
 export const useAuth = (): AuthContextType => {
    const context = useContext(AuthContext);
    if (!context) {

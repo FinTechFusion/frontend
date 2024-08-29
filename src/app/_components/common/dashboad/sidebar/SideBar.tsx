@@ -10,7 +10,7 @@ import { useSidebar } from '@/context/SidebarContext';
 export default function Sidebar() {
    const { isVisible, toggleVisibility } = useSidebar();
    return (
-         <div className={`min-h-screen bg-gray-100 px-6 md:flex fixed transform ${isVisible ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+         <div className={`min-h-screen bg-gray-100 px-6 md:flex fixed transform z-10 ${isVisible ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
             <div className="sideBar lg:col-span-2 md:col-span-3 col-span-12 ">
                <ul className="sideBar-List px-3 py-5">
                   <SidebarLink icon={<FaHouse />

@@ -8,6 +8,7 @@ import { API_BASE_URL } from '@/utils/api';
 import { useState, useEffect } from 'react';
 import Loading from '../common/loading/Loading';
 import Textbox from '../common/Text/Textbox';
+import { getTokenFromStorage } from '@/context/AuthContext';
 
 export default function TableOrders() {
    const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -29,7 +30,7 @@ export default function TableOrders() {
       return new Date(dateString).toLocaleString(undefined, options);
    };
    useEffect(() => {
-      const storedAccessToken = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
+      const storedAccessToken = typeof window !== 'undefined' ? getTokenFromStorage('access_token') : null;
       setAccessToken(storedAccessToken);
    }, []);
 

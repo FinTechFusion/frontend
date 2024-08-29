@@ -1,11 +1,10 @@
 "use client"
 import Link from "next/link";
 import { MainBtn } from "../Buttons/MainBtn";
-import { useAuth } from "@/context/AuthContext";
+import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import Toast from "../Tostify/Toast";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function UserStrategy() {
@@ -39,7 +38,7 @@ export default function UserStrategy() {
       }
    }
    useEffect(() => {
-      const storedAccessToken = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
+      const storedAccessToken = typeof window !== 'undefined' ? getTokenFromStorage('access_token') : null;
       setAccessToken(storedAccessToken);
    }, []);
    return (
