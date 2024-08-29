@@ -18,7 +18,7 @@ function BinanceConnectionStatus() {
    const code = searchParams.get('code');
  
 
-   const data = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}`,
+   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}`,
       {
          method: 'GET',
          headers: {
@@ -26,12 +26,11 @@ function BinanceConnectionStatus() {
          },
       }
    );
-   console.log(data); 
 
    return (
       <div className="container mx-auto">
          <div className="flex flex-col justify-start items-center text-center min-h-screen pt-16">
-            {data?.success ? <>
+            {data?.is_binance ? <>
             <FaCheck className="p-3 bg-primary-600 text-secondary text-6xl rounded-full my-5"/>
                <Textbox title="Binance Account Connected" description="Your Binance account has been successfully connected. You can now access your trading data and manage your portfolio." descriptionClass="md:w-1/2 w-full mx-auto text-lg" />
                <Link href='/dashboard'>
