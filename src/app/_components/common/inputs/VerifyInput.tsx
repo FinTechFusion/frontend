@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { API_BASE_URL } from '@/utils/api';
 import { useSearchParams } from 'next/navigation';
