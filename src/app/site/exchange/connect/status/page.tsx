@@ -18,7 +18,7 @@ function BinanceConnectionStatus() {
    const code = searchParams.get('code');
  
 
-   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}`,
+   const data = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}`,
       {
          method: 'GET',
          headers: {
