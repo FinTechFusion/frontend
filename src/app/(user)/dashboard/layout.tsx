@@ -20,7 +20,7 @@ export default function UserDashboardLayout({ children }: DashboardLayoutProps) 
             <div className="lg:col-span-2 md:col-span-3 col-span-10">
                <Sidebar />
             </div>
-            <div className="lg:col-span-10 md:col-span-9 col-span-12 ps-5 pe-2">
+            <div className="lg:col-span-10 md:col-span-9 col-span-12 md:ps-5 pe-2">
                <Headerdash />
                {children}
             </div>
