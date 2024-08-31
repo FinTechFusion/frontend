@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 
 type FetchOptions = RequestInit;
 
-
 const useFetch = (url: string, options?: FetchOptions): any => {
    const [data, setData] = useState<null>(null);
    const [loading, setLoading] = useState<boolean>(true);
