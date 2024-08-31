@@ -6,7 +6,7 @@ import { API_BASE_URL } from '@/utils/api';
 import Loading from '../loading/Loading';
 import useFetch from '@/hooks/useFetch';
 import { getTokenFromStorage } from '@/context/AuthContext';
-import BinanceConnectStatus from './BinanceConnectStatus';
+// import BinanceConnectStatus from './BinanceConnectStatus';
 
 export default function TokensTable() {
   const accessToken = getTokenFromStorage("access_token");
@@ -14,7 +14,7 @@ export default function TokensTable() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 5;
 
-  const { data: assetData, loading: assetLoading, detail: detail } = useFetch(`${API_BASE_URL}/users/me/assets`, {
+  const { data: assetData, loading: assetLoading } = useFetch(`${API_BASE_URL}/users/me/assets`, {
     method: 'GET',
     headers: {
       'authorization': `Bearer ${accessToken}`,
@@ -57,16 +57,16 @@ export default function TokensTable() {
   const offset = currentPage * itemsPerPage;
   const currentData = rowData.slice(offset, offset + itemsPerPage);
 
-  if (detail === "User OAuth not linked.") {
-    return <BinanceConnectStatus />
-  }
+  // if (detail === "User OAuth not linked.") {
+  //   return <BinanceConnectStatus />
+  // }
   if (assetLoading || !rowData.length) {
     return <Loading />;
   }
-  console.log(detail);
+  // console.log(detail);
   return (
     <>
-      {!detail && <div className="my-5 overflow-x-auto">
+      <div className="my-5 overflow-x-auto">
         <table className="min-w-full bg-white border overflow-auto">
           <thead>
             <tr>
@@ -102,7 +102,7 @@ export default function TokensTable() {
           previousClassName={"mx-1"}
           nextClassName={"mx-1"}
         />
-      </div>}
+      </div>
     </>
   );
 }

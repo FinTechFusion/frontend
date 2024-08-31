@@ -4,11 +4,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
 import { tradingbotType, tradingbotSchema } from "@/validation/TradingbotSchema";
 import { MainBtn } from "../../Buttons/MainBtn";
+import { getTokenFromStorage } from '@/context/AuthContext';
+import useFetch from '@/hooks/useFetch';
+import { API_BASE_URL } from '@/utils/api';
 
 export default function TradingBotForm() {
+  const accessToken = getTokenFromStorage("access_token");
   const { register, handleSubmit, formState: { errors } } = useForm<tradingbotType>({
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
+  });
+  const { data: assetData } = useFetch(`${API_BASE_URL}/users/me/assets`, {
+    method: 'GET',
+    headers: {
+      'authorization': `Bearer ${accessToken}`,
+    },
+    next: { revalidate: 30 }
   });
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
     console.log(data)
@@ -29,12 +40,20 @@ export default function TradingBotForm() {
               {...register('symbol')}
             >
               <option value="">Please select</option>
-              <option value="JM">John Mayer</option>
-              <option value="SRV">Stevie Ray Vaughn</option>
+              {
+                assetData?.map((asset: any, index: number) => {
+                  return (
+                    <>
+                      <option key={index} value={asset?.symbol}>{asset?.symbol?.toUpperCase()}</option>
+                    </>
+                  )
+                })
+              }
+
             </select>
-{errors?.symbol?.message && (
-  <span className="text-red-600 text-sm pt-2">{errors.symbol.message}</span>
-)}
+            {errors?.symbol?.message && (
+              <span className="text-red-600 text-sm pt-2">{errors.symbol.message}</span>
+            )}
           </div>
 
           <Input
