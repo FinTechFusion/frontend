@@ -5,12 +5,13 @@ type InputProps<TFieldValue extends FieldValues> = {
    name: Path<TFieldValue>;
    type?: string;
    placeholder: string;
-   register: UseFormRegister<TFieldValue>;
+   register?: UseFormRegister<TFieldValue>;
    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onPaste?: (e: React.ClipboardEvent) => void; // Add onPaste prop
+   onPaste?: (e: React.ClipboardEvent) => void;
    error?: string;
    value?: string;
    step?: string;
+   readOnly?: boolean; // New prop
 };
 
 const Input = <TFieldValue extends FieldValues>({
@@ -24,8 +25,22 @@ const Input = <TFieldValue extends FieldValues>({
    onPaste,
    value,
    step = "0.001",
+   readOnly = false, // Default to false
    ...rest
 }: InputProps<TFieldValue>) => {
+   const inputProps = register
+      ? {
+         ...register(name, { valueAsNumber: type === 'number' }),
+         readOnly, // Add readOnly to registered props
+      }
+      : {
+         name,
+         onChange,
+         onPaste,
+         value,
+         readOnly, // Add readOnly to unregistered props
+      };
+
    return (
       <div className="pb-4">
          {label && (
@@ -38,10 +53,10 @@ const Input = <TFieldValue extends FieldValues>({
          )}
          <input
             type={type}
-            className={`main_input border-2 ${error && 'border-red-600 shadow'}`}
-            {...register(name, { valueAsNumber: type === 'number' })}
+            className={`main_input border-2 ${error && 'border-red-600 shadow'} ${readOnly ? 'bg-gray-100 cursor-not-allowed' : ''}`}
             id={name}
             placeholder={placeholder}
+            {...inputProps}
             {...rest}
             step={step}
          />

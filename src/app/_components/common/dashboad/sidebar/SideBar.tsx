@@ -10,14 +10,14 @@ import { useSidebar } from '@/context/SidebarContext';
 export default function Sidebar() {
    const { isVisible, toggleVisibility } = useSidebar();
    return (
-         <div className={`min-h-screen bg-gray-100 px-6 md:flex fixed transform z-10 ${isVisible ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+         <div className={`min-h-screen bg-gray-100 px-6 md:flex fixed transform z-10 ${isVisible ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
             <div className="sideBar lg:col-span-2 md:col-span-3 col-span-12 ">
                <ul className="sideBar-List px-3 py-5">
                   <SidebarLink icon={<FaHouse />
                   } content='Dashboard' weight='font-semibold' path='/dashboard' />
 
                  <span onClick={() => toggleVisibility()}>
-                     <IoClose className="text-4xl font-bold absolute top-3	right-2 cursor-pointer text-red-600 flex md:hidden"  />
+                     <IoClose className="text-4xl font-bold absolute top-3	right-2 cursor-pointer text-red-600 flex lg:hidden"  />
                  </span>
                   <SidebarLink icon={<FaUser />
                   } content='My Portfolio' weight='font-normal' path='/' />

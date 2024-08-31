@@ -73,7 +73,7 @@ export default function Page() {
             </div>
          </div>
          <BinanceConnectStatus />
-         <button className='bg-red-600 hover:bg-red-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide w-fit mb-3' onClick={logout}>logout</button>
+         <button className='bg-red-600 hover:bg-red-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide w-fit my-3' onClick={logout}>logout</button>
       </div>
    )
 }

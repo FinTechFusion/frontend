@@ -8,7 +8,7 @@ import { Input } from "@/app/_components/common/forms";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
-import { useAuth } from "@/context/AuthContext";
+import { saveTokenToStorage, useAuth } from "@/context/AuthContext";
 import Toast from "../Tostify/Toast";
 import { useState } from "react";
 // import { useState } from "react";
@@ -41,7 +41,8 @@ export default function Loginform() {
             const currentTime = Date.now();
             const thirtyMinutesInMilliseconds = 30 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
-            localStorage.setItem("expire_data_token", newExpireTime.toString());
+            // localStorage.setItem("expire_data_token", newExpireTime.toString());
+            saveTokenToStorage("expire_data_token", newExpireTime.toString());
             login(access_token, refresh_token);
             toast.success("Login Successfully");
          } else {
@@ -62,8 +63,6 @@ export default function Loginform() {
    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
    };
-
-
    return (
       <>
          <Toast />

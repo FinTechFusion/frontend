@@ -17,10 +17,10 @@ export default function UserDashboardLayout({ children }: DashboardLayoutProps) 
    return (
       <SidebarProvider>
          <div className="grid grid-cols-12">
-            <div className="lg:col-span-2 md:col-span-3 col-span-10">
+            <div className="lg:col-span-2 col-span-10">
                <Sidebar />
             </div>
-            <div className="lg:col-span-10 md:col-span-9 col-span-12 md:ps-5 pe-2">
+            <div className="lg:col-span-10 col-span-12 md:ps-5 ps-1 pe-1">
                <Headerdash />
                {children}
             </div>

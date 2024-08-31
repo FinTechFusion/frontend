@@ -5,7 +5,7 @@ import Input from "../input/input";
 import { tradingbotType, tradingbotSchema } from "@/validation/TradingbotSchema";
 import { MainBtn } from "../../Buttons/MainBtn";
 
-export default function TradningBotForm() {
+export default function TradingBotForm() {
   const { register, handleSubmit, formState: { errors } } = useForm<tradingbotType>({
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
@@ -16,8 +16,27 @@ export default function TradningBotForm() {
   return (
     <>
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600	">Start Trading</h3>
-      <form className="md:w-4/5 w-full py-3" onSubmit={handleSubmit(submitForm)}>
-        <div className="grid grid-cols-1 ">
+      <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
+          <div>
+            <label htmlFor="symbol" className="block capitalize pb-1 text-lg font-medium tracking-wide">
+              Symbol
+            </label>
+
+            <select
+              id="symbol"
+              className={`main_input border ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
+              {...register('symbol')}
+            >
+              <option value="">Please select</option>
+              <option value="JM">John Mayer</option>
+              <option value="SRV">Stevie Ray Vaughn</option>
+            </select>
+{errors?.symbol?.message && (
+  <span className="text-red-600 text-sm pt-2">{errors.symbol.message}</span>
+)}
+          </div>
+
           <Input
             label="Quantity"
             name="quantity"
@@ -26,10 +45,8 @@ export default function TradningBotForm() {
             register={register}
             error={errors.quantity?.message}
           />
-          <label>Side</label>
-          <input type="text" readOnly={true} value="Buy" className="main_input border-2 my-2" />
-          <label>Order Type</label>
-          <input type="text" readOnly={true} value="Spot" className="main_input border-2 my-2" />
+          <Input label="Side" value="But" type="text" name="buy" placeholder="" readOnly={true} />
+          <Input label="Order Type" value="Spot" type="text" name="spot" placeholder="" readOnly={true} />
           <Input
             label="Profit threshold"
             name="profit_threshold"

@@ -1,6 +1,4 @@
-// components/TradingViewWidget.tsx
 "use client";
-
 import React, { useEffect, useRef, memo } from 'react';
 
 const TradingViewWidget: React.FC = () => {

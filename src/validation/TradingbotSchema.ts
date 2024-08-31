@@ -2,7 +2,10 @@ import { z } from "zod";
 
 
 const tradingbotSchema = z.object({
-   quantity: z
+   symbol: z.string().refine((value) => value !== "", {
+      message: "Please, Select Symbol",
+   }),
+    quantity: z
       .number({ message: "Quantity is required" })
       .int({ message: "Quantity must be an integer" })
       .positive({ message: "Quantity must be greater than 0" }),
