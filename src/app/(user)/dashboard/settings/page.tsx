@@ -15,8 +15,6 @@ export default function Page() {
    if (error) {
       toast.error(error);
    }
-
-
    return (
       <div className="container mx-auto px-5">
          <div className="my-8">

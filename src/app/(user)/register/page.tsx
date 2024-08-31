@@ -4,8 +4,6 @@ import Image from "next/image";
 import Registerform from "@/app/_components/common/forms/registerform";
 
 export default function Register() {
-
-
    return (
       <>
          <div className="bg-gradient-to-r from-primary-600 to-primary-500 h-92 px-2 py-8">
