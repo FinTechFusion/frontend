@@ -14,7 +14,7 @@ export default function TokensTable() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 5;
 
-  const { data: assetData, loading: assetLoading } = useFetch(`${API_BASE_URL}/users/me/assets`, {
+  const { data: assetData, loading: assetLoading, detail: detail } = useFetch(`${API_BASE_URL}/users/me/assets`, {
     method: 'GET',
     headers: {
       'authorization': `Bearer ${accessToken}`,
@@ -57,15 +57,16 @@ export default function TokensTable() {
   const offset = currentPage * itemsPerPage;
   const currentData = rowData.slice(offset, offset + itemsPerPage);
 
-  if (assetData?.detail === "User OAuth not linked.") {
+  if (detail === "User OAuth not linked.") {
     return <BinanceConnectStatus />
   }
   if (assetLoading || !rowData.length) {
     return <Loading />;
   }
-  console.log(assetData);
+  console.log(detail);
   return (
-      <div className="my-5 overflow-x-auto">
+    <>
+      {!detail && <div className="my-5 overflow-x-auto">
         <table className="min-w-full bg-white border overflow-auto">
           <thead>
             <tr>
@@ -101,6 +102,7 @@ export default function TokensTable() {
           previousClassName={"mx-1"}
           nextClassName={"mx-1"}
         />
-      </div>
+      </div>}
+    </>
   );
 }
