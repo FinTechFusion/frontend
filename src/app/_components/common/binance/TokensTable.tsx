@@ -56,14 +56,14 @@ export default function TokensTable() {
   // Calculate data to be displayed on the current page
   const offset = currentPage * itemsPerPage;
   const currentData = rowData.slice(offset, offset + itemsPerPage);
-  
+
   if (assetData?.detail === "User OAuth not linked.") {
     return <BinanceConnectStatus />
   }
   if (assetLoading || !rowData.length) {
     return <Loading />;
   }
- 
+  console.log(assetData);
   return (
       <div className="my-5 overflow-x-auto">
         <table className="min-w-full bg-white border overflow-auto">
