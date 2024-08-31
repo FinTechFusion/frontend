@@ -41,14 +41,15 @@ export default function TradingBotForm() {
             >
               <option value="">Please select</option>
               {
-                assetData?.map((asset: any, index: number) => {
-                  return (
-                    <>
-                      <option key={index} value={asset?.symbol}>{asset?.symbol?.toUpperCase()}</option>
-                    </>
-                  )
-                })
+                assetData
+                  ?.filter((asset: any) => asset.symbol !== 'usdt')
+                  .map((asset: any, index: number) => (
+                    <option key={index} value={asset?.symbol}>
+                      {asset?.symbol?.toUpperCase()}
+                    </option>
+                  ))
               }
+
 
             </select>
             {errors?.symbol?.message && (

@@ -21,12 +21,12 @@ export default function page() {
          <div className="text-start">
             <Textbox title="Capabilities of Bot Analysis and Bot AI" description="Our cutting-edge trading system combines the power of advanced algorithms to identify profitable opportunities and predict market movements, all while prioritizing simplicity and security." />
             <div className="text-center my-12 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-               <Textbox mainClass="shadow p-5 bg-gray-100" titleClass="text-primary-600" title="Bot Analysis" description="Our advanced algorithms analyze market data to identify profitable trading opportunities, helping you make informed decisions." />
-               <Textbox mainClass="shadow p-5 bg-gray-100" titleClass="text-primary-600" title="Bot AI" description="Our AI-powered models use historical data and machine learning to predict future market trends, enabling you to stay ahead of the curve." />
-               <Textbox mainClass="shadow p-5 bg-gray-100" titleClass="text-primary-600" title="Simplicity" description="Our user-friendly interface and intuitive design make it easy for traders of all levels to leverage the power of Bot Analysis and Bot AI." />
-               <Textbox mainClass="shadow p-5 bg-gray-100" titleClass="text-primary-600" title="Security" description="Your data and trades are protected by industry-leading security measures, ensuring your investments are safe and secure." />
-               <Textbox mainClass="shadow p-5 bg-gray-100" titleClass="text-primary-600" title="Profitability" description="By leveraging the power of Bot Analysis and Bot AI, you can boost your trading profits and achieve your financial goals." />
-               <Textbox mainClass="shadow p-5 bg-gray-100" titleClass="text-primary-600" title="Reliability" description="Our robust and dependable system ensures consistent performance, giving you the confidence to make informed trading decisions." />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded" titleClass="text-primary-600" title="Bot Analysis" description="Our advanced algorithms analyze market data to identify profitable trading opportunities, helping you make informed decisions." />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded" titleClass="text-primary-600" title="Bot AI" description="Our AI-powered models use historical data and machine learning to predict future market trends, enabling you to stay ahead of the curve." />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded" titleClass="text-primary-600" title="Simplicity" description="Our user-friendly interface and intuitive design make it easy for traders of all levels to leverage the power of Bot Analysis and Bot AI." />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded" titleClass="text-primary-600" title="Security" description="Your data and trades are protected by industry-leading security measures, ensuring your investments are safe and secure." />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded" titleClass="text-primary-600" title="Profitability" description="By leveraging the power of Bot Analysis and Bot AI, you can boost your trading profits and achieve your financial goals." />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded" titleClass="text-primary-600" title="Reliability" description="Our robust and dependable system ensures consistent performance, giving you the confidence to make informed trading decisions." />
             </div>
          </div>
          <div className="banner my-8">
