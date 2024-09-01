@@ -4,22 +4,15 @@ import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { API_BASE_URL } from '@/utils/api';
 import Loading from '../loading/Loading';
-import useFetch from '@/hooks/useFetch';
+import { useAssetData } from '@/context/AssetsContext';
 import { getTokenFromStorage } from '@/context/AuthContext';
-// import BinanceConnectStatus from './BinanceConnectStatus';
 
 export default function TokensTable() {
-  const accessToken = getTokenFromStorage("access_token");
   const [rowData, setRowData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 5;
-
-  const { data: assetData, loading: assetLoading } = useFetch(`${API_BASE_URL}/users/me/assets`, {
-    method: 'GET',
-    headers: {
-      'authorization': `Bearer ${accessToken}`,
-    },
-  });
+  const accessToken = getTokenFromStorage("access_token");
+  const { assetData, assetLoading } = useAssetData();
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -51,29 +44,27 @@ export default function TokensTable() {
           // Handle errors here
         });
     }
-  }, [assetData, accessToken]);
+  }, [assetData,]);
 
   // Calculate data to be displayed on the current page
   const offset = currentPage * itemsPerPage;
   const currentData = rowData.slice(offset, offset + itemsPerPage);
 
-  // if (detail === "User OAuth not linked.") {
-  //   return <BinanceConnectStatus />
-  // }
-  if (assetLoading || !rowData.length) {
+  if (assetLoading) {
     return <Loading />;
   }
-  // console.log(detail);
   return (
     <>
       <div className="my-5 overflow-x-auto">
-        <table className="min-w-full bg-white border overflow-auto">
+        <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">Currency Details</h2>
+        <table className="min-w-full bg-white border overflow-auto shadow-sm">
           <thead>
             <tr>
               <th className="py-2 px-4 border text-start">Symbol</th>
               <th className="py-2 px-4 border text-start">Quantity</th>
               <th className="py-2 px-4 border text-start">Price Change Percent</th>
               <th className="py-2 px-4 border text-start">Last Price</th>
+              <th className="py-2 px-4 border text-start">Total</th>
             </tr>
           </thead>
           <tbody className='overflow-auto'>
@@ -83,6 +74,7 @@ export default function TokensTable() {
                 <td className="py-2 px-4 border">{item.quantity}</td>
                 <td className={`py-2 px-4 border  ${item.price_change_percent > 0 ? 'text-primary-700' : 'text-red-600'}`}>{item.price_change_percent}</td>
                 <td className="py-2 px-4 border">{item.last_price}</td>
+                <td className="py-2 px-4 border">{item.quantity * item.last_price}</td>
               </tr>
             ))}
           </tbody>

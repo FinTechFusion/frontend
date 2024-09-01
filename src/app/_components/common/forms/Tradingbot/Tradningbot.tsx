@@ -65,7 +65,7 @@ export default function TradingBotForm() {
             register={register}
             error={errors.quantity?.message}
           />
-          <Input label="Side" value="But" type="text" name="buy" placeholder="" readOnly={true} />
+          <Input label="Side" value="Buy" type="text" name="buy" placeholder="" readOnly={true} />
           <Input label="Order Type" value="Spot" type="text" name="spot" placeholder="" readOnly={true} />
           <Input
             label="Profit threshold"
