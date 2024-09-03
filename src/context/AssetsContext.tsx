@@ -2,7 +2,7 @@
 
 import { API_BASE_URL } from '@/utils/api';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getTokenFromStorage } from './AuthContext';
+import { getTokenFromStorage } from '@/context/AuthContext';
 
 interface ApiError {
    success: boolean;
@@ -36,9 +36,31 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
             },
          });
          const responseData = await response.json();
-
          if (response.ok && responseData.success) {
-            setAssetData(responseData);
+            // Fetch ticker data for each asset
+            const fetchTickers = responseData.data.map((asset: any) =>
+               fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
+                  method: 'GET',
+                  headers: {
+                     'authorization': `Bearer ${accessToken}`,
+                  },
+               })
+                  .then(response => response.json())
+                  .then(tickerData => ({
+                     symbol: asset.symbol,
+                     quantity: asset.quantity,
+                     price_change_percent: tickerData.data?.price_change_percent || 'N/A',
+                     last_price: tickerData.data?.last_price || 'N/A',
+                  }))
+            );
+
+            Promise.all(fetchTickers)
+               .then(results => {
+                  setAssetData(results);
+               })
+               .catch(() => {
+                  setAssetError('Failed to fetch ticker data');
+               });
          } else {
             const error: ApiError = {
                success: responseData.success,
@@ -46,7 +68,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                status_code: response.status,
             };
             setErrorMessage(error);
-            setAssetError(error.detail);  // Set assetError with the error detail
+            setAssetError(error.detail);
          }
       } catch (error) {
          setAssetError((error as Error).message);

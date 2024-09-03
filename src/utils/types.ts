@@ -74,3 +74,10 @@ export interface Data {
    status: string;
    created_at: string;
 }
+
+export interface AssetData {
+   symbol: string;
+   quantity: number;
+   price_change_percent: number;
+   last_price: number;
+}

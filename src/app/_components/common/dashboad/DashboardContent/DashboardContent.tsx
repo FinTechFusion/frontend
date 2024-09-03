@@ -1,42 +1,51 @@
 "use client";
 
-import { useAssetData } from "@/context/AssetsContext";
-import Loading from "../../loading/Loading";
+import { useAuth } from '@/context/AuthContext';
+import { useAssetData } from '@/context/AssetsContext';
 import { MainBtn } from "../../Buttons/MainBtn";
 import Tradingopportunity from "../opportunity/Tradingopportunity";
 import BinanceConnectStatus from "../../binance/BinanceConnectStatus";
 import TokensTable from "../../binance/TokensTable";
 import PriceChangeLineChart from "../charts/LineChart";
-
+import Loading from '@/app/_components/common/loading/Loading';
+import { AssetData } from '@/utils/types';
 
 function DashboardContent() {
    const { assetData, errorMessage, assetLoading } = useAssetData();
-   if (assetLoading) {
+   const { user } = useAuth();
+
+   if (!user || assetLoading) {
       return <Loading />;
    }
 
+   // Transform assetData to the format expected by PriceChangeLineChart
+   const formattedData = assetData.map((item: AssetData) => ({
+      symbol: item.symbol,
+      quantity: item.quantity,
+      priceChangePercent: item.price_change_percent,
+      lastPrice: item.last_price,
+      total: item.quantity * item.last_price,
+   }));
+
    return (
-    <>
-          <div className="py-5 my-5 shadow rounded-md">
-         <div className="flex justify-between items-center px-3">
-            <h4 className='text-xl font-medium'>Dashboard</h4>
-            <MainBtn content='Product Tour' btnProps="text-lg" />
+      <>
+         <div className="py-5 my-5 shadow rounded-md">
+            <div className="flex justify-between items-center px-3">
+               <h4 className='text-xl font-medium'>Dashboard</h4>
+               <MainBtn content='Product Tour' btnProps="text-lg" />
+            </div>
+            <Tradingopportunity />
          </div>
-         <Tradingopportunity />
-      </div>
-         
-         {!(errorMessage?.success) ? (
-            <BinanceConnectStatus />
-         ) : (
+         {user?.is_binance ?
             <>
                <TokensTable />
                <div className="grid justify-start items-start md:grid-cols-1 gap-5 grid-cols-1">
-                  {/* <PortfolioPieChart /> */}
-                  <PriceChangeLineChart />
+                  <PriceChangeLineChart data={formattedData} />
                </div>
             </>
-         )}
-    </>
+            : <BinanceConnectStatus />
+         }
+      </>
    );
 }
 

@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
-import { API_BASE_URL } from '@/utils/api';
 import Loading from '../loading/Loading';
 import { useAssetData } from '@/context/AssetsContext';
-import { getTokenFromStorage } from '@/context/AuthContext';
 
 export default function TokensTable() {
   const [rowData, setRowData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 5;
-  const accessToken = getTokenFromStorage("access_token");
   const { assetData, assetLoading } = useAssetData();
 
   const handlePageClick = (event: { selected: number }) => {
@@ -19,32 +16,11 @@ export default function TokensTable() {
   };
 
   useEffect(() => {
-    if (assetData && assetData.length > 0) {
-      const fetchTickers = assetData.map((asset: any) =>
-        fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
-          method: 'GET',
-          headers: {
-            'authorization': `Bearer ${accessToken}`,
-          },
-        })
-          .then(response => response.json())
-          .then(data => ({
-            symbol: asset.symbol,
-            quantity: asset.quantity,
-            price_change_percent: data.data?.price_change_percent || 'N/A',
-            last_price: data.data?.last_price || 'N/A',
-          }))
-      );
-
-      Promise.all(fetchTickers)
-        .then(results => {
-          setRowData(results);
-        })
-        .catch(() => {
-          // Handle errors here
-        });
+    // Assuming you fetch and set rowData based on assetData
+    if (assetData) {
+      setRowData(assetData);
     }
-  }, [assetData,]);
+  }, [assetData]);
 
   // Calculate data to be displayed on the current page
   const offset = currentPage * itemsPerPage;
@@ -53,6 +29,7 @@ export default function TokensTable() {
   if (assetLoading) {
     return <Loading />;
   }
+
   return (
     <>
       <div className="my-5 overflow-x-auto">
