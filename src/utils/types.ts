@@ -30,15 +30,17 @@ export interface User {
    email: string;
    id: string; 
    plan?: string;
-   cycles_count_remaining?: number;
    signal_strategy: string | null;
    ai_strategy: string | null;
+   signal_cycles:number;
+   ai_cycles:number;
    email_preferences?: string[];
    allowed_scopes?: string[];
    is_demo?: boolean;
    is_verified?: boolean;
    is_active?: boolean;
    is_binance?: boolean;
+
    data?:Object
 }
 

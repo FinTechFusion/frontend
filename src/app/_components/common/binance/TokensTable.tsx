@@ -32,8 +32,8 @@ export default function TokensTable() {
 
   return (
     <>
+      <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">Currency Details</h2>
       <div className="my-5 overflow-x-auto">
-        <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">Currency Details</h2>
         <table className="min-w-full bg-white border overflow-auto shadow-sm">
           <thead>
             <tr>
