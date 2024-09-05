@@ -12,10 +12,7 @@ export default function Page() {
       method: "GET",
       next: { revalidate: 180 },
    });
-   if (loading) {
-      return <Loading />;
-   }
-
+   if (loading) return <Loading />;
    if (error) {
       toast.error("Error fetching strategies, try again later");
       return null;

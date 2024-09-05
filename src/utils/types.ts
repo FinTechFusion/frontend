@@ -27,11 +27,12 @@ export interface User {
    first_name: string;
    last_name?: string;
    phone_number?: string;
-   email?: string;
-   id?: string; // Assuming UUID is a string
+   email: string;
+   id: string; 
    plan?: string;
    cycles_count_remaining?: number;
-   strategy?: string;
+   signal_strategy: string | null;
+   ai_strategy: string | null;
    email_preferences?: string[];
    allowed_scopes?: string[];
    is_demo?: boolean;

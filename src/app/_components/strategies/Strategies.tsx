@@ -2,7 +2,7 @@
 
 import { Strategy } from '@/utils/types';
 import { useState } from 'react';
-import StrategieCart from './StrategieCart';
+import StrategieCard from './StrategieCard';
 
 interface dataProps {
   data?: Strategy[]
@@ -58,7 +58,7 @@ export default function Strategies({ data }: dataProps) {
       <section className="store-strategies grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
         {filteredData!.length > 0 ? (
           filteredData?.map((el: Strategy) => (
-            <StrategieCart key={el.id} {...el} />
+            <StrategieCard key={el.id} {...el} />
           ))
         ) : (
           <p className="text-xl">No strategies found</p>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MainBtn } from "../common/Buttons/MainBtn";
 import Link from "next/link";
 
-export default function StrategieCart({ id, banner_url, name, type, description }: Strategy) {
+export default function StrategieCard({ id, banner_url, name, type, description }: Strategy) {
    return (
       <div className="px-3 py-5 shadow" key={id}>
          <div className="strategy-image">
@@ -12,7 +12,7 @@ export default function StrategieCart({ id, banner_url, name, type, description 
                alt={`${name} banner`}
                width={425}
                height={300}
-               className="rounded"
+               className="rounded w-full"
             />
          </div>
          <div className="flex flex-col">

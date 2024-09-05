@@ -51,7 +51,7 @@ export default function TableOrders() {
                   { field: 'quantity', headerName: 'Quantity', filter: 'agNumberColumnFilter' },
                   { field: 'profit_threshold', headerName: 'Profit Threshold', filter: 'agNumberColumnFilter' },
                   { field: 'trailing_stop_loss', headerName: 'Trailing Stop Loss', filter: 'agNumberColumnFilter' },
-                  { field: 'cycles_count', headerName: 'Cycles Count', filter: 'agNumberColumnFilter' },
+                  { field: 'cycles', headerName: 'Cycles Count', filter: 'agNumberColumnFilter' },
                   { field: 'strategy', headerName: 'Strategy', filter: true },
                   { field: 'status', headerName: 'Status', filter: true },
                   {

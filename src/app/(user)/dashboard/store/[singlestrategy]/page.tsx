@@ -1,6 +1,7 @@
 "use client";
 
-import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
+import React, { useState, useEffect } from "react";
+import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import Textbox from "@/app/_components/common/Text/Textbox";
 import { API_BASE_URL } from "@/utils/api";
 import Image from "next/image";
@@ -8,7 +9,7 @@ import Loading from "@/app/_components/common/loading/Loading";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import Toast from "@/app/_components/common/Tostify/Toast";
-import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface SingleStrategyItemProps {
   params: {
@@ -18,53 +19,55 @@ interface SingleStrategyItemProps {
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user } = useAuth();
+  const accessToken = getTokenFromStorage("access_token");
+  const [signalStrategy, setSignalStrategy] = useState<string | null>(user?.signal_strategy || null);
+  const [aiStrategy, setAiStrategy] = useState<string | null>(user?.ai_strategy || null);
+  const route = useRouter();
+  useEffect(() => {
+    setSignalStrategy(user?.signal_strategy || null);
+    setAiStrategy(user?.ai_strategy || null);
+  }, [])
+
   const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies/${params.singlestrategy}`, {
     method: "GET",
     next: { revalidate: 180 },
   });
 
-  if (loading) {
-    return <Loading />;
-  }
-
+  if (loading) return <Loading />;
   if (error) {
     toast.error("Error fetching strategy, please try again later.");
     return null;
   }
-
-
   async function InstallStrategy() {
-    try {
-      const accessToken = localStorage.getItem("access_token");
-      if (!accessToken) {
-        toast.error("You must be logged in to install a strategy.");
-        return;
-      }
-      if (user?.strategy){
-        return toast.info("You can only install one strategy")
-      }
-      const response = await fetch(`${API_BASE_URL}/users/me/strategy/${data.id}/install`, {
+    if (signalStrategy !== null || aiStrategy !== null) {
+      const response = await fetch(`${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+          authorization: `Bearer ${accessToken}`,
+        }
       });
-
       if (!response.ok) {
-        throw new Error("Failed to install the strategy. Please try again.");
+        toast.error("Error installing strategy, please try again later.");
+        return;
       }
-
       const responseData = await response.json();
-      console.log(responseData)
+      console.log(responseData.success);
       if (responseData.success) {
-        toast.success("strategy installed successfully");
+        if (data.bot_type === "signal") {
+          setSignalStrategy(data.name);
+          route.push("/dashboard/botanalysis");
+        }
+        else {
+          setAiStrategy(data.name);
+          route.push("/dashboard/botai");
+        }
+        toast.success("Strategy installed successfully.");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("An error occurred while installing the strategy.");
     }
-
-  }
+    else {
+      toast.error("You already have a strategy installed.");
+    }
+  };
 
   return (
     <>
@@ -72,25 +75,28 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
         <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
           <Image
-            src={data?.banner_url}
-            alt={`${data?.name} banner`}
+            src={data.banner_url}
+            alt={`${data.name} banner`}
             width={180}
             height={180}
-            className="h-fit"
+            className="h-full w-full"
           />
-          <Textbox titleClass="w-fit" title={data?.name} description={data?.description} />
+          <Textbox titleClass="w-fit" title={data.name} description={data.description} />
         </div>
         <div className="right mt-4 md:mt-0">
-          <button onClick={InstallStrategy}>
-            <MainBtn content="Install" btnProps="w-fit" />
+          <button
+            className="main-btn"
+            onClick={() => InstallStrategy()}
+          >
+            Install
           </button>
         </div>
       </div>
       <hr />
-      <div className="news-list py-3">
+      <div className="news-list p-3">
         <h3 className="text-2xl font-medium py-3">What&apos;s new</h3>
         <ol className="list-decimal px-2">
-          {data.whats_new?.map((el: string, index: number) => (
+          {data.whats_new.map((el: string, index: number) => (
             <li className="py-3" key={index}>
               {el}
             </li>

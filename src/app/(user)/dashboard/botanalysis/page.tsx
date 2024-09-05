@@ -6,7 +6,7 @@ import UserStrategy from "@/app/_components/common/user/UserStrategy";
 export default function page() {
   return (
     <>
-      <UserStrategy/>
+      <UserStrategy type="botanalysis"/>
       <div style={{ height: '60vh' }} className="my-6 pe-3">
         <TradingViewWidget />
       </div>

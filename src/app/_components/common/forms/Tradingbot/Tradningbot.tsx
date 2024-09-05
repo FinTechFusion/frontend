@@ -26,7 +26,7 @@ export default function TradingBotForm() {
   };
   return (
     <>
-      <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600	">Start Trading</h3>
+      <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">Start Trading</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
           <div>
