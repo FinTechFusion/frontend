@@ -107,7 +107,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       clearTokensFromStorage();
       setUser(null);
       router.push('/');
-      toast.success('Logged out');
    };
 
    const refreshAccessToken = async (): Promise<string> => {

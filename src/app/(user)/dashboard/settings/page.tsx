@@ -12,7 +12,6 @@ export default function Page() {
 
    if (isLoading) return <Loading />;
    if (error) toast.error(error);
-   if (!user) toast.error("Try login , again");
    return (
       <>
          {user ? <div className="container mx-auto px-5">
