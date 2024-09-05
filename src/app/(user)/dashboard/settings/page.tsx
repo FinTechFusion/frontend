@@ -50,10 +50,14 @@ export default function Page() {
             </div>
             <div className="account-setting border shadow-sm md:col-span-6 col-span-12 p-5 rounded-md h-full">
                <h3 className="text-2xl font-bold pb-8">Account Settings</h3>
-               <div className="flex justify-between items-center">
+               <div className="flex justify-start items-center">
                   <div>
-                     <p className="text-xl pb-2">Strategy</p>
-                     <b className="capitalize text-lg">{user?.strategy == null ? "No " : user?.strategy} Strategy</b>
+                     <p className="text-xl pb-2">Signal Strategy</p>
+                     <b className="capitalize text-lg">{user?.signal_strategy == null ? "No" : user?.signal_strategy} Strategy</b>
+                  </div>
+                  <div>
+                     <p className="text-xl pb-2">Ai Strategy</p>
+                     <b className="capitalize text-lg">{user?.ai_strategy == null ? "No" : user?.ai_strategy} Strategy</b>
                   </div>
                </div>
                <div className="grid md:grid-cols-3 grid-cols-1 justify-between items-center mt-4">
