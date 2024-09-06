@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import Loading from '@/app/_components/common/loading/Loading';
 import { getTokenFromStorage } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
-import { ndjsonStream } from 'can-ndjson-stream';
+// @ts-ignore
+import ndjsonStream from "can-ndjson-stream";
 
 // Define the expected shape of the log data
 interface Log {
