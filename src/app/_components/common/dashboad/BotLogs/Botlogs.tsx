@@ -34,14 +34,16 @@ export default function BotLogs() {
             }
 
             const reader = ndjsonStream(response.body).getReader();
+
+            console.log(response);
+            console.log(reader);
             const logs: Log[] = [];
 
-            while (true) {
-               const { done, value } = await reader.read();
-               if (done) break;
-               logs.push(value);
-            }
-            console.log(logs);
+            // while (true) {
+            //    const { done, value } = await reader.read();
+            //    if (done) break;
+            //    logs.push(value);
+            // }
             setLogs(logs);
             setIsLoading(false);
          } catch (error: any) {
