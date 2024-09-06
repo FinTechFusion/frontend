@@ -23,7 +23,7 @@ export default function BotLogs() {
                method: "GET",
                headers: {
                   "Content-Type": "application/json",
-                  Authorization: `Bearer ${accessToken}`,
+                  authorization: `Bearer ${accessToken}`,
                },
             });
 
