@@ -21,7 +21,7 @@ export default function BotLogs() {
    useEffect(() => {
       const fetchLogs = async () => {
          try {
-            const response = await fetch(`${API_BASE_URL}/orders/logs`, {
+            const response = await fetch(`${API_BASE_URL}/users/me/orders/logs`, {
                method: "GET",
                headers: {
                   "Content-Type": "application/json",

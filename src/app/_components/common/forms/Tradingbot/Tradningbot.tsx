@@ -16,7 +16,7 @@ type tradingBotType = {
 
 export default function TradingBotForm({ type }: tradingBotType) {
   const accessToken = getTokenFromStorage("access_token");
-  const { register, handleSubmit, formState: { errors } } = useForm<tradingbotType>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
@@ -41,6 +41,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
       console.log(responseData);
       if (responseData.success) {
         toast.success("Order created successfully");
+        reset();
       } else {
         toast.error(responseData?.detail);
       }
