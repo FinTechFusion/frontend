@@ -41,7 +41,7 @@ export default function BotLogs() {
                if (done) break;
                logs.push(value);
             }
-
+            console.log(logs);
             setLogs(logs);
             setIsLoading(false);
          } catch (error: any) {
