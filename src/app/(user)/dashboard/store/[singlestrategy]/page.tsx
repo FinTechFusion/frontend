@@ -20,54 +20,79 @@ interface SingleStrategyItemProps {
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user } = useAuth();
   const accessToken = getTokenFromStorage("access_token");
-  const [signalStrategy, setSignalStrategy] = useState<string | null>(user?.signal_strategy || null);
-  const [aiStrategy, setAiStrategy] = useState<string | null>(user?.ai_strategy || null);
-  const route = useRouter();
-  useEffect(() => {
-    setSignalStrategy(user?.signal_strategy || null);
-    setAiStrategy(user?.ai_strategy || null);
-  }, [])
+  const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
+  const [aiStrategy, setAiStrategy] = useState<string | null>(null);
+  const router = useRouter();
 
-  const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies/${params.singlestrategy}`, {
-    method: "GET",
-    next: { revalidate: 180 },
-  });
+  // Wait for `user` before setting strategies
+  useEffect(() => {
+    if (user) {
+      setSignalStrategy(user.signal_strategy || null);
+      setAiStrategy(user.ai_strategy || null);
+    }
+  }, [user]);
+
+  // Fetch strategy details
+  const { data, loading, error } = useFetch(
+    `${API_BASE_URL}/binance/strategies/${params.singlestrategy}`,
+    {
+      method: "GET",
+      next: { revalidate: 180 },
+    }
+  );
 
   if (loading) return <Loading />;
   if (error) {
     toast.error("Error fetching strategy, please try again later.");
     return null;
   }
+
+  // Check if `data` is available
+  if (!data) {
+    toast.error("No strategy data found.");
+    return null;
+  }
+
+  // Handle installation of the strategy
   async function InstallStrategy() {
-    if (signalStrategy !== null || aiStrategy !== null) {
-      const response = await fetch(`${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${accessToken}`,
+    if (!accessToken) {
+      toast.error("User not authenticated. Please log in.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
+        {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
+      );
+
       if (!response.ok) {
         toast.error("Error installing strategy, please try again later.");
         return;
       }
+
       const responseData = await response.json();
-      console.log(responseData.success);
+
       if (responseData.success) {
         if (data.bot_type === "signal") {
           setSignalStrategy(data.name);
-          route.push("/dashboard/botanalysis");
-        }
-        else {
+          router.push("/dashboard/botanalysis");
+        } else {
           setAiStrategy(data.name);
-          route.push("/dashboard/botai");
+          router.push("/dashboard/botai");
         }
         toast.success("Strategy installed successfully.");
       }
+    } catch (error) {
+      toast.error("Something went wrong, please try again later.");
+      console.error("Error installing strategy:", error);
     }
-    else {
-      toast.error("You already have a strategy installed.");
-    }
-  };
+  }
 
   return (
     <>
@@ -84,10 +109,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           <Textbox titleClass="w-fit" title={data.name} description={data.description} />
         </div>
         <div className="right mt-4 md:mt-0">
-          <button
-            className="main-btn"
-            onClick={() => InstallStrategy()}
-          >
+          <button className="main-btn" onClick={InstallStrategy}>
             Install
           </button>
         </div>
@@ -96,11 +118,15 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       <div className="news-list p-3">
         <h3 className="text-2xl font-medium py-3">What&apos;s new</h3>
         <ol className="list-decimal px-2">
-          {data.whats_new.map((el: string, index: number) => (
-            <li className="py-3" key={index}>
-              {el}
-            </li>
-          ))}
+          {data.whats_new && data.whats_new.length > 0 ? (
+            data.whats_new.map((el: string, index: number) => (
+              <li className="py-3" key={index}>
+                {el}
+              </li>
+            ))
+          ) : (
+              <li className="py-3">No new updates.</li>
+          )}
         </ol>
       </div>
     </>

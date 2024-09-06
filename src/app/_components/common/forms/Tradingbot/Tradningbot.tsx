@@ -7,8 +7,14 @@ import { MainBtn } from "../../Buttons/MainBtn";
 import { getTokenFromStorage } from '@/context/AuthContext';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
+import { toast } from "react-toastify";
+import Toast from "../../Tostify/Toast";
 
-export default function TradingBotForm() {
+type tradingBotType = {
+  type: 'signal' | 'ai';
+}
+
+export default function TradingBotForm({ type }: tradingBotType) {
   const accessToken = getTokenFromStorage("access_token");
   const { register, handleSubmit, formState: { errors } } = useForm<tradingbotType>({
     mode: "onBlur",
@@ -21,11 +27,35 @@ export default function TradingBotForm() {
     },
     next: { revalidate: 30 }
   });
+  async function createOrder(data: any) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}`, {
+        method: 'POST',
+        headers: {
+          'authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      if (responseData.success) {
+        toast.success("Order created successfully");
+      } else {
+        toast.error(responseData?.detail);
+      }
+    }
+    catch (error) {
+      toast.error("Order creation failed");
+    }
+
+  }
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    console.log(data)
+    createOrder(data);
   };
   return (
     <>
+      <Toast />
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">Start Trading</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
@@ -85,11 +115,11 @@ export default function TradingBotForm() {
           />
           <Input
             label="Max Cycles"
-            name="cycles_count"
+            name="cycles"
             type="number"
             placeholder="Max Cycles"
             register={register}
-            error={errors.cycles_count?.message}
+            error={errors.cycles?.message}
           />
         </div>
         <MainBtn content="Start" btnProps="w-fit" />

@@ -17,7 +17,7 @@ const tradingbotSchema = z.object({
       .number({ message: "Trailing stop loss is required" })
       .positive({ message: "Trailing stop loss must be greater than 0" })
       .max(100, { message: "Trailing stop loss must be at most 100" }),
-   cycles_count: z
+   cycles: z
       .number({ message: "Max cycles is required" })
       .int({ message: "Max cycles must be an integer" })
       .positive({ message: "Max cycles must be greater than 0" })

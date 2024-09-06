@@ -11,7 +11,7 @@ export default function page() {
         <TradingViewWidget />
       </div>
       <div className="tradingbot-form">
-        <TradingBotForm />
+        <TradingBotForm type="signal" />
         <div className="logs-conatiner  w-full">
           <BotLogs />
         </div>

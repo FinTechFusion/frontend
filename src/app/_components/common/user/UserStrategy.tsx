@@ -60,11 +60,9 @@ export default function UserStrategy({ type }: UserStrategyProps) {
          <div className="user-strategy py-5">
             <div className="flex justify-between items-center py-3">
                <h3 className="text-2xl font-medium">Strategy Used</h3>
-                
                   <Link href="/dashboard/store">
                      <MainBtn content="choose strategy" btnProps="w-fit" />
                   </Link>
-   
             </div>
             <hr />
 
