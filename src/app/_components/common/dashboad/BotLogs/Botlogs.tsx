@@ -1,12 +1,11 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import Loading from '@/app/_components/common/loading/Loading';
 import { getTokenFromStorage } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream";
 
-// Define the expected shape of the log data
 interface Log {
    timestamp: string;
    message: string;
@@ -14,57 +13,79 @@ interface Log {
 
 export default function BotLogs() {
    const [logs, setLogs] = useState<Log[]>([]);
-   const [isLoading, setIsLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
-   const accessToken = getTokenFromStorage("access_token");
+   const [rawOutput, setRawOutput] = useState<string[]>([]);
 
    useEffect(() => {
       const fetchLogs = async () => {
+         const accessToken = getTokenFromStorage("access_token");
+         if (!accessToken) {
+            console.error("No access token found");
+            setRawOutput(prev => [...prev, "Error: No access token found"]);
+            return;
+         }
+
          try {
             const response = await fetch(`${API_BASE_URL}/users/me/orders/logs`, {
                method: "GET",
                headers: {
-                  "Content-Type": "application/json",
                   authorization: `Bearer ${accessToken}`,
                },
             });
 
             if (!response.ok) {
-               throw new Error(`Error: ${response.status}`);
+               throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const reader = ndjsonStream(response.body).getReader();
+            const exampleStream = ndjsonStream(response.body);
+            const reader = exampleStream.getReader();
 
-            console.log(response);
-            console.log(reader);
-            const logs: Log[] = [];
+            const readChunk = async (): Promise<void> => {
+               const { done, value } = await reader.read();
+               if (done) {
+                  setRawOutput(prev => [...prev, "Stream complete"]);
+                  return;
+               }
 
-            // while (true) {
-            //    const { done, value } = await reader.read();
-            //    if (done) break;
-            //    logs.push(value);
-            // }
-            setLogs(logs);
-            setIsLoading(false);
-         } catch (error: any) {
-            setError(error.message);
-            setIsLoading(false);
+               // Log raw value
+               console.log("Received value:", value);
+               setRawOutput(prev => [...prev, JSON.stringify(value)]);
+
+               // Add to logs if it matches the Log interface
+               if (typeof value === 'object' && value !== null && 'timestamp' in value && 'message' in value) {
+                  setLogs(prevLogs => [...prevLogs, value as Log]);
+               }
+
+               await readChunk();
+            };
+
+            await readChunk();
+         } catch (err) {
+            console.error("Error fetching logs:", err);
+            setRawOutput(prev => [...prev, `Error: ${err instanceof Error ? err.message : "An unknown error occurred"}`]);
          }
       };
 
       fetchLogs();
    }, []);
 
-   if (isLoading) return <Loading />;
-   if (error) return <p>{error}</p>;
-
    return (
       <div className="bot-logs py-2">
-         <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">Bot Logs</h3>
+         <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">
+            Bot Logs
+         </h3>
          <div className="log-output bg-gray-200 p-3 my-2 rounded-md overflow-y-auto max-h-52">
+            <h4 className="font-bold">Parsed Logs:</h4>
             {logs.map((log, index) => (
                <p key={index} className="bg-gray-100 text-lg p-2 rounded-md my-3">
-                  {log.timestamp} - {log.timestamp}
+                  {log.timestamp} - {log.message}
+               </p>
+            ))}
+         </div>
+         <div className="raw-output bg-gray-200 p-3 my-2 rounded-md overflow-y-auto max-h-52">
+            <h4 className="font-bold">Raw Output:</h4>
+            {rawOutput.map((output, index) => (
+               <p key={index} className="bg-gray-100 text-sm p-2 rounded-md my-1 font-mono">
+                  {output}
                </p>
             ))}
          </div>

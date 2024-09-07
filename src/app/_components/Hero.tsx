@@ -2,6 +2,9 @@ import Image from "next/image";
 import homeImage from '/public/assets/images/headerimg.webp';
 import Link from "next/link";
 import { MainBtn } from "./common/Buttons/MainBtn";
+import dynamic from "next/dynamic";
+const BinancePopup = dynamic(() => import("./Popups/BinancePopup"), { ssr: false });
+
 export default function Hero() {
    return (
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-12 md:justify-center justify-start items-start md:space-x-40 md:space-y-0 space-y-4 md:min-h-[vh] min-h-[95vh] mt-12" >
@@ -25,6 +28,7 @@ export default function Hero() {
                sizes="(max-width: 768px) 100vw, 800px"
             />
          </div>
+         <BinancePopup />
       </div >
    )
 }
