@@ -1,19 +1,22 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
 export default function BinancePopup() {
-   // Initialize state based on localStorage to prevent flickering on page load
-   const [isVisible, setIsVisible] = useState(() => {
-      // Check if the popup has been dismissed on the initial render
-      if (typeof window !== 'undefined') {
-         return !localStorage.getItem("binancePopupDismissed");
-      }
-      return false; // Default to not showing if running server-side
-   });
-
+   const [isVisible, setIsVisible] = useState(false); // Initially set to false
    const { user } = useAuth();
+
+   useEffect(() => {
+      // Delay showing the popup for 2 seconds
+      const timer = setTimeout(() => {
+         if (!localStorage.getItem("binancePopupDismissed")) {
+            setIsVisible(true);
+         }
+      }, 2000);
+
+      return () => clearTimeout(timer); // Clear the timer on component unmount
+   }, []);
 
    // Handle dismissing the popup
    const handleMarkAsRead = () => {
@@ -55,7 +58,10 @@ export default function BinancePopup() {
                      Connect
                   </Link>
 
-                  <button className="mt-2 inline-block w-full rounded-lg bg-gray-50 px-5 py-3 text-center text-sm font-semibold text-gray-500 sm:mt-0 sm:w-auto hover:bg-primary-600 hover:text-secondary" onClick={handleMarkAsRead}>
+                  <button
+                     className="mt-2 inline-block w-full rounded-lg bg-gray-50 px-5 py-3 text-center text-sm font-semibold text-gray-500 sm:mt-0 sm:w-auto hover:bg-primary-600 hover:text-secondary"
+                     onClick={handleMarkAsRead}
+                  >
                      Mark as Read
                   </button>
                </div>
