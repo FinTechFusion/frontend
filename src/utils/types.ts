@@ -40,7 +40,6 @@ export interface User {
    is_verified?: boolean;
    is_active?: boolean;
    is_binance?: boolean;
-
    data?:Object
 }
 

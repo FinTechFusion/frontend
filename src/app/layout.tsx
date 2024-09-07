@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Roboto } from 'next/font/google';
 import "../styles/globals.css";
 import { AuthProvider } from '@/context/AuthContext';
+import AuthGuard from "@/context/AuthGuard";
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["100", "300", "400", "500", "700"] });
 
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className={`${roboto.className}`}>
         <AuthProvider>
-          {children}
+          <AuthGuard>
+            {children}
+          </AuthGuard>
         </AuthProvider>
       </body>
     </html>

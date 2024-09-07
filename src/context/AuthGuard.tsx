@@ -17,7 +17,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
       const accessToken = localStorage.getItem("access_token");
 
       if (!accessToken) {
-         if (pathname.startsWith('/dashboard')) {
+         if (pathname.startsWith('/dashboard') || pathname.startsWith("/site/exchange")) {
             router.push('/login');
          }
       } else {
