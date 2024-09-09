@@ -18,19 +18,10 @@ interface SingleStrategyItemProps {
 }
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
-  const { user } = useAuth();
+  const { user,fetchUserData } = useAuth();
   const accessToken = getTokenFromStorage("access_token");
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
-  const router = useRouter();
-
-  // Wait for `user` before setting strategies
-  useEffect(() => {
-    if (user) {
-      setSignalStrategy(user.signal_strategy || null);
-      setAiStrategy(user.ai_strategy || null);
-    }
-  }, [user]);
 
   // Fetch strategy details
   const { data, loading, error } = useFetch(
@@ -41,56 +32,56 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
     }
   );
 
+  // Update the state based on the user's installed strategies
+  useEffect(() => {
+    if (user) {
+      setSignalStrategy(user.signal_strategy);
+      setAiStrategy(user.ai_strategy);
+    }
+  }, [user]);
+
   if (loading) return <Loading />;
   if (error) {
     toast.error("Error fetching strategy, please try again later.");
     return null;
   }
 
-  // Check if `data` is available
-  if (!data) {
-    toast.error("No strategy data found.");
-    return null;
-  }
-
   // Handle installation of the strategy
   async function InstallStrategy() {
-    if (!accessToken) {
-      toast.error("User not authenticated. Please log in.");
+    if (data.bot_type === "signal" && signalStrategy != null) {
+      toast.error("You must only install one signal strategy");
       return;
-    }
+    } else if (data.bot_type === "ai" && aiStrategy != null) {
+      toast.error("You must only install one AI strategy");
+      return;
+    } else {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
+          {
+            method: "POST",
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
-        {
-          method: "POST",
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
+        if (!response.ok) {
+          toast.error("Error installing strategy, please try again later.");
+          return;
         }
-      );
 
-      if (!response.ok) {
-        toast.error("Error installing strategy, please try again later.");
-        return;
-      }
+        const responseData = await response.json();
 
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        if (data.bot_type === "signal") {
-          setSignalStrategy(data.name);
-          router.push("/dashboard/botanalysis");
-        } else {
-          setAiStrategy(data.name);
-          router.push("/dashboard/botai");
+        if (responseData.success) {
+          toast.success("Strategy installed successfully.");
+          if (accessToken) {
+            fetchUserData(accessToken);
+          }       
         }
-        toast.success("Strategy installed successfully.");
+      } catch (error) {
+        toast.error("Something went wrong, please try again later.");
       }
-    } catch (error) {
-      toast.error("Something went wrong, please try again later.");
-      console.error("Error installing strategy:", error);
     }
   }
 

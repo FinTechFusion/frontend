@@ -8,26 +8,27 @@ import { toast } from "react-toastify";
 import Toast from "../Tostify/Toast";
 
 type UserStrategyProps = {
-   type: string;
+   type: "signal" | "ai";
 };
 
 export default function UserStrategy({ type }: UserStrategyProps) {
-   const { user } = useAuth();
+   const { user, fetchUserData } = useAuth(); 
    const accessToken = getTokenFromStorage("access_token");
    const [currentStrategy, setCurrentStrategy] = useState<string | null>(null);
 
-   // Initialize the current strategy based on the user and type
    useEffect(() => {
-      if (user) {
-         setCurrentStrategy(type === "botanalysis" ? "signal" : "ai");
+      if (type === "signal") {
+         setCurrentStrategy(user?.signal_strategy || null);
+      } else if (type === "ai") {
+         setCurrentStrategy(user?.ai_strategy || null);
       }
-   }, [type, user]);
+   }, [user, type]);
 
    async function UnInstallStrategy() {
       if (currentStrategy !== null) {
          try {
             const response = await fetch(
-               `${API_BASE_URL}/users/me/strategy/${currentStrategy}/uninstall`,
+               `${API_BASE_URL}/users/me/strategy/${type}/uninstall`,
                {
                   method: "POST",
                   headers: {
@@ -41,42 +42,40 @@ export default function UserStrategy({ type }: UserStrategyProps) {
             }
 
             const responseData = await response.json();
-            console.log(responseData)
             if (responseData.success) {
                toast.success("Strategy uninstalled successfully");
-               // Update state to remove the current strategy from the UI
-               setCurrentStrategy(null);
+               if (accessToken) {
+                  fetchUserData(accessToken);
+               }
+               setCurrentStrategy(null); 
             } else {
                toast.error("Failed to uninstall strategy");
             }
          } catch (error) {
             toast.error("Error occurred while uninstalling, try again later");
-         }
+         } 
       }
    }
    return (
       <>
          <Toast />
-         <div className="user-strategy py-5">
-            <div className="flex justify-between items-center py-3">
-               <h3 className="text-2xl font-medium">Strategy Used</h3>
+         {currentStrategy ? (
+            <div className="user-strategy py-5">
+               <div className="flex justify-between items-center py-3">
+                  <h3 className="text-xl font-medium">Strategy Used</h3>
                   <Link href="/dashboard/store">
                      <MainBtn content="choose strategy" btnProps="w-fit" />
                   </Link>
-            </div>
-            <hr />
-
-            {(type === "botanalysis" && user?.signal_strategy) && (
+               </div>
+               <hr />
                <div className="md:w-1/3 my-5">
                   <div className="strategy-card p-4 shadow-sm">
                      <h3 className="text-3xl font-bold tracking-wide capitalize">
-                        {currentStrategy === "signal" ? user?.signal_strategy : user?.ai_strategy}
+                        {currentStrategy}
                      </h3>
                      <span className="block py-5 text-lg">Spot Strategy</span>
                      <div className="pb-4">
-                        <span id="ProgressLabel" className="sr-only">
-                           Loading
-                        </span>
+                        <span id="ProgressLabel" className="sr-only">Loading</span>
                         <span
                            role="progressbar"
                            aria-labelledby="ProgressLabel"
@@ -90,15 +89,21 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                      </div>
 
                      <button
-                        className="bg-primary-600 hover:bg-primary-700 rounded-md p-2 text-secondary capitalize text-lg cursor-pointer tracking-wide"
+                        className={`bg-primary-600 hover:bg-primary-700 rounded-md p-2 text-secondary capitalize text-lg cursor-pointer tracking-wide`}
                         onClick={UnInstallStrategy}
                      >
-                        Uninstall
+                        uninstall
                      </button>
                   </div>
                </div>
+            </div>
+         ) : (
+               <div className="flex justify-between items-center py-3">
+                  <Link href="/dashboard/store">
+                     <MainBtn content="choose strategy" btnProps="w-fit" />
+                  </Link>
+               </div>
             )}
-         </div>
       </>
    );
 }

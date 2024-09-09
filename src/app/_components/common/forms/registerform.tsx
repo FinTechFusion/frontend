@@ -32,7 +32,7 @@ export default function RegisterForm() {
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
       if (!turnstileToken) {
-         toast.error("Turnstile verification required.");
+         toast.error("Please complete the CAPTCHA");
          return;
       }
 
@@ -95,7 +95,7 @@ export default function RegisterForm() {
             </div>
             <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
             <div id="turnstile-container" className="cf-turnstile w-100"></div>
-            {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>}
+            {/* {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>} */}
             <div className="register-btn">
                {isLoading ? <SpinBtn content="creating" btnProps="w-full" /> : <MainBtn content="create" btnProps="w-full" />}
             </div>
