@@ -9,9 +9,8 @@ export interface Heading {
    title: string;
 }
 export interface FeatureCard extends TextBox {
-   buttonContent: string;
-   cardImg?: any;
-   altText?: any
+   buttonContent?: string;
+   icon?: any;
 }
 export interface TextData {
    content: string
@@ -93,4 +92,13 @@ export interface AssetData {
    quantity: number;
    price_change_percent: number;
    last_price: number;
+}
+export interface assetsProps {
+   data: {
+      symbol: string;
+      quantity: number;
+      priceChangePercent: number;
+      lastPrice: number;
+      total: number;
+   }[];
 }

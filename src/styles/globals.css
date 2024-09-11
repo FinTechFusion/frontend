@@ -21,6 +21,9 @@ body {
 section {
    margin: 48px 0px;
 }
+ul li::marker {
+   @apply text-primary-700;
+}
 /* src/styles/global.css */
 .main-btn {
    @apply bg-primary-600 hover:bg-primary-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide;

@@ -63,9 +63,9 @@ export default function UserStrategy({ type }: UserStrategyProps) {
             <div className="user-strategy py-5">
                <div className="flex justify-between items-center py-3">
                   <h3 className="text-xl font-medium">Strategy Used</h3>
-                  <Link href="/dashboard/store">
-                     <MainBtn content="choose strategy" btnProps="w-fit" />
-                  </Link>
+                  {currentStrategy == null && <Link href="/dashboard/store">
+                     <MainBtn content="choose strategy" btnProps="w-fit text-sm" />
+                  </Link>}
                </div>
                <hr />
                <div className="md:w-1/3 my-5">

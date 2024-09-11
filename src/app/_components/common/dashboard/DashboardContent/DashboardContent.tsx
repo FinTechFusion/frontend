@@ -3,12 +3,13 @@
 import { useAuth } from '@/context/AuthContext';
 import { useAssetData } from '@/context/AssetsContext';
 import { MainBtn } from "../../Buttons/MainBtn";
-import Tradingopportunity from "../opportunity/Tradingopportunity";
 import BinanceConnectStatus from "../../binance/BinanceConnectStatus";
 import TokensTable from "../../binance/TokensTable";
 import PriceChangeLineChart from "../charts/LineChart";
 import Loading from '@/app/_components/common/loading/Loading';
 import { AssetData } from '@/utils/types';
+import Tradingopportunity from '../opportunity/Tradingopportunity';
+import PieChartDigram from '../charts/PieChart';
 
 function DashboardContent() {
    const { assetData, errorMessage, assetLoading } = useAssetData();
@@ -29,18 +30,19 @@ function DashboardContent() {
 
    return (
       <>
-         <div className="py-5 my-5 shadow rounded-md">
-            <div className="flex justify-between items-center px-3">
+         <div className="py-5 my-5 shadow rounded-md flex md:flex-row flex-col md:gap-6 justify-between items-center">
+            {/* <div className="flex justify-between items-center px-3">
                <h4 className='text-xl font-medium'>Dashboard</h4>
                <MainBtn content='Product Tour' btnProps="text-lg" />
-            </div>
+            </div> */}
             <Tradingopportunity />
+            {user.is_binance && formattedData.length > 0 && <PieChartDigram data={formattedData} />}
          </div>
          {user?.is_binance ?
             <>
                <TokensTable />
                <div className="grid justify-start items-start md:grid-cols-1 gap-5 grid-cols-1">
-                  <PriceChangeLineChart data={formattedData} />
+                  {formattedData.length > 0 && <PriceChangeLineChart data={formattedData} />}
                </div>
             </>
             : <BinanceConnectStatus />

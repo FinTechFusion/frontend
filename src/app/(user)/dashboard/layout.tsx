@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Sidebar from "@/app/_components/common/dashboad/sidebar/SideBar";
-import Headerdash from "@/app/_components/common/dashboad/Headerdash/Headerdash";
 import { SidebarProvider } from '@/context/SidebarContext';
+import Sidebar from "@/app/_components/common/dashboard/sidebar/SideBar";
+import Headerdash from "@/app/_components/common/dashboard/Headerdash/Headerdash";
 
 export const metadata: Metadata = {
    title: "FinTech Fusion",

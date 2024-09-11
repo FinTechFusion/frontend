@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Tradingopportunity() {
    return (
-      <div className="p-5 md:w-3/5 w-full">
+      <div className="p-5 md:w-2/3 w-full">
          <div className="pb-4">
             <Textbox title="Trading Opportunities" description="user our made strategies from store page trading strategies designed for different market conditions. A simple and quick way to start automated trading." descriptionClass="text-lg" />
          </div>
