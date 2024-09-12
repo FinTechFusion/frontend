@@ -2,6 +2,7 @@
 import PlanCard from '@/app/_components/common/plans/PlanCard';
 import PlansToggle from '@/app/_components/common/plans/PlansToggle';
 import ToggleChange from '@/app/_components/common/plans/ToggleChange';
+import BenfitsSubscription from '@/app/_components/common/supscription/BenfitsSubscription';
 
 const page = () => {
   const { selectedPlanType, handleTabChange } = ToggleChange();
@@ -13,6 +14,7 @@ const page = () => {
       <>
         <PlanCard selectedPlanType={selectedPlanType} />
       </>
+      <BenfitsSubscription />
     </section>
   );
 };

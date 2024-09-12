@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import TextInfo from '@/app/_components/common/Text/TextInfo'
 import Textbox from '@/app/_components/common/Text/Textbox'
-import botaiImg from "/public/assets/images/botaiImg.webp";
+import Link from "next/link";
+import botaiImg from "/public/assets/images/botaiImg.jpg";
 import { CgTrending } from "react-icons/cg";
 import { MdAnalytics } from "react-icons/md";
 import { GiBriefcase } from "react-icons/gi";
@@ -11,12 +11,15 @@ export default function page() {
    return (
       <>
          <section className='container mx-auto px-2'>
-            <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 md:gap-x-6 md:gap-y-0 py-8 ">
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-y-6 md:gap-x-6 md:gap-y-0 py-8 ">
                <div className="botanylsis-content lg:w-2/3 w-full">
                   <Textbox titleClass="w-fit me-auto" title="Unlock the Power of AI-Driven Investing"
-                     description="Bot AI is a revolutionary investment assistant that uses advanced algorithms to optimize your trading strategy and maximize your returns." />
-                  <TextInfo content="For instance, investing a large amount at once risks high entry points, potentially leading to losses if the market dips. Bot AI, however, evaluates market conditions in real-time, deciding the best moments to distribute your investment across different price levels." />
-                  <TextInfo content="Bot AI buys at different prices, getting you a better average cost and cutting the risk of market ups and downs. With smart analysis and planning, it aims for smarter, safer investments by following market trends." />
+                     description="Bot AI is an advanced investment assistant that optimizes trading strategies to maximize returns. It evaluates real-time market conditions to distribute investments across different price levels, reducing the risk of market fluctuations. By buying at various prices, it secures a better average cost. Bot AI’s smart analysis and planning ensure smarter, safer investments by following market trends and minimizing risks." />
+
+                  <Link href="/dashboard/botai">
+                     <MainBtn content="try Bot Ai" btnProps="w-fit" />
+                  </Link>
+
                </div>
                <div className="botanylasis-Image md:w-1/3 w-full">
                   <Image
@@ -29,7 +32,7 @@ export default function page() {
                </div>
             </div>
          </section>
-         <section className="bg-gray-100 py-12 px-1">
+         <section className="bg-gray-100 py-12 md:px-1 px-3">
             <div className="container mx-auto">
                <div className="content-botAi ">
                   <Textbox titleClass='w-fit mx-start' title='Explore Bot AI' description='Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions. Check out the video below to see it in action.' />
@@ -44,7 +47,7 @@ export default function page() {
                         </ul>
                         <MainBtn content="Explore Bot AI" btnProps='w-fit' />
                      </div>
-                     <div className='bot-ai-states md:mx-auto md:text-center'>
+                     <div className='bot-ai-states md:mx-auto md:text-center '>
                         <div className="state-1 my-4">
                            <h4 className='text-xl py-2'>PRICE WITH BOT AI</h4>
                            <span className='text-3xl font-extrabold text-primary-600'>$70.00</span>

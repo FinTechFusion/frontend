@@ -45,7 +45,7 @@ export default function Sidebar() {
                   content="Subscription"
                   weight='font-normal'
 
-                  path="/binance/connect/apikey/subscription"
+                  path="/dashboard/subscription"
                />
                <SidebarLink
                   icon={<FaGear className="px-2 text-4xl" />}

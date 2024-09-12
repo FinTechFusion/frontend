@@ -100,7 +100,6 @@ const TableOrders: React.FC = () => {
          setRowData(data.data);
       } catch (error) {
          console.error('Error fetching user orders:', error);
-         toast.error('Failed to load orders');
       } finally {
          setLoading(false);
       }

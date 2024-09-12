@@ -25,11 +25,11 @@ export default function BinanceConnect() {
           </button>
         </Link>}
       </div>
-      <div className="flex justify-end">
+      <div className="flex md:justify-end justify-center">
         <Image
           src={binanceImage}
           alt="Binance"
-          className="w-[85%] rounded"
+          className="md:w-[85%] rounded w-full"
         />
       </div>
     </div>

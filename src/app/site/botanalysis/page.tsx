@@ -1,7 +1,6 @@
 import Textbox from "@/app/_components/common/Text/Textbox";
 import Image from "next/image";
 import botanaylsisImg from "/public/assets/images/robot-analysis.png";
-import TextInfo from "@/app/_components/common/Text/TextInfo";
 import InvestingScenario from "@/app/_components/common/InvestingScenario";
 import Link from "next/link";
 import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
@@ -11,13 +10,9 @@ export default function page() {
          <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 md:gap-x-6 md:gap-y-0 py-8 ">
             <div className="botanylsis-content lg:w-2/3 w-full">
                <Textbox titleClass="w-fit me-auto" title="Unlock Your Trading Potential with Bot Analysis"
-                  description="Imagine a world where you can make informed, 
-            profitable trading decisions with the help of a powerful AI-driven trading assistant.
-            Bot Analysis is the solution you've been waiting for." />
-               <TextInfo content="For instance, trading without data analysis is like investing a lump sum blindly, risking high buys followed by market drops, leading to tough decisions on holding or selling at a loss." />
-               <TextInfo content="Bot Analysis, however, segments your strategy over time, whether for quick trades or month-long investments. It analyzes and suggests entry and exit points, smoothing out market
-               volatility and aiming for the best average entry and exit prices, thus safeguarding your investments against market unpredictability." />
-               <Link href="/">
+                  description="Bot Analysis is an AI-driven trading assistant that helps you make informed, profitable decisions. It segments your trading strategy over time, analyzing and suggesting optimal entry and exit points for trades. This smooths out market volatility and targets the best average prices. By doing so, it protects your investments from market unpredictability. With Bot Analysis, you avoid the risks of trading without data and gain smarter, more strategic trading insights." />
+
+               <Link href="/dashboard/botanalysis">
                   <MainBtn content="try Bot Analysis" btnProps="w-fit" />
                </Link>
             </div>

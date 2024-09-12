@@ -15,7 +15,7 @@ function DashboardContent() {
    const { assetData, errorMessage, assetLoading } = useAssetData();
    const { user } = useAuth();
 
-   if (!user || assetLoading) {
+   if (!user) {
       return <Loading />;
    }
 
