@@ -25,15 +25,15 @@ export default function PlanCard({ selectedPlanType }: PlanCardProps) {
       method: "GET",
       next: { revalidate: 120 }
    })
-   // if (loading) {
-   //    return <Loading />
-   // }
+   if (loading) {
+      return <Loading />
+   }
    console.log(data)
    const filteredPlans = data?.filter((plan: PlanType) => {
       return plan.frequency === selectedPlanType ||
          (selectedPlanType === "monthly" && plan.frequency === "trial");
    }).filter((plan: PlanType) => plan.id != 'beginner_monthly');
-  console.log(filteredPlans);
+   console.log(filteredPlans);
    return (
       <div className="grid md:grid-cols-3 grid-cols-1 gap-6">
          {filteredPlans?.map((plan: PlanType, index: number) => {

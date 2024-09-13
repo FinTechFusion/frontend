@@ -1,8 +1,8 @@
 
+import NotSubscripe from "@/app/_components/common/supscription/NotSubscripe";
+
 export default function Page() {
-
-
    return (
-      <h2>Heloo</h2>
+      <NotSubscripe />
    );
 }

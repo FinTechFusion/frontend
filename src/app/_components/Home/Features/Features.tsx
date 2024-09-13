@@ -1,4 +1,5 @@
 import { FaRobot, FaChartLine, FaCogs, FaTachometerAlt, FaShieldAlt, FaUserAlt } from 'react-icons/fa';
+import MainCard from '../../common/Cards/MainCard';
 
 type Feature = {
    title: string;
@@ -21,13 +22,7 @@ export default function Features() {
       <div className="features py-6">
          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 justify-center items-center py-6">
             {features.map((feature, index) => (
-               <div key={index} className="bg-gray-100 rounded py-8 px-4 h-full">
-                  <div className="mb-4 flex md:flex-row flex-col justify-start items-start md:space-x-3 space-y-3">
-                     <i className="text-primary-600 text-3xl bg-secondary p-3 rounded-full">{feature.icon}</i>
-                     <h3 className="text-xl font-bold mb-2 hover:text-primary-600">{feature.title}</h3>
-                  </div>
-                  <p className="text-gray-600 text-xl">{feature.description}</p>
-               </div>
+               <MainCard key={index} title={feature.title} description={feature.description} icon={feature.icon} />
             ))}
          </div>
       </div>

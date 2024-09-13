@@ -5,6 +5,11 @@ export interface TextBox {
    titleClass?: string;
    descriptionClass?: string;
 }
+export interface MainCardProps {
+   icon: any,
+   title: string;
+   description: string;
+}
 export interface Heading {
    title: string;
 }

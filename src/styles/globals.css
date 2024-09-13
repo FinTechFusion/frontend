@@ -21,6 +21,7 @@ body {
 section {
    margin: 48px 0px;
 }
+
 ul li::marker {
    @apply text-primary-700;
 }
