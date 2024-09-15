@@ -35,7 +35,7 @@ export default function AccountSetting({ user }: { user: User }) {
             <h3 className="text-3xl font-medium mb-6 flex items-center ">
                <FaGear className="mr-3" /> Account Settings
             </h3>
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-6">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-6 justify-between items-start">
                <div>
                   <p className="text-xl font-medium mb-2 flex items-center">
                      <FaSignal className="mr-2" /> Signal Strategy

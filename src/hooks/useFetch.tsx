@@ -16,7 +16,7 @@ const useFetch = (url: string, options?: FetchOptions): any => {
             if (!response.ok) {
                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            const data = await response.json();
+            const {data} = await response.json();
             setData(data);
          } catch (err) {
             setError((err as Error).message);

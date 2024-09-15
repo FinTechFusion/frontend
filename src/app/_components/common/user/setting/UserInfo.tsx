@@ -3,7 +3,6 @@ import { CiUser } from "react-icons/ci";
 
 export default function UserInfo({ user }: { user: User }) {
    const { first_name, last_name, email, phone_number } = user;
-
    return (
       <div className="md:col-span-8 col-span-12 text-start">
          <div className="user-data flex justify-start items-center">

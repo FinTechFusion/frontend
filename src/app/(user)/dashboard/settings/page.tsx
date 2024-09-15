@@ -9,7 +9,6 @@ import AccountSetting from '@/app/_components/common/user/setting/AccountSetting
 
 export default function Page() {
    const { user, isLoading, error, logout } = useAuth();
-
    if (isLoading) return <Loading />;
    if (error) toast.error(error);
    return (
