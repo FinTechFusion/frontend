@@ -1,5 +1,4 @@
 "use cleint"
-
 import { useAuth } from "@/context/AuthContext";
 
 export default function Subscription() {

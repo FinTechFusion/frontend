@@ -1,5 +1,5 @@
 "use client"
-import PlanCard from '@/app/_components/common/plans/PlanCard';
+import Plans from '@/app/_components/common/plans/Plans';
 import PlansToggle from '@/app/_components/common/plans/PlansToggle';
 import ToggleChange from '@/app/_components/common/plans/ToggleChange';
 import BenfitsSubscription from '@/app/_components/common/supscription/BenfitsSubscription';
@@ -12,7 +12,7 @@ const page = () => {
         <PlansToggle onTabChange={handleTabChange} />
       </div>
       <>
-        <PlanCard selectedPlanType={selectedPlanType} />
+        <Plans excludedPlanId='beginner_monthly' selectedPlanType={selectedPlanType} />
       </>
       <BenfitsSubscription />
     </section>

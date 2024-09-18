@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { getTokenFromStorage } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
-// @ts-ignore
-// import ndjsonStream from "can-ndjson-stream";
 
 interface Log {
    timestamp: string;
@@ -16,58 +14,6 @@ export default function BotLogs() {
    const [rawOutput, setRawOutput] = useState<string[]>([]);
    const accessToken = getTokenFromStorage("access_token");
 
-   // useEffect(() => {
-   // const fetchLogs = async () => {
-   //    const accessToken = getTokenFromStorage("access_token");
-   //    if (!accessToken) {
-   //       console.error("No access token found");
-   //       setRawOutput(prev => [...prev, "Error: No access token found"]);
-   //       return;
-   //    }
-
-   //    try {
-   //       const response = await fetch(`${API_BASE_URL}/users/me/orders/logs`, {
-   //          method: "GET",
-   //          headers: {
-   //             authorization: `Bearer ${accessToken}`,
-   //          },
-   //       });
-
-   //       if (!response.ok) {
-   //          throw new Error(`HTTP error! status: ${response.status}`);
-   //       }
-
-   //       const exampleStream = ndjsonStream(response.body);
-   //       const reader = exampleStream.getReader();
-
-   //       const readChunk = async (): Promise<void> => {
-   //          const { done, value } = await reader.read();
-   //          if (done) {
-   //             setRawOutput(prev => [...prev, "Stream complete"]);
-   //             return;
-   //          }
-
-   //          // Log raw value
-   //          console.log("Received value:", value);
-   //          setRawOutput(prev => [...prev, JSON.stringify(value)]);
-
-   //          // Add to logs if it matches the Log interface
-   //          if (typeof value === 'object' && value !== null && 'timestamp' in value && 'message' in value) {
-   //             setLogs(prevLogs => [...prevLogs, value as Log]);
-   //          }
-
-   //          await readChunk();
-   //       };
-
-   //       await readChunk();
-   //    } catch (err) {
-   //       console.error("Error fetching logs:", err);
-   //       setRawOutput(prev => [...prev, `Error: ${err instanceof Error ? err.message : "An unknown error occurred"}`]);
-   //    }
-   // };
-   // fetchLogs();
-   // }, []);
-
    useEffect(() => {
       async function fetchLogs() {
          try {
@@ -76,19 +22,59 @@ export default function BotLogs() {
                headers: {
                   authorization: `Bearer ${accessToken}`,
                },
-            })
+            });
             if (!response.ok) {
                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
-            console.log(data);
-         }
-         catch (err) {
-            console.log(err)
+
+            if (!response.body) {
+               throw new Error("ReadableStream not supported or response body is null.");
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let ndjson = '';
+
+            while (true) {
+               const { done, value } = await reader.read();
+               if (done) break;
+               ndjson += decoder.decode(value, { stream: true });
+
+               let lines = ndjson.split('\n');
+               ndjson = lines.pop() || ''; // Keep the last incomplete line
+
+               lines.forEach(line => {
+                  if (line.trim()) {
+                     try {
+                        const logEntry = JSON.parse(line);
+                        setLogs(prevLogs => [...prevLogs, logEntry]);
+                        setRawOutput(prevRaw => [...prevRaw, line]);
+                     } catch (parseError) {
+                        console.error('Error parsing line:', line, parseError);
+                     }
+                  }
+               });
+            }
+
+            // Parse any remaining data
+            if (ndjson.trim()) {
+               try {
+                  const logEntry = JSON.parse(ndjson);
+                  setLogs(prevLogs => [...prevLogs, logEntry]);
+                  setRawOutput(prevRaw => [...prevRaw, ndjson]);
+               } catch (parseError) {
+                  console.error('Error parsing remaining data:', ndjson, parseError);
+               }
+            }
+
+         } catch (err) {
+            console.log('Fetch error:', err);
          }
       }
-      fetchLogs()
+
+      fetchLogs();
    }, []);
+
    return (
       <div className="bot-logs py-2">
          <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">
@@ -112,8 +98,4 @@ export default function BotLogs() {
          </div>
       </div>
    );
-
 }
-
-
-

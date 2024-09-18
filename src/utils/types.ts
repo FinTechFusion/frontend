@@ -60,6 +60,15 @@ export interface AuthContextType {
    error: string | null;
    fetchUserData: (access_token: string) => any
 }
+export interface PlanType {
+   id: string,
+   name: string,
+   price: number,
+   description: string,
+   frequency: string,
+   features: string[],
+}
+
 export type Strategy = {
    id: string;
    name: string;
