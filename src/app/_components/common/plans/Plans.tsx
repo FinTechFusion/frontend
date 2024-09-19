@@ -42,7 +42,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          const result = await response.json();
          if (result.success && result.data.client_secret) {
             // Redirect to PaymentPage with clientSecret
-            // router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
+            router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
 
          }
       } catch (error) {
