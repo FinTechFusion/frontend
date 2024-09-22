@@ -20,12 +20,11 @@ export default function Page() {
                   <div className="md:col-span-4 col-span-12 md:text-end md:mt-0 mt-8">
                      <MainBtn content="Edit Profile" btnProps="w-fit" />
                   </div>
-
                </div>
             </div>
             <AccountSetting user={user} />
             <BinanceConnectStatus />
-            <button className='bg-red-600 hover:bg-red-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide w-fit my-3' onClick={logout}>logout</button>
+            {/* <button className='bg-red-600 hover:bg-red-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide w-fit my-3' onClick={logout}>logout</button> */}
          </div> : <Loading />}
       </>
    )
