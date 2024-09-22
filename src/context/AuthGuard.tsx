@@ -10,23 +10,37 @@ interface AuthGuardProps {
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const [isLoading, setIsLoading] = useState(true);
+   const [isAuthenticated, setIsAuthenticated] = useState(false);
    const router = useRouter();
    const pathname = usePathname();
 
    useEffect(() => {
-      const accessToken = localStorage.getItem("access_token");
+      const checkAuth = () => {
+         try {
+            const accessToken = localStorage.getItem("access_token");
+            setIsAuthenticated(!!accessToken);
 
-      if (!accessToken) {
-         if (pathname.startsWith('/dashboard') || pathname.startsWith("/site/exchange")) {
-            router.push('/login');
-         }
-      } else {
-         if (pathname == '/login' || pathname == "/forget-password" || pathname == "/reset-password") {
-            router.push('/dashboard');
-         }
-      }
+            const protectedRoutes = ['/dashboard', '/site/exchange'];
+            const authRoutes = ['/login', '/forget-password', '/reset-password'];
 
-      setIsLoading(false);
+            const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route)) || pathname.includes('payment');
+            const isAuthRoute = authRoutes.includes(pathname);
+
+            if (!accessToken && isProtectedRoute) {
+               router.push('/login');
+               sessionStorage.setItem("path", pathname);
+            } else if (accessToken && isAuthRoute) {
+               router.push('/dashboard');
+            }
+            // Note: We're not redirecting for /site/plans or any other routes
+         } catch (error) {
+            setIsAuthenticated(false);
+         } finally {
+            setIsLoading(false);
+         }
+      };
+
+      checkAuth();
    }, [router, pathname]);
 
    if (isLoading) {

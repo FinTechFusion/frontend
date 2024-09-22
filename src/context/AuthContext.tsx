@@ -15,16 +15,16 @@ interface AuthProviderProps {
 }
 
 export const getTokenFromStorage = (key: string): string | null => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem(key);
-  }
-  return null;
+   if (typeof window !== 'undefined') {
+      return localStorage.getItem(key);
+   }
+   return null;
 };
 
 export const saveTokenToStorage = (key: string, value: string): void => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(key, value);
-  }
+   if (typeof window !== 'undefined') {
+      localStorage.setItem(key, value);
+   }
 };
 
 // Utility function to remove tokens from localStorage
@@ -47,15 +47,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          saveTokenToStorage('refresh_token', refreshToken);
          const userData = await fetchUserData(accessToken);
          setUser(userData);
-         router.push("/dashboard");
+         const storedPath = sessionStorage.getItem('path');
+         if (storedPath) {
+            router.push(storedPath);
+            sessionStorage.removeItem('path');
+         }
+         else {
+            router.push("/dashboard");
+         }
       } catch (err) {
          toast.error('Login failed');
-         console.error('Login error:', err);
       }
    };
 
    const fetchUserData = async (accessToken: string): Promise<User | null> => {
-      setIsLoading(true);
+      setIsLoading(false);
       try {
          const response = await fetch(`${API_BASE_URL}/users/me`, {
             method: 'GET',
@@ -67,7 +73,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          if (!response.ok) {
             throw new Error('Failed to fetch user data');
          }
-         const {data}  = await response.json();
+         const { data } = await response.json();
          setUser(data);
          return data;
       } catch (err) {

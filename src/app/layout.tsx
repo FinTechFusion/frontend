@@ -1,9 +1,9 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Roboto } from 'next/font/google';
 import "../styles/globals.css";
 import { AuthProvider } from '@/context/AuthContext';
 import AuthGuard from "@/context/AuthGuard";
+// import LoadingPage from "./_components/common/LoadingPage";
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["100", "300", "400", "500", "700"] });
 
@@ -21,12 +21,15 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+
   return (
     <html lang="en">
       <body className={`${roboto.className}`}>
         <AuthProvider>
           <AuthGuard>
-            {children}
+            {/* <LoadingPage> */}
+              {children}
+            {/* </LoadingPage> */}
           </AuthGuard>
         </AuthProvider>
       </body>

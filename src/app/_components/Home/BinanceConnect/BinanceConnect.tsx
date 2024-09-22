@@ -9,7 +9,7 @@ import { useAuth } from "@/context/AuthContext";
 export default function BinanceConnect() {
   const { user } = useAuth();
   return (
-    <div className="grid md:grid-cols-2 justify-between items-center gap-6 pb-8">
+    <div className="grid md:grid-cols-2 justify-between items-center gap-6 py-8">
       <div className="integrate">
         <Textbox title="Seamless Integration with Binance" description="We&apos;ve partnered with Binance, the world&apos;s leading cryptocurrency exchange, to provide you with unparalleled trading opportunities and liquidity." descriptionClass="md:w-3/4 w-full" />
         <ul className="list-disc pl-5 pb-5">

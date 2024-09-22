@@ -81,21 +81,20 @@ export default function BotLogs() {
             Bot Logs
          </h3>
          <div className="log-output bg-gray-200 p-3 my-2 rounded-md overflow-y-auto max-h-52">
-            <h4 className="font-bold">Parsed Logs:</h4>
             {logs.map((log, index) => (
                <p key={index} className="bg-gray-100 text-lg p-2 rounded-md my-3">
                   {log.timestamp} - {log.message}
                </p>
             ))}
          </div>
-         <div className="raw-output bg-gray-200 p-3 my-2 rounded-md overflow-y-auto max-h-52">
+         {/* <div className="raw-output bg-gray-200 p-3 my-2 rounded-md overflow-y-auto max-h-52">
             <h4 className="font-bold">Raw Output:</h4>
             {rawOutput.map((output, index) => (
                <p key={index} className="bg-gray-100 text-sm p-2 rounded-md my-1 font-mono">
                   {output}
                </p>
             ))}
-         </div>
+         </div> */}
       </div>
    );
 }

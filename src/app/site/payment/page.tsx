@@ -26,17 +26,16 @@ export default function PaymentPage() {
       }
    }, [fetchClientSecret]);
 
+
    if (loading) {
       return <Loading/>;
    }
-
-   // Check if clientSecret is valid
    if (!clientSecret) {
       return <div>Missing or invalid client secret</div>;
    }
 
    const options = {
-      fetchClientSecret: () => Promise.resolve(clientSecret), // Return a promise
+      fetchClientSecret: () => Promise.resolve(clientSecret),
    };
 
    return (
@@ -51,43 +50,4 @@ export default function PaymentPage() {
    );
 }
 
-// function PaymentForm() {
-//    const stripe = useStripe();
-//    const elements = useElements();
-//    const [loading, setLoading] = useState(false);
 
-//    const confirmPayment = async () => {
-//       if (!stripe || !elements) {
-//          console.error('Stripe has not loaded or client secret is not available');
-//          return;
-//       }
-
-//       setLoading(true);
-
-//       const result = await stripe.confirmPayment({
-//          elements,
-//          redirect: 'if_required',
-//       });
-
-//       if (result.error) {
-//          console.error(result.error.message);
-//          // Handle error, show message to user
-//       } else {
-//          if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-//             console.log('Payment succeeded!');
-//             // Handle successful payment here
-//          }
-//       }
-
-//       setLoading(false);
-//    };
-
-//    return (
-//       <div>
-//          <PaymentElement />
-//          <button onClick={confirmPayment} disabled={!stripe || loading}>
-//             {loading ? 'Processing...' : 'Confirm Payment'}
-//          </button>
-//       </div>
-//    );
-// }

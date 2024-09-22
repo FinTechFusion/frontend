@@ -15,13 +15,9 @@ interface PlanCardProps {
 
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
-   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+   // const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
    const accessToken = getTokenFromStorage("access_token");
-
-   if (!accessToken) {
-      router.push('/login');
-   }
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans`, {
       method: "GET",
@@ -29,7 +25,9 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    });
 
    const createSubscription = async (planId: string) => {
-      if (!accessToken) return;
+      if (!accessToken) {
+         router.push('/login');
+      }
       try {
          const response = await fetch(`${API_BASE_URL}/users/me/subscription`, {
             method: 'POST',
