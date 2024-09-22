@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    };
 
    const fetchUserData = async (accessToken: string): Promise<User | null> => {
-      setIsLoading(false);
+      setIsLoading(true);
       try {
          const response = await fetch(`${API_BASE_URL}/users/me`, {
             method: 'GET',
