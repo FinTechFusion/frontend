@@ -7,7 +7,7 @@ import { FaChartLine } from "react-icons/fa6";
 import { FaChartBar } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import MenueSetting from "../../user/MenueSetting";
-import { Toggle } from "../../inputs/Toggle";
+// import { Toggle } from "../../inputs/Toggle";
 
 export default function Headerdash() {
    const { toggleVisibility } = useSidebar();
@@ -20,7 +20,7 @@ export default function Headerdash() {
             <div className="geer-icon lg:hidden" onClick={toggleVisibility}>
                <FaGear className="text-primary-700 text-2xl cursor-pointer" />
             </div>
-            <div className="flex md:justify-between justify-end items-center w-full">
+            <div className="flex lg:justify-between justify-end items-center w-full">
                <div className="assets-info hidden lg:flex items-start gap-10">
                   <div className="btc-info">
                      <h5 className="uppercase text-primary-600">btc / usdt</h5>

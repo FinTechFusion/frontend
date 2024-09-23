@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { FaUser, FaChartLine, FaRobot, FaStore, FaBell } from 'react-icons/fa';
+import { IoMdContacts } from "react-icons/io";
 import { FaHouse, FaGear } from "react-icons/fa6";
 import { BsBagCheckFill } from "react-icons/bs";
 import SidebarLink from './SidebarLink';
@@ -53,7 +54,13 @@ export default function Sidebar() {
                   weight='font-normal'
                   path="/dashboard/settings"
                />
-
+               <SidebarLink
+                  icon={<IoMdContacts className="px-2 text-4xl" />}
+                  content="Contact Us"
+                  weight='font-normal'
+                  path="/site/contact"
+               />
+{/* 
                <div className="text-center my-5 w-100">
                   <Link className="text-xl text-primary-600 hover:text-primary-700" href="/site/contact">
                      Contact Us
@@ -62,7 +69,7 @@ export default function Sidebar() {
                      <Link className="text-gray-950" href="/livechat">Live Chat</Link>
                      <Link className="text-gray-950" href="/feedback">Feedback</Link>
                   </div>
-               </div>
+               </div> */}
             </ul>
          </div>
       </div>
