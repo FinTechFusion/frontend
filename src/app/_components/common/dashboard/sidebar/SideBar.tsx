@@ -45,7 +45,6 @@ export default function Sidebar() {
                   icon={<FaBell className="px-2 text-4xl" />}
                   content="Subscription"
                   weight='font-normal'
-
                   path="/dashboard/subscription"
                />
                <SidebarLink

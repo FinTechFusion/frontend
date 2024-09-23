@@ -1,3 +1,5 @@
+import { ReactElement } from "react"
+
 export interface TextBox {
    title: string;
    description: string;
@@ -67,6 +69,12 @@ export interface PlanType {
    description: string,
    frequency: string,
    features: string[],
+}
+export type SidebarLinkProps = {
+   icon: ReactElement,
+   content: string,
+   weight: string,
+   path: string
 }
 
 export type Strategy = {

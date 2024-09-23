@@ -41,7 +41,7 @@ const UserSubscription = () => {
                      <p className="text-secondary text-lg">Plan Purchased at : {data?.created_at.split("T")[0]}</p>
                   </div>
                   <div className="billing-info flex flex-col gap-3">
-                     <div className="duration-bulling text-secondary  flex items-center gap-2">
+                     <div className="duration-bulling text-secondary flex items-center gap-2">
                         <BsCreditCardFill />
                         <span className="text-lg capitalize">{data?.plan?.split('_')[1]} billing</span>
                      </div>
@@ -53,9 +53,9 @@ const UserSubscription = () => {
                         <h6 className="text-xl font-bold flex items-center gap-2" ><GiMoneyStack /> Amount : {data?.price} <span className="text-lg">AED</span></h6>
                      </div>
                   </div>
-                  <div className="subscription-actions flex flex-col md:items-center gap-3">
+                  <div className="subscription-actions flex flex-col lg:items-center items-start gap-3">
                      <button className="main-btn md:w-1/2">Change Plan</button>
-                     <button className="main-btn bg-red-700 md:w-1/2">Cancel Plan</button>
+                     <button className="main-btn !bg-red-600 !hover:bg-red-700 md:w-1/2">Cancel Plan</button>
                   </div>
                </div>
             </div></>}

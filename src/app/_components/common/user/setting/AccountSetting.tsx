@@ -36,20 +36,20 @@ export default function AccountSetting({ user }: { user: User }) {
                <FaGear className="mr-3" /> Account Settings
             </h3>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-6 justify-between items-start">
-               <div>
+               <>
                   <p className="text-xl font-medium mb-2 flex items-center">
                      <FaSignal className="mr-2" /> Signal Strategy
                   </p>
-                  <b className="capitalize text-lg bg-gray-100 py-1 px-3 rounded-full">
-                     {signal_strategy == null ? "No" : signal_strategy} Strategy
+                  <b className="capitalize text-lg bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
+                     {signal_strategy == null ? "No Strategy" : signal_strategy?.replace(/_/g,' ')}
                   </b>
-               </div>
-               <div>
-                  <p className="text-xl font-medium mb-2 flex items-center">
+               </>
+               <div className="flex flex-col md:justify-end md:flex-end">
+                  <p className="text-xl font-medium mb-2 flex items-end">
                      <FaRobot className="mr-2" /> AI Strategy
                   </p>
-                  <b className="capitalize text-lg bg-gray-100 py-1 px-3 rounded-full">
-                     {ai_strategy == null ? "No" : ai_strategy} Strategy
+                  <b className="capitalize text-lg bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
+                     {ai_strategy == null ? "No Strategy" : ai_strategy?.replace(/_/g, ' ')} 
                   </b>
                </div>
             </div>
