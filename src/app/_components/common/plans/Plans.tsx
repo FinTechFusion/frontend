@@ -7,6 +7,8 @@ import Loading from '@/app/_components/common/loading/Loading';
 import { PlanType } from '@/utils/types';
 import { getTokenFromStorage } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import Toast from '../Tostify/Toast';
 
 interface PlanCardProps {
    selectedPlanType: string;
@@ -15,7 +17,7 @@ interface PlanCardProps {
 
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
-   // const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
    const accessToken = getTokenFromStorage("access_token");
 
@@ -23,7 +25,12 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       method: "GET",
       next: { revalidate: 120 }
    });
-
+   const response = useFetch(`${API_BASE_URL}/users/me/subscription`, {
+      method: "GET",
+      headers: {
+         authorization: `Bearer ${accessToken}`,
+      }
+   });
    const createSubscription = async (planId: string) => {
       if (!accessToken) {
          router.push('/login');
@@ -49,8 +56,12 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    };
 
    const handlePurchase = async (planId: string) => {
-      await createSubscription(planId);
-   };
+      if (response.data === null) {
+         await createSubscription(planId);
+      } else {
+         return toast.info("You are already subscribed a plan.upgrade if you wish");
+      }
+   }
 
    if (loading) {
       return <Loading />;
@@ -62,7 +73,9 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    }).filter((plan: PlanType) => plan.id != excludedPlanId);
 
    return (
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+      <>
+         <Toast />  
+         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
          {filteredPlans?.map((plan: PlanType, index: number) => (
             <div className="planCard shadow-sm border border-gray-200 px-8 py-10 rounded-[14px] h-full" key={index}>
                <h2 className="text-2xl font-medium pb-4">{plan.id === "beginner_trial" ? "Free Trial" : plan.name}</h2>
@@ -89,7 +102,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                </div>
             </div>
          ))}
-      </div>
+         </div></>
    );
 }
 

@@ -8,7 +8,7 @@ import UserInfo from '@/app/_components/common/user/setting/UserInfo';
 import AccountSetting from '@/app/_components/common/user/setting/AccountSetting';
 
 export default function Page() {
-   const { user, isLoading, error, logout } = useAuth();
+   const { user, isLoading, error } = useAuth();
    if (isLoading) return <Loading />;
    if (error) toast.error(error);
    return (
