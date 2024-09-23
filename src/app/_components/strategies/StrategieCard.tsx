@@ -17,7 +17,7 @@ export default function StrategieCard({ id, banner_url, name, type, description 
          </div>
          <div className="flex flex-col">
             <h2 className="text-2xl font-medium pt-2">{name}</h2>
-            <span className="text-lg text-primary-600">{type}</span>
+            <span className="text-lg text-primary-600">{type.replace(/_/g, ' ')}</span>
          </div>
          <p className="line-clamp-3 text-lg text-gray-800 py-2 overflow-hidden">
             {description}

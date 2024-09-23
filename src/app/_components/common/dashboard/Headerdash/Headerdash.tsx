@@ -56,13 +56,13 @@ export default function Headerdash() {
                            </span>
                         </div>
                      )}
-                     <div className="account-switcher absolute top-16 bg-secondary p-2 shadow-sm rounded w-52 h-24">
+                     {/* <div className="account-switcher absolute top-16 bg-secondary p-2 shadow-sm rounded w-52 h-24">
                         <p className="text-primary-600 pb-2">Types Of Account</p>
                         <div className="flex justify-between items-center">
                            <span>{user?.is_demo ? "Demo Account" : "Real Account"}</span>
                            <Toggle isOn={user?.is_demo ?? false} handleToggle={() => { console.log("Toggle clicked"); }} />
                         </div>
-                     </div>
+                     </div> */}
                   </div>
                </div>
                <div className="flex gap-6 items-center">

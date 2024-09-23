@@ -38,9 +38,9 @@ export default function Strategies({ data }: dataProps) {
           <button
             key={index}
             onClick={() => handleTypeClick(type)}
-            className={`px-4 py-2 text-xl border rounded ${selectedType === type ? "bg-primary-600 text-secondary" : "bg-gray-100"}`}
+            className={`px-4 py-2 text-xl border rounded capitalize ${selectedType === type ? "bg-primary-600 text-secondary" : "bg-gray-100"}`}
           >
-            {type}
+            {type.replace(/_/, ' ')}
           </button>
         ))}
       </div>

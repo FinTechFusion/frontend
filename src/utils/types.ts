@@ -116,3 +116,11 @@ export interface assetsProps {
       total: number;
    }[];
 }
+export interface UserSubscriptionProps {
+   id: string;
+   plan: string;
+   status: string;
+   created_at: string;
+   expire_at: string;
+   price: number;
+}
