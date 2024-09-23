@@ -5,7 +5,9 @@ import { useSidebar } from "@/context/SidebarContext";
 import { FaGear } from "react-icons/fa6";
 import { FaChartLine } from "react-icons/fa6";
 import { FaChartBar } from "react-icons/fa";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import MenueSetting from "../../user/MenueSetting";
+import { Toggle } from "../../inputs/Toggle";
 
 export default function Headerdash() {
    const { toggleVisibility } = useSidebar();
@@ -42,9 +44,10 @@ export default function Headerdash() {
                         ))
                      )}
                   </div>
-                  <div className="account-type">
-                     <h5 className="uppercase text-primary-600">
-                        {user?.is_demo ? "Demo Account" : "Real Account"}
+                  <div className="account-type relative">
+                     <h5 className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer">
+                        {user?.is_demo ? "Demo Account" : "Real Account"} 
+                        <MdKeyboardArrowDown size={25} />
                      </h5>
                      {user?.is_binance && assetData && assetData.length > 0 && (
                         <div className="text-center">
@@ -53,6 +56,13 @@ export default function Headerdash() {
                            </span>
                         </div>
                      )}
+                     <div className="account-switcher absolute top-16 bg-secondary p-2 shadow-sm rounded w-52 h-24">
+                        <p className="text-primary-600 pb-2">Types Of Account</p>
+                        <div className="flex justify-between items-center">
+                           <span>{user?.is_demo ? "Demo Account" : "Real Account"}</span>
+                           <Toggle isOn={user?.is_demo ?? false} handleToggle={() => { console.log("Toggle clicked"); }} />
+                        </div>
+                     </div>
                   </div>
                </div>
                <div className="flex gap-6 items-center">

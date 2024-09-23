@@ -24,7 +24,7 @@ export default function MenueSetting() {
          </button>
 
          {isOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-secondary rounded-md shadow-sm p-1 z-50">
+            <div className="absolute right-0 mt-2 md:w-64 w-[21rem] bg-secondary rounded-md shadow-sm p-1 z-50">
                <div className="p-4 border-b">
                   <p className="text-lg text-gray-600 flex items-center gap-2">
                      <FaUser className="w-5 h-5 text-primary-600" />
