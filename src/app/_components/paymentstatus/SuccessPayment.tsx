@@ -1,0 +1,41 @@
+"use client"
+import { useEffect } from 'react';
+import confetti from 'canvas-confetti'
+import { LuCheckCircle } from "react-icons/lu";
+import { MainBtn } from '../common/Buttons/MainBtn';
+import Link from 'next/link';
+
+export default function SuccessPayment() {
+   useEffect(() => {
+      // Trigger confetti effect on component mount
+      confetti({
+         particleCount: 120,
+         spread: 80,
+         origin: { y: 0.6 }
+      })
+   }, [])
+   return (
+      <div className="md:bg-gradient-to-b md:from-primary-50 md:to-primary-100 flex items-center justify-center">
+         <div className="successCard flex flex-col justify-center items-center h-full px-2 py-16 rounded-md bg-secondary shadow-sm my-16 md:w-1/3 w-96">
+            <div className="card-heading text-center mx-auto pb-5">
+               <div className="icon pb-3">
+                  <LuCheckCircle className="w-20 h-20 text-primary-600 mx-auto " />
+               </div>
+               <h3 className="text-3xl font-bold text-primary-700">Welcome Aboard!</h3>
+               <p className="text-lg text-primary-600 pt-2">Your payment was successful</p>
+            </div>
+            <div className="card-body">
+               <h5 className="text-xl font-medium pb-3 text-dark">What&apos;s Next?</h5>
+               <ul className="pb-5 pl-5 list-disc">
+                  <li className="text-lg py-2"> Set up your profile and preferences in the dashboard</li>
+                  <li className="text-lg py-2">Explore your new features and start using our service</li>
+                  <li className="text-lg py-2">Check your email for a welcome message and receipt</li>
+               </ul>
+            </div>
+            <Link href='/site/dashboard'>
+               <MainBtn content='Go To Dashboard' btnProps='w-full' />
+            </Link>
+         </div>
+      </div>
+   )
+}
