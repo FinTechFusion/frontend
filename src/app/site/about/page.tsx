@@ -1,7 +1,6 @@
 import { IoIosCheckmark } from "react-icons/io";
 import Textbox from "@/app/_components/common/Text/Textbox";
 import HowItWorks from "@/app/_components/Home/HowWork/HowWork";
-import Link from "next/link";
 
 export default function page() {
    return (
@@ -35,9 +34,7 @@ export default function page() {
          <div className="banner my-8">
             <div className="bg-dark p-10 rounded-md flex md:flex-row flex-col items-center justify-between">
                <Textbox titleClass="text-secondary tracking-wide hover:text-secondary" descriptionClass="text-secondary tracking-wide hover:text-secondary md:w-3/4 w-full" title="Start Boosting Your Profits Today" description="Experience the power of Bot Analysis and Bot AI to take your trading to the next level. Sign up now and unlock a world of profitable opportunities." />
-
             </div>
-
          </div>
       </div>
    )

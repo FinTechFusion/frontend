@@ -16,7 +16,7 @@ export default function SuccessPayment() {
    }, [])
    return (
       <div className="md:bg-gradient-to-b md:from-primary-50 md:to-primary-100 flex items-center justify-center">
-         <div className="successCard flex flex-col justify-center items-center h-full px-2 py-16 rounded-md bg-secondary shadow-sm my-16 lg:1/3 md:w-2/3 w-96">
+         <div className="successCard flex flex-col justify-center items-center h-full px-2 py-16 rounded-md bg-secondary shadow-sm my-16 md:w-1/3 w-96">
             <div className="card-heading text-center mx-auto pb-5">
                <div className="icon pb-3">
                   <LuCheckCircle className="w-20 h-20 text-primary-600 mx-auto " />
@@ -33,7 +33,7 @@ export default function SuccessPayment() {
                </ul>
             </div>
             <Link href='/site/dashboard'>
-               <MainBtn content='Go To Dashboard' btnProps='w-full' />
+            <button className="main-btn !w-full">Go To Dashboard</button>
             </Link>
          </div>
       </div>

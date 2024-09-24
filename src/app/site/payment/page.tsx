@@ -11,7 +11,7 @@ export default function PaymentPage() {
    const searchParams = useSearchParams();
    const fetchClientSecret = searchParams.get('clientSecret');
    const [clientSecret, setClientSecret] = useState<string | null>(null);
-   const [loading, setLoading] = useState<boolean>(true); // Loading state
+   const [loading, setLoading] = useState<boolean>(true); 
 
    useEffect(() => {
       if (fetchClientSecret) {

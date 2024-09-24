@@ -18,10 +18,14 @@ export default function BinanceConnect() {
           <li className="text-lg py-1">Access to Binance&apos;s extensive range of trading pairs</li>
           <li className="text-lg py-1">Leverage Binance&apos;s robust API for advanced trading strategies</li>
         </ul>
-        {!user?.is_binance && <Link href="/site/exchange/connect">
+        {!user?.is_binance ? <Link href="/site/exchange/connect">
           <button className="main-btn flex justify-center items-center gap-2">
             connect your account
             <FaLink className="pt-1" />
+          </button>
+        </Link> : <Link href="/dashboard">
+          <button className="main-btn ">
+            Start Trial
           </button>
         </Link>}
       </div>

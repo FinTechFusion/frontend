@@ -11,7 +11,7 @@ import Loading from '@/app/_components/common/loading/Loading';
 
 const UserSubscription = () => {
    const accessToken = getTokenFromStorage("access_token");
-   const { data, loading } = useFetch(`${API_BASE_URL}/users/me/subscription`,
+   const { data, loading,error } = useFetch(`${API_BASE_URL}/users/me/subscription`,
       {
          method: "GET",
          headers: {
@@ -19,6 +19,9 @@ const UserSubscription = () => {
          },
       }
    );
+   if(error && error.status === 404){
+      console.log("Free Trial Plan")
+   }
    if (loading) {
       return <Loading />
    }
