@@ -10,7 +10,7 @@ export default function Page() {
    const accessToken = getTokenFromStorage("access_token");
    const searchParams = useSearchParams();
    const sessionId = searchParams.get('session_id');
-      const { data } = useFetch(`${API_BASE_URL}/users/me/subscription/confirm?${sessionId}`, {
+      const { data } = useFetch(`${API_BASE_URL}/users/me/subscription/confirm?session_id=${sessionId}`, {
       method: 'POST',
       headers: {
          authorization: `Bearer ${accessToken}`
