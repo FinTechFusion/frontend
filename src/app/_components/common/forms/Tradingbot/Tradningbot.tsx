@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
 import { tradingbotType, tradingbotSchema } from "@/validation/TradingbotSchema";
 import { MainBtn } from "../../Buttons/MainBtn";
-import { getTokenFromStorage } from '@/context/AuthContext';
+import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ type tradingBotType = {
 
 export default function TradingBotForm({ type }: tradingBotType) {
   const accessToken = getTokenFromStorage("access_token");
+  const { user } = useAuth();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
@@ -52,7 +53,12 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
   }
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    createOrder(data);
+    if (user?.is_subscribed) {
+      createOrder(data);
+    }
+    else {
+      return toast.info("Please subscribe to create order");
+    }
   };
   return (
     <>
