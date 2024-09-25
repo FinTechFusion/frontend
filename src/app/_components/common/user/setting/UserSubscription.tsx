@@ -31,7 +31,7 @@ const UserSubscription: React.FC = () => {
 
    const checkSubscriptionStatus = async (): Promise<void> => {
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/subscription-status`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/subscription`, {
             method: "GET",
             headers: {
                authorization: `Bearer ${accessToken}`,
@@ -52,7 +52,6 @@ const UserSubscription: React.FC = () => {
       } catch (err) {
          setError(err instanceof Error ? err.message : 'An unknown error occurred');
          setStatus(SubscriptionStatus.ERROR);
-         console.error("Error checking subscription status:", err);
       }
    };
 
@@ -141,10 +140,6 @@ const UserSubscription: React.FC = () => {
 
    if (status === SubscriptionStatus.LOADING) {
       return <Loading />
-   }
-
-   if (status === SubscriptionStatus.ERROR) {
-      return <div>Error: {error}</div>
    }
 
    if (status === SubscriptionStatus.NOT_SUBSCRIBED) {
