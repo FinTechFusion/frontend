@@ -44,14 +44,14 @@ export default function AccountSetting({ user }: { user: User }) {
                      {signal_strategy == null ? "No Strategy" : signal_strategy?.replace(/_/g,' ')}
                   </b>
                </>
-               <div className="flex flex-col md:justify-end md:flex-end">
+               <>
                   <p className="text-xl font-medium mb-2 flex items-end">
                      <FaRobot className="mr-2" /> AI Strategy
                   </p>
                   <b className="capitalize text-lg bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
                      {ai_strategy == null ? "No Strategy" : ai_strategy?.replace(/_/g, ' ')} 
                   </b>
-               </div>
+               </>
             </div>
             <div className="grid lg:grid-cols-3 grid-cols-2 justify-between gap-4">
                <div className="text-start">

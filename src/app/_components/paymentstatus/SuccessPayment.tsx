@@ -32,7 +32,7 @@ export default function SuccessPayment() {
                   <li className="text-lg py-2">Check your email for a welcome message and receipt</li>
                </ul>
             </div>
-            <Link href='/site/dashboard'>
+            <Link href='/dashboard'>
             <button className="main-btn !w-full">Go To Dashboard</button>
             </Link>
          </div>
