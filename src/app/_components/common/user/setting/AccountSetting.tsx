@@ -3,7 +3,7 @@ import { FaBell, FaSignal, FaRobot, FaUserCheck, FaCheckCircle, FaTimesCircle } 
 import { FaGear } from "react-icons/fa6";
 
 export default function AccountSetting({ user }: { user: User }) {
-   const { plan, signal_cycles, ai_cycles, signal_strategy, ai_strategy, is_demo, is_verified, is_active } = user;
+   const { signal_cycles, ai_cycles, signal_strategy, ai_strategy, is_demo, is_verified, is_active, is_subscribed } = user;
    return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
          <div className="subscription-box bg-white border border-gray-200 rounded-xl p-6">
@@ -13,7 +13,7 @@ export default function AccountSetting({ user }: { user: User }) {
             <div className="flex justify-between items-center mb-6">
                <p className="text-2xl font-medium">Plan</p>
                <span className="bg-primary-100 text-primary-700 py-2 px-4 rounded-full font-bold">
-                  {plan == null ? "No plan" : plan}
+                  {is_subscribed == null ? "No plan" : "Subscribed"}
                </span>
             </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
