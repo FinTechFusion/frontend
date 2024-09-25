@@ -2,11 +2,16 @@
 import { useEffect } from 'react';
 import confetti from 'canvas-confetti'
 import { LuCheckCircle } from "react-icons/lu";
-import { MainBtn } from '../common/Buttons/MainBtn';
 import Link from 'next/link';
+import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 
 export default function SuccessPayment() {
+   const { fetchUserData } = useAuth();
+   const accessToken = getTokenFromStorage("access_token");
    useEffect(() => {
+      if (accessToken) {
+         fetchUserData(accessToken)
+      }
       // Trigger confetti effect on component mount
       confetti({
          particleCount: 120,
@@ -33,7 +38,7 @@ export default function SuccessPayment() {
                </ul>
             </div>
             <Link href='/dashboard'>
-            <button className="main-btn !w-full">Go To Dashboard</button>
+               <button className="main-btn !w-full">Go To Dashboard</button>
             </Link>
          </div>
       </div>

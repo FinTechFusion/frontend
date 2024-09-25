@@ -1,4 +1,4 @@
-// pages/Plans.tsx
+"use client";
 import { useState } from 'react';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
@@ -9,6 +9,7 @@ import { getTokenFromStorage } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
+import { useAuth } from '@/context/AuthContext';
 
 interface PlanCardProps {
    selectedPlanType: string;
@@ -18,19 +19,19 @@ interface PlanCardProps {
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
    const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-
+   const {user}=useAuth();
    const accessToken = getTokenFromStorage("access_token");
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans`, {
       method: "GET",
       next: { revalidate: 120 }
    });
-   const response = useFetch(`${API_BASE_URL}/users/me/subscription`, {
-      method: "GET",
-      headers: {
-         authorization: `Bearer ${accessToken}`,
-      }
-   });
+   // const response = useFetch(`${API_BASE_URL}/users/me/subscription`, {
+   //    method: "GET",
+   //    headers: {
+   //       authorization: `Bearer ${accessToken}`,
+   //    }
+   // });
    const createSubscription = async (planId: string) => {
       if (!accessToken) {
          router.push('/login');
@@ -45,10 +46,12 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             body: JSON.stringify({ plan: planId })
          });
          const result = await response.json();
+         if(result?.plan === "beginner_trial"){
+           toast.success("You Subscribed To Free Trial Plan")
+         }
          if (result.success && result.data.client_secret) {
             // Redirect to PaymentPage with clientSecret
             router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
-
          }
       } catch (error) {
          console.error('Error creating subscription:', error);
@@ -56,7 +59,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    };
 
    const handlePurchase = async (planId: string) => {
-      if (response.data === null) {
+      if (!user?.is_subscribed) {
          await createSubscription(planId);
       } else {
          return toast.info("You are already subscribed a plan.upgrade if you wish");

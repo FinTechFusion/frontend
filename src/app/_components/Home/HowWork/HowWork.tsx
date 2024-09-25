@@ -20,14 +20,13 @@ export default function HowItWorks() {
       {
          id: 4,
          title: "Start Trading",
-         description: "Let our AI handle the rest",
+         description: "Let our AI or Signal handle the rest",
       },
    ];
 
    return (
       <>
-         <Textbox mainClass='' title="How It Works" description='Follow these simple steps to start trading with our platform. From account setup to automated trading, we have streamlined the entire process for you.' descriptionClass='md:w-3/4 w-full' />
-         <div className="bg-gray-100 py-8 mt-8">
+         <div className="md:bg-gray-50 py-8 mt-8 w-full">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 justify-items-center">
                {steps.map((step) => (
                   <div key={step.id} className="flex flex-col justify-center items-center text-center">

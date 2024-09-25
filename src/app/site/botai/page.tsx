@@ -35,8 +35,8 @@ export default function page() {
          <section className="bg-gray-100 py-12 md:px-1 px-3">
             <div className="container mx-auto">
                <div className="content-botAi ">
-                  <Textbox titleClass='w-fit mx-start' title='Explore Bot AI' description='Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions. Check out the video below to see it in action.' />
-                  <div className="flex flex-col lg:flex-row justify-between md:items-center gap-y-6 md:gap-x-6 md:gap-y-0 py-8">
+                  <Textbox titleClass='w-fit mx-start' title='Explore Bot AI' description='Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions. Check out the video below to see it in action.' descriptionClass='md:w-1/2' />
+                  <div className="flex flex-col lg:flex-row justify-between md:items-end gap-y-6 md:gap-x-6 md:gap-y-0 py-8">
                      <div className="list-data">
                         <h4 className='text-2xl font-semibold px-0'>Key Features:</h4>
                         <ul className='py-3 list-inside list-disc'>

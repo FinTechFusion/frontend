@@ -11,9 +11,9 @@ export default function Register() {
                <Textbox
                   mainClass="text-center flex flex-col h-92 justify-center items-center"
                   titleClass="text-secondary hover:text-secondary tracking-wider"
-                  title="Secure Your Financial Future with Our Crypto Platform"
+                  title="Empower Your Trading Journey with FinTechFusion"
                   descriptionClass="text-xl text-primary-50 md:w-3/5 w-4/5 py-6"
-                  description="Experience the future of finance with our cutting-edge cryptocurrency platform. Invest, trade, and manage your digital assets with ease and confidence."
+                  description="Unlock the potential of trading with AI-powered Signal Bots. Trade smarter with real-time analysis and strategies designed for all traders."
                />
             </div>
          </div>
@@ -23,8 +23,8 @@ export default function Register() {
                <Textbox
                   mainClass="pt-6"
                   titleClass="text-4xl w-fit"
-                  title="Unlock the Future of Finance"
-                  description="Join the Crypto Vault and take control of your digital assets. Secure, simple, and seamless."
+                  title="Unlock the Future of Automated Trading"
+                  description="Join the platform that empowers you with AI-driven Signal Bots and advanced strategies. Secure, smart, and seamless trading at your fingertips."
                />
                <Image
                   src={registerImg}

@@ -14,7 +14,6 @@
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.4.0",
     "ag-grid-react": "^32.1.0",
-    "can-ndjson-stream": "^1.0.2",
     "canvas-confetti": "^1.9.3",
     "next": "14.2.3",
     "react": "^18",
@@ -28,7 +27,6 @@
     "sharp": "^0.33.5",
     "stripe": "^16.11.0",
     "sweetalert2": "^11.14.1",
-    "sweetalert2-react-content": "^5.0.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {

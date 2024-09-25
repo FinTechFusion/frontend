@@ -15,7 +15,7 @@ export default function Footer() {
                            <Link href="/site/botai" className="capitalize text-lg hover:text-primary-500">bot ai</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot analysis</Link>
+                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
                         </li>
                         <li className="py-3">
                            <Link href="/site/plans" className="capitalize text-lg hover:text-primary-500">plans</Link>
@@ -43,7 +43,7 @@ export default function Footer() {
                            <Link href="/site/about" className="capitalize text-lg hover:text-primary-500">about us</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot analysis</Link>
+                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
                         </li>
                         <li className="py-3">
                            <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">contact us</Link>

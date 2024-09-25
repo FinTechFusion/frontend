@@ -7,7 +7,7 @@ export default function Component() {
     <>
       <Header />
       <HomePage />
-      <Footer/>
+      <Footer />
     </>
   );
 }

@@ -31,21 +31,21 @@ export interface PlatformFeature {
 
 export interface User {
    first_name: string;
-   last_name?: string;
-   phone_number?: string;
+   last_name: string;
+   phone_number: string;
    email: string;
    id: string; 
-   plan?: string;
    signal_strategy: string | null;
    ai_strategy: string | null;
    signal_cycles:number;
    ai_cycles:number;
    email_preferences?: string[];
    allowed_scopes?: string[];
-   is_demo?: boolean;
-   is_verified?: boolean;
-   is_active?: boolean;
-   is_binance?: boolean;
+   is_demo: boolean;
+   is_verified: boolean;
+   is_active: boolean;
+   is_binance: boolean;
+   is_subscribed:boolean;
    data?:Object
 }
 
