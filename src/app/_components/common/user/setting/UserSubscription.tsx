@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const UserSubscription = () => {
    const accessToken = getTokenFromStorage("access_token");
-   const { user } = useAuth();
+   const { user, fetchUserData } = useAuth();
    const [subscriptionData, setSubscriptionData] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
 
@@ -70,6 +70,9 @@ const UserSubscription = () => {
       }).then(async (result) => {
          if (result.isConfirmed) {
             await handleDeletePlan();
+            if(accessToken){
+               await fetchUserData(accessToken);
+            }
             Swal.fire({
                title: "Deleted!",
                text: "Your Plan has been cancelled.",

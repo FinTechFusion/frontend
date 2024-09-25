@@ -26,8 +26,8 @@ export default function HowItWorks() {
 
    return (
       <>
-         <div className="md:bg-gray-50 py-8 mt-8 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 justify-items-center">
+         <div className="md:bg-gray-50 py-8 mt-8 w-full rounded-md">
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-8 justify-items-center">
                {steps.map((step) => (
                   <div key={step.id} className="flex flex-col justify-center items-center text-center">
                      <div className="bg-primary-600 text-secondary w-12 h-12 flex items-center justify-center rounded-full text-lg font-bold mb-4">

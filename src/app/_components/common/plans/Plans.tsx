@@ -46,13 +46,11 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             body: JSON.stringify({ plan: planId })
          });
          const result = await response.json();
-         if(result?.plan === "beginner_trial"){
-           toast.success("You Subscribed To Free Trial Plan")
-         }
          if (result.success && result.data.client_secret) {
             // Redirect to PaymentPage with clientSecret
             router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
          }
+
       } catch (error) {
          console.error('Error creating subscription:', error);
       }
@@ -61,8 +59,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const handlePurchase = async (planId: string) => {
       if (!user?.is_subscribed) {
          await createSubscription(planId);
-      } else {
-         return toast.info("You are already subscribed a plan.upgrade if you wish");
       }
    }
 
@@ -105,7 +101,8 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                </div>
             </div>
          ))}
-         </div></>
+         </div>
+      </>
    );
 }
 
