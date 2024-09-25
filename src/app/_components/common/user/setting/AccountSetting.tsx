@@ -13,7 +13,7 @@ export default function AccountSetting({ user }: { user: User }) {
             <div className="flex justify-between items-center mb-6">
                <p className="text-2xl font-medium">Plan</p>
                <span className="bg-primary-100 text-primary-700 py-2 px-4 rounded-full font-bold">
-                  {is_subscribed == null ? "No plan" : "Subscribed"}
+                  {is_subscribed ? "Subscribed" : "Not Subscribed"}
                </span>
             </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">

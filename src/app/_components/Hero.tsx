@@ -8,10 +8,10 @@ const BinancePopup = dynamic(() => import("./Popups/BinancePopup"), { ssr: false
 
 export default function Hero() {
    return (
-      <div className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-12" >
+      <div className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
          <div className="flex flex-col justify-center items-center">
             <div className="grid md:grid-cols-2 grid-cols-1 md:gap-12 md:justify-center justify-start items-start">
-               <div className="text-title mt-12 flex flex-col justify-start items-start">
+               <div className="text-title mt-10 flex flex-col justify-start items-start">
                   <h1 className="font-semibold text-4xl tracking-wide capitalize text-dark">Meet your new crypto trading bots</h1>
                   <p className="text-gray-700 py-3 text-xl">Meet your new trading edge Bot Signal and Bot AI, Simple smart,and secure Bot Signal finds opportunities. Bot AI predicts the market.
                      Both designed to boost your profits with ease and safety in mind.</p>
