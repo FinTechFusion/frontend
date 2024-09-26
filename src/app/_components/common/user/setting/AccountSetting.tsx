@@ -40,15 +40,15 @@ export default function AccountSetting({ user }: { user: User }) {
                   <p className="text-xl font-medium mb-2 flex items-center">
                      <FaSignal className="mr-2" /> Signal Strategy
                   </p>
-                  <b className="capitalize text-lg bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
+                  <b className="capitalize text-lg text-center bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
                      {signal_strategy == null ? "No Strategy" : signal_strategy?.replace(/_/g,' ')}
                   </b>
                </>
                <>
-                  <p className="text-xl font-medium mb-2 flex items-end">
+                  <p className="text-xl font-medium mb-2 flex items-center">
                      <FaRobot className="mr-2" /> AI Strategy
                   </p>
-                  <b className="capitalize text-lg bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
+                  <b className="capitalize text-lg text-center bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
                      {ai_strategy == null ? "No Strategy" : ai_strategy?.replace(/_/g, ' ')} 
                   </b>
                </>

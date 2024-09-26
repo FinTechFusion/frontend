@@ -16,6 +16,7 @@
     "ag-grid-react": "^32.1.0",
     "canvas-confetti": "^1.9.3",
     "next": "14.2.3",
+    "next-intl": "^3.20.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",

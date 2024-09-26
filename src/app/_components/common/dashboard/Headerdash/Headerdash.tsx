@@ -1,11 +1,13 @@
 "use client"
 
 import { FaGear, FaChartLine, FaChartBar } from "react-icons/fa6";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import MenueSetting from '../../user/MenueSetting';
-import { useAuth } from "@/context/AuthContext";
+import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { useAssetData } from "@/context/AssetsContext";
 import { useSidebar } from "@/context/SidebarContext";
+import { useState, useEffect } from 'react';
+import { API_BASE_URL } from "@/utils/api";
 
 interface AssetInfo {
    symbol: string;
@@ -36,18 +38,81 @@ interface AccountTypeProps {
    isDemo: boolean;
    balance: string;
 }
+const AccountType: React.FC<AccountTypeProps> = ({ isDemo: initialDemo, balance }) => {
+   const [isDemo, setIsDemo] = useState(initialDemo);
+   const [isOpen, setIsOpen] = useState(false);
+   const [loading, setLoading] = useState(false);
+   const { fetchUserData } = useAuth();
+   const accessToken = getTokenFromStorage("access_token");
 
-const AccountType: React.FC<AccountTypeProps> = ({ isDemo, balance }) => (
-   <div className="account-type relative">
-      <h5 className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer">
-         {isDemo ? "Demo Account" : "Real Account"}
-         <MdKeyboardArrowDown size={25} />
-      </h5>
-      <div className="text-center">
-         <span className="block py-1">{balance}</span>
+   useEffect(() => {
+      setIsDemo(initialDemo); // Update isDemo when initialDemo changes
+   }, [initialDemo]);
+
+   const handleToggleAccountType = async () => {
+      if (!accessToken) return;
+      console.log("Change Switch");
+      try {
+         setLoading(true);
+         const newAccountType = !isDemo;
+
+         const response = await fetch(`${API_BASE_URL}/users/me/demo/disable`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+               authorization: `Bearer ${accessToken}`,
+            },
+         });
+
+         if (response.ok) {
+            setIsDemo(newAccountType);
+         } else {
+            console.error('Failed to update account type');
+         }
+      } catch (error) {
+         console.error('Error updating account type:', error);
+      } finally {
+         await fetchUserData(accessToken);
+         setLoading(false);
+      }
+   };
+
+   return (
+      <div className="account-type relative">
+         <h5 className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer">
+            {isDemo ? "Demo Account" : "Real Account"}
+            {isOpen ? (
+               <MdKeyboardArrowUp onClick={() => setIsOpen(false)} size={25} />
+            ) : (
+               <MdKeyboardArrowDown onClick={() => setIsOpen(true)} size={25} />
+            )}
+         </h5>
+         <div className="text-center">
+            <span className="block py-1">{balance}</span>
+         </div>
+         {isOpen && (
+            <div className="switch-real w-64 absolute left-0 top-15 bg-secondary rounded-md shadow-sm p-3 z-50">
+               <p className="text-lg text-primary-700 pb-2">Type of Account</p>
+               <hr />
+               <div className="flex items-center justify-between py-2">
+                  <span className="text-lg font-semibold text-gray-800">Real Account</span>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                     <input
+                        type="checkbox"
+                        className="sr-only peer"
+                        onChange={handleToggleAccountType}
+                        checked={!isDemo}
+                        disabled={loading}
+                     />
+                     <div className="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:bg-primary-600"></div>
+                     <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300"></div>
+                  </label>
+               </div>
+            </div>
+         )}
       </div>
-   </div>
-);
+   );
+};
 
 interface UserProfileProps {
    signalCycles: number;

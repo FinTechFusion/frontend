@@ -92,7 +92,7 @@ export default function MenueSetting() {
                </div>
                <div className="p-2">
                   <p className="text-lg font-semibold mb-2">Setting</p>
-                  <Link href="/dashboard/subscription" className="flex items-center p-2 hover:bg-gray-100 rounded">
+                  <Link  href="/dashboard/subscription" className="flex items-center p-2 hover:bg-gray-100 rounded">
                      <MdNotifications size={18} className="mr-2 text-primary-600" />
                      <span>Subscription</span>
                   </Link>
