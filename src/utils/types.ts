@@ -132,3 +132,12 @@ export interface UserSubscriptionProps {
    expire_at: string;
    price: number;
 }
+
+export interface Log {
+   timestamp: string;
+   message: string;
+}
+
+export interface BotLogsProps {
+   orderId: string;
+}

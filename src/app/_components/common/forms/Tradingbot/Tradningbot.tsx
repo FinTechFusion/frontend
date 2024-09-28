@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
@@ -9,6 +9,8 @@ import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
 import Toast from "../../Tostify/Toast";
+import { useState } from "react";
+import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
 
 type tradingBotType = {
   type: 'signal' | 'ai';
@@ -26,8 +28,11 @@ export default function TradingBotForm({ type }: tradingBotType) {
     headers: {
       'authorization': `Bearer ${accessToken}`,
     },
-    next: { revalidate: 30 }
+    next: { revalidate: 60 }
   });
+
+  const [orderId, setOrderId] = useState<string | null>(null); // State to store orderId
+
   async function createOrder(data: any) {
     try {
       const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}`, {
@@ -42,24 +47,25 @@ export default function TradingBotForm({ type }: tradingBotType) {
       console.log(responseData);
       if (responseData.success) {
         toast.success("Order created successfully");
+        setOrderId(responseData.orderId); // Set the orderId
         reset();
       } else {
         toast.error(responseData?.detail);
       }
     }
     catch (error) {
-      toast.error("Order creation failed");
+      toast.error("order creation failed");
     }
-
   }
+
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    if (user?.is_subscribed) {
+    if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       createOrder(data);
-    }
-    else {
+    } else {
       return toast.info("Please subscribe to create order");
     }
   };
+
   return (
     <>
       <Toast />
@@ -70,24 +76,19 @@ export default function TradingBotForm({ type }: tradingBotType) {
             <label htmlFor="symbol" className="block capitalize pb-1 text-lg font-medium tracking-wide">
               Symbol
             </label>
-
             <select
               id="symbol"
               className={`main_input border ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
               {...register('symbol')}
             >
               <option value="">Please select</option>
-              {
-                assetData
-                  ?.filter((asset: any) => asset.symbol !== 'usdt')
-                  .map((asset: any, index: number) => (
-                    <option key={index} value={asset?.symbol}>
-                      {asset?.symbol?.toUpperCase()}
-                    </option>
-                  ))
+              {assetData?.filter((asset: any) => asset.symbol !== 'usdt')
+                .map((asset: any, index: number) => (
+                  <option key={index} value={asset?.symbol}>
+                    {asset?.symbol?.toUpperCase()}
+                  </option>
+                ))
               }
-
-
             </select>
             {errors?.symbol?.message && (
               <span className="text-red-600 text-sm pt-2">{errors.symbol.message}</span>
@@ -131,6 +132,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
         </div>
         <MainBtn content="Start" btnProps="w-fit" />
       </form>
+
+      {orderId && <BotLogs orderId={orderId} />}
     </>
   )
 }
