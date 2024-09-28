@@ -74,7 +74,8 @@ export type SidebarLinkProps = {
    icon: ReactElement,
    content: string,
    weight: string,
-   path: string
+   path: string,
+   toggleVisibility: () => void; 
 }
 
 export type Strategy = {

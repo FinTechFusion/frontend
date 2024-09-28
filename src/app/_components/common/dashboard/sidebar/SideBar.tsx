@@ -20,7 +20,7 @@ export default function Sidebar() {
                <span onClick={() => toggleVisibility()}>
                   <IoClose className="text-4xl font-bold absolute top-3	right-2 cursor-pointer text-red-600 flex lg:hidden" />
                </span>
-               <SidebarLink icon={<FaUser />
+               <SidebarLink  icon={<FaUser />
                } content='My Portfolio' weight='font-normal' path='/' />
 
                <p className="text-gray-700 text-xl py-3">Trading</p>
