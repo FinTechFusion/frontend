@@ -8,8 +8,6 @@ import { useAssetData } from "@/context/AssetsContext";
 import { useSidebar } from "@/context/SidebarContext";
 import { useState, useEffect } from 'react';
 import { API_BASE_URL } from "@/utils/api";
-import { toast } from "react-toastify";
-import Toast from "../../Tostify/Toast";
 
 interface AssetInfo {
    symbol: string;
@@ -58,7 +56,7 @@ const AccountType: React.FC<AccountTypeProps> = ({ isDemo: initialDemo, balance 
          setLoading(true);
          const newAccountType = !isDemo;
 
-         const response = await fetch(`${API_BASE_URL}/users/me/demo/${isDemo ? 'disable' : 'enable'}`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/demo/disable`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -69,7 +67,7 @@ const AccountType: React.FC<AccountTypeProps> = ({ isDemo: initialDemo, balance 
          if (response.ok) {
             setIsDemo(newAccountType);
          } else {
-            return toast.error('Failed to update account type');
+            console.error('Failed to update account type');
          }
       } catch (error) {
          console.error('Error updating account type:', error);
@@ -157,31 +155,29 @@ const HeaderDash = () => {
    const ethInfo = getAssetInfo('eth') || { price: 2655.08, changePercent: 3.473 };
 
    // Fix reduce function to use correct types
-   const accountBalance = user?.is_binance && assetData.lenght>0
+   const accountBalance = user?.is_binance && assetData
       ? assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(5)
       : '66617.98000';
+
    return (
-      <>
-         <Toast />
-         <header className="p-4 bg-gray-50 flex">
-            <div className="flex justify-between items-center w-full">
-               <div className="gear-icon lg:hidden">
-                  <FaGear className="text-primary-700 text-2xl cursor-pointer" onClick={toggleVisibility} />
+      <header className="p-4 bg-gray-50 flex">
+         <div className="flex justify-between items-center w-full">
+            <div className="gear-icon lg:hidden">
+               <FaGear className="text-primary-700 text-2xl cursor-pointer" onClick={toggleVisibility} />
+            </div>
+            <div className="flex lg:justify-between justify-end items-center w-full">
+               <div className="assets-info hidden lg:flex items-start gap-10">
+                  <AssetInfo symbol="btc" price={btcInfo.price} changePercent={btcInfo.changePercent} />
+                  <AssetInfo symbol="eth" price={ethInfo.price} changePercent={ethInfo.changePercent} />
+                  <AccountType isDemo={user?.is_demo ?? false} balance={accountBalance} />
                </div>
-               <div className="flex lg:justify-between justify-end items-center w-full">
-                  <div className="assets-info hidden lg:flex items-start gap-10">
-                     <AssetInfo symbol="btc" price={btcInfo.price} changePercent={btcInfo.changePercent} />
-                     <AssetInfo symbol="eth" price={ethInfo.price} changePercent={ethInfo.changePercent} />
-                     <AccountType isDemo={user?.is_demo ?? false} balance={accountBalance} />
-                  </div>
-                  <div className="flex gap-6 items-center">
-                     <UserProfile signalCycles={user?.signal_cycles ?? 0} aiCycles={user?.ai_cycles ?? 0} />
-                     <MenueSetting />
-                  </div>
+               <div className="flex gap-6 items-center">
+                  <UserProfile signalCycles={user?.signal_cycles ?? 0} aiCycles={user?.ai_cycles ?? 0} />
+                  <MenueSetting />
                </div>
             </div>
-         </header>
-      </>
+         </div>
+      </header>
    );
 };
 
