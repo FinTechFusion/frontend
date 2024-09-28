@@ -47,7 +47,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
       console.log(responseData);
       if (responseData.success) {
         toast.success("Order created successfully");
-        setOrderId(responseData.orderId); // Set the orderId
+        setOrderId(responseData.id); // Set the orderId
         reset();
       } else {
         toast.error(responseData?.detail);

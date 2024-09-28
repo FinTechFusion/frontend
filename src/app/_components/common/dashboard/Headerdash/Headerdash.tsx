@@ -51,12 +51,11 @@ const AccountType: React.FC<AccountTypeProps> = ({ isDemo: initialDemo, balance 
 
    const handleToggleAccountType = async () => {
       if (!accessToken) return;
-      console.log("Change Switch");
       try {
          setLoading(true);
          const newAccountType = !isDemo;
 
-         const response = await fetch(`${API_BASE_URL}/users/me/demo/disable`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/demo/${isDemo ? 'disable' : 'enable'}`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',

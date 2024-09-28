@@ -70,6 +70,7 @@ export default function BotLogs({ orderId }: BotLogsProps) {
    useEffect(() => {
       if (orderId) {
          fetchLogs(orderId);
+         console.log(orderId);
       }
    }, [orderId]);
 
