@@ -80,9 +80,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    };
 
    useEffect(() => {
-      if (user?.is_binance) {
-         fetchAssets();
-      }
+      fetchAssets();
    }, []);
 
    return (
