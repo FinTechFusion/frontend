@@ -1,5 +1,4 @@
 import TradingViewWidget from "@/app/_components/common/dashboard/TradingViewWidget/TradingViewWidget";
-import BotLogs from "@/app/_components/common/dashboard/BotLogs/Botlogs";
 import TradingBotForm from "@/app/_components/common/forms/Tradingbot/Tradningbot";
 import UserStrategy from "@/app/_components/common/user/UserStrategy";
 
@@ -12,9 +11,6 @@ export default function page() {
       </div>
       <div className="tradingbot-form">
         <TradingBotForm type="ai" />
-        <div className="logs-conatiner w-full">
-          <BotLogs />
-        </div>
       </div>
     </>
   )
