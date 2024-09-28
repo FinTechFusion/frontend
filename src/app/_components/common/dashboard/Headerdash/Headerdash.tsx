@@ -155,7 +155,7 @@ const HeaderDash = () => {
    const ethInfo = getAssetInfo('eth') || { price: 2655.08, changePercent: 3.473 };
 
    // Fix reduce function to use correct types
-   const accountBalance = user?.is_binance && assetData
+   const accountBalance = user?.is_binance && assetData.length > 0
       ? assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(5)
       : '66617.98000';
 
