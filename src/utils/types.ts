@@ -141,3 +141,25 @@ export interface Log {
 export interface BotLogsProps {
    orderId: string;
 }
+export interface AssetInfo {
+   symbol: string;
+   last_price: number;
+   price_change_percent: number;
+   quantity: number;
+}
+
+export interface AssetInfoProps {
+   symbol: string;
+   price: number;
+   changePercent: number;
+}
+
+export interface AccountTypeProps {
+   isDemo: boolean;
+   balance: string;
+}
+
+export interface UserProfileProps {
+   signalCycles: number;
+   aiCycles: number;
+}

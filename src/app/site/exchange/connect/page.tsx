@@ -46,7 +46,7 @@ export default function Page() {
                {loading ? <Loading /> : <Link href={`${data?.authorization_url}`}>
                   <MainBtn content="connect binance" btnProps="w-fit" />
                </Link>}
-               <p className=" py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href='' target="_blank" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
+               <p className="py-5 w-1/2 text-center mx-auto capitalize">dont have account binance? <Link href='https://accounts.binance.com/ar/register' target="_blank" className="text-primary-600 cursor-pointer">create account bainance</Link></p>
             </div>
          </aside>
       </div>
