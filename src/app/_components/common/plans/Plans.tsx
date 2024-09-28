@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
 import { useAuth } from '@/context/AuthContext';
+import { SpinBtn } from '../Buttons/MainBtn';
 
 interface PlanCardProps {
    selectedPlanType: string;
@@ -19,24 +20,20 @@ interface PlanCardProps {
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
    const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-   const {user}=useAuth();
+   const [LoadingBtn, setLoading] = useState<Boolean>(false);
+   const { user } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans`, {
       method: "GET",
       next: { revalidate: 120 }
    });
-   // const response = useFetch(`${API_BASE_URL}/users/me/subscription`, {
-   //    method: "GET",
-   //    headers: {
-   //       authorization: `Bearer ${accessToken}`,
-   //    }
-   // });
    const createSubscription = async (planId: string) => {
       if (!accessToken) {
          router.push('/login');
       }
       try {
+         setLoading(true);
          const response = await fetch(`${API_BASE_URL}/users/me/subscription`, {
             method: 'POST',
             headers: {
@@ -54,11 +51,17 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       } catch (error) {
          console.error('Error creating subscription:', error);
       }
+      finally {
+         setLoading(false);
+      }
    };
 
    const handlePurchase = async (planId: string) => {
       if (!user?.is_subscribed) {
          await createSubscription(planId);
+      }
+      else {
+         return toast.info("You,already subscribe")
       }
    }
 
@@ -73,34 +76,34 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
 
    return (
       <>
-         <Toast />  
+         <Toast />
          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-         {filteredPlans?.map((plan: PlanType, index: number) => (
-            <div className="planCard shadow-sm border border-gray-200 px-8 py-10 rounded-[14px] h-full" key={index}>
-               <h2 className="text-2xl font-medium pb-4">{plan.id === "beginner_trial" ? "Free Trial" : plan.name}</h2>
-               <span className="text-gray-500 text-lg pt-5">
-                  <b className="text-gray-950 text-3xl"> {plan.price}/{plan.frequency === "monthly" || plan.frequency === "trial" ? "mo" : "yearly"}</b>
-                  <span className="text-2xl text-gray-600">{" "}AED</span>
-               </span>
-               <p className="info text-gray-500 py-3 line-clamp-2">{plan.description}</p>
-               <button
-                  className="main-btn w-full"
-                  onClick={() => handlePurchase(plan.id)}
-               >
-                  Purchase Plan
-               </button>
-               <div className="plan-include">
-                  <p className="text-gray-800 text-xl font-medium pt-4">Includes :</p>
-                  <ul className='py-3'>
-                     {plan?.features?.map((feature: any, index: number) => (
-                        <li key={index} className='capitalize py-2 flex justify-start items-start'>
-                           <FaCheck className="pe-2 text-primary-600 text-2xl" /> {feature}
-                        </li>
-                     ))}
-                  </ul>
+            {filteredPlans?.map((plan: PlanType, index: number) => (
+               <div className="planCard shadow-sm border border-gray-200 px-8 py-10 rounded-[14px] h-full" key={index}>
+                  <h2 className="text-2xl font-medium pb-4">{plan.id === "beginner_trial" ? "Free Trial" : plan.name}</h2>
+                  <span className="text-gray-500 text-lg pt-5">
+                     <b className="text-gray-950 text-3xl"> {plan.price}/{plan.frequency === "monthly" || plan.frequency === "trial" ? "mo" : "yearly"}</b>
+                     <span className="text-2xl text-gray-600">{" "}AED</span>
+                  </span>
+                  <p className="info text-gray-500 py-3 line-clamp-2">{plan.description}</p>
+                  {LoadingBtn ? <SpinBtn content='Purchasing ..' btnProps='w-full' /> : <button
+                     className="main-btn w-full"
+                     onClick={() => handlePurchase(plan.id)}
+                  >
+                     Purchase Plan
+                  </button>}
+                  <div className="plan-include">
+                     <p className="text-gray-800 text-xl font-medium pt-4">Includes :</p>
+                     <ul className='py-3'>
+                        {plan?.features?.map((feature: any, index: number) => (
+                           <li key={index} className='capitalize py-2 flex justify-start items-start'>
+                              <FaCheck className="pe-2 text-primary-600 text-2xl" /> {feature}
+                           </li>
+                        ))}
+                     </ul>
+                  </div>
                </div>
-            </div>
-         ))}
+            ))}
          </div>
       </>
    );

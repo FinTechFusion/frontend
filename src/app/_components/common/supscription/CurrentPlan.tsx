@@ -5,7 +5,6 @@ import { GiMoneyStack } from "react-icons/gi";
 interface CurrentPlanProps {
    data: any;
    confirmdDeletePlan: () => void;
-
 }
 
 export default function CurrentPlan({ data, confirmdDeletePlan }: CurrentPlanProps) {
