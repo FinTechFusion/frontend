@@ -2,7 +2,6 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useAssetData } from '@/context/AssetsContext';
-import { MainBtn } from "../../Buttons/MainBtn";
 import BinanceConnectStatus from "../../binance/BinanceConnectStatus";
 import TokensTable from "../../binance/TokensTable";
 import PriceChangeLineChart from "../charts/LineChart";
@@ -38,14 +37,13 @@ function DashboardContent() {
             <Tradingopportunity />
             {user.is_binance && formattedData.length > 0 && <PieChartDigram data={formattedData} />}
          </div>
-         {user?.is_binance ?
-            <>
-               <TokensTable />
-               <div className="grid justify-start items-start md:grid-cols-1 gap-5 grid-cols-1">
-                  {formattedData.length > 0 && <PriceChangeLineChart data={formattedData} />}
-               </div>
-            </>
-            : <BinanceConnectStatus />
+         <>
+            <TokensTable />
+            <div className="grid justify-start items-start md:grid-cols-1 gap-5 grid-cols-1">
+               {formattedData.length > 0 && <PriceChangeLineChart data={formattedData} />}
+            </div>
+         </>
+         {!user?.is_binance && <BinanceConnectStatus />
          }
       </>
    );
