@@ -28,9 +28,8 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
       if (!accessToken) {
          return toast.error('Try,login again');
       }
-      if (!user?.is_subscribed) {
-         CheckConfirmAlert(onConfirm);
-         return;
+      if (!(user?.is_binance)) {
+         return CheckConfirmAlert(onConfirm);
       }
       try {
          setLoading(true);

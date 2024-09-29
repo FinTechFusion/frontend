@@ -7,7 +7,6 @@ const tradingbotSchema = z.object({
    }),
     quantity: z
       .number({ message: "Quantity is required" })
-      .int({ message: "Quantity must be an integer" })
       .positive({ message: "Quantity must be greater than 0" }),
    profit_threshold: z
       .number({ message: "Profit threshold is required" })

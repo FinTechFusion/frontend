@@ -23,8 +23,12 @@ const config: Config = {
         backgroundImage: {
           'notfound-pattern': "url('/assets/images/pattern-lines.png')",
           'contact-backgroud': "url('/assets/images/contact-backgroud.jpeg')"
+        },
+        zIndex: {
+          '100': '100',
         }
       },
+
     },
 
   },

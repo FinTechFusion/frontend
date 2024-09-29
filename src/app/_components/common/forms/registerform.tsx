@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
@@ -99,6 +100,8 @@ export default function RegisterForm() {
             <div className="register-btn">
                {isLoading ? <SpinBtn content="creating" btnProps="w-full" /> : <MainBtn content="create" btnProps="w-full" />}
             </div>
+            <p className="pt-2 text-lg"> Already have an account? <Link href="/login" className="text-primary-600 underline">login</Link>
+            </p>
          </form>
       </>
    );

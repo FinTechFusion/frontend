@@ -69,7 +69,7 @@ const HeaderDash = () => {
          <header className="p-4 bg-gray-50 flex">
             <div className="flex justify-between items-center w-full">
                <div className="gear-icon lg:hidden">
-                  <FiMenu className="text-primary-700 text-2xl cursor-pointer" onClick={toggleVisibility} />
+                  <FiMenu className="text-primary-700 text-3xl cursor-pointer" onClick={toggleVisibility} />
                </div>
                <div className="flex lg:justify-between justify-end items-center w-full">
                   <div className="assets-info hidden lg:flex items-start gap-10">
