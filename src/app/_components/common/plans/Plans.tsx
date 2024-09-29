@@ -88,7 +88,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                      className="main-btn w-full"
                      onClick={() => handlePurchase(plan.id)}
                   >
-                     Purchase Plan
+                     Subscribe Plan
                   </button>
                   <div className="plan-include">
                      <p className="text-gray-800 text-xl font-medium pt-4">Includes :</p>

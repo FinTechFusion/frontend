@@ -3,7 +3,7 @@ import homeImage from '/public/assets/images/headerimg.webp';
 import Link from "next/link";
 import { MainBtn } from "./common/Buttons/MainBtn";
 import dynamic from "next/dynamic";
-import HowItWorks from "./Home/HowWork/HowWork";
+// import HowItWorks from "./Home/HowWork/HowWork";
 const BinancePopup = dynamic(() => import("./Popups/BinancePopup"), { ssr: false });
 
 export default function Hero() {
@@ -31,7 +31,7 @@ export default function Hero() {
                   />
                </div>
             </div>
-            <HowItWorks />
+            {/* <HowItWorks /> */}
          </div>
          <BinancePopup />
       </div>

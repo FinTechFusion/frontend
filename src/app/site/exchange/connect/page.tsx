@@ -39,7 +39,7 @@ export default function Page() {
                      log in to your account in binance</li>
                   <li className="my-8 capitalize text-lg font-medium flex items-center">
                      <span className="bg-primary-600 me-4 text-2xl rounded-full text-secondary w-[45px] h-[45px] flex justify-center items-center">3</span>
-                     create new Api key & secret key</li>
+                     Confirm your connection to Fintech Fusion</li>
                </ul>
             </div>
             <div className="connection mx-auto text-center">

@@ -13,7 +13,7 @@ export default function Tradingopportunity() {
                <MainBtn content="Bot AI" btnProps="w-fit me-3" />
             </Link>
             <Link href="/dashboard/botanalysis">
-               <MainBtn content="Bot Analysis" btnProps="w-fit" />
+               <MainBtn content="Bot Signal" btnProps="w-fit" />
             </Link>
          </div>
       </div>

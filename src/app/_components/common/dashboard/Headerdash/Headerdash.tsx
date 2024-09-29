@@ -1,6 +1,6 @@
 "use client"
 
-import { FaGear, FaChartLine, FaChartBar } from "react-icons/fa6";
+import { FiMenu } from "react-icons/fi";
 import MenueSetting from '../../user/MenueSetting';
 import { useAuth } from "@/context/AuthContext";
 import { useAssetData } from "@/context/AssetsContext";
@@ -8,6 +8,8 @@ import { useSidebar } from "@/context/SidebarContext";
 import Toast from '@/app/_components/common/Tostify/Toast';
 import { AssetInfoProps, UserProfileProps } from "@/utils/types";
 import AccountTypeSwitcher from "./AccountTypeSwitcher";
+import { HiOutlineSignal } from "react-icons/hi2";
+import { FaRobot } from 'react-icons/fa';
 
 const AssetInfo: React.FC<AssetInfoProps> = ({ symbol, price, changePercent }) => (
    <div className="asset-info">
@@ -26,12 +28,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ signalCycles, aiCycles }) => 
    <div className="user-profile hidden lg:flex items-center gap-6">
       <div className="signal-number">
          <span className="flex items-center gap-2">
-            <FaChartLine className="text-primary-600 text-xl" /> {signalCycles}
+            <HiOutlineSignal className="text-primary-600 text-xl" /> {signalCycles}
          </span>
       </div>
       <div className="ai-number">
          <span className="flex items-center gap-2">
-            <FaChartBar className="text-primary-600 text-xl font-medium" /> {aiCycles}
+            <FaRobot className="text-primary-600 text-xl font-medium" /> {aiCycles}
          </span>
       </div>
    </div>
@@ -67,7 +69,7 @@ const HeaderDash = () => {
          <header className="p-4 bg-gray-50 flex">
             <div className="flex justify-between items-center w-full">
                <div className="gear-icon lg:hidden">
-                  <FaGear className="text-primary-700 text-2xl cursor-pointer" onClick={toggleVisibility} />
+                  <FiMenu className="text-primary-700 text-2xl cursor-pointer" onClick={toggleVisibility} />
                </div>
                <div className="flex lg:justify-between justify-end items-center w-full">
                   <div className="assets-info hidden lg:flex items-start gap-10">

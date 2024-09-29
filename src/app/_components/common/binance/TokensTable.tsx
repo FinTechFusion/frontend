@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import Loading from '../loading/Loading';
 import { useAssetData } from '@/context/AssetsContext';
+import { useAuth } from '@/context/AuthContext';
 
 export default function TokensTable() {
+  const {user}=useAuth();
   const [rowData, setRowData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 5;
@@ -32,7 +34,7 @@ export default function TokensTable() {
 
   return (
     <>
-      <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">Currency Details</h2>
+      <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">{user?.is_demo ? "Demo Spot Wallet" : "Spot Wallet"}</h2>
       <div className="my-5 overflow-x-auto">
         <table className="min-w-full bg-white border overflow-auto shadow-sm">
           <thead>

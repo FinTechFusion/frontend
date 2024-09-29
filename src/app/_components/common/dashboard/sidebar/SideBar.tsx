@@ -1,12 +1,13 @@
 "use client"
-import Link from 'next/link';
-import { FaUser, FaChartLine, FaRobot, FaStore, FaBell } from 'react-icons/fa';
+import { FaRobot, FaStore } from 'react-icons/fa';
 import { IoMdContacts } from "react-icons/io";
 import { FaHouse, FaGear } from "react-icons/fa6";
 import { BsBagCheckFill } from "react-icons/bs";
 import SidebarLink from './SidebarLink';
 import { IoClose } from "react-icons/io5";
 import { useSidebar } from '@/context/SidebarContext';
+import { HiOutlineSignal } from "react-icons/hi2";
+import { IoWalletOutline } from "react-icons/io5";
 
 export default function Sidebar() {
    const { isVisible, toggleVisibility } = useSidebar();
@@ -25,8 +26,8 @@ export default function Sidebar() {
 
                <p className="text-gray-700 text-xl py-3">Trading</p>
 
-               <SidebarLink icon={<FaChartLine />
-               } content='Bot Analysis' weight='font-normal' path='/dashboard/botanalysis' />
+               <SidebarLink icon={<HiOutlineSignal />
+               } content='Bot Signal' weight='font-normal' path='/dashboard/botanalysis' />
 
                <SidebarLink icon={<FaRobot />
                } content='Bot AI' weight='font-normal' path='/dashboard/botai' />
@@ -42,7 +43,7 @@ export default function Sidebar() {
                   path="/dashboard/store"
                />
                <SidebarLink
-                  icon={<FaBell className="px-2 text-4xl" />}
+                  icon={<IoWalletOutline className="px-2 text-4xl" />}
                   content="Subscription"
                   weight='font-normal'
                   path="/dashboard/subscription"
