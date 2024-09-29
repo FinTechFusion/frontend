@@ -12,7 +12,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const [isDemo, setIsDemo] = useState(initialDemo);
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
-   const { fetchUserData } = useAuth();
+   const { user, fetchUserData } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
 
@@ -28,7 +28,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
       if (!accessToken) {
          return toast.error('Try,login again');
       }
-      if (isDemo) {
+      if (!user?.is_subscribed) {
          CheckConfirmAlert(onConfirm);
          return;
       }
