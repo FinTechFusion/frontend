@@ -31,7 +31,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     next: { revalidate: 60 }
   });
 
-  const [orderId, setOrderId] = useState<string | null>(null); // State to store orderId
+  const [orderId, setOrderId] = useState<string | null>(null);
 
   async function createOrder(data: any) {
     try {
@@ -47,7 +47,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
       console.log(responseData);
       if (responseData.success) {
         toast.success("Order created successfully");
-        setOrderId(responseData.id); // Set the orderId
+        setOrderId(responseData?.data?.id); // Set the orderId
         reset();
       } else {
         toast.error(responseData?.detail);
@@ -132,8 +132,9 @@ export default function TradingBotForm({ type }: tradingBotType) {
         </div>
         <MainBtn content="Start" btnProps="w-fit" />
       </form>
-
-      {orderId && <BotLogs orderId={orderId} />}
+      <>
+        {orderId && <BotLogs orderId={orderId} />}
+      </>
     </>
   )
 }

@@ -5,7 +5,7 @@ interface PlansToggleProps {
 }
 
 const PlansToggle = ({ onTabChange }: PlansToggleProps) => {
-   const tabs = ['Monthly', 'Yearly up to 25%'];
+   const tabs = ['Monthly', 'Yearly up to -25%'];
    const [activeTab, setActiveTab] = useState(0);
 
    const handleClick = (index: number) => {

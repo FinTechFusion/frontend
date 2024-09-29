@@ -17,9 +17,9 @@ export default function Page() {
             <div className="my-8">
                <div className="user-info grid grid-cols-12 justify-between items-center">
                   <UserInfo user={user} />
-                  <div className="md:col-span-4 col-span-12 md:text-end md:mt-0 mt-8">
+                  {/* <div className="md:col-span-4 col-span-12 md:text-end md:mt-0 mt-8">
                      <MainBtn content="Edit Profile" btnProps="w-fit" />
-                  </div>
+                  </div> */}
                </div>
             </div>
             <AccountSetting user={user} />

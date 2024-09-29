@@ -156,7 +156,7 @@ export interface AssetInfoProps {
 
 export interface AccountTypeProps {
    isDemo: boolean;
-   balance: string;
+   balance?: string;
 }
 
 export interface UserProfileProps {

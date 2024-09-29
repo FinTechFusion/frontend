@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+// import { useState } from 'react';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { FaCheck } from "react-icons/fa6";
@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
 import { useAuth } from '@/context/AuthContext';
-import { SpinBtn } from '../Buttons/MainBtn';
+import BenfitsSubscription from '../supscription/BenfitsSubscription';
 
 interface PlanCardProps {
    selectedPlanType: string;
@@ -19,8 +19,7 @@ interface PlanCardProps {
 
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
-   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-   const [LoadingBtn, setLoading] = useState<Boolean>(false);
+   // const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
    const { user } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
 
@@ -33,9 +32,8 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          router.push('/login');
       }
       try {
-         setLoading(true);
          const response = await fetch(`${API_BASE_URL}/users/me/subscription`, {
-            method: 'POST',
+            method: `${user?.is_subscribed ? "PATCH" : "POST"}`,
             headers: {
                'Content-Type': 'application/json',
                authorization: `Bearer ${accessToken}`
@@ -43,6 +41,9 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             body: JSON.stringify({ plan: planId })
          });
          const result = await response.json();
+         if (result.data.plan === "beginner_trial") {
+            return toast.success("You,subscribed at play successfully")
+         }
          if (result.success && result.data.client_secret) {
             // Redirect to PaymentPage with clientSecret
             router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
@@ -51,19 +52,12 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       } catch (error) {
          console.error('Error creating subscription:', error);
       }
-      finally {
-         setLoading(false);
-      }
    };
 
    const handlePurchase = async (planId: string) => {
-      if (!user?.is_subscribed) {
-         await createSubscription(planId);
-      }
-      else {
-         return toast.info("You,already subscribe")
-      }
-   }
+      await createSubscription(planId);
+   } 
+
 
    if (loading) {
       return <Loading />;
@@ -86,12 +80,12 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                      <span className="text-2xl text-gray-600">{" "}AED</span>
                   </span>
                   <p className="info text-gray-500 py-3 line-clamp-2">{plan.description}</p>
-                  {LoadingBtn ? <SpinBtn content='Purchasing ..' btnProps='w-full' /> : <button
+                  <button
                      className="main-btn w-full"
                      onClick={() => handlePurchase(plan.id)}
                   >
                      Purchase Plan
-                  </button>}
+                  </button>
                   <div className="plan-include">
                      <p className="text-gray-800 text-xl font-medium pt-4">Includes :</p>
                      <ul className='py-3'>
@@ -105,6 +99,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                </div>
             ))}
          </div>
+         <BenfitsSubscription />
       </>
    );
 }

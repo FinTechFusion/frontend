@@ -15,7 +15,7 @@ export default function Footer() {
                            <Link href="/site/botai" className="capitalize text-lg hover:text-primary-500">bot ai</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
+                           <Link href="/site/botsignal" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
                         </li>
                         <li className="py-3">
                            <Link href="/site/plans" className="capitalize text-lg hover:text-primary-500">plans</Link>
@@ -29,10 +29,10 @@ export default function Footer() {
                            <Link href="/site/faq" className="capitalize text-lg hover:text-primary-500">FAQ</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="" className="capitalize text-lg hover:text-primary-500">blog</Link>
+                           <span className="capitalize text-lg hover:text-primary-500">blog</span>
                         </li>
                         <li className="py-3">
-                           <Link href="" className="capitalize text-lg hover:text-primary-500">support</Link>
+                           <span className="capitalize text-lg hover:text-primary-500">support</span>
                         </li>
                      </ul>
                   </div>
@@ -42,9 +42,9 @@ export default function Footer() {
                         <li className="py-3">
                            <Link href="/site/about" className="capitalize text-lg hover:text-primary-500">about us</Link>
                         </li>
-                        <li className="py-3">
-                           <Link href="/site/botanalysis" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
-                        </li>
+                        {/* <li className="py-3">
+                           <Link href="/site/botsignal" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
+                        </li> */}
                         <li className="py-3">
                            <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">contact us</Link>
                         </li>

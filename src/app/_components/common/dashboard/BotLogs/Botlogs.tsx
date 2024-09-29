@@ -10,7 +10,7 @@ export default function BotLogs({ orderId }: BotLogsProps) {
    const [logs, setLogs] = useState<Log[]>([]);
    const [rawOutput, setRawOutput] = useState<string[]>([]);
    const accessToken = getTokenFromStorage("access_token");
-
+   console.log(orderId);
    async function fetchLogs(orderId: string) {
       try {
          const response = await fetch(`${API_BASE_URL}/users/me/orders/${orderId}/logs`, {
