@@ -20,7 +20,7 @@ interface PlanCardProps {
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
    // const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-   const { user } = useAuth();
+   const { user, fetchUserData } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans`, {
@@ -41,24 +41,28 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             body: JSON.stringify({ plan: planId })
          });
          const result = await response.json();
-         if (result.data.plan === "beginner_trial") {
-            return toast.success("You,subscribed at play successfully")
+         if (!result.success) {
+            return toast.info("You already subscribed at this plan,before");
          }
+         if (result.data.plan === "beginner_trial") {
+            toast.success("You,subscribed at plan successfully");
+            if (accessToken) {
+               fetchUserData(accessToken);
+            }
+            return;
+         }
+
          if (result.success && result.data.client_secret) {
             // Redirect to PaymentPage with clientSecret
             router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
          }
-
       } catch (error) {
          console.error('Error creating subscription:', error);
       }
    };
-
    const handlePurchase = async (planId: string) => {
       await createSubscription(planId);
    } 
-
-
    if (loading) {
       return <Loading />;
    }
