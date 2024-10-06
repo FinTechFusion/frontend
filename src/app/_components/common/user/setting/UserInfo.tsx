@@ -12,7 +12,7 @@ export default function UserInfo({ user }: { user: User }) {
                   {`${first_name} ${last_name}`}
                </h3>
                <p className="email text-lg text-gray-600 py-1">{email}</p>
-               <p className="phone text-lg text-gray-600 py-1 text-left" dir="rtl">{phone_number}</p>
+               <p className="phone text-lg text-gray-600 py-1" dir="ltr">{phone_number}</p>
             </div>
          </div>
       </div>
