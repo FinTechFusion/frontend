@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Toast() {
    const locale = useLocale();
-   console.log(locale)
    return (
       <ToastContainer
          position={locale === "ar" ? "top-right" : "top-left"}

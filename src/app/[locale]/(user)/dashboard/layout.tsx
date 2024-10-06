@@ -17,14 +17,14 @@ type DashboardLayoutProps = {
 export default function UserDashboardLayout({ children }: DashboardLayoutProps) {
    const locale = useLocale();
    return (
-      <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      <html lang={locale}>
          <body>
             <SidebarProvider>
                <div className="grid grid-cols-12 gap-5">
-                  <div className={`lg:col-span-3 col-span-10`}>
+                  <div className={`${locale === "en" ? "lg:col-span-2" :"lg:col-span-3"} col-span-10 `}>
                      <Sidebar />
                   </div>
-                  <div className={`lg:col-span-9 col-span-12`}>
+                  <div className={`${locale ==="en" ?"lg:col-span-10":"lg:col-span-9"} col-span-12`}>
                      <AssetDataProvider>
                         <Headerdash />
                      </AssetDataProvider>
