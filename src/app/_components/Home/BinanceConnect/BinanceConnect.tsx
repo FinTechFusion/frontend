@@ -2,30 +2,32 @@
 import Textbox from "../../common/Text/Textbox";
 import Image from "next/image";
 import binanceImage from "/public/assets/images/binancetest.jpg";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 import { FaLink } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslations } from "next-intl";
 
 export default function BinanceConnect() {
   const { user } = useAuth();
+  const t = useTranslations("");
   return (
     <div className="grid md:grid-cols-2 justify-between items-center gap-6 py-8">
       <div className="integrate">
-        <Textbox title="Seamless Integration with Binance" description="We&apos;ve partnered with Binance, the world&apos;s leading cryptocurrency exchange, to provide you with unparalleled trading opportunities and liquidity." descriptionClass="md:w-3/4 w-full" />
-        <ul className="list-disc pl-5 pb-5">
-          <li className="text-lg py-1">Easy account linking</li>
-          <li className="text-lg py-1">Real-time data synchronization</li>
-          <li className="text-lg py-1">Access to Binance&apos;s extensive range of trading pairs</li>
-          <li className="text-lg py-1">Leverage Binance&apos;s robust API for advanced trading strategies</li>
+        <Textbox title="integrate_heading" description="integrate_description" descriptionClass="md:w-3/4 text-lg w-full" />
+        <ul className="list-disc px-5 pb-5">
+          <li className="text-lg py-1">{t("integrate_feat_1")}</li>
+          <li className="text-lg py-1">{t("integrate_feat_2")}</li>
+          <li className="text-lg py-1">{t("integrate_feat_3")}</li>
+          <li className="text-lg py-1">{t("integrate_feat_4")}</li>
         </ul>
         {!user?.is_binance ? <Link href="/site/exchange/connect">
           <button className="main-btn flex justify-center items-center gap-2">
-            connect your account
+            {t("connect_acc")}
             <FaLink className="pt-1" />
           </button>
         </Link> : <Link href="/dashboard">
           <button className="main-btn ">
-            Start Trial
+            {t("trail_btn")}
           </button>
         </Link>}
       </div>

@@ -6,17 +6,18 @@ import { PlatformFeature } from "./types";
 export const tradingPlatformData: PlatformFeature[] = [
    {
       icon: FiShield,
-      title: "Secure Trading",
-      description: "prioritizes top-tier security, ensuring the protection of both your assets and personal information.",
+      titleKey: "secure_trading",
+      descriptionKey: "secure_trading_info",
    },
    {
       icon: AiOutlineThunderbolt,
-      title: "Fast Execution",
-      description: "Experience lightning-fast trade execution with our state-of-the-art trading engine.",
+      titleKey: "fast_execution",
+      descriptionKey: "fast_execution_info",
    },
    {
       icon: FaWallet,
-      title: "Intuitive Wallet",
-      description: "Manage your crypto assets with ease using our user-friendly and secure wallet.",
+      titleKey: "intuitive_wallet",
+      descriptionKey: "intuitive_wallet_info",
    },
-]
+];
+

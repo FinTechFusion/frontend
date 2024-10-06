@@ -2,18 +2,21 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { useAssetData } from "@/context/AssetsContext";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 import { useState } from "react";
 import { FaBriefcase, FaUser, FaChartLine, FaChartBar } from "react-icons/fa6";
 import { MdKeyboardArrowDown, MdNotifications, MdSettings } from "react-icons/md";
 import AccountTypeSwitcher from "../dashboard/Headerdash/AccountTypeSwitcher";
+import { useTranslations } from "next-intl";
+import { useLocale } from 'next-intl';
 
 export default function MenueSetting() {
    const { user, logout } = useAuth();
    const { assetData } = useAssetData();
    const [isOpen, setIsOpen] = useState(false);
    const toggleDropdown = () => setIsOpen(!isOpen);
-
+   const t = useTranslations("dashboard");
+   const locale = useLocale();
    return (
       <div className="relative">
          <button
@@ -25,7 +28,7 @@ export default function MenueSetting() {
          </button>
 
          {isOpen && (
-            <div className="absolute right-0 mt-2 md:w-64 w-[21rem] bg-secondary rounded-md shadow-sm p-1 z-50">
+            <div className={`absolute ${locale === 'en' ? "right-0" : "left-0"} mt-2 md:w-64 w-[21rem] bg-secondary rounded-md shadow-sm p-1 z-50`}>
                <div className="p-4 border-b">
                   <p className="text-lg text-gray-600 flex items-center gap-2">
                      <FaUser className="w-5 h-5 text-primary-600" />
@@ -90,23 +93,23 @@ export default function MenueSetting() {
                   </label>
                </div> */}
                <div className="p-2">
-                  <p className="text-lg font-semibold mb-2">Setting</p>
-                  <Link onClick={toggleDropdown} href="/dashboard/subscription" className="flex items-center p-2 hover:bg-gray-100 rounded">
+                  <p className="text-lg font-semibold mb-2">{t("userSetting")}</p>
+                  <Link onClick={toggleDropdown} href="/dashboard/subscription" className="flex items-center p-2 hover:bg-gray-100 rounded gap-1">
                      <MdNotifications size={18} className="mr-2 text-primary-600" />
-                     <span>Subscription</span>
+                     <span>{t("sidebar.subscription")}</span>
                   </Link>
-                  <Link onClick={toggleDropdown} href="#" className="flex items-center p-2 hover:bg-gray-100 rounded">
+                  <Link onClick={toggleDropdown} href="/dashboard/store" className="flex items-center p-2 hover:bg-gray-100 rounded gap-1">
                      <FaBriefcase size={18} className="mr-2 text-primary-600" />
-                     <span>My Portfolio</span>
+                     <span>{t("sidebar.store")}</span>
                   </Link>
-                  <Link onClick={toggleDropdown} href="/dashboard/settings" className="flex items-center p-2 hover:bg-gray-100 rounded">
+                  <Link onClick={toggleDropdown} href="/dashboard/settings" className="flex items-center p-2 hover:bg-gray-100 rounded gap-1">
                      <MdSettings size={18} className="mr-2 text-primary-600" />
-                     <span>Settings</span>
+                     <span>{t("sidebar.settings")}</span>
                   </Link>
                </div>
                <div className="p-2">
                   <button className="w-fit bg-primary-600 text-secondary p-2 rounded hover:bg-teal-700" onClick={logout}>
-                     Logout
+                     {t("logout")}
                   </button>
                </div>
             </div>

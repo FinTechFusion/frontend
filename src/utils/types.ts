@@ -24,8 +24,8 @@ export interface TextData {
 }
 export interface PlatformFeature {
    icon: React.ElementType;
-   title: string;
-   description: string;
+   titleKey: string;
+   descriptionKey: string;
 }
 // utils/types.ts
 

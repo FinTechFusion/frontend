@@ -3,6 +3,7 @@
 import { Strategy } from '@/utils/types';
 import { useState } from 'react';
 import StrategieCard from './StrategieCard';
+import { useTranslations } from "next-intl";
 
 interface dataProps {
   data?: Strategy[]
@@ -27,11 +28,11 @@ export default function Strategies({ data }: dataProps) {
   });
 
   const strategyTypes: string[] = Array.from(new Set<string>(data?.map((strategy: Strategy) => strategy.type)));
-
+  const t = useTranslations("dashboard");
   return (
     <>
       <div className="section-title pt-6 pb-3">
-        <h3 className="text-2xl font-medium">Get better Strategy experience with special apps for Fintech Fusion </h3>
+        <h3 className="text-2xl font-medium">{t("ourStrategies")}</h3>
       </div>
       <div className="type-filter flex gap-4 mt-4">
         {strategyTypes.map((type, index) => (
@@ -48,7 +49,7 @@ export default function Strategies({ data }: dataProps) {
       <form className="searchForm mt-8">
         <input
           type="search"
-          placeholder="Search about strategy"
+          placeholder={t("searchStartegy")}
           className="main_input border focus:border-primary-700 text-xl"
           value={searchQuery}
           onChange={handleSearchChange}

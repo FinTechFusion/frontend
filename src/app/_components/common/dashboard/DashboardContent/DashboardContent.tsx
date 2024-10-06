@@ -11,10 +11,10 @@ import Tradingopportunity from '../opportunity/Tradingopportunity';
 import PieChartDigram from '../charts/PieChart';
 
 function DashboardContent() {
-   const { assetData, errorMessage, assetLoading } = useAssetData();
+   const { assetData, assetLoading } = useAssetData();
    const { user } = useAuth();
 
-   if (!user) {
+   if (!user || assetLoading) {
       return <Loading />;
    }
 
@@ -30,10 +30,6 @@ function DashboardContent() {
    return (
       <>
          <div className="py-5 my-5 shadow rounded-md flex md:flex-row flex-col md:gap-6 justify-between items-center">
-            {/* <div className="flex justify-between items-center px-3">
-               <h4 className='text-xl font-medium'>Dashboard</h4>
-               <MainBtn content='Product Tour' btnProps="text-lg" />
-            </div> */}
             <Tradingopportunity />
             {user.is_binance && formattedData.length > 0 && <PieChartDigram data={formattedData} />}
          </div>

@@ -1,7 +1,7 @@
 import { Strategy } from "@/utils/types";
 import Image from "next/image";
 import { MainBtn } from "../common/Buttons/MainBtn";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 
 export default function StrategieCard({ id, banner_url, name, type, description }: Strategy) {
    return (
@@ -10,9 +10,9 @@ export default function StrategieCard({ id, banner_url, name, type, description 
             <Image
                src={banner_url}
                alt={`${name} banner`}
-               width={425}
+               width={250}
                height={300}
-               className="rounded w-full"
+               className="rounded w-full h-[300px]"
             />
          </div>
          <div className="flex flex-col">

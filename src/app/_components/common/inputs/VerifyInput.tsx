@@ -1,27 +1,29 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/i18n/navigation';
 import { API_BASE_URL } from '@/utils/api';
 import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
 import { useOTPInput } from "@/hooks/useOTPInput";
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import Loading from "../loading/Loading";
 import { saveTokenToStorage } from "@/context/AuthContext";
+import { SpinBtn } from '../Buttons/MainBtn';
+import { useTranslations } from 'next-intl';
 
 function VerifyInput() {
    const route = useRouter();
    const searchParams = useSearchParams();
    const email = searchParams.get('email');
-
+   const [loadingbtn, SetLoading] = useState(false);
    const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
-
+   const t = useTranslations("auth");
    async function sendCodeToApi(code: number) {
       try {
+         SetLoading(true);
          if (!email) {
-            return toast.error("Invalid Email");
+            return toast.error(t("inavlidEmail"));
          }
-
          const response = await fetch(`${API_BASE_URL}/auth/verify?otp_code=${code}&email=${email}`, {
             method: 'POST',
             headers: {
@@ -31,7 +33,7 @@ function VerifyInput() {
 
          if (!response.ok) {
             const responseData = await response.json();
-            return toast.error(responseData.detail || "An error has occurred");
+            return toast.error(responseData.detail || t("errorOccured"));
          }
 
          const responseData = await response.json();
@@ -45,13 +47,16 @@ function VerifyInput() {
             saveTokenToStorage("access_token", access_token);
             saveTokenToStorage("refresh_token", refresh_token);
             route.push('/site/exchange');
-            return toast.success("Account is verified Successfully");
+            return toast.success(t("verify_email_success"));
          } else {
             return toast.error(responseData.detail);
          }
       } catch (error: any) {
          console.error(error);
-         toast.error("An error has occurred");
+         toast.error(t("errorOccured"));
+      }
+      finally {
+         SetLoading(false);
       }
    }
 
@@ -59,7 +64,7 @@ function VerifyInput() {
       e.preventDefault();
       const combinedValue = values.join('');
       if (!combinedValue) {
-         return toast.error("Enter Full OTP code");
+         return toast.error(t("fullOtp"));
       }
       sendCodeToApi(Number(combinedValue));
    };
@@ -67,8 +72,8 @@ function VerifyInput() {
    return (
       <>
          <Toast />
-         <div className="flex flex-col items-center space-y-4">
-            <div className="flex space-x-2">
+         <div className="flex flex-col items-start space-y-4">
+            <div className="flex gap-2">
                {values.map((val, index) => (
                   <input
                      key={index}
@@ -83,12 +88,12 @@ function VerifyInput() {
                   />
                ))}
             </div>
-            <button
+            {loadingbtn ? <SpinBtn content='loading' btnProps='w-full' /> : <button
                onClick={handleVerify}
                className="bg-primary-600 hover:bg-primary-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide"
             >
-               Verify
-            </button>
+               {t("verify")}
+            </button>}
          </div>
       </>
    );

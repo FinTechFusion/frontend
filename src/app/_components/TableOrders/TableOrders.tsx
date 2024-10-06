@@ -7,10 +7,10 @@ import { API_BASE_URL } from '@/utils/api';
 import { getTokenFromStorage } from '@/context/AuthContext';
 import Loading from '../common/loading/Loading';
 import Textbox from '../common/Text/Textbox';
-import { toast } from 'react-toastify';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Order } from '@/utils/types';
+import { useTranslations } from 'next-intl';
 
 
 
@@ -18,7 +18,7 @@ const TableOrders: React.FC = () => {
    const accessToken = getTokenFromStorage("access_token");
    const [rowData, setRowData] = useState<Order[]>([]);
    const [loading, setLoading] = useState(true);
-
+   const t = useTranslations("dashboard");
    const formatDate = (dateString: string): string => {
       const options: Intl.DateTimeFormatOptions = {
          year: 'numeric',
@@ -115,9 +115,8 @@ const TableOrders: React.FC = () => {
       <>
          <Textbox
             mainClass="mt-5"
-            title='Your current orders'
-            description='View and manage your active orders'
-         />
+            title={t("currentOrders")}
+            description={t("manageOrders")} />
          <div className="ag-theme-quartz my-5" style={{ height: 500 }}>
             <AgGridReact
                rowData={rowData}

@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
 import Loading from '@/app/_components/common/loading/Loading';
+import { useRouter, usePathname } from '@/i18n/navigation';
+import { getTokenFromStorage } from "@/context/AuthContext";
 
 interface AuthGuardProps {
    children: React.ReactNode;
@@ -17,13 +18,13 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    useEffect(() => {
       const checkAuth = () => {
          try {
-            const accessToken = localStorage.getItem("access_token");
+            const accessToken = getTokenFromStorage("access_token");
             setIsAuthenticated(!!accessToken);
 
             const protectedRoutes = ['/dashboard', '/site/exchange'];
             const authRoutes = ['/login', '/forget-password', '/reset-password'];
 
-            const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route)) || pathname.includes('payment');
+            const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route)) || pathname.includes('payment');
             const isAuthRoute = authRoutes.includes(pathname);
 
             if (!accessToken && isProtectedRoute) {

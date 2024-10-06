@@ -1,0 +1,460 @@
+{
+   "header": {
+      "home": "Home",
+      "botsignal": "Bot Signal",
+      "botai": "Bot Ai",
+      "plans": "Plans",
+      "aboutus": "About Us",
+      "faq": "FAQ",
+      "dashboard": "Dashboard",
+      "login": "Login",
+      "freetrial": "Free Trial"
+   },
+   "hero": {
+      "heading": "Best Platform Cryptocurrency",
+      "title": "Meet your new crypto trading bots",
+      "description": "Meet your new trading edge Bot Analysis and Bot AI. Simple, smart, and secure. Bot Analysis finds opportunities. Bot AI predicts the market. Both designed to boost your profits with ease and safety in mind."
+   },
+   "features": {
+      "feat_heading": "Advanced Trading Platform Features",
+      "feat_description": "Experience the future of trading with our comprehensive suite of tools,our platform offers everything you need to trade smarter, faster, and more securely.",
+      "title_1": "AI-Powered Trading",
+      "description_1": "Leverage advanced algorithms for optimal trade execution.",
+      "title_2": "Real-Time Analysis",
+      "description_2": "Stay ahead with instant market insights and predictions.",
+      "title_3": "Automated Strategies",
+      "description_3": "Set up and run complex trading strategies with ease.",
+      "title_4": "Performance Tracking",
+      "description_4": "Monitor your portfolio and strategy performance in real-time.",
+      "title_5": "Risk Management",
+      "description_5": "Built-in tools to protect your investments and minimize losses.",
+      "title_6": "User-Friendly Interface",
+      "description_6": "Platform designed for traders of all experience levels."
+   },
+   "integrate_heading": "Seamless Integration with Binance",
+   "integrate_description": "We've partnered with Binance, the world's leading cryptocurrency exchange, to provide you with unparalleled trading opportunities and liquidity.",
+   "integrate_feat_1": "Easy account linking",
+   "integrate_feat_2": "Real-time data synchronization",
+   "integrate_feat_3": "Access to Binance's extensive range of trading pairs",
+   "integrate_feat_4": "Leverage Binance's robust API for advanced trading strategies",
+   "connect_acc": "Connect Your Account",
+   "trail_btn": "start trail",
+   "why_us": "why choose our crypto trading platform ?",
+   "why_us_info": "Experience the future of trading with our comprehensive suite of tools,our platform offers everything you need to trade smarter, faster, and more securely.",
+   "sendMessage": "Send Message",
+   "connect": "Connect",
+   "trybotsignal": "Try Signal Bot",
+   "backhome": "Back Home",
+   "start": "start",
+   "install": "Install",
+   "loading": "Loading...",
+   "trading_benfits": {
+      "secure_trading": "Secure Trading",
+      "secure_trading_info": "prioritizes top-tier security, ensuring the protection of both your assets and personal information.",
+      "fast_execution": "Fast Execution",
+      "fast_execution_info": "Experience lightning-fast trade execution with our state-of-the-art trading engine.",
+      "intuitive_wallet": "Intuitive Wallet",
+      "intuitive_wallet_info": "Manage your crypto assets with ease using our user-friendly and secure wallet"
+   },
+   "startTrading": {
+      "elevateStrategies": {
+         "title": "Ready to elevate your trading strategies and maximize your potential?"
+      },
+      "joinCommunity": {
+         "description": "Join a growing community of successful traders who trust in the power of cutting-edge, AI-driven trading solutions."
+      },
+      "getStarted": "Get Started For Free"
+   },
+   "botsignalPage": {
+      "title": "Unlock Your Trading Potential with Bot Signal",
+      "description": "Bot Signal is a trading assistant that helps you make informed, profitable decisions. It segments your trading strategy over time, analyzing and suggesting optimal entry and exit points for trades. This smooths out market volatility and targets the best average prices. By doing so, it protects your investments from market unpredictability. With Bot Signal, you avoid the risks of trading without data and gain smarter, more strategic trading insights.",
+      "tryBotSignal": "Try Bot Signal",
+      "botAnalysisAlt": "bot-analysis",
+      "perfectForTraders": "Perfect for Every Trader Level",
+      "perfectForTradersDescription": "Bot Signal is designed to be a powerful tool for traders of all experience levels, from beginners to experts. No matter your trading style or strategy, Bot Signal can help you make more informed and profitable decisions.",
+      "beginnerTitle": "Beginner Traders",
+      "beginnerDescription": "Bot Signal provides a user-friendly interface and step-by-step guidance to help new traders navigate the market with confidence.",
+      "intermediateTitle": "Intermediate Traders",
+      "intermediateDescription": "Bot Signal offers advanced features and customization options to help intermediate traders refine their strategies and take their trading to the next level.",
+      "expertTitle": "Expert Traders",
+      "expertDescription": "Bot Signal provides powerful analytical tools and real-time market insights to help experienced traders make more informed and profitable decisions.",
+      "considerScenarioTitle": "Consider this Scenario",
+      "considerScenarioDescription": "You're a trader, and you've been struggling to make consistent profits. But then you discover Bot Signal, a powerful trading assistant that can help you make more informed and profitable decisions."
+   },
+   "investingScenario": {
+      "tradingScenario": "Trading Scenario",
+      "withoutBotSignal": "Without Bot Signal",
+      "withBotSignal": "With Bot Signal",
+      "buyingWrongTime": "Buying a crypto at the wrong time",
+      "lossWithoutBotSignal": "$5,000 loss",
+      "lossWithBotSignal": "$1,000 loss",
+      "sellingTooEarly": "Selling a crypto too early",
+      "missedOpportunityWithoutBotSignal": "$3,000 missed opportunity",
+      "missedOpportunityWithBotSignal": "$500 missed opportunity",
+      "failingToManageRisk": "Failing to manage risk",
+      "lossRiskWithoutBotSignal": "$7,000 loss",
+      "lossRiskWithBotSignal": "$2,000 loss"
+   },
+   "botAiPage": {
+      "unlockPowerTitle": "Unlock the Power of AI-Driven Investing",
+      "unlockPowerDescription": "Bot AI is an advanced investment assistant that optimizes trading strategies to maximize returns. It evaluates real-time market conditions to distribute investments across different price levels, reducing the risk of market fluctuations. By buying at various prices, it secures a better average cost. Bot AI’s smart analysis and planning ensure smarter, safer investments by following market trends and minimizing risks.",
+      "tryBotAi": "Try Bot AI",
+      "exploreBotAiTitle": "Explore Bot AI",
+      "exploreBotAiDescription": "Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions. Check out the video below to see it in action.",
+      "keyFeaturesTitle": "Key Features:",
+      "realTimeAnalysis": "Real-time market analysis and insights",
+      "personalizedRecommendations": "Personalized trading recommendations",
+      "riskManagement": "Risk management tools and alerts",
+      "backtesting": "Backtesting and performance tracking",
+      "exploreBotAiButton": "Explore Bot AI",
+      "priceWithBotAi": "PRICE WITH BOT AI",
+      "priceWithBotAiValue": "$70.00",
+      "priceWithoutBotAi": "PRICE WITHOUT BOT AI",
+      "priceWithoutBotAiValue": "$100.00",
+      "cryptoTradingTitle": "Crypto Trading",
+      "cryptoTradingDescription": "Automate your crypto trading with our advanced algorithms, executing trades based on market conditions and your preferences.",
+      "portfolioManagementTitle": "Portfolio Management",
+      "portfolioManagementDescription": "Manage your crypto portfolio with ease, track your holdings, and receive personalized recommendations to optimize your investments.",
+      "marketAnalysisTitle": "Market Analysis",
+      "marketAnalysisDescription": "Stay on top of the crypto market with our real-time market analysis, providing insights and trends to help you make informed decisions."
+   },
+   "aboutPage": {
+      "boostYourProfitsTitle": "Boost Your Profits with Bot Signal and Bot AI",
+      "boostYourProfitsDescription": "Our cutting-edge trading system combines the power of Bot Signal and Bot AI to find opportunities and predict the market, all designed with simplicity, intelligence, and security in mind.",
+      "keyFeaturesTitle": "Key Features",
+      "feature1": "Simple to use",
+      "feature2": "Smart trading algorithms",
+      "feature3": "Secure and reliable",
+      "capabilitiesTitle": "Capabilities of Bot Signal and Bot AI",
+      "capabilitiesDescription": "Our cutting-edge trading system combines the power of advanced algorithms to identify profitable opportunities and predict market movements, all while prioritizing simplicity and security.",
+      "botSignalTitle": "Bot Signal",
+      "botSignalDescription": "Our advanced algorithms analyze market data to identify profitable trading opportunities, helping you make informed decisions.",
+      "botAITitle": "Bot AI",
+      "botAIDescription": "Our AI-powered models use historical data and machine learning to predict future market trends, enabling you to stay ahead of the curve.",
+      "simplicityTitle": "Simplicity",
+      "simplicityDescription": "Our user-friendly interface and intuitive design make it easy for traders of all levels to leverage the power of Bot Signal and Bot AI.",
+      "securityTitle": "Security",
+      "securityDescription": "Your data and trades are protected by industry-leading security measures, ensuring your investments are safe and secure.",
+      "profitabilityTitle": "Profitability",
+      "profitabilityDescription": "By leveraging the power of Bot Signal and Bot AI, you can boost your trading profits and achieve your financial goals.",
+      "reliabilityTitle": "Reliability",
+      "reliabilityDescription": "Our robust and dependable system ensures consistent performance, giving you the confidence to make informed trading decisions.",
+      "howItWorksTitle": "How It Works",
+      "howItWorksDescription": "Follow these simple steps to start trading with our platform. From account setup to automated trading, we have streamlined the entire process for you.",
+      "startBoostingTitle": "Start Boosting Your Profits Today",
+      "startBoostingDescription": "Experience the power of Bot Signal and Bot AI to take your trading to the next level. Sign up now and unlock a world of profitable opportunities."
+   },
+   "contactPage": {
+      "title": "Contact Us",
+      "description": "Any questions or remarks? Just write us a messaage!",
+      "getInTouch": "Get in touch",
+      "comeBack": "Fill up the form and our Team will get back to you within 24 hours",
+      "supportTicket": "Open Support Ticket",
+      "contactForm": {
+         "nameLabel": "Your Name",
+         "namePlaceholder": "Enter Your Name",
+         "emailLabel": "Your Email",
+         "emailPlaceholder": "Enter Your Email",
+         "address": "Address",
+         "addressPlaceholder": "Enter Your Address",
+         "messageBody": "Enter Your Message here"
+      }
+   },
+   "faq": {
+      "faqTitle": "Frequently asked questions",
+      "faqdescription": "We understand you might have questions. Explore our FAQs to find detailed answers and insights about our services and how to maximize your experience.",
+      "faqQuestion1": "What is FinTechFusion?",
+      "faqAnswer1": "FinTechFusion is a leading fintech platform that provides advanced trading bots designed to optimize your trading strategies and maximize profits in any market condition, whether the market is up, down, or stable.",
+      "faqQuestion2": "How do FinTechFusion's trading bots work?",
+      "faqAnswer2": "Our trading bots use sophisticated algorithms to analyze market trends and execute trades at the most opportune times. They are designed to buy low and sell high, capitalizing on price fluctuations to enhance your trading outcomes.",
+      "faqQuestion3": "Can our bots make profits in markets?",
+      "faqAnswer3": "Yes, our bots are equipped to make gains even when prices are falling. They do this by selling high and buying back at lower prices, ensuring that you can profit from downward trends.",
+      "faqQuestion4": "How do the bots perform in sideways markets?",
+      "faqAnswer4": "In sideways markets, where prices fluctuate within a range, our bots are programmed to buy on dips and sell on highs. This strategy helps to secure better profits as prices oscillate.",
+      "faqQuestion5": "What about stable markets?",
+      "faqAnswer5": "In stable markets, our bots trade between support and resistance levels to earn steady gains. They are adept at identifying these levels and executing trades to capitalize on small price movements.",
+      "faqQuestion6": "Is FinTechFusion suitable for beginners?",
+      "faqAnswer6": "Absolutely! FinTechFusion is designed to be user-friendly and accessible for traders of all experience levels. Our intuitive interface and comprehensive support resources make it easy for beginners to get started and succeed.",
+      "faqQuestion7": "How secure is the FinTechFusion platform?",
+      "faqAnswer7": "Security is our top priority. FinTechFusion employs state-of-the-art encryption and security protocols to protect your data and transactions. You can trade with confidence knowing your assets are secure.",
+      "faqQuestion8": "What markets can I trade with FinTechFusion?",
+      "faqAnswer8": "FinTechFusion supports a wide range of markets, including cryptocurrencies, stocks, forex, and commodities. Our bots are versatile and can optimize trading strategies across different asset classes.",
+      "faqQuestion9": "How do I start using FinTechFusion?",
+      "faqAnswer9": "To start using FinTechFusion, simply sign up for an account on our platform, verify your identity, and fund your trading account. Once your account is set up, you can select a trading bot, configure its settings, and start trading.",
+      "faqQuestion10": "What kind of support does we offer?",
+      "faqAnswer10": "We offer comprehensive support through various channels, including live chat, email, and a detailed knowledge base. Our support team is always ready to assist you with any questions or issues you may have."
+   },
+   "howItWork": {
+      "signup": "Sign Up",
+      "signup_info": "Create your account in minutes",
+      "connectexchanges": "Connect Exchanges",
+      "connectexchanges_info": "Link your preferred crypto exchanges",
+      "setstrategies": "Set Strategies",
+      "setstrategies_info": "Choose a custom trading strategies",
+      "starttrading": "Start Trading",
+      "starttrading_info": "Let our AI or Signal handle the rest"
+   },
+   "auth": {
+      "login": "Login",
+      "Logintitle": "Sign in to your account",
+      "Logindescription": "Enter your email and password below to access your account.",
+      "email": "email",
+      "emailPlaceHolder": "Enter Your Email",
+      "password": "Password",
+      "passwordPlaceHolder": "Enter strong password",
+      "don'thaveaccount": "Don't have an account?",
+      "forgetPassword": "Forgot Password?",
+      "create": "Create",
+      "registerTitle": "Empower Your Trading Journey with FinTechFusion",
+      "registerDescription": "Unlock the potential of trading with AI-powered Signal Bots. Trade smarter with real-time analysis and strategies designed for all traders.",
+      "secure_crypto": "Secure Your Crypto",
+      "secure_crypto_title": "Unlock the Future of Automated Trading",
+      "secure_crypto_description": "Join the platform that empowers you with AI-driven Signal Bots and advanced strategies. Secure, smart, and seamless trading at your fingertips.",
+      "firstName": "first name",
+      "lastName": "Last Name",
+      "alreadyhaveaccount": "Already have an account?",
+      "verify": "Verify",
+      "verify_email": "Verify Your Email",
+      "verify_email_description": "Enter the 6-digit code sent to your email to confirm your identity.",
+      "resetEmail": "Enter your email to receive a OTP code reset your password.",
+      "sendResetCode": "Send Reset Code",
+      "resetPassword": "Reset Password",
+      "resetPasswordDescription": "Enter a new password and the OTP sent to your email to reset your account password.",
+      "enterOTPCode": "Enter an OTP Code",
+      "newPassword": "New Password",
+      "newPasswordPlaceHolder": "Enter new password",
+      "reset": "Reset",
+      "inavlidEmail": "Invalid Email",
+      "loginSuccess": "Login Successfully",
+      "loginFailed": "Login Failed",
+      "verify_email_success": "Account is verified Successfully",
+      "EnterFullOTP": "Enter Full OTP code",
+      "successOTP": "OTP Verified, proceed to reset password",
+      "errorOccured": "error occurred,try again later",
+      "accountCreated": "Account created successfully",
+      "complete_captcha": "Please complete the CAPTCHA",
+      "registerError": "An error occurred while registering",
+      "occurError": "An error has occurred",
+      "resetCodeSent":"Reset Code Sent To Email",
+      "errorOccuredSentCode":"An error occurred while sending the reset code"
+   },
+   "toast": {},
+   "plans": {
+      "freeTrial": "Free Trial",
+      "monthly": "monthly",
+      "mo": "mo",
+      "yearly": "yearly",
+      "AED": "AED",
+      "subscribePlan": "Subscribe Plan",
+      "includes": "Includes : "
+   },
+   "binance": {
+      "connectAccount": "Connect Account To Start Trading",
+      "donthaveExchanges": "I don't have an exchange",
+      "startAtDemo": "Start Trading on the Demo",
+      "accessTransfer": "FinTech Fusion will not have access to transfer or withdraw your assets",
+      "connectExchange": "Connect Exchange",
+      "clickAtConnect": "click on the connect button",
+      "loginBinance": "log in to your account in binance",
+      "confirmConnect": "Confirm your connection to Fintech Fusion",
+      "availableTypes": "Avalabile account types",
+      "donthaveBinance": "don't have account binance?",
+      "connect_binance": "Connect Binance",
+      "createAccount": "create binance account",
+      "accountConnected": "Binance Account Connected",
+      "successConnect": "Your Binance account has been successfully connected. You can now access your trading data and manage your portfolio.",
+      "goToDashboard": "Go to Dashboard",
+      "accountNotConnected": "Binance Account Connection Failed",
+      "failedConnect": "We're sorry, but there was an error connecting your Binance account. Please try again later or contact support if the issue persists."
+   },
+   "payment": {
+      "missingClientSecret": "Missing or invalid client secret",
+      "welcomeAboard": "Welcome Aboard!",
+      "paymentSuccessful": "Your payment was successful",
+      "whatsNext": "What's Next?",
+      "setupProfile": "Set up your profile and preferences in the dashboard",
+      "exploreFeatures": "Explore your new features and start using our service",
+      "checkMail": "Check your email for a welcome message and receipt",
+      "goToDashboard": "Go To Dashboard",
+      "paymentFailed": "Payment Failed",
+      "possibleReasons": "Possible reasons for the payment failure:",
+      "insufficientFunds": "Insufficient funds",
+      "incorrectCardInformation": "Incorrect card information",
+      "cardExpired": "Expired Card",
+      "transactionBlocked": "Transaction blocked by your bank",
+      "contactSupport": "Contact Support",
+      "tryAgain": "Retry Payment"
+   },
+   "footer": {
+      "trading": {
+         "title": "Trading",
+         "botAi": "Bot Ai",
+         "botSignal": "Bot Signal",
+         "plans": "Plans"
+      },
+      "information": {
+         "title": "Information",
+         "faq": "FAQ",
+         "blog": "Blog",
+         "support": "Support"
+      },
+      "company": {
+         "title": "Company",
+         "about": "About Us",
+         "contact": "Contact Us"
+      },
+      "subscribe": {
+         "title": "Subscribe",
+         "emailPlaceholder": "Email",
+         "description": "Hello, we are Lift Media. Our goal is to translate the positive effects from revolutionizing how companies engage with their clients & their team."
+      },
+      "copyright": "Copyright",
+      "legal": {
+         "terms": "Terms",
+         "privacy": "Privacy",
+         "cookies": "Cookies"
+      }
+   },
+   "dashboard": {
+      "userSetting":"Account Settings",
+      "sidebar": {
+         "dashboard": "Dashboard",
+         "botsignal": "Bot Signal",
+         "botai": "Bot Ai",
+         "trading": "Trading",
+         "orders": "Orders",
+         "others": "others",
+         "store": "store",
+         "subscription": "Subscription",
+         "settings": "Settings",
+         "contactus": "Contact Us"
+      },
+      "trading_apportunity": {
+         "title": "Trading Opportunities",
+         "description": "user our made strategies from store page trading strategies designed for different market conditions. A simple and quick way to start automated trading.",
+         "botSignal": "Bot Signal",
+         "botAi": "Bot Ai"
+      },
+      "spotWallet": "Spot Wallet",
+      "DemoSpotWallet": "Demo Spot Wallet",
+      "symbol": "Symbol",
+      "quantity": "Quantity",
+      "price": "Price",
+      "price_change": "Price Change Percent",
+      "LastPrice": "Last Price",
+      "total": "Total",
+      "previous": "Previous",
+      "next": "Next",
+      "binanceConnect": "Binance Connect Status",
+      "connect_status_info": "Connect your Binance account to our platform for seamless trading and portfolio management all in one place.",
+      "strategy_used": "Strategy Used",
+      "choose_startegy": "Choose Startegy",
+      "start_trading": "Start Trading",
+      "please_select": "Please select",
+      "buy": "Buy",
+      "side": "Side",
+      "spot": "Spot",
+      "enter_profit_threshold": "Enter Profit threshold",
+      "enter_trailling_loss": "Enter Trailing Stop Loss",
+      "orderType": "Order Type",
+      "profitThreshold": "Profit Threshold",
+      "TrailingStopLoss": "Trailing Stop Loss",
+      "maxCycles": "Max Cycles",
+      "start": "Start",
+      "install": "Install",
+      "currentOrders": "Your current orders",
+      "manageOrders": "View and manage your active orders",
+      "no_newupdates": "No new updates",
+      "uninstall": "uninstall",
+      "Whatisnew": "What's new",
+      "subscription": "Subscription",
+      "plan": "Plan",
+      "subscribed": "Subscribed",
+      "NotSubscribed": "Not Subscribed",
+      "Signalcycles": "Signal cycles",
+      "Aicycles": "AI cycles",
+      "AccountSettings": "Account Settings",
+      "SignalStrategy": "Signal Strategy",
+      "NoStrategy": "No Strategy",
+      "AIStrategy": "AI Strategy",
+      "AccountType": "Account Type",
+      "demoAccount": "Demo",
+      "realAccount": "Real",
+      "Verified": "Verified",
+      "isVerify": "Verified",
+      "notVerify": "Not Verified",
+      "Active": "Active",
+      "inActive": "Inactive",
+      "ourStrategies": "Get better Strategy experience with special apps for Fintech Fusion",
+      "longTerm": "Long Term",
+      "shortTerm": "Short Term",
+      "searchStartegy": "Search About Strategy",
+      "logout":"Logout"
+   },
+   "errorPage": {
+      "title": "Oops! Something went wrong.",
+      "description": "We 're sorry, but the page you were trying to access is not available."
+   },
+   "NotFound": {
+      "description": "Don't worry, our team is already working on it.Please try refreshing the page or come back later."
+   },
+   "validation": {
+      "first_name": {
+         "string": "First Name must be a string",
+         "min": "First name must be at least 3 characters long"
+      },
+      "last_name": {
+         "min": "Last name must be at least 3 characters long"
+      },
+      "phone_number": {
+         "string": "Phone number must be a string"
+      },
+      "email": {
+         "required": "Email is required",
+         "invalid": "Email is not valid",
+         "forbidden": "Email with + followed by numbers are not allowed"
+      },
+      "password": {
+         "min": "Password must be at least 8 characters"
+      },
+      "contact": {
+         "first_name": {
+            "string": "Your Name must be a string",
+            "min": "Name must be at least 3 characters long"
+         },
+         "email": {
+            "required": "Email is required",
+            "invalid": "Email is not valid"
+         },
+         "address": {
+            "string": "Address must be a string",
+            "min": "Enter your address"
+         }
+      },
+      "tradingbot": {
+         "symbol": {
+            "required": "Please, Select Symbol"
+         },
+         "quantity": {
+            "required": "Quantity is required",
+            "positive": "Quantity must be greater than 0"
+         },
+         "profit_threshold": {
+            "required": "Profit threshold is required",
+            "positive": "Profit threshold must be greater than 0",
+            "max": "Profit threshold must be at most 100"
+         },
+         "trailing_stop_loss": {
+            "required": "Trailing stop loss is required",
+            "positive": "Trailing stop loss must be greater than 0",
+            "max": "Trailing stop loss must be at most 100"
+         },
+         "cycles": {
+            "required": "Max cycles is required",
+            "integer": "Max cycles must be an integer",
+            "positive": "Max cycles must be greater than 0",
+            "max": "Max cycles must be at most 100"
+         }
+      }
+   }
+}

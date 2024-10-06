@@ -5,6 +5,7 @@ import { contactSchema, contactType } from "@/validation/contactSchema";
 import { useState } from "react";
 import Input from "../input/input";
 import { MainBtn, SpinBtn } from "../../Buttons/MainBtn";
+import { useTranslations } from "next-intl";
 
 
 export default function ContactForm() {
@@ -20,40 +21,41 @@ export default function ContactForm() {
       console.log(data)
 
    };
+   const t = useTranslations("contactPage.contactForm")
    return (
       <form onSubmit={handleSubmit(submitForm)}>
          <Input
-            label="Your Name"
+            label={t("nameLabel")}
             name="first_name"
-            placeholder="Enter Your Name"
+            placeholder={t("namePlaceholder")}
             error={errors.first_name?.message}
             type="text"
             register={register}
          />
          <Input
-            label="email"
+            label={t("emailLabel")}
             type="email"
             register={register}
             name="email"
             error={errors.email?.message}
-            placeholder="Email"
+            placeholder={t("emailPlaceholder")}
          />
          <Input
-            label="Address"
+            label={t("address")}
             type="address"
             register={register}
             name="address"
             error={errors.address?.message}
-            placeholder="Address"
+            placeholder={t("addressPlaceholder")}
          />
 
-         <textarea className="w-full p-3 rounded-md border-gray-300 text-lg mb-4 border" placeholder="Enter your message here" rows={4}
+         <textarea className="w-full p-3 rounded-md border-gray-300 text-lg mb-4 border" placeholder={t("messageBody")} rows={4}
             required minLength={8}
          >
          </textarea>
          <div className="send-btn">
-            {isLoading ? <SpinBtn content="Send Message" btnProps="w-fit" />
-               : <MainBtn content="Send Message" btnProps="w-fit" />}
+            {isLoading ? <SpinBtn content="sendMessage" btnProps="w-fit" />
+               : <MainBtn content="sendMessage" btnProps="w-fit" />}
          </div>
       </form>
    )

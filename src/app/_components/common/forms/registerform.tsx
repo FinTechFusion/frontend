@@ -13,8 +13,10 @@ import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
 import { useRouter } from "next/navigation";
 import Toast from "../Tostify/Toast";
+import { useTranslations } from "next-intl";
 
 export default function RegisterForm() {
+   const t = useTranslations("auth");
    const route = useRouter();
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
@@ -33,7 +35,7 @@ export default function RegisterForm() {
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
       if (!turnstileToken) {
-         toast.error("Please complete the CAPTCHA");
+         toast.error(t("complete_captcha"));
          return;
       }
 
@@ -50,18 +52,17 @@ export default function RegisterForm() {
          const responseData = await response.json();
 
          if (!response.ok) {
-            throw new Error(responseData.detail || "An error has occurred");
+            throw new Error(responseData.detail || t("occurError"));
          }
 
          if (!responseData.success) {
             toast.error(responseData.detail[0]?.msg || responseData.detail);
          } else {
-            toast.success("Account created successfully");
+            toast.success(t("accountCreated"));
             route.push(`/verifyemail?email=${data.email}`);
          }
       } catch (error: any) {
-         console.error('Error:', error);
-         toast.error(error.message || 'An error occurred while registering');
+         toast.error(error.message || t("registerError"));
       } finally {
          setIsLoading(false);
       }
@@ -76,10 +77,10 @@ export default function RegisterForm() {
          <Toast />
          <form onSubmit={handleSubmit(submitForm)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-               <Input label="first name" register={register} name="first_name" error={errors.first_name?.message} placeholder="First Name" />
-               <Input label="last name" register={register} name="last_name" error={errors.last_name?.message} placeholder="Last Name" />
+               <Input label={t("firstName")} register={register} name="first_name" error={errors.first_name?.message} placeholder={t("firstName")} />
+               <Input label={t("lastName")} register={register} name="last_name" error={errors.last_name?.message} placeholder={t("lastName")} />
             </div>
-            <Input label="email" register={register} name="email" error={errors.email?.message} placeholder="Email" />
+            <Input label={t("email")} register={register} name="email" error={errors.email?.message} placeholder={t("emailPlaceHolder")} />
             <div className="pb-4">
                <PhoneInput
                   country={'sa'}
@@ -88,19 +89,18 @@ export default function RegisterForm() {
                   enableSearch={true}
                   inputProps={{
                      required: true,
-                     className: "w-full main_input border-2",
-                     style: { paddingLeft: '45px' }
+                     className: "w-full main_input border-2 text-left px-5",
+                     style: { direction: "ltr" }
                   }}
                />
                {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
             </div>
-            <Input label="password" register={register} name="password" error={errors.password?.message} placeholder="Enter strong password" />
+            <Input label={t("password")} register={register} name="password" error={errors.password?.message} placeholder={t("passwordPlaceHolder")} />
             <div id="turnstile-container" className="cf-turnstile w-100"></div>
-            {/* {!turnstileToken && <span className="text-red-600 text-sm py-2">Please complete the CAPTCHA</span>} */}
             <div className="register-btn">
-               {isLoading ? <SpinBtn content="creating" btnProps="w-full" /> : <MainBtn content="create" btnProps="w-full" />}
+               {isLoading ? <SpinBtn content="loading" btnProps="w-full" /> : <MainBtn content="auth.create" btnProps="w-full" />}
             </div>
-            <p className="pt-2 text-lg"> Already have an account? <Link href="/login" className="text-primary-600 underline">login</Link>
+            <p className="pt-2 text-lg">{t("alreadyhaveaccount")}<Link href="/login" className="text-primary-600 underline">{t("login")}</Link>
             </p>
          </form>
       </>

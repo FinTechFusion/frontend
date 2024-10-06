@@ -14,7 +14,7 @@ const PlansToggle = ({ onTabChange }: PlansToggleProps) => {
    };
 
    return (
-      <div className="tabs-pills flex justify-center items-center space-x-2">
+      <div className="tabs-pills flex justify-center items-center gap-2">
          {tabs.map((el, index) => (
             <button
                key={index}

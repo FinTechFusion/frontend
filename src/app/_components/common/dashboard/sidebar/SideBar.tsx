@@ -1,4 +1,5 @@
 "use client"
+import { useLocale } from 'next-intl';
 import { FaRobot, FaStore } from 'react-icons/fa';
 import { IoMdContacts } from "react-icons/io";
 import { FaHouse, FaGear } from "react-icons/fa6";
@@ -8,70 +9,36 @@ import { IoClose } from "react-icons/io5";
 import { useSidebar } from '@/context/SidebarContext';
 import { HiOutlineSignal } from "react-icons/hi2";
 import { IoWalletOutline } from "react-icons/io5";
+import { useTranslations } from 'next-intl';
 
 export default function Sidebar() {
    const { isVisible, toggleVisibility } = useSidebar();
+   const t = useTranslations("dashboard.sidebar");
+   const locale = useLocale();
    return (
-      <div className={`min-h-screen bg-gray-100 px-6 md:flex fixed transform z-10 ${isVisible ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
-         <div className="sideBar lg:col-span-2 md:col-span-3 col-span-12 ">
-            <ul className="sideBar-List px-3 py-5">
-               <SidebarLink icon={<FaHouse />
-               } content='Dashboard' weight='font-semibold' path='/dashboard' />
+      <div className={`min-h-screen bg-gray-100 px-3 md:flex fixed transform z-10 ${isVisible ? 'translate-x-0' : (locale === "en" ? "-translate-x-full" : "translate-x-full")} lg:translate-x-0`}>
+   <div className="sideBar lg:col-span-2 md:col-span-3 col-span-12">
+      <ul className="sideBar-List px-3 py-5">
+         <SidebarLink icon={<FaHouse />} content='dashboard' weight='font-semibold' path='/dashboard' />
 
-               <span onClick={() => toggleVisibility()}>
-                  <IoClose className="text-4xl font-bold absolute top-3	right-2 cursor-pointer text-red-600 flex lg:hidden" />
-               </span>
-               {/* <SidebarLink  icon={<FaUser />
-               } content='My Portfolio' weight='font-normal' path='/' /> */}
+         <span onClick={() => toggleVisibility()}>
+            <IoClose className={`text-4xl font-bold absolute top-3 ${locale ==="en" ?"right-2" :"left-2"} cursor-pointer text-red-600 flex lg:hidden`} />
+         </span>
+         <p className="text-gray-700 text-xl py-3">{t("trading")}</p>
 
-               <p className="text-gray-700 text-xl py-3">Trading</p>
+         <SidebarLink icon={<HiOutlineSignal />} content='botsignal' weight='font-normal' path='/dashboard/botsignal' />
+         <SidebarLink icon={<FaRobot />} content='botai' weight='font-normal' path='/dashboard/botai' />
+         <SidebarLink icon={<BsBagCheckFill />} content='orders' weight='font-normal' path='/dashboard/orders' />
 
-               <SidebarLink icon={<HiOutlineSignal />
-               } content='Bot Signal' weight='font-normal' path='/dashboard/botanalysis' />
+         <p className="text-gray-700 text-xl py-3">{t("others")}</p>
 
-               <SidebarLink icon={<FaRobot />
-               } content='Bot AI' weight='font-normal' path='/dashboard/botai' />
-               <SidebarLink icon={<BsBagCheckFill />
-               } content='Orders' weight='font-normal' path='/dashboard/orders' />
+         <SidebarLink icon={<FaStore className="px-2 text-4xl" />} content="store" weight='font-normal' path="/dashboard/store" />
+         <SidebarLink icon={<IoWalletOutline className="px-2 text-4xl" />} content="subscription" weight='font-normal' path="/dashboard/subscription" />
+         <SidebarLink icon={<FaGear className="px-2 text-4xl" />} content="settings" weight='font-normal' path="/dashboard/settings" />
+         <SidebarLink icon={<IoMdContacts className="px-2 text-4xl" />} content="contactus" weight='font-normal' path="/site/contact" />
+      </ul>
+   </div>
+</div>
 
-               <p className="text-gray-700 text-xl py-3">Other</p>
-
-               <SidebarLink
-                  icon={<FaStore className="px-2 text-4xl" />}
-                  content="Store"
-                  weight='font-normal'
-                  path="/dashboard/store"
-               />
-               <SidebarLink
-                  icon={<IoWalletOutline className="px-2 text-4xl" />}
-                  content="Subscription"
-                  weight='font-normal'
-                  path="/dashboard/subscription"
-               />
-               <SidebarLink
-                  icon={<FaGear className="px-2 text-4xl" />}
-                  content="Settings"
-                  weight='font-normal'
-                  path="/dashboard/settings"
-               />
-               <SidebarLink
-                  icon={<IoMdContacts className="px-2 text-4xl" />}
-                  content="Contact Us"
-                  weight='font-normal'
-                  path="/site/contact"
-               />
-{/* 
-               <div className="text-center my-5 w-100">
-                  <Link className="text-xl text-primary-600 hover:text-primary-700" href="/site/contact">
-                     Contact Us
-                  </Link>
-                  <div className="flex justify-around items-center py-8">
-                     <Link className="text-gray-950" href="/livechat">Live Chat</Link>
-                     <Link className="text-gray-950" href="/feedback">Feedback</Link>
-                  </div>
-               </div> */}
-            </ul>
-         </div>
-      </div>
    );
 }

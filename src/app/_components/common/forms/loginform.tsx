@@ -5,17 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, loginType } from "@/validation/loginSchema";
 import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
 import { Input } from "@/app/_components/common/forms";
-import Link from "next/link";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
 import { saveTokenToStorage, useAuth } from "@/context/AuthContext";
 import Toast from "../Tostify/Toast";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function Loginform() {
    const { login } = useAuth();
    const [email, setEmail] = useState('');
-
+   const t = useTranslations("auth");
    const [isLoading, setIsLoading] = useState(false);
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
@@ -43,13 +44,12 @@ export default function Loginform() {
             // localStorage.setItem("expire_data_token", newExpireTime.toString());
             saveTokenToStorage("expire_data_token", newExpireTime.toString());
             login(access_token, refresh_token);
-            toast.success("Login Successfully");
+            toast.success(t("loginSuccess"));
          } else {
-            toast.error(responseData.detail || 'Login failed');
+            toast.error(responseData.detail || t("loginFailed"));
          }
       } catch (error) {
-         console.error('Error:', error);
-         toast.error('An error occurred while logging in');
+         toast.error(t("errorWhileLogin"));
       } finally {
          setIsLoading(false);
       }
@@ -69,32 +69,32 @@ export default function Loginform() {
             <div className="pb-3">
                <div className="grid grid-cols-1 gap-4">
                   <Input
-                     label="email"
+                     label={t("email")}
                      type="email"
                      register={register}
                      name="email"
                      error={errors.email?.message}
-                     placeholder="Email"
+                     placeholder={t("emailPlaceHolder")}
                      onChange={handleEmailChange}
                   />
                   <Input
-                     label="password"
+                     label={t("password")}
                      type="password"
                      register={register}
                      name="password"
                      error={errors.password?.message}
-                     placeholder="Enter strong password"
+                     placeholder={t("passwordPlaceHolder")}
                      onPaste={preventPaste}
                   />
                   <div className="login-btn">
-                     {isLoading ? <SpinBtn content="Login" btnProps="w-full" />
-                        : <MainBtn content="Login" btnProps="w-full" />}
+                     {isLoading ? <SpinBtn content="loading" btnProps="w-full" />
+                        : <MainBtn content="auth.login" btnProps="w-full" />}
                   </div>
                   <div className="flex justify-between items-start">
                      <p className="md:pb-0 pb-3 w-1/2">
-                        Don&apos;t have an account? <Link href="/register" className="text-primary-600 underline">Create</Link>
+                        {t("don'thaveaccount")} <Link href="/register" className="text-primary-600 underline">{t("create")}</Link>
                      </p>
-                     <Link href={`forget-password?email=${email}`} className="text-primary-600 capitalize ">forget password?</Link>
+                     <Link href={`forget-password?email=${email}`} className="text-primary-600 capitalize">{t("forgetPassword")}</Link>
                   </div>
                </div>
             </div>

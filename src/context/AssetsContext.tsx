@@ -2,7 +2,7 @@
 
 import { API_BASE_URL } from '@/utils/api';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
+import { getTokenFromStorage } from '@/context/AuthContext';
 
 interface ApiError {
    success: boolean;
@@ -25,8 +25,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
    const accessToken = getTokenFromStorage("access_token");
-
-   const { user } = useAuth();
 
    const fetchAssets = async () => {
       try {

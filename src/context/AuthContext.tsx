@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { toast } from 'react-toastify';
 import { Tokens, AuthContextType, User } from '@/utils/types';
 import { API_BASE_URL } from '@/utils/api';

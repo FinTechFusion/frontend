@@ -6,6 +6,7 @@ import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import Toast from "../Tostify/Toast";
+import { useTranslations } from "next-intl";
 
 type UserStrategyProps = {
    type: "signal" | "ai";
@@ -15,7 +16,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
    const { user, fetchUserData } = useAuth(); 
    const accessToken = getTokenFromStorage("access_token");
    const [currentStrategy, setCurrentStrategy] = useState<string | null>(null);
-
+   const t = useTranslations("dashboard")
    useEffect(() => {
       if (type === "signal") {
          setCurrentStrategy(user?.signal_strategy || null);
@@ -62,9 +63,9 @@ export default function UserStrategy({ type }: UserStrategyProps) {
          {currentStrategy ? (
             <div className="user-strategy py-5">
                <div className="flex justify-between items-center py-3">
-                  <h3 className="text-xl font-medium">Strategy Used</h3>
+                  <h3 className="text-xl font-medium">{t("strategy_used")}</h3>
                   {currentStrategy == null && <Link href="/dashboard/store">
-                     <MainBtn content="choose strategy" btnProps="w-fit text-sm" />
+                     <MainBtn content={t("choose_startegy")} btnProps="w-fit text-sm" />
                   </Link>}
                </div>
                <hr />
@@ -92,15 +93,15 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                         className={`bg-primary-600 hover:bg-primary-700 rounded-md p-2 text-secondary capitalize text-lg cursor-pointer tracking-wide`}
                         onClick={UnInstallStrategy}
                      >
-                        uninstall
+                        {t("uninstall")}
                      </button>
                   </div>
                </div>
             </div>
          ) : (
-               <div className="flex justify-end items-center py-3">
+               <div className="flex justify-start py-3">
                   <Link href="/dashboard/store">
-                     <MainBtn content="choose strategy" btnProps="w-fit" />
+                     <MainBtn content={t("choose_startegy")} btnProps="w-fit" />
                   </Link>
                </div>
             )}

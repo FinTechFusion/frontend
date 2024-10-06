@@ -1,10 +1,10 @@
 "use client";
-
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import Loading from '../loading/Loading';
 import { useAssetData } from '@/context/AssetsContext';
 import { useAuth } from '@/context/AuthContext';
+import { useTranslations } from 'next-intl';
 
 export default function TokensTable() {
   const {user}=useAuth();
@@ -12,6 +12,7 @@ export default function TokensTable() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 5;
   const { assetData, assetLoading } = useAssetData();
+  const t = useTranslations("dashboard");
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -34,16 +35,16 @@ export default function TokensTable() {
 
   return (
     <>
-      <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">{user?.is_demo ? "Demo Spot Wallet" : "Spot Wallet"}</h2>
+      <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">{user?.is_demo ? t("DemoSpotWallet") : t("spotWallet")}</h2>
       <div className="my-5 overflow-x-auto">
         <table className="min-w-full bg-white border overflow-auto shadow-sm">
           <thead>
             <tr>
-              <th className="py-2 px-4 border text-start">Symbol</th>
-              <th className="py-2 px-4 border text-start">Quantity</th>
-              <th className="py-2 px-4 border text-start">Price Change Percent</th>
-              <th className="py-2 px-4 border text-start">Last Price</th>
-              <th className="py-2 px-4 border text-start">Total</th>
+              <th className="py-2 px-4 border text-start">{t("symbol")}</th>
+              <th className="py-2 px-4 border text-start">{t("quantity")}</th>
+              <th className="py-2 px-4 border text-start">{t("price_change")}</th>
+              <th className="py-2 px-4 border text-start">{t("LastPrice")}</th>
+              <th className="py-2 px-4 border text-start">{t("total")}</th>
             </tr>
           </thead>
           <tbody className='overflow-auto'>
@@ -60,8 +61,8 @@ export default function TokensTable() {
         </table>
 
         <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
+          previousLabel={t("previous")}
+          nextLabel={t("next")}
           breakLabel={"..."}
           pageCount={Math.ceil(rowData.length / itemsPerPage)}
           marginPagesDisplayed={2}

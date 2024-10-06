@@ -2,7 +2,7 @@ import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { CheckConfirmAlert } from "@/utils/alerts";
 import { API_BASE_URL } from "@/utils/api";
 import { AccountTypeProps } from "@/utils/types";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/i18n/navigation';
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';

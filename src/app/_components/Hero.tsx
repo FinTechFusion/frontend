@@ -1,22 +1,23 @@
 import Image from "next/image";
 import homeImage from '/public/assets/images/headerimg.webp';
-import Link from "next/link";
 import { MainBtn } from "./common/Buttons/MainBtn";
 import dynamic from "next/dynamic";
-// import HowItWorks from "./Home/HowWork/HowWork";
+import { useTranslations } from "next-intl";
 const BinancePopup = dynamic(() => import("./Popups/BinancePopup"), { ssr: false });
+import { Link } from '@/i18n/navigation';
 
 export default function Hero() {
+   const t = useTranslations('hero');
    return (
       <div className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
-         <div className="flex flex-col justify-center items-center">
-            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-12 md:justify-center justify-start items-start">
+         <div className="flex flex-col justify-center items-start">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-12 md:justify-between justify-start items-start">
                <div className="text-title mt-10 flex flex-col justify-start items-start">
-                  <h1 className="font-semibold text-4xl tracking-wide capitalize text-dark">Meet your new crypto trading bots</h1>
-                  <p className="text-gray-700 py-3 text-xl">Meet your new trading edge Bot Signal and Bot AI, Simple smart,and secure Bot Signal finds opportunities. Bot AI predicts the market.
-                     Both designed to boost your profits with ease and safety in mind.</p>
+                  <p className="bg-primary-50 my-3 text-primary-600 p-2 rounded-xl text-lg font-semibold">{t("heading")}</p>
+                  <h1 className="font-semibold text-4xl tracking-wide capitalize text-dark">{t('title')}</h1>
+                  <p className="text-gray-700 text-xl pb-4 pt-2">{t("description")}</p>
                   <Link href="/dashboard">
-                     <MainBtn content="start trial" btnProps="w-fit" />
+                     <MainBtn content="trail_btn" btnProps="w-fit" />
                   </Link>
                </div>
                <div className="w-3/4 mx-auto md:h-fit h-full">
@@ -31,7 +32,6 @@ export default function Hero() {
                   />
                </div>
             </div>
-            {/* <HowItWorks /> */}
          </div>
          <BinancePopup />
       </div>

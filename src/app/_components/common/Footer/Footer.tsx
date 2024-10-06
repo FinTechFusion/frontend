@@ -1,93 +1,103 @@
-import Link from "next/link";
-import Logo from "../Logo";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { Link } from '@/i18n/navigation';
+import { FaRegCopyright } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function Footer() {
+   const t = useTranslations('footer');
+   const locale = useLocale()
    return (
       <div className="bg-dark md:px-0 px-3  py-6 ">
          <div className="border-b-2 border-gray-600 my-6">
             <div className="container mx-auto pb-6">
                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
                   <div className="col-items-1 text-primary-50">
-                     <h3 className="capitalize text-2xl font-medium">trading</h3>
+                     <h3 className="capitalize text-2xl font-medium">{t('trading.title')}</h3>
                      <ul className="py-3">
                         <li className="py-3">
-                           <Link href="/site/botai" className="capitalize text-lg hover:text-primary-500">bot ai</Link>
+                           <Link href="/site/botai" className="capitalize text-lg hover:text-primary-500">{t('trading.botAi')}</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/site/botsignal" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
+                           <Link href="/site/botsignal" className="capitalize text-lg hover:text-primary-500">{t('trading.botSignal')}</Link>
                         </li>
                         <li className="py-3">
-                           <Link href="/site/plans" className="capitalize text-lg hover:text-primary-500">plans</Link>
+                           <Link href="/site/plans" className="capitalize text-lg hover:text-primary-500">{t('trading.plans')}</Link>
                         </li>
                      </ul>
                   </div>
                   <div className="col-items-1 text-primary-50">
-                     <h3 className="capitalize text-2xl font-medium">Information</h3>
+                     <h3 className="capitalize text-2xl font-medium">{t('information.title')}</h3>
                      <ul className="py-3">
                         <li className="py-3">
-                           <Link href="/site/faq" className="capitalize text-lg hover:text-primary-500">FAQ</Link>
+                           <Link href="/site/faq" className="capitalize text-lg hover:text-primary-500">{t('information.faq')}</Link>
                         </li>
                         <li className="py-3">
-                           <span className="capitalize text-lg hover:text-primary-500">blog</span>
+                           <span className="capitalize text-lg hover:text-primary-500">{t('information.blog')}</span>
                         </li>
                         <li className="py-3">
-                           <span className="capitalize text-lg hover:text-primary-500">support</span>
+                           <span className="capitalize text-lg hover:text-primary-500">{t('information.support')}</span>
                         </li>
                      </ul>
                   </div>
                   <div className="col-items-1 text-primary-50">
-                     <h3 className="capitalize text-2xl font-medium">Company</h3>
+                     <h3 className="capitalize text-2xl font-medium">{t('company.title')}</h3>
                      <ul className="py-3">
                         <li className="py-3">
-                           <Link href="/site/about" className="capitalize text-lg hover:text-primary-500">about us</Link>
+                           <Link href="/site/about" className="capitalize text-lg hover:text-primary-500">{t('company.about')}</Link>
                         </li>
-                        {/* <li className="py-3">
-                           <Link href="/site/botsignal" className="capitalize text-lg hover:text-primary-500">bot signal</Link>
-                        </li> */}
                         <li className="py-3">
-                           <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">contact us</Link>
+                           <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">{t('company.contact')}</Link>
                         </li>
                      </ul>
                   </div>
                   <div className="subscripe-box rounded-md py-6 px-8 bg-[#3d3b3b]">
-                     <h2 className="text-secondary text-2xl font-medium">Subscribe</h2>
-                     <div className="subscripe-input relative my-4 w-full h-fit">
-                        <input
-                           type="email"
-                           id="UserEmail"
-                           placeholder="Email"
-                           className="rounded-md w-full border-none bg-transparent outline-none focus:border-none p-2"
-                        />
-                        <span className="absolute top-0 bottom-0 right-0 ">
-                           <AiOutlineArrowRight className="bg-primary-700  text-secondary text-3xl h-full w-10 cursor-pointer rounded-tr-md rounded-br-md" />
-                        </span>
-                     </div>
-                     <p className="text-base text-primary-50">Hello, we are Lift Media. Our goal is to translate the positive
-                        effects from revolutionizing how companies engage with their clients & their team.</p>
+                     <h2 className="text-secondary text-2xl font-medium">{t('subscribe.title')}</h2>
+                     <form action="">
+                        <div className="subscripe-input relative my-4 w-full h-fit">
+                           <input
+                              type="email"
+                              id="UserEmail"
+                              placeholder={t('subscribe.emailPlaceholder')}
+                              className="rounded-md w-full border-none bg-transparent outline-none focus:border-none p-2"
+                              required={true}
+                           />
+                           {/* <button
+                              className={`absolute top-0 bottom-0 ${locale === 'ar' ? "left-0" : "right-0"} flex items-center justify-center`}
+                              type="submit"
+                           >
+                              {locale === "en" ? (
+                                 <FaArrowRight className="bg-primary-700 hover:bg-primary-800 text-secondary text-xl h-full w-10 cursor-pointer rounded-br-md" />
+                              ) : (
+                                    <FaArrowLeft className="bg-primary-700 hover:bg-primary-800 text-secondary text-xl h-full w-10 cursor-pointer rounded-tb-md" />
+                              )}
+                           </button> */}
+
+                        </div>
+                     </form>
+                     <p className="text-base text-primary-50">{t('subscribe.description')}</p>
                   </div>
                </div>
             </div>
-
          </div>
          <div className="container mx-auto">
-            <div className="flex md:justify-between justify-center items-center">
-               <div className="md:block hidden">
-                  <Logo />
+            <div className="flex md:flex-row flex-col md:justify-between justify-center items-center md:gap-0 gap-6">
+               <div className="text-secondary flex items-center gap-1">
+                  <FaRegCopyright /> {t('copyright')} {new Date().getFullYear()} FintechFusion
                </div>
-               <ul className="flex text-primary-50 space-x-6">
+               <ul className="flex text-primary-50 gap-5">
                   <li>
-                     <Link href="/site/terms" className="capitalize text-lg hover:text-primary-500">terms</Link>
+                     <Link href="/site/terms" className="capitalize text-lg hover:text-primary-500">{t('legal.terms')}</Link>
                   </li>
                   <li>
-                     <Link href="/site/privacy" className="capitalize text-lg hover:text-primary-500">privacy</Link>
+                     <Link href="/site/privacy" className="capitalize text-lg hover:text-primary-500">{t('legal.privacy')}</Link>
                   </li>
                   <li>
-                     <Link href="/site/cookies" className="capitalize text-lg hover:text-primary-500">cookies</Link>
+                     <Link href="/site/cookies" className="capitalize text-lg hover:text-primary-500">{t('legal.cookies')}</Link>
                   </li>
                </ul>
             </div>
          </div>
       </div>
-   )
+   );
 }

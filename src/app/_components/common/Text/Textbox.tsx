@@ -1,11 +1,16 @@
 import { TextBox } from '@/utils/types';
-import React from 'react';
+import { useTranslations } from "next-intl";
 
-const Textbox = ({ title, description, mainClass="", titleClass="", descriptionClass="" }: TextBox) => {
+const Textbox = ({ title, description, mainClass = "", titleClass = "", descriptionClass = "" }: TextBox) => {
+   const t = useTranslations();
    return (
       <div className={`text-box ${mainClass}`}>
-         <h2 className={`md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 ${titleClass}`}>{title}</h2>
-         <p className={`py-4 text-lg text-gray-500 ${descriptionClass}`}>{description}</p>
+         <h2 className={`md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 ${titleClass}`}>
+            {t(title)}
+         </h2>
+         <p className={`py-4 text-lg text-gray-500 ${descriptionClass}`}>
+            {t(description)}
+         </p>
       </div>
    );
 };

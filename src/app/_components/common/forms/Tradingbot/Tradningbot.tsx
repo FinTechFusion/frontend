@@ -11,12 +11,14 @@ import { toast } from "react-toastify";
 import Toast from "../../Tostify/Toast";
 import { useState } from "react";
 import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
+import { useTranslations } from "next-intl";
 
 type tradingBotType = {
   type: 'signal' | 'ai';
 }
 
 export default function TradingBotForm({ type }: tradingBotType) {
+  const t = useTranslations("dashboard");
   const accessToken = getTokenFromStorage("access_token");
   const { user } = useAuth();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
@@ -69,19 +71,19 @@ export default function TradingBotForm({ type }: tradingBotType) {
   return (
     <>
       <Toast />
-      <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">Start Trading</h3>
+      <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">{t("start_trading")}</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
           <div>
             <label htmlFor="symbol" className="block capitalize pb-1 text-lg font-medium tracking-wide">
-              Symbol
+              {t("symbol")}
             </label>
             <select
               id="symbol"
               className={`main_input border ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
               {...register('symbol')}
             >
-              <option value="">Please select</option>
+              <option value="">{t("please_select")}</option>
               {assetData?.filter((asset: any) => asset.symbol !== 'usdt')
                 .map((asset: any, index: number) => (
                   <option key={index} value={asset?.symbol}>
@@ -96,41 +98,41 @@ export default function TradingBotForm({ type }: tradingBotType) {
           </div>
 
           <Input
-            label="Quantity"
+            label={t("quantity")}
             name="quantity"
             type="number"
-            placeholder="quantity"
+            placeholder={t("quantity")}
             register={register}
             error={errors.quantity?.message}
           />
-          <Input label="Side" value="Buy" type="text" name="buy" placeholder="" readOnly={true} />
-          <Input label="Order Type" value="Spot" type="text" name="spot" placeholder="" readOnly={true} />
+          <Input label={t("side")} value={t("buy")} type="text" name="buy" placeholder="" readOnly={true} />
+          <Input label={t("orderType")} value={t("spot")} type="text" name="spot" placeholder="" readOnly={true} />
           <Input
-            label="Profit threshold"
+            label={t("profitThreshold")}
             name="profit_threshold"
             type="number"
-            placeholder="Enter Profit threshold"
+            placeholder={t("enter_profit_threshold")}
             register={register}
             error={errors.profit_threshold?.message}
           />
           <Input
-            label="Trailing Stop Loss"
+            label={t("TrailingStopLoss")}
             name="trailing_stop_loss"
             type="number"
-            placeholder="Enter Trailing Stop Loss"
+            placeholder={t("enter_trailling_loss")}
             register={register}
             error={errors.trailing_stop_loss?.message}
           />
           <Input
-            label="Max Cycles"
+            label={t("maxCycles")}
             name="cycles"
             type="number"
-            placeholder="Max Cycles"
+            placeholder={t("maxCycles")}
             register={register}
             error={errors.cycles?.message}
           />
         </div>
-        <MainBtn content="Start" btnProps="w-fit" />
+        <MainBtn content="start" btnProps="w-fit" />
       </form>
       <>
         {orderId && <BotLogs orderId={orderId} />}

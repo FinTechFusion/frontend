@@ -1,34 +1,38 @@
+import { useTranslations } from 'next-intl';
+
 export default function InvestingScenario() {
+   const t = useTranslations("investingScenario");
+
    return (
       <div className="mx-auto w-full max-w-4xl">
          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+            <table className="w-full">
                <thead>
                   <tr className="bg-dark">
-                     <th className="px-4 py-3 font-bold text-secondary">Trading Scenario</th>
-                     <th className="px-4 py-3 font-bold text-secondary">Without Bot Signal</th>
-                     <th className="px-4 py-3 font-bold text-secondary">With Bot Signal</th>
+                     <th className="px-4 py-3 font-bold text-secondary">{t("tradingScenario")}</th>
+                     <th className="px-4 py-3 font-bold text-secondary">{t("withoutBotSignal")}</th>
+                     <th className="px-4 py-3 font-bold text-secondary">{t("withBotSignal")}</th>
                   </tr>
                </thead>
-               <tbody>
+               <tbody className='text-center'>
                   <tr className="border-b border-gray-700 hover:bg-gray-100">
                      <td className="px-4 py-3 font-medium text-gray-900">
-                        Buying a crypto at the wrong time
+                        {t("buyingWrongTime")}
                      </td>
-                     <td className="px-4 py-3 text-gray-800 font-medium">$5,000 loss</td>
-                     <td className="px-4 py-3 text-gray-800 font-medium">$1,000 loss</td>
+                     <td className="px-4 py-3 text-gray-800 font-medium">{t("lossWithoutBotSignal")}</td>
+                     <td className="px-4 py-3 text-gray-800 font-medium">{t("lossWithBotSignal")}</td>
                   </tr>
                   <tr className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100">
                      <td className="px-4 py-3 font-medium text-gray-900">
-                        Selling a crypto too early
+                        {t("sellingTooEarly")}
                      </td>
-                     <td className="px-4 py-3 text-gray-800 font-medium">$3,000 missed opportunity</td>
-                     <td className="px-4 py-3 text-gray-800 font-medium">$500 missed opportunity</td>
+                     <td className="px-4 py-3 text-gray-800 font-medium">{t("missedOpportunityWithoutBotSignal")}</td>
+                     <td className="px-4 py-3 text-gray-800 font-medium">{t("missedOpportunityWithBotSignal")}</td>
                   </tr>
-                  <tr className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100" >
-                     <td className="px-4 py-3 font-medium text-gray-900">Failing to manage risk</td>
-                     <td className="px-4 py-3 text-gray-800 font-medium">$7,000 loss</td>
-                     <td className="px-4 py-3 text-gray-800 font-medium">$2,000 loss</td>
+                  <tr className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100">
+                     <td className="px-4 py-3 font-medium text-gray-900">{t("failingToManageRisk")}</td>
+                     <td className="px-4 py-3 text-gray-800 font-medium">{t("lossRiskWithoutBotSignal")}</td>
+                     <td className="px-4 py-3 text-gray-800 font-medium">{t("lossRiskWithBotSignal")}</td>
                   </tr>
                </tbody>
             </table>
