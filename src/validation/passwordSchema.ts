@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const passwordSchema = z.object({
-   password: z.string().min(8, { message: "Password must be at least 8 characters" })
+   password: z.string().min(8, { message: "password.min" })
 });
 
 type passwordType = z.infer<typeof passwordSchema>;

@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 
 export default function ContactForm() {
    const [isLoading, setIsLoading] = useState(false);
-
+   const validationT = useTranslations("validation.contact");
    const { register, handleSubmit, formState: { errors } } = useForm<contactType>({
       mode: "onBlur",
       resolver: zodResolver(contactSchema),
@@ -18,17 +18,21 @@ export default function ContactForm() {
 
    const submitForm: SubmitHandler<contactType> = async (data) => {
       setIsLoading(true);
-      console.log(data)
-
    };
-   const t = useTranslations("contactPage.contactForm")
+   const t = useTranslations("contactPage.contactForm");
+      // Error message translation mapping
+   const translateErrorMessage = (errorKey: string | undefined) => {
+      if (!errorKey) return '';
+      return validationT(errorKey);
+   };
+
    return (
       <form onSubmit={handleSubmit(submitForm)}>
          <Input
             label={t("nameLabel")}
             name="first_name"
             placeholder={t("namePlaceholder")}
-            error={errors.first_name?.message}
+            error={translateErrorMessage(errors.first_name?.message)}
             type="text"
             register={register}
          />
@@ -37,7 +41,7 @@ export default function ContactForm() {
             type="email"
             register={register}
             name="email"
-            error={errors.email?.message}
+            error={translateErrorMessage(errors.email?.message)}
             placeholder={t("emailPlaceholder")}
          />
          <Input
@@ -45,7 +49,7 @@ export default function ContactForm() {
             type="address"
             register={register}
             name="address"
-            error={errors.address?.message}
+            error={translateErrorMessage(errors.address?.message)}
             placeholder={t("addressPlaceholder")}
          />
 

@@ -3,10 +3,10 @@ const forbiddenEmailPattern = /\+\d+@/;
 
 const emailSchema = z.object({
    email: z.string()
-      .min(6, { message: "Email is required" })
-      .email({ message: "Email is not valid" })
+      .min(6, { message: "email.required" })
+      .email({ message: "email.invalid" })
       .refine(value => !forbiddenEmailPattern.test(value), {
-         message: "Email with + followed by numbers are not allowed"
+         message: "email.forbidden"
       }),
 });
 

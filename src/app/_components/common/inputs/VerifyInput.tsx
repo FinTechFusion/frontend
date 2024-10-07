@@ -64,7 +64,7 @@ function VerifyInput() {
       e.preventDefault();
       const combinedValue = values.join('');
       if (!combinedValue) {
-         return toast.error(t("fullOtp"));
+         return toast.error(t("EnterFullOTP"));
       }
       sendCodeToApi(Number(combinedValue));
    };

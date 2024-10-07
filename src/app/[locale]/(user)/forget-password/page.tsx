@@ -24,6 +24,7 @@ function Page() {
   const [turnstileToken, setTurnstileToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("auth");
+  const validationT = useTranslations("validation");
 
   const { register, handleSubmit, formState: { errors } } = useForm<emailType>({
     mode: "onBlur",
@@ -40,12 +41,20 @@ function Page() {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+  // Error message translation mapping
+  const translateErrorMessage = (errorKey: string | undefined) => {
+    if (!errorKey) return '';
+    return validationT(errorKey);
+  };
 
   const submitForm: SubmitHandler<emailType> = async (data) => {
 
     if (!turnstileToken) {
       toast.error(t("complete_captcha"));
       return;
+    }
+    if (!email) {
+      return toast.info(t("inavlidEmail"));
     }
     setIsLoading(true);
     try {
@@ -100,7 +109,7 @@ function Page() {
               name="email"
               placeholder={t("emailPlaceHolder")}
               register={register}
-              error={errors.email?.message}
+              error={translateErrorMessage(errors.email?.message)}
               value={email}
               onChange={handleEmailChange}
             />

@@ -401,10 +401,12 @@
    "validation": {
       "first_name": {
          "string": "First Name must be a string",
-         "min": "First name must be at least 3 characters long"
+         "min": "First name must be at least 3 characters long",
+         "alphabetic": "First name can only start with letters"
       },
       "last_name": {
-         "min": "Last name must be at least 3 characters long"
+         "min": "Last name must be at least 3 characters long",
+         "alphabetic":"Last name can only start with letters"
       },
       "phone_number": {
          "string": "Phone number must be a string"

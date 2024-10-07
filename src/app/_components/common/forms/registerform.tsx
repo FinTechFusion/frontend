@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
@@ -16,8 +16,10 @@ import Toast from "../Tostify/Toast";
 import { useTranslations } from "next-intl";
 
 export default function RegisterForm() {
-   const t = useTranslations("auth");
+   const t = useTranslations("auth"); 
+   const validationT = useTranslations("validation");
    const route = useRouter();
+
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema),
@@ -72,15 +74,39 @@ export default function RegisterForm() {
 
    useTurnstile(sitekey, (token: string) => setTurnstileToken(token), "light");
 
+   // Error message translation mapping
+   const translateErrorMessage = (errorKey: string | undefined) => {
+      if (!errorKey) return '';
+      return validationT(errorKey);
+   };
+
    return (
       <>
          <Toast />
          <form onSubmit={handleSubmit(submitForm)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-               <Input label={t("firstName")} register={register} name="first_name" error={errors.first_name?.message} placeholder={t("firstName")} />
-               <Input label={t("lastName")} register={register} name="last_name" error={errors.last_name?.message} placeholder={t("lastName")} />
+               <Input
+                  label={t("firstName")}
+                  register={register}
+                  name="first_name"
+                  error={translateErrorMessage(errors.first_name?.message)}
+                  placeholder={t("firstName")}
+               />
+               <Input
+                  label={t("lastName")}
+                  register={register}
+                  name="last_name"
+                  error={translateErrorMessage(errors.last_name?.message)}
+                  placeholder={t("lastName")}
+               />
             </div>
-            <Input label={t("email")} register={register} name="email" error={errors.email?.message} placeholder={t("emailPlaceHolder")} />
+            <Input
+               label={t("email")}
+               register={register}
+               name="email"
+               error={translateErrorMessage(errors.email?.message)}
+               placeholder={t("emailPlaceHolder")}
+            />
             <div className="pb-4">
                <PhoneInput
                   country={'sa'}
@@ -95,12 +121,22 @@ export default function RegisterForm() {
                />
                {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
             </div>
-            <Input label={t("password")} register={register} name="password" error={errors.password?.message} placeholder={t("passwordPlaceHolder")} />
+            <Input
+               label={t("password")}
+               register={register}
+               name="password"
+               error={translateErrorMessage(errors.password?.message)}
+               placeholder={t("passwordPlaceHolder")}
+            />
             <div id="turnstile-container" className="cf-turnstile w-100"></div>
             <div className="register-btn">
                {isLoading ? <SpinBtn content="loading" btnProps="w-full" /> : <MainBtn content="auth.create" btnProps="w-full" />}
             </div>
-            <p className="pt-2 text-lg">{t("alreadyhaveaccount")}<Link href="/login" className="text-primary-600 underline">{t("login")}</Link>
+            <p className="pt-2 text-lg">
+               {t("alreadyhaveaccount")}
+               <Link href="/login" className="text-primary-600 underline">
+                  {t("login")}
+               </Link>
             </p>
          </form>
       </>

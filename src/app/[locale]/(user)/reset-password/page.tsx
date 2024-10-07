@@ -20,6 +20,7 @@ function ResetPasswordPage() {
    const searchParams = useSearchParams();
    const email = searchParams.get('email');
    const t = useTranslations("auth");
+   const validationT = useTranslations("validation");
    const { register, handleSubmit, formState: { errors } } = useForm<passwordType>({
       mode: "onBlur",
       resolver: zodResolver(passwordSchema),
@@ -27,6 +28,9 @@ function ResetPasswordPage() {
    const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
 
    async function handleReset(code: string, data: passwordType) {
+      if(!email){
+         return toast.info(t("inavlidEmail"));
+      }
       try {
          const response = await fetch(`${API_BASE_URL}/auth/reset-password?otp_code=${code}&password=${data.password}&email=${email}`, {
             method: 'POST',
@@ -49,6 +53,11 @@ function ResetPasswordPage() {
          toast.error(t("errorOccured"));
       }
    }
+      // Error message translation mapping
+   const translateErrorMessage = (errorKey: string | undefined) => {
+      if (!errorKey) return '';
+      return validationT(errorKey);
+   };
 
    const onSubmit: SubmitHandler<passwordType> = (data) => {
       const combinedValue = values.join('');
@@ -91,7 +100,7 @@ function ResetPasswordPage() {
                   register={register}
                   placeholder={t("newPasswordPlaceHolder")}
                   type="password"
-                  error={errors.password?.message}
+                  error={translateErrorMessage(errors.password?.message)}
                />
                <MainBtn content="auth.reset" btnProps="w-full" />
             </div>

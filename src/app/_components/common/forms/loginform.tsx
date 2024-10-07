@@ -17,6 +17,7 @@ export default function Loginform() {
    const { login } = useAuth();
    const [email, setEmail] = useState('');
    const t = useTranslations("auth");
+   const validationT = useTranslations("validation");
    const [isLoading, setIsLoading] = useState(false);
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
@@ -58,6 +59,11 @@ export default function Loginform() {
    const preventPaste = (e: React.ClipboardEvent) => {
       e.preventDefault();
    };
+   // Error message translation mapping
+   const translateErrorMessage = (errorKey: string | undefined) => {
+      if (!errorKey) return '';
+      return validationT(errorKey);
+   };
 
    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
@@ -73,7 +79,7 @@ export default function Loginform() {
                      type="email"
                      register={register}
                      name="email"
-                     error={errors.email?.message}
+                     error={translateErrorMessage(errors.email?.message)}
                      placeholder={t("emailPlaceHolder")}
                      onChange={handleEmailChange}
                   />
@@ -82,7 +88,7 @@ export default function Loginform() {
                      type="password"
                      register={register}
                      name="password"
-                     error={errors.password?.message}
+                     error={translateErrorMessage(errors.password?.message)}
                      placeholder={t("passwordPlaceHolder")}
                      onPaste={preventPaste}
                   />

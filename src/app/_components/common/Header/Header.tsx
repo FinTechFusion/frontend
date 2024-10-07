@@ -19,7 +19,7 @@ export default function Header() {
          <header className='bg-secondary flex justify-between items-center md:px-12 px-3 py-2 shadow z-50 h-[90px]'>
             <Logo />
             <div className={`bg-primary-600 md:bg-secondary lg:flex lg:items-center lg:justify-center
-               lg:static fixed right-0 top-[90px] z-10 bottom-0 transform transition-transform ease-in-out duration-300  min-h-screen lg:min-h-0 bg-teal-700 w-52 lg:w-auto lg:bg-transparent ${toggle ? 'translate-x-0' : 'translate-x-full lg:translate-x-0 '}`}>
+               lg:static fixed right-0 top-[90px] z-10 bottom-0 transform transition-transform ease-in-out duration-300  min-h-screen lg:min-h-0 bg-teal-700 w-52 lg:w-auto lg:bg-transparent ${toggle ? 'translate-x-0 backdrop-blur-md' : 'translate-x-full lg:translate-x-0 '}`}>
                <ul className={`w-full lg:w-auto flex flex-col lg:flex-row items-center justify-center  lg:text-black h-full gap-5`}>
                   <Link href='/' className={`mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary`} onClick={handleLinkClick} >{t("home")}</Link>
                   <Link href='/site/botsignal' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botsignal")}</Link>
