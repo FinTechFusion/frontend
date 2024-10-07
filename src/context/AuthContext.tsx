@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          setUser(data);
          return data;
       } catch (err) {
-         setError('Failed to fetch user data');
+         // setError('Failed to fetch user data');
          return null;
       } finally {
          setIsLoading(false);
