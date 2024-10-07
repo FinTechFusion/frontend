@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Textbox from '@/app/_components/common/Text/Textbox';
 import { Link } from '@/i18n/navigation';
-import botaiImg from "/public/assets/images/botaiImg.jpg";
+import botaiImg from "/public/assets/images/botaiImg.webp";
 import { CgTrending } from "react-icons/cg";
 import { MdAnalytics } from "react-icons/md";
 import { GiBriefcase } from "react-icons/gi";

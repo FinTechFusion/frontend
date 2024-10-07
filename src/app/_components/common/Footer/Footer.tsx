@@ -83,7 +83,7 @@ export default function Footer() {
          <div className="container mx-auto">
             <div className="flex md:flex-row flex-col md:justify-between justify-center items-center md:gap-0 gap-6">
                <div className="text-secondary flex items-center gap-1">
-                  <FaRegCopyright /> {t('copyright')} {new Date().getFullYear()} FintechFusion
+                  <FaRegCopyright /> {t('copyright')} {new Date().getFullYear()} 
                </div>
                <ul className="flex text-primary-50 gap-5">
                   <li>
