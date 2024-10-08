@@ -88,8 +88,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               {...register('symbol')}
             >
               <option value="">{t("please_select")}</option>
-              {assetData?.filter((asset: any) => asset.symbol !== 'usdt')
-                .map((asset: any, index: number) => (
+              {assetData?.map((asset: any, index: number) => (
                   <option key={index} value={asset?.symbol}>
                     {asset?.symbol?.toUpperCase()}
                   </option>

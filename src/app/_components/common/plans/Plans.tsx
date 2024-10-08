@@ -32,7 +32,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          router.push('/login');
       }
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/subscription`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/subscription?lang=${locale}`, {
             method: `${user?.is_subscribed ? "PATCH" : "POST"}`,
             headers: {
                'Content-Type': 'application/json',
