@@ -1,26 +1,25 @@
 import { z } from "zod";
 
-
 const tradingbotSchema = z.object({
    symbol: z.string().refine((value) => value !== "", {
-      message: "Please, Select Symbol",
+      message: "symbol.required",
    }),
     quantity: z
-      .number({ message: "Quantity is required" })
-      .positive({ message: "Quantity must be greater than 0" }),
+      .number({ message: "quantity.required" })
+      .positive({ message: "quantity.positive" }),
    profit_threshold: z
-      .number({ message: "Profit threshold is required" })
-      .positive({ message: "Profit threshold must be greater than 0" })
-      .max(100, { message: "Profit threshold must be at most 100" }),
+      .number({ message: "profit_threshold.required" })
+      .positive({ message: "profit_threshold.positive" })
+      .max(100, { message: "profit_threshold.max" }),
    trailing_stop_loss: z
-      .number({ message: "Trailing stop loss is required" })
-      .positive({ message: "Trailing stop loss must be greater than 0" })
-      .max(100, { message: "Trailing stop loss must be at most 100" }),
+      .number({ message: "trailing_stop_loss.required" })
+      .positive({ message: "trailing_stop_loss.positive" })
+      .max(100, { message: "trailing_stop_loss.max" }),
    cycles: z
-      .number({ message: "Max cycles is required" })
-      .int({ message: "Max cycles must be an integer" })
-      .positive({ message: "Max cycles must be greater than 0" })
-      .max(100, { message: "Max cycles must be at most 100" }),
+      .number({ message: "cycles.required" })
+      .int({ message: "cycles.integer" })
+      .positive({ message: "cycles.positive" })
+      .max(100, { message: "cycles.max" }),
 });
 
 

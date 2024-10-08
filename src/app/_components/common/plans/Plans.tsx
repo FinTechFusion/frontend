@@ -26,7 +26,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
-      next: { revalidate: 120 }
    });
    const createSubscription = async (planId: string) => {
       if (!accessToken) {

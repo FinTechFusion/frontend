@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { MainBtn } from "../Buttons/MainBtn";
 import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
@@ -7,6 +6,7 @@ import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import Toast from "../Tostify/Toast";
 import { useTranslations } from "next-intl";
+import { Link } from '@/i18n/navigation';
 
 type UserStrategyProps = {
    type: "signal" | "ai";
@@ -65,7 +65,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                <div className="flex justify-between items-center py-3">
                   <h3 className="text-xl font-medium">{t("strategy_used")}</h3>
                   {currentStrategy == null && <Link href="/dashboard/store">
-                     <MainBtn content={t("choose_startegy")} btnProps="w-fit text-sm" />
+                     <MainBtn content="dashboard.choose_startegy" btnProps="w-fit text-sm" />
                   </Link>}
                </div>
                <hr />
@@ -101,7 +101,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
          ) : (
                <div className="flex justify-start py-3">
                   <Link href="/dashboard/store">
-                     <MainBtn content={t("choose_startegy")} btnProps="w-fit" />
+                     <MainBtn content="dashboard.choose_startegy" btnProps="w-fit" />
                   </Link>
                </div>
             )}

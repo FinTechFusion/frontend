@@ -19,6 +19,7 @@ type tradingBotType = {
 
 export default function TradingBotForm({ type }: tradingBotType) {
   const t = useTranslations("dashboard");
+  const validationT = useTranslations("validation.tradingbot");
   const accessToken = getTokenFromStorage("access_token");
   const { user } = useAuth();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
@@ -59,7 +60,10 @@ export default function TradingBotForm({ type }: tradingBotType) {
       toast.error("order creation failed");
     }
   }
-
+  const translateErrorMessage = (errorKey: string | undefined) => {
+    if (!errorKey) return '';
+    return validationT(errorKey);
+  };
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
     if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       createOrder(data);
@@ -93,7 +97,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               }
             </select>
             {errors?.symbol?.message && (
-              <span className="text-red-600 text-sm pt-2">{errors.symbol.message}</span>
+              <span className="text-red-600 text-sm pt-2">{translateErrorMessage(errors.symbol.message)}</span>
             )}
           </div>
 
@@ -103,7 +107,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             type="number"
             placeholder={t("quantity")}
             register={register}
-            error={errors.quantity?.message}
+            error={translateErrorMessage(errors.quantity?.message)}
           />
           <Input label={t("side")} value={t("buy")} type="text" name="buy" placeholder="" readOnly={true} />
           <Input label={t("orderType")} value={t("spot")} type="text" name="spot" placeholder="" readOnly={true} />
@@ -113,7 +117,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             type="number"
             placeholder={t("enter_profit_threshold")}
             register={register}
-            error={errors.profit_threshold?.message}
+            error={translateErrorMessage(errors.profit_threshold?.message)}
           />
           <Input
             label={t("TrailingStopLoss")}
@@ -121,7 +125,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             type="number"
             placeholder={t("enter_trailling_loss")}
             register={register}
-            error={errors.trailing_stop_loss?.message}
+            error={translateErrorMessage(errors.trailing_stop_loss?.message)}
           />
           <Input
             label={t("maxCycles")}
@@ -129,7 +133,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             type="number"
             placeholder={t("maxCycles")}
             register={register}
-            error={errors.cycles?.message}
+            error={translateErrorMessage(errors.cycles?.message)}
           />
         </div>
         <MainBtn content="start" btnProps="w-fit" />
