@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 import { MdErrorOutline } from "react-icons/md";
 
 export default function FailedPayment() {

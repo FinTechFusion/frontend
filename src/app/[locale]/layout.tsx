@@ -24,7 +24,6 @@ type RootLayoutProps = {
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
   const messages = await getMessages();
-
   return (
     <html lang={`${params.locale}`}>
       <body className={cairo.className}>

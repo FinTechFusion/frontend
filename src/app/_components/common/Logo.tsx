@@ -5,12 +5,12 @@ import Image from "next/image";
 export default function Logo() {
    const locale = useLocale();
    return (
-      <div className="logo w-[200px]">
+      <div className="logo">
          <Link href='/' className='flex justify-center items-center text-xl font-bold tracking-widest'>
             <Image
-               src={`${locale === "en" ? "/assets/images/fintechfusionlogo-en.svg" : "/assets/images/fintechfusionlogo-ar.svg"}`}
+               src={`${locale === "en" ? "/assets/images/logofintechfusion-en.png" : "/assets/images/logofintechfusion-ar.png"}`}
                alt='Logo'
-               width='200'
+               width='220'
                height='120'
                className="w-auto h-auto"
             />

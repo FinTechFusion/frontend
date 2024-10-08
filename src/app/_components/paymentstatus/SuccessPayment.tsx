@@ -2,9 +2,9 @@
 import { useEffect } from 'react';
 import confetti from 'canvas-confetti'
 import { LuCheckCircle } from "react-icons/lu";
-import Link from 'next/link';
 import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 export default function SuccessPayment() {
    const { fetchUserData } = useAuth();
