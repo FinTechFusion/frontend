@@ -83,7 +83,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                      <b className="text-gray-950 text-3xl"> {plan.price}/{plan.frequency === "monthly" || plan.frequency === "trial" ? t("mo") : t("yearly")}</b>
                      <span className="text-2xl text-gray-600">{" "}{t("AED")}</span>
                   </span>
-                  <p className="info text-gray-500 py-3 line-clamp-2">{plan.description}</p>
+                  <p className="text-gray-500 py-3 h-[95px]">{plan.description}</p>
                   <button
                      className="main-btn w-full"
                      onClick={() => handlePurchase(plan.id)}

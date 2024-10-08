@@ -242,11 +242,21 @@
    "plans": {
       "freeTrial": "Free Trial",
       "monthly": "monthly",
+      "yearlyUp25": "yearly up -25%",
       "mo": "mo",
       "yearly": "yearly",
       "AED": "AED",
       "subscribePlan": "Subscribe Plan",
       "includes": "Includes : "
+   },
+   "subscriptionBenefits": {
+      "whySubscripe": "Why Subscribe?",
+      "benfit1": "Access to sophisticated automated trading technology",
+      "benfit2": "Automated trading strategies tailored to your goals",
+      "benfit3": "24/7 expert support to guide you",
+      "benfit4": "Real-time market analysis and insights",
+      "benfit5": "Enhanced risk management tools for secure trading",
+      "benfit6": "Regular updates and new features"
    },
    "binance": {
       "connectAccount": "Connect Account To Start Trading",

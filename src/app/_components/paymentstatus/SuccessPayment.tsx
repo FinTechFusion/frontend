@@ -33,7 +33,7 @@ export default function SuccessPayment() {
             </div>
             <div className="card-body">
                <h5 className="text-xl font-medium pb-3 text-dark">{t("whatsNext")}</h5>
-               <ul className="pb-5 pl-5 list-disc">
+               <ul className="pb-5 px-5 list-disc">
                   <li className="text-lg py-2">{t("setupProfile")}</li>
                   <li className="text-lg py-2">{t("exploreFeatures")}</li>
                   <li className="text-lg py-2">{t("checkMail")}</li>

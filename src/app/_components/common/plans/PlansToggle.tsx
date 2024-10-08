@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useTranslations } from "next-intl";
 
 interface PlansToggleProps {
    onTabChange: (index: number) => void;
 }
 
 const PlansToggle = ({ onTabChange }: PlansToggleProps) => {
-   const tabs = ['Monthly', 'Yearly up to -25%'];
+   const tabs = ['monthly', 'yearlyUp25'];
    const [activeTab, setActiveTab] = useState(0);
-
+   const t = useTranslations("plans");
    const handleClick = (index: number) => {
       setActiveTab(index);
       onTabChange(index); 
@@ -24,7 +25,7 @@ const PlansToggle = ({ onTabChange }: PlansToggleProps) => {
                   : 'bg-gray-200 text-gray-950'
                   }`}
             >
-               {el}
+               {t(el)}
             </button>
          ))}
       </div>
