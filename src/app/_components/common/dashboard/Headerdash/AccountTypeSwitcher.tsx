@@ -29,7 +29,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
 
    const handleToggleAccountType = async () => {
       if (accessToken) {
-         fetchUserData(accessToken);
+         await fetchUserData(accessToken);
       }
       if (!(user?.is_binance)) {
          return CheckConfirmAlert(onConfirm);
@@ -53,7 +53,6 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
          }
       } catch (error) {
       } finally {
-         await fetchUserData(accessToken);
          setLoading(false);
       }
    };
