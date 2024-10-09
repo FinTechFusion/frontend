@@ -10,7 +10,7 @@ export default function Page() {
             <div className="card">
                <div className="card-content text-center pb-5">
                   <h2 className="text-2xl font-bold capitalize text-dark">{t("Logintitle")}</h2>
-                  <p className="py-2 text-lg text-gray-500">{t("Logindescription")}</p>
+                  <p className="pt-4  text-lg text-gray-500">{t("Logindescription")}</p>
                </div>
             </div>
             <div className="w-full py-6">

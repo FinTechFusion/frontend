@@ -10,9 +10,9 @@ export default function Logo() {
             <Image
                src={`${locale === "en" ? "/assets/images/logofintechfusion-en.png" : "/assets/images/logofintechfusion-ar.png"}`}
                alt='Logo'
-               width='220'
+               width='200'
                height='120'
-               className="w-auto h-auto"
+               className="w-fit h-auto"
             />
          </Link>
       </div>)

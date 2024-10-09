@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Loading from '@/app/_components/common/loading/Loading';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { getTokenFromStorage } from "@/context/AuthContext";
+import { useLocale } from 'next-intl';
 
 interface AuthGuardProps {
    children: React.ReactNode;
@@ -14,7 +15,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const [isAuthenticated, setIsAuthenticated] = useState(false);
    const router = useRouter();
    const pathname = usePathname();
-
+   const locale = useLocale();
    useEffect(() => {
       const checkAuth = () => {
          try {
@@ -28,10 +29,10 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
             const isAuthRoute = authRoutes.includes(pathname);
 
             if (!accessToken && isProtectedRoute) {
-               router.push('/login');
+               router.push(`${locale}/login`);
                sessionStorage.setItem("path", pathname);
             } else if (accessToken && isAuthRoute) {
-               router.push('/dashboard');
+               router.push(`${locale}/dashboard`);
             }
             // Note: We're not redirecting for /site/plans or any other routes
          } catch (error) {

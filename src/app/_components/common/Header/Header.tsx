@@ -26,7 +26,7 @@ export default function Header() {
                   <Link href='/site/botai' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botai")}</Link>
                   <Link href='/site/plans' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("plans")}</Link>
                   <Link href='/site/about' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("aboutus")}</Link>
-                  <Link href='/site/faq' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("faq")}</Link>
+
                </ul>
             </div>
             <div className='auth flex justify-center items-center gap-5'>

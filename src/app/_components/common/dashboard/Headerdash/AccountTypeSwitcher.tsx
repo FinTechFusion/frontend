@@ -7,12 +7,15 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import Toast from "../../Tostify/Toast";
+import { useAssetData } from "@/context/AssetsContext";
 
 export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: AccountTypeProps) {
    const [isDemo, setIsDemo] = useState(initialDemo);
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
+   const { fetchAssets } = useAssetData();
+
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
 
@@ -44,11 +47,11 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
 
          if (response.ok) {
             setIsDemo(newAccountType);
+            await fetchAssets();
          } else {
             return toast.error('Failed to update account type');
          }
       } catch (error) {
-         console.error('Error updating account type:', error);
       } finally {
          await fetchUserData(accessToken);
          setLoading(false);

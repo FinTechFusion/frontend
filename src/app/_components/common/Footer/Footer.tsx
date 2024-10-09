@@ -49,6 +49,9 @@ export default function Footer() {
                         <li className="py-3">
                            <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">{t('company.contact')}</Link>
                         </li>
+                        <li className="py-3">
+                         <Link href='/site/faq' className='capitalize text-lg hover:text-primary-500'>{t("company.faq")}</Link>
+                        </li>
                      </ul>
                   </div>
                   <div className="subscripe-box rounded-md py-6 px-8 bg-[#3d3b3b]">

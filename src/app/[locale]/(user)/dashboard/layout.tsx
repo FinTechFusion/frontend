@@ -4,7 +4,6 @@ import { SidebarProvider } from '@/context/SidebarContext';
 import Sidebar from "@/app/_components/common/dashboard/sidebar/SideBar";
 import Headerdash from "@/app/_components/common/dashboard/Headerdash/Headerdash";
 import { AssetDataProvider } from "@/context/AssetsContext";
-import WhatsAppIcon from "@/app/_components/common/contact/WhatsAppIcon";
 
 export const metadata: Metadata = {
    title: "FinTech Fusion",
@@ -28,7 +27,6 @@ export default function UserDashboardLayout({ children }: DashboardLayoutProps) 
                      <AssetDataProvider>
                         <Headerdash />
                      </AssetDataProvider>
-                     <WhatsAppIcon />
                      {children}
                   </div>
                </div>

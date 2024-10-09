@@ -5,6 +5,7 @@ import { useRouter } from '@/i18n/navigation';
 import { toast } from 'react-toastify';
 import { Tokens, AuthContextType, User } from '@/utils/types';
 import { API_BASE_URL } from '@/utils/api';
+import { useLocale, useTranslations } from 'next-intl';
 
 // Auth Context
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
+   const locale = useLocale();
 
    const login = async (accessToken: string, refreshToken: string) => {
       try {
@@ -112,14 +114,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const logout = () => {
       clearTokensFromStorage();
       setUser(null);
-      router.push('/');
+      router.push(`${locale}/`);
    };
 
    const refreshAccessToken = async (): Promise<string> => {
       try {
          const refreshToken = getTokenFromStorage('refresh_token');
          if (!refreshToken) {
-            router.push('/login');
+            router.push(`${locale}/login`);
             throw new Error('Refresh token not found');
          }
 

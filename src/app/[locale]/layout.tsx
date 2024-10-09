@@ -23,9 +23,9 @@ type RootLayoutProps = {
 };
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
-  const messages = await getMessages({locale: params.locale });
+  const messages = await getMessages({ locale: params.locale });
   return (
-    <html lang={params.locale}>
+    <html lang={params.locale} dir={params.locale === "en" ? "ltr" : "rtl"}>
       <body className={cairo.className}>
         <AuthProvider>
           <AuthGuard>

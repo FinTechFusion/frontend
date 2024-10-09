@@ -9,7 +9,7 @@ import React, { Suspense, useState } from 'react';
 import Loading from "../loading/Loading";
 import { saveTokenToStorage } from "@/context/AuthContext";
 import { SpinBtn } from '../Buttons/MainBtn';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 function VerifyInput() {
    const route = useRouter();
@@ -18,6 +18,8 @@ function VerifyInput() {
    const [loadingbtn, SetLoading] = useState(false);
    const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
    const t = useTranslations("auth");
+   const locale = useLocale();
+
    async function sendCodeToApi(code: number) {
       try {
          SetLoading(true);
@@ -46,13 +48,12 @@ function VerifyInput() {
             saveTokenToStorage("expire_data_token", newTime.toString());
             saveTokenToStorage("access_token", access_token);
             saveTokenToStorage("refresh_token", refresh_token);
-            route.push('/site/exchange');
+            route.push(`${locale}/site/exchange`);
             return toast.success(t("verify_email_success"));
          } else {
             return toast.error(responseData.detail);
          }
       } catch (error: any) {
-         console.error(error);
          toast.error(t("errorOccured"));
       }
       finally {

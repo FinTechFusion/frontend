@@ -10,7 +10,7 @@ import { API_BASE_URL } from "@/utils/api";
 import { saveTokenToStorage, useAuth } from "@/context/AuthContext";
 import Toast from "../Tostify/Toast";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from "@/i18n/navigation";
 
 export default function Loginform() {
@@ -19,6 +19,7 @@ export default function Loginform() {
    const t = useTranslations("auth");
    const validationT = useTranslations("validation");
    const [isLoading, setIsLoading] = useState(false);
+   const locale = useLocale();
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
       resolver: zodResolver(loginSchema),
@@ -27,7 +28,7 @@ export default function Loginform() {
    const submitForm: SubmitHandler<loginType> = async (data) => {
       setIsLoading(true);
       try {
-         const response = await fetch(`${API_BASE_URL}/auth/login`, {
+         const response = await fetch(`${API_BASE_URL}/auth/login?lang=${locale}`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'

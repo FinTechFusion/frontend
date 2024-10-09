@@ -15,6 +15,7 @@ interface AssetDataContextType {
    assetLoading: boolean;
    assetError: string | null;
    errorMessage: ApiError | null;
+   fetchAssets: () => Promise<void>;
 }
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
@@ -50,7 +51,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                      symbol: asset.symbol,
                      quantity: asset.quantity,
                      price_change_percent: tickerData.data?.price_change_percent || 'N/A',
-                     last_price: tickerData.data?.last_price || 'N/A',
+                     last_price: asset.symbol.toUpperCase() === 'USDT' ? '1' : (tickerData.data?.last_price || 'N/A'),
                   }))
             );
 
@@ -82,7 +83,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    }, []);
 
    return (
-      <AssetDataContext.Provider value={{ assetData, assetLoading, assetError, errorMessage }}>
+      <AssetDataContext.Provider value={{ assetData, assetLoading, assetError, errorMessage, fetchAssets }}>
          {children}
       </AssetDataContext.Provider>
    );

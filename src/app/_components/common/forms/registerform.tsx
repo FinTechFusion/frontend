@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import {Link} from "@/i18n/navigation";
+import {Link,useRouter} from "@/i18n/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
@@ -11,14 +11,14 @@ import 'react-phone-input-2/lib/style.css';
 import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
-import { useRouter } from "next/navigation";
 import Toast from "../Tostify/Toast";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function RegisterForm() {
    const t = useTranslations("auth"); 
    const validationT = useTranslations("validation");
    const route = useRouter();
+   const locale = useLocale();
 
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
@@ -43,7 +43,7 @@ export default function RegisterForm() {
 
       setIsLoading(true);
       try {
-         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}`, {
+         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}?lang=${locale}`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default function RegisterForm() {
             toast.error(responseData.detail[0]?.msg || responseData.detail);
          } else {
             toast.success(t("accountCreated"));
-            route.push(`/verifyemail?email=${data.email}`);
+            route.push(`${locale}/verifyemail?email=${data.email}`);
          }
       } catch (error: any) {
          toast.error(error.message || t("registerError"));
