@@ -61,7 +61,7 @@ export default function RegisterForm() {
             toast.error(responseData.detail[0]?.msg || responseData.detail);
          } else {
             toast.success(t("accountCreated"));
-            route.push(`${locale}/verifyemail?email=${data.email}`);
+            route.push(`/verifyemail?email=${data.email}`);
          }
       } catch (error: any) {
          toast.error(error.message || t("registerError"));

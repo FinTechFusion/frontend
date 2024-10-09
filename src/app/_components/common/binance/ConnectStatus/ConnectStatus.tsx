@@ -2,7 +2,6 @@
 import { getTokenFromStorage } from '@/context/AuthContext';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
-import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { MdError } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
@@ -15,7 +14,6 @@ export default function ConnectStatus() {
    const accessToken = getTokenFromStorage("access_token");
    const searchParams = useSearchParams();
    const code = searchParams.get('code');
-   const t = useTranslations("binance");
    const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}`,
       {
          method: 'GET',

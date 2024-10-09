@@ -28,8 +28,8 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    }
 
    const handleToggleAccountType = async () => {
-      if (!accessToken) {
-         return toast.error('Try,login again');
+      if (accessToken) {
+         fetchUserData(accessToken);
       }
       if (!(user?.is_binance)) {
          return CheckConfirmAlert(onConfirm);
