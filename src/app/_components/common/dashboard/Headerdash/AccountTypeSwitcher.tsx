@@ -14,7 +14,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
-   const { fetchAssets } = useAssetData();
+   const {assetData ,fetchAssets } = useAssetData();
 
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
@@ -47,6 +47,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
 
          if (response.ok) {
             setIsDemo(newAccountType);
+            await assetData();
             await fetchAssets();
          } else {
             return toast.error('Failed to update account type');

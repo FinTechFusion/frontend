@@ -19,7 +19,6 @@ export default function TokensTable() {
   };
 
   useEffect(() => {
-    // Assuming you fetch and set rowData based on assetData
     if (assetData) {
       setRowData(assetData);
     }
