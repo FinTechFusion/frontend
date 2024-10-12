@@ -15,7 +15,12 @@
 html[lang="ar"] {
    direction: rtl !important;
 }
-
+html[lang="ar"] .arrow{
+   right:20px;
+}
+html[lang="ar"] .selected-flag{
+   padding-right:8px;
+}
 html[lang="en"] {
    direction: ltr;
 }
@@ -71,3 +76,4 @@ ul li::marker {
    -ms-border-radius: 8px;
    -o-border-radius: 8px;
 }
+

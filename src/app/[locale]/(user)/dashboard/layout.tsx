@@ -9,6 +9,7 @@ export const metadata: Metadata = {
    title: "FinTech Fusion",
    description: "FinTechFusion offers an advanced automated trading platform designed to empower cryptocurrency traders by leveraging cutting-edge algorithms and real-time market analysis.",
 };
+
 type DashboardLayoutProps = {
    children: React.ReactNode;
 };
@@ -16,22 +17,16 @@ type DashboardLayoutProps = {
 export default function UserDashboardLayout({ children }: DashboardLayoutProps) {
    const locale = useLocale();
    return (
-      <html lang={locale}>
-         <body>
-            <SidebarProvider>
-               <div className="grid grid-cols-12 gap-5">
-                  <div className={`${locale === "en" ? "lg:col-span-2" :"lg:col-span-3"} col-span-10 `}>
-                     <Sidebar />
-                  </div>
-                  <div className={`${locale ==="en" ?"lg:col-span-10":"lg:col-span-9"} col-span-12`}>
-                     <AssetDataProvider>
-                        <Headerdash />
-                     </AssetDataProvider>
-                     {children}
-                  </div>
-               </div>
-            </SidebarProvider>
-         </body>
-      </html>
+      <SidebarProvider>
+         <div className="flex justify-between">
+            <Sidebar />
+            <div className={`lg:max-w-[80%] w-full absolute ${locale === "en"?"right-0" :"left-0"}`}>
+               <AssetDataProvider>
+                  <Headerdash />
+               </AssetDataProvider>
+               {children}
+            </div>
+         </div>
+      </SidebarProvider>
    );
 }

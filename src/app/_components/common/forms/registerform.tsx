@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import {Link,useRouter} from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
 import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
-import 'react-phone-input-2/lib/style.css';
 import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
@@ -15,7 +15,7 @@ import Toast from "../Tostify/Toast";
 import { useLocale, useTranslations } from 'next-intl';
 
 export default function RegisterForm() {
-   const t = useTranslations("auth"); 
+   const t = useTranslations("auth");
    const validationT = useTranslations("validation");
    const route = useRouter();
    const locale = useLocale();
@@ -115,9 +115,9 @@ export default function RegisterForm() {
                   enableSearch={true}
                   inputProps={{
                      required: true,
-                     className: "w-full main_input border-2 text-left px-5",
-                     style: { direction: "ltr" }
+                     className: `w-full py-2 border-2 rounded-md ${locale ? 'pr-14 pl-4' : 'pl-14 pr-4'}`,
                   }}
+                  containerClass="w-full"
                />
                {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
             </div>

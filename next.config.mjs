@@ -4,13 +4,13 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   productionBrowserSourceMaps: false,
+   productionBrowserSourceMaps: true,
    images: {
       remotePatterns: [
          {
             protocol: 'https',
             hostname: 'storage.fintechfusion.net',
-            pathname: '/**', // Allows all paths
+            pathname: '/**', 
          },
       ],
    },

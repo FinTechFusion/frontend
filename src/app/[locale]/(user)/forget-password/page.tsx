@@ -1,7 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState, Suspense } from "react";
+import {  useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { MainBtn, SpinBtn } from "@/app/_components/common/Buttons/MainBtn";
 import Textbox from "@/app/_components/common/Text/Textbox";
@@ -20,7 +20,8 @@ import { useRouter } from "@/i18n/navigation";
 function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState<string>("");
+  const emailParam = searchParams.get("email");
+  const [email, setEmail] = useState<string>(emailParam || "");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("auth");
@@ -29,32 +30,25 @@ function Page() {
   const { register, handleSubmit, formState: { errors } } = useForm<emailType>({
     mode: "onBlur",
     resolver: zodResolver(emailSchema),
+    defaultValues: { email: emailParam || "" }
   });
-
-  useEffect(() => {
-    const emailParam = searchParams.get("email");
-    if (emailParam) {
-      setEmail(emailParam);
-    }
-  }, [searchParams]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  // Error message translation mapping
+
   const translateErrorMessage = (errorKey: string | undefined) => {
     if (!errorKey) return '';
     return validationT(errorKey);
   };
 
   const submitForm: SubmitHandler<emailType> = async (data) => {
-
     if (!turnstileToken) {
       toast.error(t("complete_captcha"));
       return;
     }
-    if (!email) {
-      return toast.info(t("inavlidEmail"));
+    if (!data.email) {
+      return toast.info(t("invalidEmail"));
     }
     setIsLoading(true);
     try {
@@ -69,15 +63,14 @@ function Page() {
       );
       const responseData = await response.json();
       if (response.ok) {
-        router.push(`/reset-password?email=${data.email}`)
+        router.push(`/reset-password?email=${data.email}`);
         return toast.success(t("resetCodeSent"));
       } else {
-        return toast.error(responseData.detail[0].msg || responseData.detail);
+        return toast.error(responseData.detail[0]?.msg || responseData.detail);
       }
     } catch (error) {
-      return toast.error(t("errorOccuredSentCode"));
-    }
-    finally {
+      return toast.error(t("errorOccurredSentCode"));
+    } finally {
       setIsLoading(false);
     }
   };
@@ -85,6 +78,7 @@ function Page() {
   const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || "0x4AAAAAAAaTEPkTQRU9GjKy";
 
   useTurnstile(sitekey, (token: string) => setTurnstileToken(token), "light");
+
   return (
     <div className="min-h-screen bg-gray-100 w-full flex justify-center items-center">
       <div className="md:w-1/2 w-full bg-secondary container mx-auto p-8 rounded flex flex-col items-start">
@@ -102,7 +96,7 @@ function Page() {
           description="auth.resetEmail"
           descriptionClass="text-lg pb-4"
         />
-        <form className="" onSubmit={handleSubmit(submitForm)}>
+        <form onSubmit={handleSubmit(submitForm)}>
           <div className="w-50">
             <Input
               type="email"
@@ -114,11 +108,12 @@ function Page() {
               onChange={handleEmailChange}
             />
           </div>
-          <>
-            <div id="turnstile-container" className="cf-turnstile w-100"></div>
-            {isLoading ? <SpinBtn content="auth.loading" btnProps="w-fit" />
-              : <MainBtn content="auth.sendResetCode" btnProps="w-fit" />}
-          </>
+          <div id="turnstile-container" className="cf-turnstile w-100"></div>
+          {isLoading ? (
+            <SpinBtn content="loading" btnProps="w-fit" />
+          ) : (
+            <MainBtn content="auth.sendResetCode" btnProps="w-fit" />
+          )}
         </form>
       </div>
     </div>
@@ -127,7 +122,7 @@ function Page() {
 
 export default function WrappedPage() {
   return (
-    <Suspense fallback={<div><Loading /></div>}>
+    <Suspense fallback={<Loading />}>
       <Page />
     </Suspense>
   );

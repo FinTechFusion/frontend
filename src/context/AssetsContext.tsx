@@ -1,7 +1,7 @@
 'use client';
 
 import { API_BASE_URL } from '@/utils/api';
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
 
 interface ApiError {
@@ -10,35 +10,50 @@ interface ApiError {
    status_code: number;
 }
 
+interface PaginationInfo {
+   currentPage: number;
+   totalPages: number;
+   totalItems: number;
+}
+
 interface AssetDataContextType {
-   assetData: any;
+   assetData: any[];
    assetLoading: boolean;
    assetError: string | null;
    errorMessage: ApiError | null;
-   fetchAssets: () => Promise<void>;
+   paginationInfo: PaginationInfo;
+   fetchAssets: (limit: number, offset: number) => Promise<void>;
 }
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
 
 export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
-   const [assetData, setAssetData] = useState<any>([]);
-   const [assetLoading, setAssetLoading] = useState<boolean>(true);
+   const [assetData, setAssetData] = useState<any[]>([]);
+   const [assetLoading, setAssetLoading] = useState<boolean>(false);
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
-   const accessToken = getTokenFromStorage("access_token");
+   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
+      currentPage: 0,
+      totalPages: 1,
+      totalItems: 0,
+   });
 
-   const fetchAssets = async () => {
+   const fetchAssets = useCallback(async (limit: number = 5, offset: number = 0) => {
+      const accessToken = getTokenFromStorage("access_token");
+      setAssetLoading(true);
+      setAssetError(null);
+      setErrorMessage(null);
+
       try {
-         setAssetLoading(true);
-         const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}`, {
             method: 'GET',
             headers: {
                authorization: `Bearer ${accessToken}`,
             },
          });
          const responseData = await response.json();
+
          if (response.ok && responseData.success) {
-            // Fetch ticker data for each asset
             const fetchTickers = responseData.data.map((asset: any) =>
                fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
                   method: 'GET',
@@ -53,15 +68,24 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                      price_change_percent: tickerData.data?.price_change_percent || 'N/A',
                      last_price: asset.symbol.toUpperCase() === 'USDT' ? '1' : (tickerData.data?.last_price || 'N/A'),
                   }))
+                  .catch(error => {
+                     console.error(`Error fetching ticker for ${asset.symbol}:`, error);
+                     return {
+                        symbol: asset.symbol,
+                        quantity: asset.quantity,
+                        price_change_percent: 'Error',
+                        last_price: 'Error',
+                     };
+                  })
             );
 
-            Promise.all(fetchTickers)
-               .then(results => {
-                  setAssetData(results);
-               })
-               .catch(() => {
-                  setAssetError('Failed to fetch ticker data');
-               });
+            const results = await Promise.all(fetchTickers);
+            setAssetData(results);
+            setPaginationInfo({
+               currentPage: Math.floor(offset / limit),
+               totalPages: Math.ceil(responseData.total / limit),
+               totalItems: responseData.total,
+            });
          } else {
             const error: ApiError = {
                success: responseData.success,
@@ -76,14 +100,19 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       } finally {
          setAssetLoading(false);
       }
-   };
-
-   useEffect(() => {
-      fetchAssets();
    }, []);
 
+   const contextValue: AssetDataContextType = {
+      assetData,
+      assetLoading,
+      assetError,
+      errorMessage,
+      paginationInfo,
+      fetchAssets,
+   };
+
    return (
-      <AssetDataContext.Provider value={{ assetData, assetLoading, assetError, errorMessage, fetchAssets }}>
+      <AssetDataContext.Provider value={contextValue}>
          {children}
       </AssetDataContext.Provider>
    );

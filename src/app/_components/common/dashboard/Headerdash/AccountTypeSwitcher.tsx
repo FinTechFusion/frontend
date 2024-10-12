@@ -47,8 +47,6 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
 
          if (response.ok) {
             setIsDemo(newAccountType);
-            await assetData();
-            await fetchAssets();
          } else {
             return toast.error('Failed to update account type');
          }

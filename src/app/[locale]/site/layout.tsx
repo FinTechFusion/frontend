@@ -15,12 +15,10 @@ type SiteLayoutProps = {
 export default function SiteLayout({ children }: SiteLayoutProps) {
    const locale = useLocale();
    return (
-      <html lang={locale}>
-         <body>
-            <Header />
+      <>
+         <Header />
             {children}
-            <Footer />
-         </body>
-      </html>
+         <Footer />
+      </>
    );
 }

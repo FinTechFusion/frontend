@@ -9,9 +9,9 @@ import { Link } from '@/i18n/navigation';
 export default function Hero() {
    const t = useTranslations('hero');
    return (
-      <div className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
+      <main className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
          <div className="flex flex-col justify-center items-start">
-            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-12 md:justify-between justify-start items-start">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-12 md:justify-between justify-start items-start">
                <div className="text-title mt-10 flex flex-col justify-start items-start">
                   <p className="bg-primary-50 my-3 text-primary-600 p-2 rounded-xl text-lg font-semibold">{t("heading")}</p>
                   <h1 className="font-semibold text-4xl tracking-wide capitalize text-dark">{t('title')}</h1>
@@ -34,6 +34,6 @@ export default function Hero() {
             </div>
          </div>
          <BinancePopup />
-      </div>
+      </main>
    )
 }

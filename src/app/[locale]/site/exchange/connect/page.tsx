@@ -7,10 +7,11 @@ import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 import { API_BASE_URL } from '@/utils/api';
 import useFetch from "@/hooks/useFetch";
 import Loading from '@/app/_components/common/loading/Loading';
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Page() {
    const t = useTranslations("binance");
+   const locale = useLocale();
    const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`);
    if (loading) return <Loading />
    return (
