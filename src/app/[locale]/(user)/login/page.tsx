@@ -6,7 +6,9 @@ export default function Page() {
    return (
       <section className="w-full mx-auto md:px-0 px-2 py-6 min-h-screen">
          <div className="form-card rounded-md border-2 lg:w-1/3 md:w-3/4 w-full px-5 py-8 mx-auto">
-            <Logo /> 
+            <div className="flex justify-center">
+               <Logo /> 
+            </div>
             <div className="card">
                <div className="card-content text-center pb-5">
                   <h2 className="text-2xl font-bold capitalize text-dark">{t("Logintitle")}</h2>
