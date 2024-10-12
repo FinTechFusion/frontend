@@ -26,11 +26,14 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
             const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route)) || pathname.includes('payment');
             const isAuthRoute = authRoutes.includes(pathname);
 
-            if (!accessToken && isProtectedRoute) {
+            if (!accessToken && isProtectedRoute ) {
                router.push(`/login`);
                sessionStorage.setItem("path", pathname);
             } else if (accessToken && isAuthRoute) {
                router.push(`/dashboard`);
+            }
+            if(pathname === "/site/plans"){
+               sessionStorage.setItem("path", pathname);
             }
             // Note: We're not redirecting for /site/plans or any other routes
          } catch (error) {

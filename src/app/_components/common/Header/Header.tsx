@@ -20,10 +20,12 @@ export default function Header() {
          // scrollPosition = window.pageYOffset;
          body.style.position = 'fixed';
          // body.style.top = `-${scrollPosition}px`;
+         body.style.width = '100%';
       } else {
          body.style.position = '';
          // body.style.top = '';
          window.scrollTo(0, scrollPosition);
+         body.style.width = '100%';
       }
       const mainContent = document.querySelector('main');
       if (mainContent) {
@@ -55,15 +57,16 @@ export default function Header() {
                   <Link href='/site/botai' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botai")}</Link>
                   <Link href='/site/plans' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("plans")}</Link>
                   <Link href='/site/about' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("aboutus")}</Link>
-                  {user ? <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow lg:hidden">{t("dashboard")}</Link> : <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow lg:hidden'>{t("login")}</Link>}
+                  {user && <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:hidden">{t("dashboard")}</Link> }
                </ul>
             </div>
             <div className='auth flex justify-center items-center gap-5'>
-               {!user &&
+               {!user ?
                   <>
                      <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:flex hidden'>{t("login")}</Link>
-                     <Link href='/register' className='hidden md:block rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>{t("freetrial")}</Link>
+                     <Link href='/register' className='hidden md:flex rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>{t("freetrial")}</Link>
                   </>
+                  : <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:flex hidden">{t("dashboard")}</Link>
                }
                <div className="block lg:hidden cursor-pointer text-4xl" onClick={() => setToggle(prev => !prev)}>
                   {toggle ? <IoCloseSharp /> : <FaBars />}
