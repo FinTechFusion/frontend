@@ -10,6 +10,7 @@ export default function Toast() {
          autoClose={4000}
          hideProgressBar={false}
          newestOnTop={false}
+         rtl={locale === "ar"}
          closeOnClick
          draggable
          theme="light"

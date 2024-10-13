@@ -30,7 +30,7 @@ export default function Strategies({ data }: dataProps) {
   const strategyTypes: string[] = Array.from(new Set<string>(data?.map((strategy: Strategy) => strategy.type)));
   const t = useTranslations("dashboard");
   return (
-    <>
+    <div className="md:px-0 px-2">
       <div className="section-title pt-6 pb-3">
         <h3 className="text-2xl font-medium">{t("ourStrategies")}</h3>
       </div>
@@ -62,9 +62,9 @@ export default function Strategies({ data }: dataProps) {
             <StrategieCard key={el.id} {...el} />
           ))
         ) : (
-          <p className="text-xl">No strategies found</p>
+            <p className="text-xl">{t("noStrategiesFound")}</p>
         )}
       </section>
-    </>
+    </div>
   )
 }

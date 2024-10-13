@@ -16,7 +16,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
    const { user, fetchUserData } = useAuth(); 
    const accessToken = getTokenFromStorage("access_token");
    const [currentStrategy, setCurrentStrategy] = useState<string | null>(null);
-   const t = useTranslations("dashboard")
+   const t = useTranslations("dashboard.strategies")
    useEffect(() => {
       if (type === "signal") {
          setCurrentStrategy(user?.signal_strategy || null);
@@ -39,21 +39,21 @@ export default function UserStrategy({ type }: UserStrategyProps) {
             );
 
             if (!response.ok) {
-               throw new Error("Failed to uninstall strategy");
+               throw new Error(t("failedInstalled"));
             }
 
             const responseData = await response.json();
             if (responseData.success) {
-               toast.success("Strategy uninstalled successfully");
+               toast.success(t("successInstalled"));
                if (accessToken) {
                   fetchUserData(accessToken);
                }
                setCurrentStrategy(null); 
             } else {
-               toast.error("Failed to uninstall strategy");
+               toast.error(t("failedInstalled"));
             }
          } catch (error) {
-            toast.error("Error occurred while uninstalling, try again later");
+            toast.error(t("uninstallError"));
          } 
       }
    }
@@ -74,9 +74,9 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                      <h3 className="text-3xl font-bold tracking-wide capitalize">
                         {currentStrategy}
                      </h3>
-                     <span className="block py-5 text-lg">Spot Strategy</span>
+                     <span className="block py-5 text-lg">{t("spotStartegy")}</span>
                      <div className="pb-4">
-                        <span id="ProgressLabel" className="sr-only">Loading</span>
+                        <span id="ProgressLabel" className="sr-only">{t("loading")}</span>
                         <span
                            role="progressbar"
                            aria-labelledby="ProgressLabel"

@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import { getTokenFromStorage } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { BotLogsProps, Log } from "@/utils/types";
+import { useTranslations } from 'next-intl';
 
 
 export default function BotLogs({ orderId }: BotLogsProps) {
    const [logs, setLogs] = useState<Log[]>([]);
    const [rawOutput, setRawOutput] = useState<string[]>([]);
    const accessToken = getTokenFromStorage("access_token");
-   console.log(orderId);
+   const t = useTranslations("dashboard.botlogs");
    async function fetchLogs(orderId: string) {
       try {
          const response = await fetch(`${API_BASE_URL}/users/me/orders/${orderId}/logs`, {
@@ -70,14 +71,13 @@ export default function BotLogs({ orderId }: BotLogsProps) {
    useEffect(() => {
       if (orderId) {
          fetchLogs(orderId);
-         console.log(orderId);
       }
    }, [orderId]);
 
    return (
       <div className="bot-logs w-full py-2">
          <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">
-            Bot Logs
+            {t("title")}
          </h3>
          <div className="log-output bg-gray-200 p-3 my-2 rounded-md overflow-y-auto max-h-52">
             {logs.map((log, index) => (

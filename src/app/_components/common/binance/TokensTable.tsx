@@ -8,21 +8,20 @@ import { useTranslations } from 'next-intl';
 
 export default function TokensTable() {
   const { user } = useAuth();
-  const { assetData, assetLoading, paginationInfo, fetchAssets } = useAssetData();
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const itemsPerPage = 5;
+  const { assetData, counts, assetLoading, fetchAssets } = useAssetData();
   const t = useTranslations("dashboard");
 
-  const handlePageClick = (event: { selected: number }) => {
-    const newPage = event.selected;
-    setCurrentPage(newPage);
-    fetchAssets(itemsPerPage, newPage * itemsPerPage);
-  };
+  // console.log(assetData);
+
+  // const handlePageClick = (event: { selected: number }) => {
+  //   const newPage = event.selected;
+  //   setCurrentPage(newPage);
+  //   fetchAssets(itemsPerPage, newPage * itemsPerPage);
+  // };
 
   // useEffect(() => {
-  //   fetchAssets(itemsPerPage, 0);
-  // }, []);
-
+  //   fetchAssets()
+  // }, [])
   if (assetLoading) {
     return <Loading />;
   }
@@ -61,7 +60,7 @@ export default function TokensTable() {
           previousLabel={t("previous")}
           nextLabel={t("next")}
           breakLabel={"..."}
-          pageCount={Math.ceil(paginationInfo.totalItems / itemsPerPage)}
+          pageCount={Math.ceil(counts / 5)} // Calculate total pages
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}

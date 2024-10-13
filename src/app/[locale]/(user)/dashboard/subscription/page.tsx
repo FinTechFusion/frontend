@@ -9,7 +9,7 @@ export default function page() {
    const { selectedPlanType, handleTabChange } = ToggleChange();
 
    return (
-      <>
+      <div className="md:px-1 px-2">
          <UserSubscription />
          <div className="container mx-auto py-8">
             <div className="pb-6 text-center mx-auto">
@@ -17,6 +17,6 @@ export default function page() {
             </div>
             <Plans selectedPlanType={selectedPlanType} excludedPlanId="beginner_trial" />
          </div>
-      </>
+      </div>
    );
 }

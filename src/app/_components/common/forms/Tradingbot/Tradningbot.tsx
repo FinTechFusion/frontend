@@ -33,7 +33,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
     },
     next: { revalidate: 60 }
   });
-
   const [orderId, setOrderId] = useState<string | null>(null);
 
   async function createOrder(data: any) {
@@ -88,7 +87,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               {...register('symbol')}
             >
               <option value="">{t("please_select")}</option>
-              {assetData?.map((asset: any, index: number) => (
+              {assetData?.items?.map((asset: any, index: number) => (
                   <option key={index} value={asset?.symbol}>
                     {asset?.symbol?.toUpperCase()}
                   </option>

@@ -23,7 +23,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const accessToken = getTokenFromStorage("access_token");
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
-  const t = useTranslations("dashboard")
+  const t = useTranslations("dashboard.strategies")
   const locale = useLocale();
 
   // Fetch strategy details
@@ -45,17 +45,17 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
 
   if (loading) return <Loading />;
   if (error) {
-    toast.error("Error fetching strategy, please try again later.");
+    toast.error(t("fetchStrategyError"));
     return null;
   }
 
   // Handle installation of the strategy
   async function InstallStrategy() {
     if (data.bot_type === "signal" && signalStrategy != null) {
-      toast.error("You must only install one signal strategy");
+      toast.info(t("installOneSignalOnly"));
       return;
     } else if (data.bot_type === "ai" && aiStrategy != null) {
-      toast.error("You must only install one AI strategy");
+      toast.info(t("installOneAiOnly"));
       return;
     } else {
       try {
@@ -70,26 +70,26 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         );
 
         if (!response.ok) {
-          toast.error("Error installing strategy, please try again later.");
+          toast.error(t("errorInstall"));
           return;
         }
 
         const responseData = await response.json();
 
         if (responseData.success) {
-          toast.success("Strategy installed successfully.");
+          toast.success(t("installSuccess"));
           if (accessToken) {
             fetchUserData(accessToken);
           }
         }
       } catch (error) {
-        toast.error("Something went wrong, please try again later.");
+        toast.error(t("somethingError"));
       }
     }
   }
 
   return (
-    <>
+    <div className="md:px-0 px-2">
       <Toast />
       <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
         <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
@@ -101,8 +101,9 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             className="h-full w-full"
           />
           <div className="mt-4 md:mt-0">
-            <Textbox titleClass="w-fit" title={data.name} description={data.description} />
-            <button className="main-btn" onClick={InstallStrategy}>
+            <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{data.name}</h2>
+            <p className="py-4 text-lg text-gray-500">{data.description}</p>
+            <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>
               {t("install")}
             </button>
           </div>
@@ -111,7 +112,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       </div>
       <hr />
       <div className="news-list p-3">
-        <h3 className="text-2xl font-medium py-3">What&apos;s new</h3>
+        <h3 className="text-2xl font-medium py-3">{t("whatsnews")}</h3>
         <ol className="list-decimal px-2">
           {data.whats_new && data.whats_new.length > 0 ? (
             data.whats_new.map((el: string, index: number) => (
@@ -124,7 +125,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           )}
         </ol>
       </div>
-    </>
+    </div>
   );
 };
 

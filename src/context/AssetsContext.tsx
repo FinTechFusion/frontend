@@ -1,7 +1,7 @@
 'use client';
 
 import { API_BASE_URL } from '@/utils/api';
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
 
 interface ApiError {
@@ -10,51 +10,45 @@ interface ApiError {
    status_code: number;
 }
 
-interface PaginationInfo {
-   currentPage: number;
-   totalPages: number;
-   totalItems: number;
-}
-
 interface AssetDataContextType {
    assetData: any[];
+   counts: number;
    assetLoading: boolean;
    assetError: string | null;
    errorMessage: ApiError | null;
-   paginationInfo: PaginationInfo;
-   fetchAssets: (limit: number, offset: number) => Promise<void>;
+   fetchAssets: () => Promise<void>;
 }
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
 
 export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    const [assetData, setAssetData] = useState<any[]>([]);
+   const [limit] = useState<number>(5);
+   const [currentOffset, setCurrentOffset] = useState<number>(0);
+   const [counts, setCounts] = useState(0);
+
    const [assetLoading, setAssetLoading] = useState<boolean>(false);
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
-   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
-      currentPage: 0,
-      totalPages: 1,
-      totalItems: 0,
-   });
 
-   const fetchAssets = useCallback(async (limit: number = 5, offset: number = 0) => {
+
+   const fetchAssets = async () => {
       const accessToken = getTokenFromStorage("access_token");
       setAssetLoading(true);
       setAssetError(null);
       setErrorMessage(null);
 
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`, {
             method: 'GET',
             headers: {
                authorization: `Bearer ${accessToken}`,
             },
          });
          const responseData = await response.json();
-
          if (response.ok && responseData.success) {
-            const fetchTickers = responseData.data.map((asset: any) =>
+            setCounts(responseData.data.total);
+            const fetchTickers = responseData.data.items.map((asset: any) =>
                fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
                   method: 'GET',
                   headers: {
@@ -81,11 +75,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
 
             const results = await Promise.all(fetchTickers);
             setAssetData(results);
-            setPaginationInfo({
-               currentPage: Math.floor(offset / limit),
-               totalPages: Math.ceil(responseData.total / limit),
-               totalItems: responseData.total,
-            });
          } else {
             const error: ApiError = {
                success: responseData.success,
@@ -100,14 +89,14 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       } finally {
          setAssetLoading(false);
       }
-   }, []);
+   };
 
    const contextValue: AssetDataContextType = {
       assetData,
+      counts,
       assetLoading,
       assetError,
       errorMessage,
-      paginationInfo,
       fetchAssets,
    };
 

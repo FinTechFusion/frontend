@@ -5,12 +5,14 @@ import { API_BASE_URL } from "@/utils/api";
 import Loading from '@/app/_components/common/loading/Loading';
 import CurrentPlan from '../../supscription/CurrentPlan';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const UserSubscription = () => {
    const accessToken = getTokenFromStorage("access_token");
    const { user, fetchUserData } = useAuth();
    const [subscriptionData, setSubscriptionData] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
+   const t = useTranslations("dashboard.userCurrentPlan");
 
    useEffect(() => {
       const fetchSubscription = async () => {
@@ -26,7 +28,7 @@ const UserSubscription = () => {
                const {data} = await response.json();
                setSubscriptionData(data);
             } catch (error) {
-               console.error("Error fetching subscription:", error);
+               throw new Error(t("errorFetchPlans"));
             } finally {
                setIsLoading(false);
             }
@@ -60,13 +62,14 @@ const UserSubscription = () => {
 
    const confirmDeleted = () => {
       Swal.fire({
-         title: "Are you sure?",
-         text: "You won't be able to revert this!",
+         title: t("areYouSure"),
+         text: t("revertIt"),
          icon: "warning",
          showCancelButton: true,
          confirmButtonColor: "#3085d6",
          cancelButtonColor: "#d33",
-         confirmButtonText: "Yes, delete it!"
+         confirmButtonText: t("confirmButtonText"),
+         cancelButtonText: t("cancel")
       }).then(async (result) => {
          if (result.isConfirmed) {
             await handleDeletePlan();
@@ -74,8 +77,8 @@ const UserSubscription = () => {
                await fetchUserData(accessToken);
             }
             Swal.fire({
-               title: "Deleted!",
-               text: "Your Plan has been cancelled.",
+               title: t("deleted"),
+               text: t("deletedPlan"),
                icon: "success"
             });
          }
