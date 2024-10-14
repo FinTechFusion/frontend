@@ -16,7 +16,7 @@ export default function Sidebar() {
    const t = useTranslations("dashboard.sidebar");
    const locale = useLocale();
    return (
-      <div className={`min-h-screen bg-gray-100 px-3 md:flex fixed transform z-10 ${isVisible ? 'translate-x-0' : (locale === "en" ? "-translate-x-full" : "translate-x-full")} lg:translate-x-0`}>
+      <div className={`min-h-screen bg-gray-100 px-3 md:flex fixed transform z-10 w-[18%] ${isVisible ? 'translate-x-0 ' : (locale === "en" ? "-translate-x-full" : "translate-x-full")} lg:translate-x-0`}>
          <div className="sideBar">
             <ul className="sideBar-List px-3 py-5">
                <SidebarLink icon={<FaHouse />} content='dashboard' weight='font-semibold' path='/dashboard' />
@@ -24,12 +24,12 @@ export default function Sidebar() {
                <span onClick={() => toggleVisibility()}>
                   <IoClose className={`text-4xl font-bold absolute top-3 ${locale === "en" ? "right-2" : "left-2"} cursor-pointer text-red-600 flex lg:hidden`} />
                </span>
+               
                <p className="text-gray-700 text-xl py-3">{t("trading")}</p>
 
                <SidebarLink icon={<HiOutlineSignal />} content='botsignal' weight='font-normal' path='/dashboard/botsignal' />
                <SidebarLink icon={<FaRobot />} content='botai' weight='font-normal' path='/dashboard/botai' />
                <SidebarLink icon={<BsBagCheckFill />} content='orders' weight='font-normal' path='/dashboard/orders' />
-
                <p className="text-gray-700 text-xl py-3">{t("others")}</p>
 
                <SidebarLink icon={<FaStore className="px-2 text-4xl" />} content="store" weight='font-normal' path="/dashboard/store" />

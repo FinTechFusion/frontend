@@ -41,7 +41,9 @@ export default function Strategies({ data }: dataProps) {
             onClick={() => handleTypeClick(type)}
             className={`px-4 py-2 text-xl border rounded capitalize ${selectedType === type ? "bg-primary-600 text-secondary" : "bg-gray-100"}`}
           >
-            {type.replace(/_/, ' ')}
+            {type && type.replace(/_/g, ' ').startsWith("short")
+              ? t("strategies.shortTerm")
+              : t("strategies.longTerm")}
           </button>
         ))}
       </div>

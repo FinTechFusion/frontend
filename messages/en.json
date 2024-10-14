@@ -352,6 +352,27 @@
          "botSignal": "Bot Signal",
          "botAi": "Bot Ai"
       },
+      "accountTypes": {
+         "Types": "Type of Account",
+         "demoAccount": "Demo Account",
+         "realAccount": "Real Account",
+         "failedUpdateType": "Failed to update type of account",
+         "connect_acc": "connect account with binance to continue",
+         "connect": "Connect",
+         "cancel": "Cancel"
+      },
+      "orderCols": {
+         "symbol": "Symbol",
+         "quantity": "Quantity",
+         "profit_threshold": "Profit Threshold",
+         "trailing_stop_loss": "Trailing Stop Loss",
+         "cycles": "Cycles Count",
+         "strategy": "Strategy",
+         "status": "Status",
+         "created_at": "Created At",
+         "updated_at": "Updated At",
+         "delete": "Delete"
+      },
       "spotWallet": "Spot Wallet",
       "DemoSpotWallet": "Demo Spot Wallet",
       "PriceChangeLineChart":"Price Change Trends of Your Assets",
@@ -423,7 +444,9 @@
          "installSuccess": "Strategy installed successfully",
          "somethingError": "Something went wrong, please try again later.",
          "whatsnews": "What's news",
-         "no_newupdates": "No new updates"
+         "no_newupdates": "No new updates",
+         "longTerm": "Long Term",
+         "shortTerm": "Short Term"
       },
       "userCurrentPlan": {
          "thanksForSubscribe": "Thank you for subscribing to our plan! We appreciate your support and are excited to have you as part of the Fintech Fusion community.",

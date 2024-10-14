@@ -12,7 +12,7 @@ export default function Tradingopportunity() {
             <Link href="/dashboard/botai" className='w-full md:w-fit'>
                <MainBtn content="dashboard.trading_apportunity.botAi" btnProps="w-full" />
             </Link>
-            <Link href="/dashboard/signal" className="w-full md:w-fit">
+            <Link href="/dashboard/botsignal" className="w-full md:w-fit">
                <MainBtn content="dashboard.trading_apportunity.botSignal" btnProps="w-full" />
             </Link>
          </div>

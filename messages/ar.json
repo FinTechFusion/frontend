@@ -351,6 +351,24 @@
          "botSignal": "بوت التداول",
          "botAi": "بوت الذكاء الاصطناعي"
       },
+      "accountTypes": {
+         "Types": "أنواع الحسابات",
+         "demoAccount": "حساب تجريبي",
+         "realAccount": "حساب حقيقي",
+         "failedUpdateType": "فشل تحديث نوع الحساب"
+      },
+      "orderCols": {
+         "symbol": "الرمز",
+         "quantity": "الكمية",
+         "profit_threshold": "حد الربح",
+         "trailing_stop_loss": "وقف الخسارة المتحرك",
+         "cycles": "عدد الدورات",
+         "strategy": "الاستراتيجية",
+         "status": "الحالة",
+         "created_at": "تاريخ الإنشاء",
+         "updated_at": "تاريخ التحديث",
+         "delete": "حذف"
+      },
       "DemoSpotWallet": "محفظة العرض التجريبي",
       "spotWallet": "المحفظة الفورية",
       "PriceChangeLineChart": " تغير الأسعار للعملات",
@@ -365,7 +383,7 @@
       "binanceConnect": "حالة ربط حسابك بي بينانس",
       "connect_status_info": "قم بربط حسابك في بينانس بمنصتنا لتداول سلس وإدارة المحفظة في مكان واحد",
       "choose_startegy": "اختر استراتيجية",
-         "noStrategiesFound": "لم يتم العثور على استراتيجيات",
+      "noStrategiesFound": "لم يتم العثور على استراتيجيات",
       "start_trading": "ابدأ التداول",
       "please_select": "اختر احد العملات",
       "buy": "شراء",
@@ -424,11 +442,13 @@
          "installSuccess": "تم تثبيت الاستراتيجية بنجاح.",
          "somethingError": "حدث خطأ ما، يرجى المحاولة مرة أخرى لاحقًا.",
          "whatsnews": "ما الجديد",
-         "no_newupdates": "لا يوجد اخبار في الوقت الحالي"
+         "no_newupdates": "لا يوجد اخبار في الوقت الحالي",
+         "longTerm": "المدي البعيد",
+         "shortTerm": "المدي القريب"
       },
       "userCurrentPlan": {
          "thanksForSubscribe": "شكراً لك على الاشتراك في خطتنا! نحن نقدر دعمك ونتطلع إلى أن تكون جزءًا من مجتمع فاينتك فيوجن اشتراكك يتيح لك الاستمتاع بمزايا وميزات حصرية مصممة لتعزيز تجربتك",
-         "currentPlan":"أنت في خطة",
+         "currentPlan": "أنت في خطة",
          "purchasedAt": "تم شراء الخطة في:",
          "nextBilling": "الفاتورة التالية:",
          "amount": "المبلغ:",
@@ -439,7 +459,7 @@
          "failedDelete": "فشل في حذف الخطة",
          "areYouSure": "هل أنت متأكد أنك تريد حذف الخطة؟",
          "revertIt": "لن تتمكن من التراجع عن هذا!",
-               "confirmButtonText": "نعم، احذفها!",
+         "confirmButtonText": "نعم، احذفها!",
          "cancel": "الغاء",
          "deleted": "تم الحذف!",
          "deletedPlan": "تم حذف خطتك."

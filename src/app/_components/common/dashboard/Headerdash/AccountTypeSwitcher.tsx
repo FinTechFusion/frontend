@@ -8,8 +8,11 @@ import { toast } from "react-toastify";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import Toast from "../../Tostify/Toast";
 import { useAssetData } from "@/context/AssetsContext";
+import { useTranslations } from "next-intl";
+import { useLocale } from 'next-intl';
 
 export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: AccountTypeProps) {
+   const locale = useLocale();
    const [isDemo, setIsDemo] = useState(initialDemo);
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
@@ -18,7 +21,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
 
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
-
+   const t = useTranslations("dashboard.accountTypes");
    useEffect(() => {
       setIsDemo(initialDemo); // Update isDemo when initialDemo changes
    }, [initialDemo]);
@@ -28,6 +31,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    }
 
    const handleToggleAccountType = async () => {
+      setIsOpen(false);
       if (accessToken) {
          await fetchUserData(accessToken);
       }
@@ -47,8 +51,9 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
 
          if (response.ok) {
             setIsDemo(newAccountType);
+            await fetchAssets();
          } else {
-            return toast.error('Failed to update account type');
+            return toast.error(t("failedUpdateType"));
          }
       } catch (error) {
       } finally {
@@ -60,7 +65,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
       <div className="account-type relative">
          <Toast />
          <h5 className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer">
-            {isDemo ? "Demo Account" : "Real Account"}
+            {isDemo ? t("demoAccount") : t("realAccount")}
             {isOpen ? (
                <MdKeyboardArrowUp onClick={() => setIsOpen(false)} size={25} />
             ) : (
@@ -72,10 +77,10 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
          </div>
          {isOpen && (
             <div className="switch-real w-64 absolute left-0 top-15 bg-secondary rounded-md shadow-sm p-3 z-50">
-               <p className="text-lg text-primary-700 pb-2">Type of Account</p>
+               <p className="text-lg text-primary-700 pb-2">{t("Types")}</p>
                <hr />
                <div className="flex items-center justify-between py-2">
-                  <span className="text-lg font-semibold text-gray-800">Real Account</span>
+                  <span className="text-lg font-semibold text-gray-800">{t("realAccount")}</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                      <input
                         type="checkbox"
@@ -85,7 +90,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
                         disabled={loading}
                      />
                      <div className="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:bg-primary-600"></div>
-                     <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300"></div>
+                     <div className={`absolute ${locale === 'en' ? 'left-0.5' :'right-0.5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}></div>
                   </label>
                </div>
             </div>

@@ -6,15 +6,12 @@ import { MdDelete } from 'react-icons/md';
 import { API_BASE_URL } from '@/utils/api';
 import { getTokenFromStorage } from '@/context/AuthContext';
 import Loading from '../common/loading/Loading';
-import Textbox from '../common/Text/Textbox';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Order } from '@/utils/types';
 import { useTranslations } from 'next-intl';
 
-
-
-const TableOrders: React.FC = () => {
+const TableOrders = () => {
    const accessToken = getTokenFromStorage("access_token");
    const [rowData, setRowData] = useState<Order[]>([]);
    const [loading, setLoading] = useState(true);
@@ -53,28 +50,28 @@ const TableOrders: React.FC = () => {
    // };
 
    const columnDefs = useMemo<ColDef[]>(() => [
-      { field: 'symbol', headerName: 'Symbol', filter: true,valueFormatter: (params) => params.value.toUpperCase() },
-      { field: 'quantity', headerName: 'Quantity', filter: 'agNumberColumnFilter' },
-      { field: 'profit_threshold', headerName: 'Profit Threshold', filter: 'agNumberColumnFilter' },
-      { field: 'trailing_stop_loss', headerName: 'Trailing Stop Loss', filter: 'agNumberColumnFilter' },
-      { field: 'cycles', headerName: 'Cycles Count', filter: 'agNumberColumnFilter' },
-      { field: 'strategy', headerName: 'Strategy', filter: true },
-      { field: 'status', headerName: 'Status', filter: true },
+      { field: 'symbol', headerName: t('orderCols.symbol'), filter: true, valueFormatter: (params) => params.value.toUpperCase() },
+      { field: 'quantity', headerName: t('orderCols.quantity'), filter: 'agNumberColumnFilter' },
+      { field: 'profit_threshold', headerName: t('orderCols.profit_threshold'), filter: 'agNumberColumnFilter' },
+      { field: 'trailing_stop_loss', headerName: t('orderCols.trailing_stop_loss'), filter: 'agNumberColumnFilter' },
+      { field: 'cycles', headerName: t('orderCols.cycles'), filter: 'agNumberColumnFilter' },
+      { field: 'strategy', headerName: t('orderCols.strategy'), filter: true },
+      { field: 'status', headerName: t('orderCols.status'), filter: true },
       {
          field: 'created_at',
-         headerName: 'Created At',
+         headerName: t('orderCols.created_at'),
          filter: 'agDateColumnFilter',
          valueFormatter: (params) => formatDate(params.value),
       },
       {
          field: 'updated_at',
-         headerName: 'Updated At',
+         headerName: t('orderCols.updated_at'),
          filter: 'agDateColumnFilter',
          valueFormatter: (params) => formatDate(params.value),
       },
       {
          field: 'delete',
-         headerName: 'Delete',
+         headerName: t('orderCols.delete'),
          cellRenderer: (params: any) => (
             <MdDelete
                className="text-red-600 cursor-pointer text-3xl h-full"
@@ -96,8 +93,8 @@ const TableOrders: React.FC = () => {
             throw new Error('Failed to fetch orders');
          }
 
-         const data = await response.json();
-         setRowData(data.data);
+         const { data } = await response.json();
+         setRowData(data.items);
       } catch (error) {
          console.error('Error fetching user orders:', error);
       } finally {
@@ -113,10 +110,10 @@ const TableOrders: React.FC = () => {
 
    return (
       <>
-         <Textbox
-            mainClass="mt-5"
-            title={t("currentOrders")}
-            description={t("manageOrders")} />
+         <div className="mt-5">
+            <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{t("currentOrders")}</h2>
+            <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>
+         </div>
          <div className="ag-theme-quartz my-5" style={{ height: 500 }}>
             <AgGridReact
                rowData={rowData}
