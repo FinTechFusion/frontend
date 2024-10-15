@@ -17,6 +17,8 @@ interface AssetDataContextType {
    assetError: string | null;
    errorMessage: ApiError | null;
    fetchAssets: () => Promise<void>;
+   currentPage:number;
+   handlePageClick: (event: any) => void;
 }
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
@@ -26,7 +28,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    const [limit] = useState<number>(5);
    const [currentOffset, setCurrentOffset] = useState<number>(0);
    const [counts, setCounts] = useState(0);
-
+   const [currentPage, setCurrentPage] = useState<number>(0);
    const [assetLoading, setAssetLoading] = useState<boolean>(false);
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
@@ -90,7 +92,16 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
          setAssetLoading(false);
       }
    };
-
+   // Handle pagination click events
+   const handlePageClick = (event: any) => {
+      const selectedPage = event.selected;
+      const newOffset = selectedPage * limit;
+      setCurrentOffset(newOffset);
+      setCurrentPage(selectedPage);
+   };
+   useEffect(() => {
+      fetchAssets()
+   }, [currentOffset])
    const contextValue: AssetDataContextType = {
       assetData,
       counts,
@@ -98,6 +109,8 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       assetError,
       errorMessage,
       fetchAssets,
+      currentPage,
+      handlePageClick,
    };
 
    return (

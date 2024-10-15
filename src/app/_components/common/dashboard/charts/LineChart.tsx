@@ -2,7 +2,7 @@
 
 import { assetsProps } from '@/utils/types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import {  useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 export default function PriceChangeLineChart({ data }: assetsProps) {
    const t = useTranslations("dashboard")

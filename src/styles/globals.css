@@ -59,7 +59,7 @@ ul li::marker {
 }
 /* width */
 ::-webkit-scrollbar {
-   width: 8px;
+   width: 6px;
 }
 
 /* Track */
@@ -77,3 +77,16 @@ ul li::marker {
    -o-border-radius: 8px;
 }
 
+@keyframes spin {
+   0% {
+      transform: rotate(0deg);
+   }
+
+   100% {
+      transform: rotate(360deg);
+   }
+}
+
+.spinner {
+   animation: spin 1s linear infinite;
+}

@@ -6,10 +6,8 @@ import { toast } from 'react-toastify';
 import { Tokens, AuthContextType, User } from '@/utils/types';
 import { API_BASE_URL } from '@/utils/api';
 
-// Auth Context
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Auth Provider Props Interface
 interface AuthProviderProps {
    children: ReactNode;
 }
@@ -59,6 +57,29 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          toast.error('Login failed');
       }
    };
+   const access_Token = getTokenFromStorage("access_token");
+   const [accessToken] = useState<string | null>(access_Token);
+
+   // logout user if change accessToken                  
+   useEffect(() => {
+      const handleStorageChange = (event: StorageEvent) => {
+         if (event.key === "access_token") {
+            if (!event.newValue) {
+               logout();
+            } else {
+               logout();
+            }
+         }
+      };
+
+      window.addEventListener('storage', handleStorageChange);
+
+      return () => {
+         window.removeEventListener('storage', handleStorageChange);
+      };
+   }, [accessToken]);
+
+
 
    const fetchUserData = async (accessToken: string): Promise<User | null> => {
       setIsLoading(true);
@@ -71,6 +92,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          });
 
          if (!response.ok) {
+            logout();
             throw new Error('Failed to fetch user data');
          }
          const { data } = await response.json();
@@ -149,7 +171,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
          return newTokens.access_token;
       } catch (err) {
-         console.error('Failed to refresh access token:', err);
          throw err;
       }
    };
@@ -161,7 +182,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    );
 };
 
-// Custom hook to use the Auth context
+
+
 export const useAuth = (): AuthContextType => {
    const context = useContext(AuthContext);
    if (!context) {

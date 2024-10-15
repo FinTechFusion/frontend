@@ -48,8 +48,8 @@ const HeaderDash = () => {
       if (assetData.length > 0) {
          const asset = assetData.find((item: any) => item.symbol.toLowerCase() === symbol);
          return asset ? {
-            price: Number(asset.last_price), 
-            changePercent: Number(asset.price_change_percent) 
+            price: Number(asset.last_price),
+            changePercent: Number(asset.price_change_percent)
          } : null;
       }
       return null;
@@ -61,11 +61,15 @@ const HeaderDash = () => {
 
    // Fix reduce function to use correct types
    const accountBalance = assetData.length > 0
-      ? assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(5)
-      : '66617.98000';
+      ? (isNaN(assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0))
+         ? '66617.9800'
+         : assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(5))
+      : '66617.9800';
+
 
    return (
-      <><Toast />
+      <>
+         <Toast />
          <header className="p-4 bg-gray-50 flex">
             <div className="flex justify-between items-center w-full">
                <div className="gear-icon lg:hidden">

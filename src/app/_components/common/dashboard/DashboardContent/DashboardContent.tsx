@@ -11,10 +11,10 @@ import Tradingopportunity from '../opportunity/Tradingopportunity';
 import PieChartDigram from '../charts/PieChart';
 
 function DashboardContent() {
-   const { assetData, assetLoading } = useAssetData();
+   const { assetData } = useAssetData();
    const { user } = useAuth();
 
-   if (!user || assetLoading) {
+   if (!user) {
       return <Loading />;
    }
 

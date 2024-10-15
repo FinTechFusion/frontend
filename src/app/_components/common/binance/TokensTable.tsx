@@ -1,37 +1,22 @@
 "use client";
-import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
-import Loading from '../loading/Loading';
+import { FaSpinner } from "react-icons/fa6";
 import { useAssetData } from '@/context/AssetsContext';
 import { useAuth } from '@/context/AuthContext';
 import { useTranslations } from 'next-intl';
 
 export default function TokensTable() {
   const { user } = useAuth();
-  const { assetData, counts, assetLoading, fetchAssets } = useAssetData();
+  const { assetData,assetLoading, counts, handlePageClick, currentPage } = useAssetData();
   const t = useTranslations("dashboard");
 
-  // console.log(assetData);
-
-  // const handlePageClick = (event: { selected: number }) => {
-  //   const newPage = event.selected;
-  //   setCurrentPage(newPage);
-  //   fetchAssets(itemsPerPage, newPage * itemsPerPage);
-  // };
-
-  // useEffect(() => {
-  //   fetchAssets()
-  // }, [])
-  if (assetLoading) {
-    return <Loading />;
-  }
   return (
     <>
       <h2 className="text-2xl mb-5 mt-2 font-medium border-b-2 border-primary-600 w-fit p-1">
         {user?.is_demo ? t("DemoSpotWallet") : t("spotWallet")}
       </h2>
-      {/* <div className="my-5 overflow-x-auto">
-        <table className="min-w-full bg-white border overflow-auto shadow-sm">
+      <div className="my-5 overflow-x-scroll overflow-y-hidden md:overflow-hidden">
+        <table className="min-w-full bg-white border shadow-sm">
           <thead>
             <tr>
               <th className="py-2 px-4 border text-start">{t("symbol")}</th>
@@ -41,18 +26,28 @@ export default function TokensTable() {
               <th className="py-2 px-4 border text-start">{t("total")}</th>
             </tr>
           </thead>
-          <tbody className='overflow-auto'>
-            {assetData.map((item: any, index: number) => (
-              <tr key={index} className={`${index % 2 == 0 && 'bg-gray-100'}`}>
-                <td className="py-2 px-4 border uppercase">{item.symbol}</td>
-                <td className="py-2 px-4 border">{item.quantity}</td>
-                <td className={`py-2 px-4 border  ${item.price_change_percent > 0 ? 'text-primary-700' : 'text-red-600'}`}>
-                  {item.price_change_percent}
+          <tbody className='table-body'>
+            {assetLoading ? (
+              <tr>
+                <td colSpan={5}>
+                  <div className="flex justify-center items-center h-64">
+                    <FaSpinner className="spinner text-primary-600 w-8 h-8" />
+                  </div>
                 </td>
-                <td className="py-2 px-4 border">{item.last_price}</td>
-                <td className="py-2 px-4 border">{item.quantity * item.last_price}</td>
               </tr>
-            ))}
+            ) : (
+              assetData?.map((item: any, index: number) => (
+                <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : ''}`}>
+                  <td className="py-2 px-4 border uppercase">{item.symbol}</td>
+                  <td className="py-2 px-4 border">{item.quantity}</td>
+                  <td className={`py-2 px-4 border ${item.price_change_percent > 0 ? 'text-primary-700' : 'text-red-600'}`}>
+                    {item.price_change_percent}
+                  </td>
+                  <td className="py-2 px-4 border">{item.last_price}</td>
+                  <td className="py-2 px-4 border">{(item.quantity * item.last_price).toFixed(3)}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
 
@@ -60,7 +55,7 @@ export default function TokensTable() {
           previousLabel={t("previous")}
           nextLabel={t("next")}
           breakLabel={"..."}
-          pageCount={Math.ceil(counts / 5)} // Calculate total pages
+          pageCount={Math.ceil(counts / 5)}
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
@@ -71,7 +66,7 @@ export default function TokensTable() {
           nextClassName={"mx-1"}
           forcePage={currentPage}
         />
-      </div> */}
+      </div>
     </>
   );
 }
