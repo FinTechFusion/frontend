@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          });
 
       if (response.status === 401) {
-         console.log(refetch)
+         console.log("refetch access Token")
          refreshAccessToken();
       }
          if (!response.ok) {
