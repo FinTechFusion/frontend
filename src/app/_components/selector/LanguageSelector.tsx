@@ -3,7 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useTransition } from 'react';
-import { IoIosGlobe } from "react-icons/io";
+// import { IoIosGlobe } from "react-icons/io";
 
 export default function LanguageSelector() {
    const [isPending, startTransition] = useTransition();

@@ -91,8 +91,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             },
          });
 
+      if (response.status === 401) {
+         console.log(refetch)
+         refreshAccessToken();
+      }
          if (!response.ok) {
-            logout();
             throw new Error('Failed to fetch user data');
          }
          const { data } = await response.json();

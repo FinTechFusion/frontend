@@ -16,8 +16,6 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('header');
 
-  console.log(accessToken)
-
   useEffect(() => {
     const body = document.body;
     if (toggle) {
