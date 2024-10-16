@@ -24,7 +24,6 @@ const Input = <TFieldValue extends FieldValues>({
    onChange,
    onPaste,
    value,
-   step = "0.001",
    readOnly = false, // Default to false
    ...rest
 }: InputProps<TFieldValue>) => {
@@ -58,7 +57,6 @@ const Input = <TFieldValue extends FieldValues>({
             placeholder={placeholder}
             {...inputProps}
             {...rest}
-            step={step}
          />
          {error && <span className="text-red-600 text-sm pt-2">{error}</span>}
       </div>
