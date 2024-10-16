@@ -90,19 +90,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                authorization: `Bearer ${accessToken}`,
             },
          });
-
-      if (response.status === 401) {
-         console.log("refetch access Token")
-         refreshAccessToken();
-      }
+         if (response.status === 401) {
+            refreshAccessToken();
+         }
          if (!response.ok) {
-            throw new Error('Failed to fetch user data');
+            refreshAccessToken();
          }
          const { data } = await response.json();
          setUser(data);
          return data;
       } catch (err) {
-         // setError('Failed to fetch user data');
          return null;
       } finally {
          setIsLoading(false);

@@ -52,7 +52,7 @@
    "backhome": "Back Home",
    "start": "start",
    "install": "Install",
-   "loading": "Loading...",
+   "loading": "Loading ...",
    "trading_benfits": {
       "secure_trading": "Secure Trading",
       "secure_trading_info": "prioritizes top-tier security, ensuring the protection of both your assets and personal information.",
@@ -532,7 +532,10 @@
             "integer": "Max cycles must be an integer",
             "positive": "Max cycles must be greater than 0",
             "max": "Max cycles must be at most 100"
-         }
+         },
+         "ordersuccess": "Order created successfully",
+         "orderfailed": "order creation failed",
+         "subscripefirst": "Please subscribe to be able create order"
       }
    },
    "cookies":{

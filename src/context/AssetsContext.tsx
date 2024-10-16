@@ -93,15 +93,19 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       }
    };
    // Handle pagination click events
-   const handlePageClick = (event: any) => {
-      const selectedPage = event.selected;
-      const newOffset = selectedPage * limit;
+const handlePageClick = (event: any) => {
+   const selectedPage = event.selected;
+   const newOffset = selectedPage * limit;
+   if (newOffset !== currentOffset) {
       setCurrentOffset(newOffset);
       setCurrentPage(selectedPage);
-   };
+   }
+};
+
    useEffect(() => {
-      fetchAssets()
-   }, [currentOffset])
+      fetchAssets();
+   }, [currentOffset]);
+   
    const contextValue: AssetDataContextType = {
       assetData,
       counts,

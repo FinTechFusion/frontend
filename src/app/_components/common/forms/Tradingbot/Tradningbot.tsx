@@ -3,29 +3,35 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
 import { tradingbotType, tradingbotSchema } from "@/validation/TradingbotSchema";
-import { MainBtn } from "../../Buttons/MainBtn";
+import { MainBtn, SpinBtn } from "../../Buttons/MainBtn";
 import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
 import Toast from "../../Tostify/Toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 type tradingBotType = {
   type: 'signal' | 'ai';
 }
 
 export default function TradingBotForm({ type }: tradingBotType) {
+  const [currentSymbol, setCurrentSymbol] = useState<string | null>(null);
+  const [symbolData, setSymbolData] = useState([]);
   const t = useTranslations("dashboard");
+  const locale = useLocale();
   const validationT = useTranslations("validation.tradingbot");
   const accessToken = getTokenFromStorage("access_token");
+  const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAuth();
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
+
   const { data: assetData } = useFetch(`${API_BASE_URL}/users/me/assets`, {
     method: 'GET',
     headers: {
@@ -33,11 +39,10 @@ export default function TradingBotForm({ type }: tradingBotType) {
     },
     next: { revalidate: 60 }
   });
-  const [orderId, setOrderId] = useState<string | null>(null);
-
   async function createOrder(data: any) {
+    setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}`, {
+      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}}`, {
         method: 'POST',
         headers: {
           'authorization': `Bearer ${accessToken}`,
@@ -46,9 +51,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
         body: JSON.stringify(data)
       });
       const responseData = await response.json();
-      console.log(responseData);
       if (responseData.success) {
-        toast.success("Order created successfully");
+        toast.success(t("ordersuccess"));
         setOrderId(responseData?.data?.id); // Set the orderId
         reset();
       } else {
@@ -56,9 +60,31 @@ export default function TradingBotForm({ type }: tradingBotType) {
       }
     }
     catch (error) {
-      toast.error("order creation failed");
+      toast.error(t("orderfailed"));
+    }
+    finally {
+      setLoading(false);
     }
   }
+  async function FetchSymbols() {
+    const response = await fetch(`${API_BASE_URL}/orders/symbols`, {
+      method: 'GET',
+    });
+    const { data } = await response.json();
+    return data;
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentSymbol !== null) {
+        const symbolData = await FetchSymbols();
+        setSymbolData(symbolData)
+      }
+    }
+    fetchData();
+  }, [currentSymbol])
+
+  const [orderId, setOrderId] = useState<string | null>(null);
+
   const translateErrorMessage = (errorKey: string | undefined) => {
     if (!errorKey) return '';
     return validationT(errorKey);
@@ -67,9 +93,17 @@ export default function TradingBotForm({ type }: tradingBotType) {
     if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       createOrder(data);
     } else {
-      return toast.info("Please subscribe to create order");
+      return toast.info(t("subscripefirst"));
     }
   };
+  function checkSymbol(e: any) {
+    const selectedSymbol = e.target.value;
+    if (selectedSymbol === "btc") {
+      setCurrentSymbol(selectedSymbol);
+    } else {
+      setCurrentSymbol(null);
+    }
+  }
 
   return (
     <>
@@ -83,21 +117,44 @@ export default function TradingBotForm({ type }: tradingBotType) {
             </label>
             <select
               id="symbol"
-              className={`main_input border ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
+              className={`main_input border translate-y-0 ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
               {...register('symbol')}
+              onChange={checkSymbol}
             >
               <option value="">{t("please_select")}</option>
               {assetData?.items?.map((asset: any, index: number) => (
-                  <option key={index} value={asset?.symbol}>
-                    {asset?.symbol?.toUpperCase()}
-                  </option>
-                ))
+                <option key={index} value={asset?.symbol}>
+                  {asset?.symbol?.toUpperCase()}
+                </option>
+              ))
               }
             </select>
             {errors?.symbol?.message && (
               <span className="text-red-600 text-sm pt-2">{translateErrorMessage(errors.symbol.message)}</span>
             )}
           </div>
+          {currentSymbol === "btc" && (
+            <div className="second-symbol">
+              <label htmlFor="symbol2" className="block capitalize pb-1 text-lg font-medium tracking-wide">
+                {t("symbol")}
+              </label>
+              <select
+                id="symbol2"
+                className={`main_input border translate-y-0 ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
+                {...register("secondarySymbol")}
+              >
+                <option value="">{t("please_select")}</option>
+                {symbolData?.map((asset: string, index: number) => (
+                  <option key={index} value={asset}>
+                    {asset?.toUpperCase()}
+                  </option>
+                ))}
+              </select>
+              {errors?.secondarySymbol?.message && (
+                <span className="text-red-600 text-sm pt-2">{translateErrorMessage(errors.secondarySymbol.message)}</span>
+              )}
+            </div>
+          )}
 
           <Input
             label={t("quantity")}
@@ -134,7 +191,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             error={translateErrorMessage(errors.cycles?.message)}
           />
         </div>
-        <MainBtn content="start" btnProps="w-fit" />
+        {loading ? <SpinBtn content="loading" btnProps="w-fit" /> : <MainBtn content="start" btnProps="w-fit" />}
       </form>
       <>
         {orderId && <BotLogs orderId={orderId} />}
