@@ -98,7 +98,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   };
   function checkSymbol(e: any) {
     const selectedSymbol = e.target.value;
-    if (selectedSymbol === "btc") {
+    if (selectedSymbol === "usdt") {
       setCurrentSymbol(selectedSymbol);
     } else {
       setCurrentSymbol(null);

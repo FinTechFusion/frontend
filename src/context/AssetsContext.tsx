@@ -3,6 +3,7 @@
 import { API_BASE_URL } from '@/utils/api';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
+import { AssetInfo } from '../utils/types';
 
 interface ApiError {
    success: boolean;
@@ -24,7 +25,7 @@ interface AssetDataContextType {
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
 
 export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
-   const [assetData, setAssetData] = useState<any[]>([]);
+   const [assetData, setAssetData] = useState<AssetInfo[]>([]);
    const [limit] = useState<number>(5);
    const [currentOffset, setCurrentOffset] = useState<number>(0);
    const [counts, setCounts] = useState(0);
@@ -33,19 +34,21 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
 
+   const accessToken = getTokenFromStorage("access_token");
 
    const fetchAssets = async () => {
-      const accessToken = getTokenFromStorage("access_token");
       setAssetLoading(true);
       setAssetError(null);
       setErrorMessage(null);
 
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`,  {
             method: 'GET',
+            next: { revalidate: 120 },
             headers: {
                authorization: `Bearer ${accessToken}`,
             },
+            
          });
          const responseData = await response.json();
          if (response.ok && responseData.success) {
@@ -53,6 +56,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
             const fetchTickers = responseData.data.items.map((asset: any) =>
                fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
                   method: 'GET',
+                  next: { revalidate: 120 },
                   headers: {
                      'authorization': `Bearer ${accessToken}`,
                   },
@@ -88,6 +92,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
          }
       } catch (error) {
          setAssetError((error as Error).message);
+
       } finally {
          setAssetLoading(false);
       }
@@ -105,7 +110,7 @@ const handlePageClick = (event: any) => {
    useEffect(() => {
       fetchAssets();
    }, [currentOffset]);
-   
+
    const contextValue: AssetDataContextType = {
       assetData,
       counts,
