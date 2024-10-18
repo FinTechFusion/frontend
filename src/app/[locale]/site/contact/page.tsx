@@ -24,7 +24,7 @@ export default function Page() {
                </div>
             </div>
             <div className="flex md:flex-row flex-col md:justify-start justify-center gap-5 md:text-start  text-center py-8 bg-gray-100 rounded-md px-8 shadow-sm">
-               <div className="icon bg-[#3B82F6] rounded-full h-full w-fit p-2 mx-auto md:mx-0">
+               <div className="icon bg-[#3390EC] rounded-full h-full w-fit p-2 mx-auto md:mx-0">
                   <PiTelegramLogoBold className="w-10 h-10 text-secondary" />
                </div>
                <div className="flex flex-col justify-start ">
