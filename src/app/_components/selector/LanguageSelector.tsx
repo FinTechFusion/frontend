@@ -3,19 +3,23 @@
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useTransition } from 'react';
-// import { IoIosGlobe } from "react-icons/io";
+import { usePathname } from 'next/navigation';
 
 export default function LanguageSelector() {
    const [isPending, startTransition] = useTransition();
    const router = useRouter();
+   const pathname = usePathname();
    const locale = useLocale();
 
    const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
       const nextLocale = e.target.value;
+
+      // Extract the current locale from the pathname
+      const currentPathWithoutLocale = pathname.replace(/^\/(ar|en)/, '');
       startTransition(() => {
-         router.replace(`/${nextLocale}`);
+         router.replace(`/${nextLocale}${currentPathWithoutLocale}`);
       });
-   }; 
+   };
 
    return (
       <div className="flex items-center bg-gray-100 px-2 rounded-md">

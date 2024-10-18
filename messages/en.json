@@ -149,8 +149,8 @@
       "startBoostingTitle": "Start Boosting Your Profits Today",
       "startBoostingDescription": "Experience the power of Bot Signal and Bot AI to take your trading to the next level. Sign up now and unlock a world of profitable opportunities."
    },
-   "contactPage": {
-      "title": "Contact Us",
+   "supportPage": {
+      "title": "Support Center",
       "description": "Any questions or remarks? Just write us a messaage!",
       "getInTouch": "Get in touch",
       "comeBack": "Fill up the form and our Team will get back to you within 24 hours",
@@ -164,6 +164,19 @@
          "addressPlaceholder": "Enter Your Address",
          "messageBody": "Enter Your Message here"
       }
+   },
+   "contactPage": {
+      "title": "Get in Touch",
+      "description": "Choose your preferred method to reach out to us. We're always here to help!",
+      "whatsapp": "WhatsApp",
+      "chatWhatsapp": "Get instant responses through chat",
+      "openWhatsapp": "Chat on whatsapp",
+      "telgram": "Telegram",
+      "chatTelgram": "Send us a message anytime",
+      "openTelgram": "Open Telegram",
+      "email": "Email",
+      "sendEmail": "Write to us for detailed inquiries",
+      "sendMail": "Send Mail"
    },
    "faq": {
       "faqTitle": "Frequently asked questions",

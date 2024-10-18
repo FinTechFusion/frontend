@@ -11,8 +11,8 @@ export default function Page() {
          <div className="md:flex lg:gap-24 space-x-0 my-8">
             <div className="lg:w-2/3 w-full text-start">
                <Textbox
-                  title={t("boostYourProfitsTitle")}
-                  description={t("boostYourProfitsDescription")}
+                  title="aboutPage.boostYourProfitsTitle"
+                  description="aboutPage.boostYourProfitsDescription"
                />
             </div>
             <div className="features-list">
@@ -26,21 +26,22 @@ export default function Page() {
          </div>
          <div className="">
             <Textbox
-               title={t("capabilitiesTitle")}
-               description={t("capabilitiesDescription")}
+               title="aboutPage.capabilitiesTitle"
+               description="aboutPage.capabilitiesDescription"
             />
             <div className="text-center my-12 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title={t("botSignalTitle")} description={t("botSignalDescription")} />
-               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title={t("botAITitle")} description={t("botAIDescription")} />
-               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title={t("simplicityTitle")} description={t("simplicityDescription")} />
-               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title={t("securityTitle")} description={t("securityDescription")} />
-               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title={t("profitabilityTitle")} description={t("profitabilityDescription")} />
-               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title={t("reliabilityTitle")} description={t("reliabilityDescription")} />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title="aboutPage.botSignalTitle" description="aboutPage.botSignalDescription" />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title="aboutPage.botAITitle" description="aboutPage.botAIDescription" />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title="aboutPage.simplicityTitle" description="aboutPage.simplicityDescription" />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title="aboutPage.securityTitle" description="aboutPage.securityDescription" />
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title="aboutPage.profitabilityTitle" description="aboutPage.profitabilityDescription" />
+
+               <Textbox mainClass="shadow p-5 bg-gray-100 rounded-md" titleClass="text-primary-600" title="aboutPage.reliabilityTitle" description="aboutPage.reliabilityDescription" />
             </div>
          </div>
          <Textbox
-            title={t("howItWorksTitle")}
-            description={t("howItWorksDescription")}
+            title="aboutPage.howItWorksTitle"
+            description="aboutPage.howItWorksDescription"
             descriptionClass='md:w-3/4 w-full'
          />
          <HowItWorks />
@@ -49,8 +50,8 @@ export default function Page() {
                <Textbox
                   titleClass="text-secondary tracking-wide hover:text-secondary"
                   descriptionClass="text-secondary tracking-wide hover:text-secondary md:w-3/4 w-full"
-                  title={t("startBoostingTitle")}
-                  description={t("startBoostingDescription")}
+                  title="aboutPage.startBoostingTitle"
+                  description="aboutPage.startBoostingDescription"
                />
             </div>
          </div>

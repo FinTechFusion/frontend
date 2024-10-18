@@ -19,7 +19,7 @@ export default function ContactForm() {
    const submitForm: SubmitHandler<contactType> = async (data) => {
       setIsLoading(true);
    };
-   const t = useTranslations("contactPage.contactForm");
+   const t = useTranslations("supportPage.contactForm");
       // Error message translation mapping
    const translateErrorMessage = (errorKey: string | undefined) => {
       if (!errorKey) return '';

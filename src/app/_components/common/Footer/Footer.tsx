@@ -36,7 +36,7 @@ export default function Footer() {
                            <span className="capitalize text-lg hover:text-primary-500">{t('information.blog')}</span>
                         </li>
                         <li className="py-3">
-                           <span className="capitalize text-lg hover:text-primary-500">{t('information.support')}</span>
+                           <Link href="/site/support" className="capitalize hover:text-primary-500">{t('information.support')}</Link>
                         </li>
                      </ul>
                   </div>
