@@ -1,12 +1,9 @@
 import { Link } from '@/i18n/navigation';
 import { FaRegCopyright } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa6";
-import { FaArrowLeft } from "react-icons/fa6";
-import { useLocale, useTranslations } from 'next-intl';
+import {useTranslations } from 'next-intl';
 
 export default function Footer() {
    const t = useTranslations('footer');
-   const locale = useLocale()
    return (
       <div className="bg-dark md:px-0 px-3  py-6 ">
          <div className="border-b-2 border-gray-600 my-6">

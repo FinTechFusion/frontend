@@ -27,7 +27,7 @@ export default function BinancePopup() {
 
    return (
       <>
-         {user?.is_binance ? "" :
+         {!(user?.is_binance )&&
             <div
                className={`fixed md:bottom-3 md:right-3 bottom-0 right-0 bg-secondary rounded-2xl border border-blue-100 bg-white p-4 shadow-lg sm:p-6 lg:p-8 md:w-1/3 z-50 transition-all duration-500 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                   }`}
