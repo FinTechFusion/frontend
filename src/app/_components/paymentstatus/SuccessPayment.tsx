@@ -7,13 +7,13 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 
 export default function SuccessPayment() {
-   const { fetchUserData } = useAuth();
-   const accessToken = getTokenFromStorage("access_token");
+   // const { fetchUserData } = useAuth();
+   // const accessToken = getTokenFromStorage("access_token");
    const t = useTranslations("payment")
    useEffect(() => {
-      if (accessToken) {
-         fetchUserData(accessToken)
-      }
+      // if (accessToken) {
+      //    fetchUserData(accessToken)
+      // }
       // Trigger confetti effect on component mount
       confetti({
          particleCount: 120,

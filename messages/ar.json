@@ -148,22 +148,35 @@
       "startBoostingTitle": "ابدأ بزيادة أرباحك اليوم",
       "startBoostingDescription": "اختبر قوة بوت التوصيات و الذكاءالاصطناعي لترتقي بتداولك إلى المستوى التالي. قم بالتسجيل الآن وافتح عالماً من الفرص الربحية."
    },
+   "supportPage": {
+      "title": "مركز الدعم",
+      "description": "هل لديك أي أسئلة أو ملاحظات؟ فقط اكتب لنا رسالة!",
+            "getInTouch": "تواصل معنا",
+            "supportTicket": "افتح تذكرة دعم",
+            "comeBack": "املأ النموذج وسيتواصل معك فريقنا خلال 24 ساعة",
+            "sendMessage": "ارسل رسالتك",
+            "contactForm": {
+               "nameLabel": "اسمك",
+               "namePlaceholder": "أدخل اسمك",
+               "emailLabel": "بريدك الإلكتروني ",
+               "emailPlaceholder": "أدخل بريدك الإلكتروني",
+               "address": "العنوان",
+               "addressPlaceholder": "أدخل عنوانك",
+               "messageBody": "أدخل رسالتك هنا"
+            }
+   },
    "contactPage": {
       "title": "اتصل بنا",
-      "description": "هل لديك أي أسئلة أو ملاحظات؟ فقط اكتب لنا رسالة!",
-      "getInTouch": "تواصل معنا",
-      "comeBack": "املأ النموذج وسيتواصل معك فريقنا خلال 24 ساعة",
-      "supportTicket": "افتح تذكرة دعم",
-      "sendMessage": "ارسل رسالتك",
-      "contactForm": {
-         "nameLabel": "اسمك",
-         "namePlaceholder": "أدخل اسمك",
-         "emailLabel": "بريدك الإلكتروني ",
-         "emailPlaceholder": "أدخل بريدك الإلكتروني",
-         "address": "العنوان",
-         "addressPlaceholder": "أدخل عنوانك",
-         "messageBody": "أدخل رسالتك هنا"
-      }
+      "description": "اختر الطريقة المفضلة لديك للتواصل معنا. نحن دائمًا هنا لمساعدتك!",
+      "whatsapp": "واتساب",
+      "chatWhatsapp": "احصل على ردود فورية عبر الدردشة",
+      "openWhatsapp": "الدردشة على واتساب",
+      "telgram": "تيليجرام",
+      "chatTelgram": "أرسل لنا رسالة في أي وقت",
+      "openTelgram": "افتح تيليجرام",
+      "email": "البريد الإلكتروني",
+      "sendEmail": "اكتب لنا للاستفسارات التفصيلية",
+      "sendMail": "أرسل بريدًا"
    },
    "faq": {
       "faqTitle": "أسئلة متكررة",

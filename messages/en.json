@@ -14,11 +14,11 @@
       "title": "Meet your new crypto trading bots",
       "description": "Meet your new trading edge Bot Signal and Bot AI. Simple, smart, and secure. Bot Signal finds opportunities. Bot AI predicts the market. Both designed to boost your profits with ease and safety in mind."
    },
-   "binanceBopup":{
-      "newMsg":"New message!",
-      "popMsg":"Connecting your Binance account unlocks a wealth of opportunities in cryptocurrency trading, enabling you to leverage advanced tools like market analysis and AI-powered trading bots.",
-      "connect":"connect",
-      "markRead":"Maek as read"
+   "binanceBopup": {
+      "newMsg": "New message!",
+      "popMsg": "Connecting your Binance account unlocks a wealth of opportunities in cryptocurrency trading, enabling you to leverage advanced tools like market analysis and AI-powered trading bots.",
+      "connect": "connect",
+      "markRead": "Maek as read"
    },
    "features": {
       "feat_heading": "Advanced Trading Platform Features",
@@ -149,12 +149,12 @@
       "startBoostingTitle": "Start Boosting Your Profits Today",
       "startBoostingDescription": "Experience the power of Bot Signal and Bot AI to take your trading to the next level. Sign up now and unlock a world of profitable opportunities."
    },
-   "contactPage": {
-      "title": "Contact Us",
+   "supportPage": {
+      "title": "Support Center",
       "description": "Any questions or remarks? Just write us a messaage!",
       "getInTouch": "Get in touch",
-      "comeBack": "Fill up the form and our Team will get back to you within 24 hours",
       "supportTicket": "Open Support Ticket",
+      "comeBack": "Fill up the form and our Team will get back to you within 24 hours",
       "contactForm": {
          "nameLabel": "Your Name",
          "namePlaceholder": "Enter Your Name",
@@ -164,6 +164,19 @@
          "addressPlaceholder": "Enter Your Address",
          "messageBody": "Enter Your Message here"
       }
+   },
+   "contactPage": {
+      "title": "Get in Touch",
+      "description": "Choose your preferred method to reach out to us. We're always here to help!",
+      "whatsapp": "WhatsApp",
+      "chatWhatsapp": "Get instant responses through chat",
+      "openWhatsapp": "Chat on whatsapp",
+      "telgram": "Telegram",
+      "chatTelgram": "Send us a message anytime",
+      "openTelgram": "Open Telegram",
+      "email": "Email",
+      "sendEmail": "Write to us for detailed inquiries",
+      "sendMail": "Send Mail"
    },
    "faq": {
       "faqTitle": "Frequently asked questions",
@@ -240,8 +253,8 @@
       "complete_captcha": "Please complete the CAPTCHA",
       "registerError": "An error occurred while registering",
       "occurError": "An error has occurred",
-      "resetCodeSent":"Reset Code Sent To Email",
-      "errorOccuredSentCode":"An error occurred while sending the reset code"
+      "resetCodeSent": "Reset Code Sent To Email",
+      "errorOccuredSentCode": "An error occurred while sending the reset code"
    },
    "toast": {},
    "plans": {
@@ -318,7 +331,6 @@
          "about": "About Us",
          "contact": "Contact Us",
          "faq": "FAQ"
-
       },
       "subscribe": {
          "title": "Subscribe",
@@ -333,7 +345,7 @@
       }
    },
    "dashboard": {
-      "userSetting":"Account Settings",
+      "userSetting": "Account Settings",
       "sidebar": {
          "dashboard": "Dashboard",
          "botsignal": "Bot Signal",
@@ -375,7 +387,7 @@
       },
       "spotWallet": "Spot Wallet",
       "DemoSpotWallet": "Demo Spot Wallet",
-      "PriceChangeLineChart":"Price Change Trends of Your Assets",
+      "PriceChangeLineChart": "Price Change Trends of Your Assets",
       "symbol": "Symbol",
       "quantity": "Quantity",
       "price": "Price",
@@ -482,7 +494,7 @@
       },
       "last_name": {
          "min": "Last name must be at least 3 characters long",
-         "alphabetic":"Last name can only start with letters"
+         "alphabetic": "Last name can only start with letters"
       },
       "phone_number": {
          "string": "Phone number must be a string"
@@ -538,15 +550,15 @@
          "subscripefirst": "Please subscribe to be able create order"
       }
    },
-   "cookies":{
-      "cookiesNotice":"Cookies Cookies Notice",
-      "cookiesEffectiveData":"this cookies notice is effective of december 10, 2023",
-      "effectiveDetails":"this notice specifically explains how we deploy and administer cookies on our website https:/fintechfusion.net (the site), as well as the options you have to control them. for further information on how we process your personal data, see our privacy notice.",
-      "whatCookies":"What are cookies?",
-      "cookiesDescription":"cookies are small pieces of data stored in text files that are stored on your computer or other devices when websites are loaded in a browser. they are widely used to remember you and your preferences, either for a single visit (“session cookie”) or for multiple repeat visits (“persistent cookie”). they ensure a consistent and efficient experience for visitors and perform essential functions such as allowing users to register and remain logged in. cookies may be set by the site that you are visiting (“first party cookies”) or by third parties, such as those who serve content or provide advertising or analytics services on the website (“third party cookies”). the types of cookies we use",
-      "howControlCookies":"How to control cookies ?",
-      "cookiesControl":"where you have consented to our use of cookies through the consent banner, apart from necessary cookies, you agree to our use of cookies as per this notice. you may at any time change or withdraw your cookie consent by clicking a shield icon on our website, which opens the cookie consent banner.most browsers provide ways to control cookie behavior, such as the time they are stored – either through built-in functionality or by utilizing third-party plugins.if you would prefer to opt-out of cookies, you should be aware that you might lose some features and functionality of the website. cookies, including those which have already been set, can be deleted from your device. you can also change the preferences in your web browser to control cookies. some internet browsers have a „do not track“ or „dnt“ setting - this sends a signal to websites asking them not to track your browsing.",
-      "contactUs":"Contact us",
-      "anyQuestions":"if you have any questions about our use of cookies, please send to our email."
+   "cookies": {
+      "cookiesNotice": "Cookies Cookies Notice",
+      "cookiesEffectiveData": "this cookies notice is effective of december 10, 2023",
+      "effectiveDetails": "this notice specifically explains how we deploy and administer cookies on our website https:/fintechfusion.net (the site), as well as the options you have to control them. for further information on how we process your personal data, see our privacy notice.",
+      "whatCookies": "What are cookies?",
+      "cookiesDescription": "cookies are small pieces of data stored in text files that are stored on your computer or other devices when websites are loaded in a browser. they are widely used to remember you and your preferences, either for a single visit (“session cookie”) or for multiple repeat visits (“persistent cookie”). they ensure a consistent and efficient experience for visitors and perform essential functions such as allowing users to register and remain logged in. cookies may be set by the site that you are visiting (“first party cookies”) or by third parties, such as those who serve content or provide advertising or analytics services on the website (“third party cookies”). the types of cookies we use",
+      "howControlCookies": "How to control cookies ?",
+      "cookiesControl": "where you have consented to our use of cookies through the consent banner, apart from necessary cookies, you agree to our use of cookies as per this notice. you may at any time change or withdraw your cookie consent by clicking a shield icon on our website, which opens the cookie consent banner.most browsers provide ways to control cookie behavior, such as the time they are stored – either through built-in functionality or by utilizing third-party plugins.if you would prefer to opt-out of cookies, you should be aware that you might lose some features and functionality of the website. cookies, including those which have already been set, can be deleted from your device. you can also change the preferences in your web browser to control cookies. some internet browsers have a „do not track“ or „dnt“ setting - this sends a signal to websites asking them not to track your browsing.",
+      "contactUs": "Contact us",
+      "anyQuestions": "if you have any questions about our use of cookies, please send to our email."
    }
 }
