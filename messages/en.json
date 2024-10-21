@@ -12,7 +12,7 @@
    "hero": {
       "heading": "Best Platform Cryptocurrency",
       "title": "Meet your new crypto trading bots",
-      "description": "Meet your new trading edge Bot Analysis and Bot AI. Simple, smart, and secure. Bot Analysis finds opportunities. Bot AI predicts the market. Both designed to boost your profits with ease and safety in mind."
+      "description": "Meet your new trading edge Bot Signal and Bot AI. Simple, smart, and secure. Bot Signal finds opportunities. Bot AI predicts the market. Both designed to boost your profits with ease and safety in mind."
    },
    "binanceBopup":{
       "newMsg":"New message!",
@@ -43,7 +43,7 @@
    "integrate_feat_3": "Access to Binance's extensive range of trading pairs",
    "integrate_feat_4": "Leverage Binance's robust API for advanced trading strategies",
    "connect_acc": "Connect Your Account",
-   "trail_btn": "start trail",
+   "trail_btn": "start trial",
    "why_us": "why choose our crypto trading platform ?",
    "why_us_info": "Experience the future of trading with our comprehensive suite of tools,our platform offers everything you need to trade smarter, faster, and more securely.",
    "sendMessage": "Send Message",
@@ -101,8 +101,8 @@
       "lossRiskWithBotSignal": "$2,000 loss"
    },
    "botAiPage": {
-      "unlockPowerTitle": "Unlock the Power of AI-Driven Investing",
-      "unlockPowerDescription": "Bot AI is an advanced investment assistant that optimizes trading strategies to maximize returns. It evaluates real-time market conditions to distribute investments across different price levels, reducing the risk of market fluctuations. By buying at various prices, it secures a better average cost. Bot AI’s smart analysis and planning ensure smarter, safer investments by following market trends and minimizing risks.",
+      "unlockPowerTitle": "Unlock the Power of AI-Driven",
+      "unlockPowerDescription": "AI bot is designed to provide most accurate trading signals based on the user’s chosen strategy. By constantly analyzing real-time market conditions, it distributes trades across different price levels to reduce risk and improve performance. It is pre-trained and tested to ensure users get the best trading signals tailored to their strategies, helping them achieve optimal trading results while dealing with market volatility.",
       "tryBotAi": "Try Bot AI",
       "exploreBotAiTitle": "Explore Bot AI",
       "exploreBotAiDescription": "Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions. Check out the video below to see it in action.",
@@ -149,8 +149,8 @@
       "startBoostingTitle": "Start Boosting Your Profits Today",
       "startBoostingDescription": "Experience the power of Bot Signal and Bot AI to take your trading to the next level. Sign up now and unlock a world of profitable opportunities."
    },
-   "supportPage": {
-      "title": "Support Center",
+   "contactPage": {
+      "title": "Contact Us",
       "description": "Any questions or remarks? Just write us a messaage!",
       "getInTouch": "Get in touch",
       "comeBack": "Fill up the form and our Team will get back to you within 24 hours",
@@ -164,19 +164,6 @@
          "addressPlaceholder": "Enter Your Address",
          "messageBody": "Enter Your Message here"
       }
-   },
-   "contactPage": {
-      "title": "Get in Touch",
-      "description": "Choose your preferred method to reach out to us. We're always here to help!",
-      "whatsapp": "WhatsApp",
-      "chatWhatsapp": "Get instant responses through chat",
-      "openWhatsapp": "Chat on whatsapp",
-      "telgram": "Telegram",
-      "chatTelgram": "Send us a message anytime",
-      "openTelgram": "Open Telegram",
-      "email": "Email",
-      "sendEmail": "Write to us for detailed inquiries",
-      "sendMail": "Send Mail"
    },
    "faq": {
       "faqTitle": "Frequently asked questions",
@@ -196,11 +183,11 @@
       "faqQuestion7": "How secure is the FinTechFusion platform?",
       "faqAnswer7": "Security is our top priority. FinTechFusion employs state-of-the-art encryption and security protocols to protect your data and transactions. You can trade with confidence knowing your assets are secure.",
       "faqQuestion8": "What markets can I trade with FinTechFusion?",
-      "faqAnswer8": "FinTechFusion supports a wide range of markets, including cryptocurrencies, stocks, forex, and commodities. Our bots are versatile and can optimize trading strategies across different asset classes.",
+      "faqAnswer8": "FinTechFusion supports market are cryptocurrencies.",
       "faqQuestion9": "How do I start using FinTechFusion?",
-      "faqAnswer9": "To start using FinTechFusion, simply sign up for an account on our platform, verify your identity, and fund your trading account. Once your account is set up, you can select a trading bot, configure its settings, and start trading.",
+      "faqAnswer9": "To start using FinTechFusion, simply sign up for an account on our platform, verify your account connect with supported exchanges. Once your account is set up, you can select a trading bot, configure its settings, and start trading.",
       "faqQuestion10": "What kind of support does we offer?",
-      "faqAnswer10": "We offer comprehensive support through various channels, including live chat, email, and a detailed knowledge base. Our support team is always ready to assist you with any questions or issues you may have."
+      "faqAnswer10": "We offer comprehensive support through various channels, including email, Telegram , Whatsapp. Our support team is always ready to assist you with any questions or issues you may have."
    },
    "howItWork": {
       "signup": "Sign Up",
@@ -222,7 +209,7 @@
       "passwordPlaceHolder": "Enter strong password",
       "don'thaveaccount": "Don't have an account?",
       "forgetPassword": "Forgot Password?",
-      "create": "Create",
+      "create": "Sign Up",
       "registerTitle": "Empower Your Trading Journey with FinTechFusion",
       "registerDescription": "Unlock the potential of trading with AI-powered Signal Bots. Trade smarter with real-time analysis and strategies designed for all traders.",
       "secure_crypto": "Secure Your Crypto",
@@ -264,14 +251,14 @@
       "mo": "mo",
       "yearly": "yearly",
       "AED": "AED",
-      "subscribePlan": "Subscribe Plan",
+      "subscribePlan": "Subscribe",
       "includes": "Includes : "
    },
    "subscriptionBenefits": {
       "whySubscripe": "Why Subscribe?",
       "benfit1": "Access to sophisticated automated trading technology",
       "benfit2": "Automated trading strategies tailored to your goals",
-      "benfit3": "24/7 expert support to guide you",
+      "benfit3": "24/7 customer support",
       "benfit4": "Real-time market analysis and insights",
       "benfit5": "Enhanced risk management tools for secure trading",
       "benfit6": "Regular updates and new features"
