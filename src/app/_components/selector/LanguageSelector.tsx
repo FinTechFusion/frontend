@@ -10,14 +10,15 @@ export default function LanguageSelector() {
    const router = useRouter();
    const pathname = usePathname();
    const locale = useLocale();
+
    const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
       const nextLocale = e.target.value;
-      // Extract the current locale from the pathname
       const currentPathWithoutLocale = pathname.replace(/^\/(ar|en)/, '');
+      const searchParams = new URLSearchParams(window.location.search).toString();
       startTransition(() => {
-         router.replace(`/${nextLocale}${currentPathWithoutLocale}`);
+         router.replace(`/${nextLocale}${currentPathWithoutLocale}${searchParams ? `?${searchParams}` : ''}`);
       });
-   };
+   };;
 
    return (
       <div className="flex items-center bg-gray-100 px-2 rounded-md">
