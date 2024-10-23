@@ -13,7 +13,7 @@ export default function Page() {
    const searchParams = useSearchParams();
    const router = useRouter();
    const sessionId = searchParams.get('session_id');
-
+   const lang = localStorage.getItem("lang");
    const { data, loading } = useFetch(`${API_BASE_URL}/users/me/subscription/confirm?session_id=${sessionId}`, {
       method: 'POST',
       headers: {
@@ -22,13 +22,10 @@ export default function Page() {
    });
 
    useEffect(() => {
-      if (!loading && data) {
-         const lang = localStorage.getItem("lang");
-
-         // Perform the redirect only after data is ready
+      if (data) {
          router.push(`/${lang}/site/plans/purchase/confirm?session_id=${sessionId}`);
       }
-   }, [data, loading]);
+   }, []);
 
    if (loading) {
       return <Loading />;
