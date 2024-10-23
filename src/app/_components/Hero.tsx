@@ -8,6 +8,7 @@ import { Link } from '@/i18n/navigation';
 
 export default function Hero() {
    const t = useTranslations('hero');
+
    return (
       <main className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
          <div className="flex flex-col justify-center items-start">
