@@ -6,7 +6,6 @@ import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { getTokenFromStorage } from "@/context/AuthContext";
 import Loading from '@/app/_components/common/loading/Loading';
-import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { useEffect } from "react";
 
@@ -21,12 +20,13 @@ export default function Page() {
          authorization: `Bearer ${accessToken}`
       }
    });
-   const lang = localStorage.getItem("lang");
-   useEffect(() => {
-      if (lang) {
-         router.replace(`/${lang}/site/plans/purchase/confirm?session_id=${sessionId}`);
-      }
-   }, [])
+   // const lang = localStorage.getItem("lang");
+   // console.log(lang)
+   // useEffect(() => {
+   //    if (lang) {
+   //       router.replace(`/${lang}/site/plans/purchase/confirm?session_id=${sessionId}`);
+   //    }
+   // }, [])
    if (loading) {
       return <Loading />
    }
