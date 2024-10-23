@@ -10,21 +10,13 @@ import { getTokenFromStorage } from "@/context/AuthContext";
 export default function Page() {
    const accessToken = getTokenFromStorage("access_token");
    const searchParams = useSearchParams();
-   // const router = useRouter();
    const sessionId = searchParams.get('session_id');
-   // const lang = localStorage.getItem("lang");
    const { data, loading } = useFetch(`${API_BASE_URL}/users/me/subscription/confirm?session_id=${sessionId}`, {
       method: 'POST',
       headers: {
          authorization: `Bearer ${accessToken}`
       }
    });
-
-   // useEffect(() => {
-   //    if (data) {
-   //       router.push(`/${lang}/site/plans/purchase/confirm?session_id=${sessionId}`);
-   //    }
-   // }, []);
 
    if (loading) {
       return <Loading />;

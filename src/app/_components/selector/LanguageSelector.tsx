@@ -10,10 +10,8 @@ export default function LanguageSelector() {
    const router = useRouter();
    const pathname = usePathname();
    const locale = useLocale();
-   localStorage.setItem('lang', locale);
    const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
       const nextLocale = e.target.value;
-
       // Extract the current locale from the pathname
       const currentPathWithoutLocale = pathname.replace(/^\/(ar|en)/, '');
       startTransition(() => {

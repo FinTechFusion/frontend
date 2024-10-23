@@ -6,7 +6,7 @@ import { routing } from './i18n/routing';
 const supportedLocales = ['en', 'ar'];
 
 export default function middleware(req: any) {
-   const { pathname } = req.nextUrl;
+   const { pathname, search } = req.nextUrl;
 
    // Split the pathname and check if the first part matches a locale
    const pathnameParts = pathname.split('/');
@@ -17,7 +17,7 @@ export default function middleware(req: any) {
 
    // If the path doesn't start with a locale, redirect to the locale from the cookie
    if (!supportedLocales.includes(localeInPath)) {
-      const redirectUrl = new URL(`/${cookieLocale}${pathname}`, req.url);
+      const redirectUrl = new URL(`/${cookieLocale}${pathname}${search}`, req.url);
       return NextResponse.redirect(redirectUrl);
    }
 
