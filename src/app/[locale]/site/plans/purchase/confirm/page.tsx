@@ -20,7 +20,8 @@ export default function Page() {
          authorization: `Bearer ${accessToken}`
       }
    });
-   // const lang = localStorage.getItem("lang");
+   console.log(
+      // const lang = localStorage.getItem("lang");
    // console.log(lang)
    // useEffect(() => {
    //    if (lang) {
