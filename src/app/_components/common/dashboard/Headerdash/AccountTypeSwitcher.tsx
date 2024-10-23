@@ -1,5 +1,4 @@
 import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
-import { CheckConfirmAlert } from "@/utils/alerts";
 import { API_BASE_URL } from "@/utils/api";
 import { AccountTypeProps } from "@/utils/types";
 import { useRouter } from '@/i18n/navigation';
@@ -10,6 +9,7 @@ import Toast from "../../Tostify/Toast";
 import { useAssetData } from "@/context/AssetsContext";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
+import Swal from 'sweetalert2';
 
 export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: AccountTypeProps) {
    const locale = useLocale();
@@ -22,10 +22,32 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
    const t = useTranslations("dashboard.accountTypes");
+   const alertT = useTranslations('alerts');
    useEffect(() => {
       setIsDemo(initialDemo); // Update isDemo when initialDemo changes
    }, [initialDemo]);
-
+const CheckConfirmAlert = (onConfirm: () => void, onCancel?: () => void) => {
+   Swal.fire({
+      icon: "error",
+      title: alertT('oopsTitle'),
+      text: alertT('connectAccountText'), 
+      showCancelButton: true,
+      confirmButtonColor: "#0D9488",
+      cancelButtonColor: "#d33",
+      confirmButtonText: alertT('connectButtonText'), 
+      cancelButtonText: alertT('cancelButtonText'),
+      customClass: {
+         confirmButton: 'custom-ok-btn',
+         cancelButton: 'custom-cancel-btn',
+      },
+   }).then((result) => {
+      if (result.isConfirmed) {
+         onConfirm();
+      } else if (result.isDismissed && onCancel) {
+         onCancel();
+      }
+   });
+};
    function onConfirm() {
       router.push("/site/exchange/connect");
    }

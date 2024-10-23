@@ -212,6 +212,12 @@
       "starttrading": "Start Trading",
       "starttrading_info": "Let our AI or Signal handle the rest"
    },
+   "alerts": {
+      "oopsTitle": "Oops...",
+      "connectAccountText": "Connect account with Binance to continue.",
+      "connectButtonText": "Connect",
+      "cancelButtonText": "Cancel"
+   },
    "auth": {
       "login": "Login",
       "Logintitle": "Sign in to your account",

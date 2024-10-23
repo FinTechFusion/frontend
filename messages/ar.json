@@ -212,6 +212,12 @@
       "starttrading": "ابدأ التداول",
       "starttrading_info": "دع الذكاء الاصطناعي يتولي الباقي"
    },
+      "alerts": {
+         "oopsTitle": "عذرًا...",
+         "connectAccountText": "قم بربط الحساب مع بينانس للمتابعة.",
+         "connectButtonText": "ربط الحساب",
+         "cancelButtonText": "إلغاء"
+      },
    "auth": {
       "login": "تسجيل الدخول",
       "Logintitle": "سجل الدخول إلى حسابك",
