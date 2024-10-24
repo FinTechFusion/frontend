@@ -115,7 +115,7 @@ export default function RegisterForm() {
                   enableSearch={true}
                   inputProps={{
                      required: true,
-                     className: `w-full py-2 border-2 rounded-md ${locale ? 'pr-14 pl-4' : 'pl-14 pr-4'}`,
+                     className: `w-full py-2 border-2 rounded-md ${locale === 'ar' ? 'pr-10 pl-4' : 'pl-10 pr-4'}`,
                   }}
                   containerClass="w-full"
                />

@@ -17,7 +17,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
-   const {assetData ,fetchAssets } = useAssetData();
+   const { assetData, fetchAssets } = useAssetData();
 
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
@@ -26,28 +26,28 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    useEffect(() => {
       setIsDemo(initialDemo); // Update isDemo when initialDemo changes
    }, [initialDemo]);
-const CheckConfirmAlert = (onConfirm: () => void, onCancel?: () => void) => {
-   Swal.fire({
-      icon: "error",
-      title: alertT('oopsTitle'),
-      text: alertT('connectAccountText'), 
-      showCancelButton: true,
-      confirmButtonColor: "#0D9488",
-      cancelButtonColor: "#d33",
-      confirmButtonText: alertT('connectButtonText'), 
-      cancelButtonText: alertT('cancelButtonText'),
-      customClass: {
-         confirmButton: 'custom-ok-btn',
-         cancelButton: 'custom-cancel-btn',
-      },
-   }).then((result) => {
-      if (result.isConfirmed) {
-         onConfirm();
-      } else if (result.isDismissed && onCancel) {
-         onCancel();
-      }
-   });
-};
+   const CheckConfirmAlert = (onConfirm: () => void, onCancel?: () => void) => {
+      Swal.fire({
+         icon: "error",
+         title: alertT('oopsTitle'),
+         text: alertT('connectAccountText'),
+         showCancelButton: true,
+         confirmButtonColor: "#0D9488",
+         cancelButtonColor: "#d33",
+         confirmButtonText: alertT('connectButtonText'),
+         cancelButtonText: alertT('cancelButtonText'),
+         customClass: {
+            confirmButton: 'custom-ok-btn',
+            cancelButton: 'custom-cancel-btn',
+         },
+      }).then((result) => {
+         if (result.isConfirmed) {
+            onConfirm();
+         } else if (result.isDismissed && onCancel) {
+            onCancel();
+         }
+      });
+   };
    function onConfirm() {
       router.push("/site/exchange/connect");
    }
@@ -112,7 +112,7 @@ const CheckConfirmAlert = (onConfirm: () => void, onCancel?: () => void) => {
                         disabled={loading}
                      />
                      <div className="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:bg-primary-600"></div>
-                     <div className={`absolute ${locale === 'en' ? 'left-0.5' :'right-0.5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}></div>
+                     <div className={`absolute ${locale === 'en' ? 'left-0.5' : 'right-0.5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}></div>
                   </label>
                </div>
             </div>
