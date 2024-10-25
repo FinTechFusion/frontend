@@ -18,6 +18,7 @@ export default function BotLogs({ orderId }: BotLogsProps) {
             method: "GET",
             headers: {
                authorization: `Bearer ${accessToken}`,
+               'Content-Type': 'application/json'
             },
          });
          if (!response.ok) {
