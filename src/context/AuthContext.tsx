@@ -39,6 +39,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
 
+   useEffect(() => {
+      const interval = setInterval(() => {
+         checkAndFetchUserData();
+      }, 60000);
+   }, []);
    const login = async (accessToken: string, refreshToken: string) => {
       try {
          saveTokenToStorage('access_token', accessToken);
