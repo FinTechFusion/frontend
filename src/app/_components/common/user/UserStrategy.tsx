@@ -76,7 +76,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                      </h3>
                      <span className="block py-5 text-lg">{t("spotStartegy")}</span>
                      <div className="pb-4">
-                        <span id="ProgressLabel" className="sr-only">{t("loading")}</span>
+                        {/* <span id="ProgressLabel" className="sr-only">{t("loading")}</span> */}
                         <span
                            role="progressbar"
                            aria-labelledby="ProgressLabel"

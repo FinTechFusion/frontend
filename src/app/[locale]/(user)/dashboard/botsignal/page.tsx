@@ -7,7 +7,7 @@ export default function page() {
     <>
       <UserStrategy type="signal" />
       <div style={{ height: '60vh' }} className="my-6 pe-3">
-        <TradingViewWidget />
+        {/* <TradingViewWidget /> */}
       </div>
       <div className="tradingbot-form">
         <TradingBotForm type="signal" />

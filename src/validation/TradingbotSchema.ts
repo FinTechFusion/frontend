@@ -4,7 +4,7 @@ const tradingbotSchema = z.object({
    symbol: z.string().refine((value) => value !== "", {
       message: "symbol.required",
    }),
-   secondarySymbol: z.string(),
+   secondarySymbol: z.string().optional(),
     quantity: z
       .number({ message: "quantity.required" })
       .positive({ message: "quantity.positive" }),

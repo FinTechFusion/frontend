@@ -452,7 +452,6 @@
          "uninstallError": "Error occurred while uninstalling, try again later",
          "strategy_used": "Strategy Used",
          "spotStartegy": "Spot Startegy",
-         "Loading": "Loading",
          "uninstall": "uninstall",
          "install": "Install",
          "fetchStrategyError": "Error fetching strategy, please try again later.",

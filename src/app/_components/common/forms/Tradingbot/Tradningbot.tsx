@@ -20,12 +20,14 @@ type tradingBotType = {
 export default function TradingBotForm({ type }: tradingBotType) {
   const [currentSymbol, setCurrentSymbol] = useState<string | null>(null);
   const [symbolData, setSymbolData] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [orderId, setOrderId] = useState<string | null>(null);
+
+  const { user } = useAuth();
   const t = useTranslations("dashboard");
   const locale = useLocale();
   const validationT = useTranslations("validation.tradingbot");
   const accessToken = getTokenFromStorage("access_token");
-  const [loading, setLoading] = useState<boolean>(false);
-  const { user } = useAuth();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
     mode: "onBlur",
@@ -46,21 +48,21 @@ export default function TradingBotForm({ type }: tradingBotType) {
         method: 'POST',
         headers: {
           'authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       });
       const responseData = await response.json();
       if (responseData.success) {
-        toast.success(t("ordersuccess"));
-        setOrderId(responseData?.data?.id); // Set the orderId
+        toast.success(validationT("ordersuccess"));
+        setOrderId(responseData?.data?.id);
         reset();
       } else {
         toast.error(responseData?.detail);
       }
     }
     catch (error) {
-      toast.error(t("orderfailed"));
+      toast.error(validationT("orderfailed"));
     }
     finally {
       setLoading(false);
@@ -83,17 +85,16 @@ export default function TradingBotForm({ type }: tradingBotType) {
     fetchData();
   }, [currentSymbol])
 
-  const [orderId, setOrderId] = useState<string | null>(null);
-
   const translateErrorMessage = (errorKey: string | undefined) => {
     if (!errorKey) return '';
     return validationT(errorKey);
   };
+
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
     if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       createOrder(data);
     } else {
-      return toast.info(t("subscripefirst"));
+      return toast.info(t("subscribeFirst"));
     }
   };
   function checkSymbol(e: any) {
@@ -133,7 +134,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               <span className="text-red-600 text-sm pt-2">{translateErrorMessage(errors.symbol.message)}</span>
             )}
           </div>
-          {currentSymbol === "btc" && (
+          {currentSymbol === "usdt" && (
             <div className="second-symbol">
               <label htmlFor="symbol2" className="block capitalize pb-1 text-lg font-medium tracking-wide">
                 {t("symbol")}
