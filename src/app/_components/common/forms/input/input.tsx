@@ -30,14 +30,15 @@ const Input = <TFieldValue extends FieldValues>({
    const inputProps = register
       ? {
          ...register(name, { valueAsNumber: type === 'number' }),
-         readOnly, // Add readOnly to registered props
+         readOnly,
       }
       : {
          name,
          onChange,
          onPaste,
          value,
-         readOnly, // Add readOnly to unregistered props
+         readOnly,
+
       };
 
    return (
@@ -57,6 +58,7 @@ const Input = <TFieldValue extends FieldValues>({
             placeholder={placeholder}
             {...inputProps}
             {...rest}
+            step={type === 'number' ? '0.001' : undefined}
          />
          {error && <span className="text-red-600 text-sm pt-2">{error}</span>}
       </div>
