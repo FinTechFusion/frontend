@@ -58,7 +58,7 @@ const Input = <TFieldValue extends FieldValues>({
             placeholder={placeholder}
             {...inputProps}
             {...rest}
-            step={type === 'number' ? '0.001' : undefined}
+            step={type === 'number' ? '0.1' : undefined}
          />
          {error && <span className="text-red-600 text-sm pt-2">{error}</span>}
       </div>

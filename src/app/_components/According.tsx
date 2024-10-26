@@ -64,7 +64,8 @@ export default function Accordion() {
          {items.map((item, index) => (
             <div key={index} className="according-item col-span-1">
                <div
-                  className="according-question my-3 cursor-pointer flex justify-between items-center bg-gray-200 hover:bg-gray-300 p-3 rounded-md"
+                  className="according-question my-3 cursor-pointer flex justify-between items-center
+                  gap-6 bg-gray-200 hover:bg-gray-300 p-3 rounded-md"
                   onClick={() => toggleAnswer(index)}
                >
                   <h2 className="text-lg font-medium tracking-wide">{t(item.question)}</h2>
