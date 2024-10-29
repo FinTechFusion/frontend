@@ -18,14 +18,14 @@ function VerifyInput() {
    const [loadingbtn, SetLoading] = useState(false);
    const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
    const t = useTranslations("auth");
-
+   const locale = useLocale();
    async function sendCodeToApi(code: number) {
       try {
          SetLoading(true);
          if (!email) {
             return toast.error(t("inavlidEmail"));
          }
-         const response = await fetch(`${API_BASE_URL}/auth/verify?otp_code=${code}&email=${email}`, {
+         const response = await fetch(`${API_BASE_URL}/auth/verify?otp_code=${code}&email=${email}&lang=${locale}`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -36,12 +36,11 @@ function VerifyInput() {
             const responseData = await response.json();
             return toast.error(responseData.detail || t("errorOccured"));
          }
-
          const responseData = await response.json();
          if (responseData) {
             const { access_token, refresh_token } = responseData;
             const currentTime = Date.now();
-            const thirtyMinutesInMilliseconds = 10 * 60 * 1000;
+            const thirtyMinutesInMilliseconds = 29 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
 
             saveTokenToStorage("expire_data_token", newTime.toString());
@@ -50,7 +49,8 @@ function VerifyInput() {
             // check if user choose plan before regiter checkout after verify
             const planExist = sessionStorage.getItem("planId");
             if (planExist) {
-               route.push("/site/plans")
+               console.log("Plang Exist")
+               route.push("/site/plans");
             } else {
                route.push(`/site/exchange`);
             }
