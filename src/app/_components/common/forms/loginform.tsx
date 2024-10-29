@@ -12,8 +12,10 @@ import Toast from "../Tostify/Toast";
 import { useState } from "react";
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/routing";
 
 export default function Loginform() {
+   const router = useRouter();
    const { login } = useAuth();
    const [email, setEmail] = useState('');
    const t = useTranslations("auth");
@@ -43,11 +45,13 @@ export default function Loginform() {
             const currentTime = Date.now();
             const thirtyMinutesInMilliseconds = 30 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
-            // localStorage.setItem("expire_data_token", newExpireTime.toString());
             saveTokenToStorage("expire_data_token", newExpireTime.toString());
             login(access_token, refresh_token);
             toast.success(t("loginSuccess"));
          } else {
+            if (responseData.class === "UserNotVerified") {
+               router.push(`/verifyemail/?email=${data.email}`)
+            }
             toast.error(responseData.detail || t("loginFailed"));
          }
       } catch (error) {

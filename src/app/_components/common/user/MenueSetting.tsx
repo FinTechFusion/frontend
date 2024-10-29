@@ -63,13 +63,13 @@ export default function MenueSetting() {
                      </div>
                      <div>
                         <AccountTypeSwitcher isDemo={user?.is_demo ?? false} />
-                        {assetData.length > 0 && (
+                        {/* {assetData.length > 0 && (
                            <div>
                               <span>
-                                 {assetData.reduce((total: any, symbol: any) => total + (symbol.quantity * symbol.last_price), 0).toFixed(5)}
+                                 {assetData.reduce((total: any, symbol: any) => total + (symbol.quantity * symbol.last_price), 0).toFixed(5)} 
                               </span>
-                           </div>
-                        )}
+                           </div></div>
+                        )} */}
                      </div>
                   </div>
                </div>

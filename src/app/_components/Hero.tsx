@@ -13,7 +13,7 @@ export default function Hero() {
       <main className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
          <div className="flex flex-col justify-center items-start">
             <div className="grid md:grid-cols-2 grid-cols-1 gap-12 md:justify-between justify-start items-start">
-               <div className="text-title mt-10 flex flex-col justify-start items-start">
+               <div className="text-title mt-10 flex flex-col justify-start items-start w-full">
                   <p className="bg-primary-50 my-3 text-primary-600 p-2 rounded-xl tracking-wide text-lg font-semibold">{t("heading")}</p>
                   <h1 className="font-semibold text-4xl tracking-wide capitalize text-dark">{t('title')}</h1>
                   <p className="text-gray-700 text-xl pb-4 pt-2">{t("description")}</p>

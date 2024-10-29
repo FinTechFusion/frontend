@@ -18,7 +18,6 @@ function VerifyInput() {
    const [loadingbtn, SetLoading] = useState(false);
    const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
    const t = useTranslations("auth");
-   const locale = useLocale();
 
    async function sendCodeToApi(code: number) {
       try {
