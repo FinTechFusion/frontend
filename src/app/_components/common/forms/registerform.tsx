@@ -43,7 +43,7 @@ export default function RegisterForm() {
 
       setIsLoading(true);
       try {
-         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}?lang=${locale}`, {
+         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}&lang=${locale}`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',

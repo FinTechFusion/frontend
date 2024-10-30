@@ -251,7 +251,7 @@
       "inavlidEmail": "Invalid Email",
       "loginSuccess": "Login Successfully",
       "loginFailed": "Login Failed",
-      "errorWhileLogin":"Error while login , try later",
+      "errorWhileLogin": "Error while login , try later",
       "verify_email_success": "Account is verified Successfully",
       "EnterFullOTP": "Enter Full OTP code",
       "successOTP": "OTP Verified, proceed to reset password",

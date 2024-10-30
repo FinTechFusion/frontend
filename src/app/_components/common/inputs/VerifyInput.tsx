@@ -49,7 +49,6 @@ function VerifyInput() {
             // check if user choose plan before regiter checkout after verify
             const planExist = sessionStorage.getItem("planId");
             if (planExist) {
-               console.log("Plang Exist")
                route.push("/site/plans");
             } else {
                route.push(`/site/exchange`);
@@ -69,10 +68,11 @@ function VerifyInput() {
    const handleVerify = (e: React.FormEvent) => {
       e.preventDefault();
       const combinedValue = values.join('');
-      if (!combinedValue) {
-         return toast.error(t("EnterFullOTP"));
+      if (combinedValue.length !== 6) {
+         toast.error(t("EnterFullOTP"));
+         return;
       }
-      sendCodeToApi(Number(combinedValue));
+      sendCodeToApi(+combinedValue);
    };
 
    return (

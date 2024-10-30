@@ -14,6 +14,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const [isAuthenticated, setIsAuthenticated] = useState(false);
    const router = useRouter();
    const pathname = usePathname();
+   const existRoute = sessionStorage.getItem("path");
 
    useEffect(() => {
       const checkAuth = () => {
@@ -27,13 +28,23 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
             const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route)) || pathname.includes('payment');
             const isAuthRoute = authRoutes.includes(pathname);
 
+            // Handle unauthenticated access to protected routes
             if (!accessToken && isProtectedRoute) {
-               router.push(`/login`);
                sessionStorage.setItem("path", pathname);
-            } else if (accessToken && isAuthRoute) {
-               router.push(`/dashboard`);
-            } else if (pathname === "/site/plans" && accessToken) {
-               // Let /site/plans be accessible without redirecting
+               router.push(`/login`);
+            }
+            // Handle authenticated users accessing auth routes
+            else if (accessToken && isAuthRoute) {
+               if (existRoute) {
+                  router.push(existRoute);
+                  sessionStorage.removeItem("path");
+               } else {
+                  router.push(`/dashboard`);
+               }
+            }
+
+            // Store /site/plans path separately if needed
+            if (pathname === "/site/plans") {
                sessionStorage.setItem("path", pathname);
             }
          } catch (error) {
