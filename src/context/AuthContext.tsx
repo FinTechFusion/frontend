@@ -93,6 +93,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             method: 'GET',
             headers: {
                authorization: `Bearer ${accessToken}`,
+               'Content-Type': 'application/json'
             },
          });
          if (response.status === 401) {

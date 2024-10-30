@@ -47,6 +47,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
             next: { revalidate: 120 },
             headers: {
                authorization: `Bearer ${accessToken}`,
+               'Content-Type': 'application/json'
             },
             
          });
@@ -59,6 +60,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                   next: { revalidate: 120 },
                   headers: {
                      'authorization': `Bearer ${accessToken}`,
+                     'Content-Type': 'application/json'
                   },
                })
                   .then(response => response.json())
