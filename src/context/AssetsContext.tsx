@@ -1,7 +1,7 @@
 'use client';
 
 import { API_BASE_URL } from '@/utils/api';
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect,useMemo, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
 import { AssetInfo } from '../utils/types';
 
@@ -109,9 +109,12 @@ const handlePageClick = (event: any) => {
    }
 };
 
-   useEffect(() => {
-      fetchAssets();
-   }, [currentOffset]);
+   // useEffect(() => {
+   //    fetchAssets();
+   // }, [currentOffset]);
+   useMemo(()=>{
+     fetchAssets();
+   },[currentOffset]);
 
    const contextValue: AssetDataContextType = {
       assetData,

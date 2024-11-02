@@ -9,13 +9,16 @@ import Loading from '../common/loading/Loading';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Order } from '@/utils/types';
-import { useTranslations } from 'next-intl';
+import { useLocale,useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
+import Toast from './../common/Tostify/Toast';
 
 const TableOrders = () => {
    const accessToken = getTokenFromStorage("access_token");
    const [rowData, setRowData] = useState<Order[]>([]);
    const [loading, setLoading] = useState(true);
    const t = useTranslations("dashboard");
+   const locale = useLocale();
    const formatDate = (dateString: string): string => {
       const options: Intl.DateTimeFormatOptions = {
          year: 'numeric',
@@ -27,27 +30,29 @@ const TableOrders = () => {
       return new Date(dateString).toLocaleString(undefined, options);
    };
 
-   // const handleDelete = async (id: string) => {
-   //    try {
-   //       const accessToken = getTokenFromStorage("access_token");
-   //       const response = await fetch(`${API_BASE_URL}/users/me/orders/${id}`, {
-   //          method: "DELETE",
-   //          headers: {
-   //             Authorization: `Bearer ${accessToken}`,
-   //          },
-   //       });
-
-   //       if (!response.ok) {
-   //          throw new Error('Failed to delete order');
-   //       }
-
-   //       setRowData(prevData => prevData.filter(order => order.id !== id));
-   //       toast.success('Order deleted successfully');
-   //    } catch (error) {
-   //       console.error('Error deleting order:', error);
-   //       toast.error('Failed to delete order');
-   //    }
-   // };
+   const handleDelete = async (id: string) => {
+      try {
+         const accessToken = getTokenFromStorage("access_token");
+         const response = await fetch(`${API_BASE_URL}/users/me/orders/${id}?lang=${locale}`, {
+            method: "DELETE",
+            headers: {
+               Authorization: `Bearer ${accessToken}`,
+            },
+         });
+         const responseData = await response.json();
+         
+         if (response.ok) {
+         await fetchUserOrders();
+            toast.success('Order deleted successfully');
+         } 
+         else{
+            toast.error(responseData.detail);
+         } 
+         setRowData(prevData => prevData.filter(order => order.id !== id));
+      } catch (error) {
+         toast.error('Failed to delete order');
+      }
+   };
 
    const columnDefs = useMemo<ColDef[]>(() => [
       { field: 'symbol', headerName: t('orderCols.symbol'), filter: true, valueFormatter: (params) => params.value.toUpperCase() },
@@ -75,7 +80,7 @@ const TableOrders = () => {
          cellRenderer: (params: any) => (
             <MdDelete
                className="text-red-600 cursor-pointer text-3xl h-full"
-            // onClick={() => handleDelete(params.data.id)}
+            onClick={() => handleDelete(params.data.id)}
             />
          ),
       },
@@ -110,8 +115,9 @@ const TableOrders = () => {
 
    return (
       <>
+      <Toast />
          <div className="mt-5">
-            <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{t("currentOrders")}</h2>
+            <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 w-fit">{t("currentOrders")}</h2>
             <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>
          </div>
          <div className="ag-theme-quartz my-5" style={{ height: 500 }}>

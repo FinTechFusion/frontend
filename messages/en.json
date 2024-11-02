@@ -421,6 +421,7 @@
       "start": "Start",
       "currentOrders": "Your current orders",
       "manageOrders": "View and manage your active orders",
+      "deleteOrderSuccess":"Order deleted successfully",
       "subscription": "Subscription",
       "plan": "Plan",
       "subscribed": "Subscribed",

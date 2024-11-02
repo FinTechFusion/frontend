@@ -10,6 +10,7 @@ import { useAssetData } from "@/context/AssetsContext";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 import Swal from 'sweetalert2';
+// import { CheckConfirmAlert } from "@/utils/CheckConfirmAlert";
 
 export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: AccountTypeProps) {
    const locale = useLocale();
