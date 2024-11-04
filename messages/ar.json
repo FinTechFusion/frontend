@@ -385,6 +385,7 @@
          "cycles": "عدد الدورات",
          "strategy": "الاستراتيجية",
          "status": "الحالة",
+         "profit": "نسبة الربح٪",
          "created_at": "تاريخ الإنشاء",
          "updated_at": "تاريخ التحديث",
          "delete": "حذف"
@@ -419,6 +420,8 @@
       "currentOrders": "طلباتك الحالية",
       "manageOrders": "عرض وإدارة طلباتك النشطة",
       "deleteOrderSuccess": "تم حذف الطلب بنجاج",
+      "failedDeleteOrder": "فشل حذف الطلب جرب لاحقًا",
+      "cantDeleteOrder":"يمكنك حذف طلب معلق فقظ",
       "install": "تثبيت",
       "Whatisnew": "ما الجديد",
       "subscription": "الاشتراك",

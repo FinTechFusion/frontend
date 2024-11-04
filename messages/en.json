@@ -388,6 +388,7 @@
          "cycles": "Cycles Count",
          "strategy": "Strategy",
          "status": "Status",
+         "profit": "profit %",
          "created_at": "Created At",
          "updated_at": "Updated At",
          "delete": "Delete"
@@ -422,6 +423,8 @@
       "currentOrders": "Your current orders",
       "manageOrders": "View and manage your active orders",
       "deleteOrderSuccess":"Order deleted successfully",
+      "failedDeleteOrder": "Failed to delete order,try later",
+      "cantDeleteOrder":"You can cancel pending only",
       "subscription": "Subscription",
       "plan": "Plan",
       "subscribed": "Subscribed",

@@ -9,7 +9,7 @@ import Loading from '../common/loading/Loading';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Order } from '@/utils/types';
-import { useLocale,useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import Toast from './../common/Tostify/Toast';
 
@@ -30,38 +30,42 @@ const TableOrders = () => {
       return new Date(dateString).toLocaleString(undefined, options);
    };
 
-   const handleDelete = async (id: string) => {
-      try {
-         const accessToken = getTokenFromStorage("access_token");
-         const response = await fetch(`${API_BASE_URL}/users/me/orders/${id}?lang=${locale}`, {
-            method: "DELETE",
-            headers: {
-               Authorization: `Bearer ${accessToken}`,
-            },
-         });
-         const responseData = await response.json();
-         
-         if (response.ok) {
-         await fetchUserOrders();
-            toast.success('Order deleted successfully');
-         } 
-         else{
-            toast.error(responseData.detail);
-         } 
-         setRowData(prevData => prevData.filter(order => order.id !== id));
-      } catch (error) {
-         toast.error('Failed to delete order');
+   const handleDelete = async (order: any) => {
+      if (order.status === "pending") {
+         try {
+            const accessToken = getTokenFromStorage("access_token");
+            const response = await fetch(`${API_BASE_URL}/users/me/orders/${order.id}?lang=${locale}`, {
+               method: "DELETE",
+               headers: {
+                  Authorization: `Bearer ${accessToken}`,
+               },
+            });
+            const responseData = await response.json();
+            if (response.ok) {
+               toast.success(t("deleteOrderSuccess"));
+            }
+            else {
+               toast.error(responseData.detail);
+            }
+            await fetchUserOrders();
+         } catch (error) {
+            toast.error(t("failedDeleteOrder"));
+         }
       }
+      else {
+         toast.info(t("cantDeleteOrder"))
+      }
+
    };
 
    const columnDefs = useMemo<ColDef[]>(() => [
       { field: 'symbol', headerName: t('orderCols.symbol'), filter: true, valueFormatter: (params) => params.value.toUpperCase() },
       { field: 'quantity', headerName: t('orderCols.quantity'), filter: 'agNumberColumnFilter' },
-      { field: 'profit_threshold', headerName: t('orderCols.profit_threshold'), filter: 'agNumberColumnFilter' },
       { field: 'trailing_stop_loss', headerName: t('orderCols.trailing_stop_loss'), filter: 'agNumberColumnFilter' },
       { field: 'cycles', headerName: t('orderCols.cycles'), filter: 'agNumberColumnFilter' },
       { field: 'strategy', headerName: t('orderCols.strategy'), filter: true },
       { field: 'status', headerName: t('orderCols.status'), filter: true },
+      { field: 'profit', headerName: t('orderCols.profit'), filter: true },
       {
          field: 'created_at',
          headerName: t('orderCols.created_at'),
@@ -80,24 +84,22 @@ const TableOrders = () => {
          cellRenderer: (params: any) => (
             <MdDelete
                className="text-red-600 cursor-pointer text-3xl h-full"
-            onClick={() => handleDelete(params.data.id)}
+               onClick={() => handleDelete(params.data)}
             />
          ),
       },
    ], []);
    const fetchUserOrders = async () => {
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/orders`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/orders?limit=5&offset=0`, {
             method: "GET",
             headers: {
                Authorization: `Bearer ${accessToken}`,
             },
          });
-
          if (!response.ok) {
             throw new Error('Failed to fetch orders');
          }
-
          const { data } = await response.json();
          setRowData(data.items);
       } catch (error) {
@@ -106,28 +108,25 @@ const TableOrders = () => {
          setLoading(false);
       }
    };
-
    useEffect(() => {
       fetchUserOrders();
    }, []);
-
    if (loading) return <Loading />;
 
    return (
       <>
-      <Toast />
+         <Toast />
          <div className="mt-5">
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 w-fit">{t("currentOrders")}</h2>
             <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>
          </div>
-         <div className="ag-theme-quartz my-5" style={{ height: 500 }}>
+         <div className="ag-theme-quartz my-5" style={{ height:270 }}>
             <AgGridReact
                rowData={rowData}
                columnDefs={columnDefs}
-               pagination={true}
-               paginationPageSize={20}
-               rowSelection="multiple"
+               paginationPageSize={5}
                suppressCellFocus={true}
+               enableRtl={locale === "ar" && true}
             />
          </div>
       </>

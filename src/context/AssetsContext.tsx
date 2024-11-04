@@ -1,7 +1,7 @@
 'use client';
 
 import { API_BASE_URL } from '@/utils/api';
-import { createContext, useContext, useState, useEffect,useMemo, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
 import { AssetInfo } from '../utils/types';
 
@@ -18,7 +18,7 @@ interface AssetDataContextType {
    assetError: string | null;
    errorMessage: ApiError | null;
    fetchAssets: () => Promise<void>;
-   currentPage:number;
+   currentPage: number;
    handlePageClick: (event: any) => void;
 }
 
@@ -42,14 +42,14 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       setErrorMessage(null);
 
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`,  {
+         const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`, {
             method: 'GET',
             next: { revalidate: 120 },
             headers: {
                authorization: `Bearer ${accessToken}`,
                'Content-Type': 'application/json'
             },
-            
+
          });
          const responseData = await response.json();
          if (response.ok && responseData.success) {
@@ -80,7 +80,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                      };
                   })
             );
-
             const results = await Promise.all(fetchTickers);
             setAssetData(results);
          } else {
@@ -94,27 +93,22 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
          }
       } catch (error) {
          setAssetError((error as Error).message);
-
       } finally {
          setAssetLoading(false);
       }
    };
    // Handle pagination click events
-const handlePageClick = (event: any) => {
-   const selectedPage = event.selected;
-   const newOffset = selectedPage * limit;
-   if (newOffset !== currentOffset) {
-      setCurrentOffset(newOffset);
-      setCurrentPage(selectedPage);
-   }
-};
-
-   // useEffect(() => {
-   //    fetchAssets();
-   // }, [currentOffset]);
-   useMemo(()=>{
-     fetchAssets();
-   },[currentOffset]);
+   const handlePageClick = (event: any) => {
+      const selectedPage = event.selected;
+      const newOffset = selectedPage * limit;
+      if (newOffset !== currentOffset) {
+         setCurrentOffset(newOffset);
+         setCurrentPage(selectedPage);
+      }
+   };
+   useMemo(() => {
+      fetchAssets();
+   }, [currentOffset]);
 
    const contextValue: AssetDataContextType = {
       assetData,
@@ -126,7 +120,6 @@ const handlePageClick = (event: any) => {
       currentPage,
       handlePageClick,
    };
-
    return (
       <AssetDataContext.Provider value={contextValue}>
          {children}

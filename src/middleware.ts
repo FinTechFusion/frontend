@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 
-// Define supported locales
 const supportedLocales = ['en', 'ar'];
 
 export default function middleware(req: any) {
