@@ -91,7 +91,7 @@ const TableOrders = () => {
    ], []);
    const fetchUserOrders = async () => {
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/orders?limit=5&offset=0`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/orders`, {
             method: "GET",
             headers: {
                Authorization: `Bearer ${accessToken}`,
@@ -101,13 +101,78 @@ const TableOrders = () => {
             throw new Error('Failed to fetch orders');
          }
          const { data } = await response.json();
-         setRowData(data.items);
+         const orders = data.items;
+         // Fetch profit for each order
+         const ordersWithProfit = await Promise.all(
+            orders.map(async (order: any) => {
+               const profit = await fetchOrderProfit(order.id);
+               console.log(profit)
+               return { profit, ...order }
+            })
+         )
+         setRowData(ordersWithProfit);
       } catch (error) {
          console.error('Error fetching user orders:', error);
       } finally {
          setLoading(false);
       }
    };
+
+   // Fetch profit based on order ID
+const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
+   try {
+      const response = await fetch(`${API_BASE_URL}/users/me/orders/${orderId}/trades`, {
+         method: "GET",
+         headers: {
+            Authorization: `Bearer ${accessToken}`,
+         }
+      });
+
+      if (!response.ok) {
+         throw new Error('Failed to fetch profit');
+      }
+
+      const { data } = await response.json();
+
+      if (data?.items.length < 2) {
+         return 'N/A';
+      }
+
+      // Ensure we have an even number of items by removing the last one if odd
+      if (data.items.length % 2 !== 0) {
+         data.items.pop();
+      }
+
+      // Initialize total profit
+      let totalProfit = 0;
+
+      // Iterate over pairs and add up the profits
+      for (let i = 0; i < data.items.length; i += 2) {
+         const buyPrice = data.items[i].price;
+         const sellPrice = data.items[i + 1].price;
+
+         // Calculate profit for this pair
+         let pairProfit = (sellPrice - buyPrice) / 100;
+
+         // Adjust if the pairProfit multiplied by 100 is odd
+         if (Math.floor(pairProfit * 100) % 2 !== 0) {
+            pairProfit = parseFloat(pairProfit.toFixed(5).slice(0, -1));
+         }
+
+         // Add the adjusted pair profit to total profit
+         totalProfit += pairProfit;
+      }
+
+      // Return total profit with fixed precision of 8 decimals
+      return parseFloat(totalProfit.toFixed(8));
+   }
+   catch (error) {
+      console.error(`Error fetching profit`, error);
+      return 'Error fetching profit';
+   }
+};
+
+
    useEffect(() => {
       fetchUserOrders();
    }, []);
@@ -120,7 +185,7 @@ const TableOrders = () => {
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 w-fit">{t("currentOrders")}</h2>
             <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>
          </div>
-         <div className="ag-theme-quartz my-5" style={{ height:270 }}>
+         <div className="ag-theme-quartz my-5" style={{ height: 1000 }}>
             <AgGridReact
                rowData={rowData}
                columnDefs={columnDefs}

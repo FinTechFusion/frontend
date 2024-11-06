@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from 'react';
 import Loading from '@/app/_components/common/loading/Loading';
 import { useRouter, usePathname } from '@/i18n/navigation';
@@ -11,7 +10,6 @@ const authRoutes = ['/login', '/forget-password', '/reset-password'];
 interface AuthGuardProps {
    children: React.ReactNode;
 }
-
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const [isLoading, setIsLoading] = useState(true);
    const router = useRouter();

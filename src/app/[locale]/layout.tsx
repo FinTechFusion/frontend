@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   title: "FinTechFusion",
   description: "FinTechFusion offers an advanced automated trading platform designed to empower cryptocurrency traders by leveraging cutting-edge algorithms and real-time market analysis.",
   icons: {
-    icon: "/assets/images/logo.webp",
-    shortcut: "/assets/images/logo.webp",
+    icon: "/assets/images/logofintechfusion-en.png",
+    shortcut: "/assets/images/logofintechfusion-en.png",
   },
 };
 

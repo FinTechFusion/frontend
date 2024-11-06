@@ -421,7 +421,7 @@
       "manageOrders": "عرض وإدارة طلباتك النشطة",
       "deleteOrderSuccess": "تم حذف الطلب بنجاج",
       "failedDeleteOrder": "فشل حذف الطلب جرب لاحقًا",
-      "cantDeleteOrder":"يمكنك حذف طلب معلق فقظ",
+      "cantDeleteOrder":"يمكنك الغاء طلب معلق فقط",
       "install": "تثبيت",
       "Whatisnew": "ما الجديد",
       "subscription": "الاشتراك",
