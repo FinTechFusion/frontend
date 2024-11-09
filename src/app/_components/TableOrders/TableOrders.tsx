@@ -177,9 +177,9 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
          setCurrentPage(selectedPage);
       }
    };
-   // useMemo(() => {
-   //    fetchUserOrders();
-   // }, [currentOffset]);
+   useMemo(() => {
+      fetchUserOrders();
+   }, [currentOffset]);
 
    if (loading) return <Loading />;
    return (
