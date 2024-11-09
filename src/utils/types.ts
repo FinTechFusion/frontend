@@ -163,3 +163,19 @@ export interface UserProfileProps {
    signalCycles: number;
    aiCycles: number;
 }
+export interface ApiError {
+   success: boolean;
+   detail: string;
+   status_code: number;
+}
+
+export interface AssetDataContextType {
+   assetData: any[];
+   counts: number;
+   assetLoading: boolean;
+   assetError: string | null;
+   errorMessage: ApiError | null;
+   fetchAssets: () => Promise<void>;
+   currentPage: number;
+   handlePageClick: (event: any) => void;
+}

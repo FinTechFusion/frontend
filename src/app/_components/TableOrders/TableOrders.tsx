@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import { MdDelete } from 'react-icons/md';
@@ -12,10 +12,15 @@ import { Order } from '@/utils/types';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import Toast from './../common/Tostify/Toast';
+import ReactPaginate from 'react-paginate';
 
 const TableOrders = () => {
    const accessToken = getTokenFromStorage("access_token");
    const [rowData, setRowData] = useState<Order[]>([]);
+   const [limit] = useState<number>(5);
+   const [currentPage, setCurrentPage] = useState<number>(0);
+   const [currentOffset, setCurrentOffset] = useState<number>(0);
+   const [counts, setCounts] = useState(0);
    const [loading, setLoading] = useState(true);
    const t = useTranslations("dashboard");
    const locale = useLocale();
@@ -91,8 +96,9 @@ const TableOrders = () => {
    ], []);
    const fetchUserOrders = async () => {
       try {
-         const response = await fetch(`${API_BASE_URL}/users/me/orders`, {
+         const response = await fetch(`${API_BASE_URL}/users/me/orders?limit=${limit}&offset=${currentOffset}`, {
             method: "GET",
+            next: { revalidate: 60 },
             headers: {
                Authorization: `Bearer ${accessToken}`,
             },
@@ -101,6 +107,7 @@ const TableOrders = () => {
             throw new Error('Failed to fetch orders');
          }
          const { data } = await response.json();
+         setCounts(data?.total);
          const orders = data.items;
          // Fetch profit for each order
          const ordersWithProfit = await Promise.all(
@@ -131,53 +138,50 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
       if (!response.ok) {
          throw new Error('Failed to fetch profit');
       }
-
       const { data } = await response.json();
-
       if (data?.items.length < 2) {
          return 'N/A';
       }
-
       // Ensure we have an even number of items by removing the last one if odd
       if (data.items.length % 2 !== 0) {
          data.items.pop();
       }
-
       // Initialize total profit
       let totalProfit = 0;
-
       // Iterate over pairs and add up the profits
       for (let i = 0; i < data.items.length; i += 2) {
          const buyPrice = data.items[i].price;
          const sellPrice = data.items[i + 1].price;
-
          // Calculate profit for this pair
          let pairProfit = (sellPrice - buyPrice) / 100;
-
          // Adjust if the pairProfit multiplied by 100 is odd
          if (Math.floor(pairProfit * 100) % 2 !== 0) {
             pairProfit = parseFloat(pairProfit.toFixed(5).slice(0, -1));
          }
-
          // Add the adjusted pair profit to total profit
          totalProfit += pairProfit;
       }
-
-      // Return total profit with fixed precision of 8 decimals
-      return parseFloat(totalProfit.toFixed(8));
+      // Return total profit with fixed precision of 6 decimals
+      return parseFloat(totalProfit.toFixed(6));
    }
    catch (error) {
       console.error(`Error fetching profit`, error);
       return 'Error fetching profit';
    }
 };
+   const handlePageClick = (event: any) => {
+      const selectedPage = event.selected;
+      const newOffset = selectedPage * limit;
+      if (newOffset !== currentOffset) {
+         setCurrentOffset(newOffset);
+         setCurrentPage(selectedPage);
+      }
+   };
+   // useMemo(() => {
+   //    fetchUserOrders();
+   // }, [currentOffset]);
 
-
-   useEffect(() => {
-      fetchUserOrders();
-   }, []);
    if (loading) return <Loading />;
-
    return (
       <>
          <Toast />
@@ -185,13 +189,28 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 w-fit">{t("currentOrders")}</h2>
             <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>
          </div>
-         <div className="ag-theme-quartz my-5" style={{ height: 1000 }}>
+         <div className="ag-theme-quartz my-5" style={{ height: 270 }}>
             <AgGridReact
                rowData={rowData}
                columnDefs={columnDefs}
                paginationPageSize={5}
                suppressCellFocus={true}
                enableRtl={locale === "ar" && true}
+            />
+            <ReactPaginate
+               previousLabel={t("previous")}
+               nextLabel={t("next")}
+               breakLabel={"..."}
+               pageCount={Math.ceil(counts / 5)}
+               marginPagesDisplayed={2}
+               pageRangeDisplayed={3}
+               onPageChange={handlePageClick}
+               containerClassName={"flex justify-end mt-4"}
+               pageClassName={"mx-1"}
+               activeClassName={"font-bold bg-primary-600 w-6 h-6 text-secondary rounded-full flex justify-center items-center"}
+               previousClassName={"mx-1"}
+               nextClassName={"mx-1"}
+               forcePage={currentPage}
             />
          </div>
       </>

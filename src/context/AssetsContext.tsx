@@ -1,26 +1,9 @@
 'use client';
 
 import { API_BASE_URL } from '@/utils/api';
-import { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
+import { createContext, useContext, useState, useMemo, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
-import { AssetInfo } from '../utils/types';
-
-interface ApiError {
-   success: boolean;
-   detail: string;
-   status_code: number;
-}
-
-interface AssetDataContextType {
-   assetData: any[];
-   counts: number;
-   assetLoading: boolean;
-   assetError: string | null;
-   errorMessage: ApiError | null;
-   fetchAssets: () => Promise<void>;
-   currentPage: number;
-   handlePageClick: (event: any) => void;
-}
+import { ApiError, AssetDataContextType, AssetInfo } from '../utils/types';
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
 
@@ -33,9 +16,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    const [assetLoading, setAssetLoading] = useState<boolean>(false);
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
-
    const accessToken = getTokenFromStorage("access_token");
-
    const fetchAssets = async () => {
       setAssetLoading(true);
       setAssetError(null);
@@ -49,7 +30,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                authorization: `Bearer ${accessToken}`,
                'Content-Type': 'application/json'
             },
-
          });
          const responseData = await response.json();
          if (response.ok && responseData.success) {
@@ -89,7 +69,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                status_code: response.status,
             };
             setErrorMessage(error);
-            setAssetError(error.detail);
+            setAssetError(error?.detail);
          }
       } catch (error) {
          setAssetError((error as Error).message);
