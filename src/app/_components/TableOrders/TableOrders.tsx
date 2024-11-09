@@ -113,7 +113,6 @@ const TableOrders = () => {
          const ordersWithProfit = await Promise.all(
             orders.map(async (order: any) => {
                const profit = await fetchOrderProfit(order.id);
-               console.log(profit)
                return { profit, ...order }
             })
          )

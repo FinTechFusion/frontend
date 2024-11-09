@@ -34,7 +34,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       next: { revalidate: 180 },
     }
   );
-
   // Update the state based on the user's installed strategies
   useEffect(() => {
     if (user) {
@@ -42,13 +41,11 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       setAiStrategy(user.ai_strategy);
     }
   }, [user]);
-
   if (loading) return <Loading />;
   if (error) {
     toast.error(t("fetchStrategyError"));
     return null;
   }
-
   // Handle installation of the strategy
   async function InstallStrategy() {
     if (data.bot_type === "signal" && signalStrategy != null) {
@@ -68,14 +65,11 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             },
           }
         );
-
         if (!response.ok) {
           toast.error(t("errorInstall"));
           return;
         }
-
         const responseData = await response.json();
-
         if (responseData.success) {
           toast.success(t("installSuccess"));
           if (accessToken) {
@@ -87,10 +81,10 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       }
     }
   }
-
   return (
+    <>
+    <Toast />
     <div className="md:px-0 px-2">
-      <Toast />
       <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
         <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
           <Image
@@ -108,7 +102,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             </button>
           </div>
         </div>
-
       </div>
       <hr />
       <div className="news-list p-3">
@@ -126,7 +119,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         </ol>
       </div>
     </div>
+    </>
   );
 };
-
 export default SingleStrategy;

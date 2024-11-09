@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import confetti from 'canvas-confetti'
 import { LuCheckCircle } from "react-icons/lu";
-import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 

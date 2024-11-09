@@ -2,8 +2,6 @@ import { assetsProps } from '@/utils/types';
 import React from 'react';
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Legend } from 'recharts';
 
-
-
 const COLORS = ['#0D9488', '#4ECDC4', '#2DD4BF', '#5EEAD4'];
 
 const PieChartDigram = ({ data }: assetsProps) => {

@@ -8,7 +8,7 @@ const Textbox = ({ title, description, mainClass = "", titleClass = "", descript
          <h2 className={`md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 ${titleClass}`}>
             {t(title)}
          </h2>
-         <p className={`py-4 text-lg text-gray-500 ${descriptionClass}`}>
+         <p className={`py-4 text-lg text-gray-600 ${descriptionClass}`}>
             {t(description)}
          </p>
       </div>

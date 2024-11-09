@@ -1,4 +1,3 @@
-import { useLocale } from 'next-intl';
 import Header from '@/app/_components/common/Header/Header';
 import Footer from '@/app/_components/common/Footer/Footer';
 import type { Metadata } from "next";
@@ -13,11 +12,10 @@ type SiteLayoutProps = {
 };
 
 export default function SiteLayout({ children }: SiteLayoutProps) {
-   const locale = useLocale();
    return (
       <>
          <Header />
-            {children}
+         {children}
          <Footer />
       </>
    );

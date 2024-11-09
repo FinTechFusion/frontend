@@ -13,10 +13,9 @@ import PieChartDigram from '../charts/PieChart';
 function DashboardContent() {
    const { assetData } = useAssetData();
    const { user } = useAuth();
-
-   if (!user) {
-      return <Loading />;
-   }
+   // if (!user) {
+   //    return <Loading />;
+   // }
    // Transform assetData to the format expected by PriceChangeLineChart
    const formattedData = assetData.map((item: AssetData) => ({
       symbol: item.symbol,
@@ -25,7 +24,6 @@ function DashboardContent() {
       lastPrice: item.last_price,
       total: item.quantity * item.last_price,
    }));
-   console.log(assetData)
    return (
       <>
          <div className="py-5 my-5 shadow rounded-md flex md:flex-row flex-col md:gap-6 justify-between items-center">

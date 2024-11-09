@@ -21,7 +21,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       setAssetLoading(true);
       setAssetError(null);
       setErrorMessage(null);
-
       try {
          const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`, {
             method: 'GET',

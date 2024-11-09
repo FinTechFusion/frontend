@@ -15,10 +15,8 @@ export default function Page() {
    });
    if (loading) return <Loading />;
    if (error) {
-      toast.error("Error fetching strategies, try again later");  
-      return null;
+      return toast.error("Error fetching strategies, try again later");  
    }
-
    return (
       <>
          <Toast />

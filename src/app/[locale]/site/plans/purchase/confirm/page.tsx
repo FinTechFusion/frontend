@@ -17,11 +17,9 @@ export default function Page() {
          authorization: `Bearer ${accessToken}`
       }
    });
-
    if (loading) {
       return <Loading />;
    }
-
    return (
       <>
          {data ? <SuccessPayment /> : <FailedPayment />}

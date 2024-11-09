@@ -1,5 +1,4 @@
 "use client"
-
 import { Strategy } from '@/utils/types';
 import { useState } from 'react';
 import StrategieCard from './StrategieCard';
@@ -8,7 +7,6 @@ import { useTranslations } from "next-intl";
 interface dataProps {
   data?: Strategy[]
 }
-
 export default function Strategies({ data }: dataProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string | null>(null);
