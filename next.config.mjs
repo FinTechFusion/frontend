@@ -4,7 +4,7 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   productionBrowserSourceMaps: true,
+   productionBrowserSourceMaps: false,
    images: {
       remotePatterns: [
          {

@@ -272,7 +272,8 @@
       "yearly": "yearly",
       "AED": "AED",
       "subscribePlan": "Subscribe",
-      "includes": "Includes : "
+      "includes": "Includes : ",
+      "subscribeSuccess":"You subscribed to the plan successfully"
    },
    "subscriptionBenefits": {
       "whySubscripe": "Why Subscribe?",

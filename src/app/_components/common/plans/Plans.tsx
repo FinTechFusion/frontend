@@ -19,8 +19,8 @@ interface PlanCardProps {
 }
 
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
-   const [loadingSpin, setLoading] = useState(false);
    const router = useRouter();
+   const [isLoading, setIsLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
    const locale = useLocale();
@@ -34,14 +34,13 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          }
       }
    }, []); 
-
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
    });
 
    const createSubscription = async (planId: string) => {
       if (user) {
-         setLoading(true);
+         setIsLoading(true);
          try {
             const response = await fetch(`${API_BASE_URL}/users/me/subscription?lang=${locale}`, {
                method: `${user?.is_subscribed ? "PATCH" : "POST"}`,
@@ -52,26 +51,25 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                body: JSON.stringify({ plan: planId })
             });
             const result = await response.json();
+            console.log(result)
             if (!result.success) {
-               return toast.info(result?.detail || "You already subscribed to this plan before");
+               return toast.info(result?.detail);
             }
-
             if (result.data.plan === "beginner_trial") {
-               toast.success("You subscribed to the plan successfully");
+               toast.success(t("subscribeSuccess"));
                if (accessToken) {
                   fetchUserData(accessToken);
                }
                return;
             }
-
             if (result.success && result.data.client_secret) {
                router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
-               sessionStorage.removeItem("planId")
+               sessionStorage.removeItem("planId");
             }
          } catch (error) {
-            toast.error(`Error creating subscription:`);
+            console.error(`Error creating subscription: ${error}`);
          } finally {
-            setLoading(false);
+            setIsLoading(false);
          }
       } else {
          sessionStorage.setItem("planId", planId);
@@ -83,7 +81,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       await createSubscription(planId);
    };
 
-   if (loading || loadingSpin) {
+   if (loading || isLoading) {
       return <Loading />;
    }
 
@@ -115,7 +113,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                   <div className="plan-include">
                      <p className="text-gray-800 text-xl font-medium pt-4">{t("includes")}</p>
                      <ul className='py-3'>
-                        {plan?.features?.map((feature: any, index: number) => (
+                        {plan?.features?.map((feature: string, index: number) => (
                            <li key={index} className='capitalize py-2 flex justify-start items-start'>
                               <FaCheck className="pe-2 text-primary-600 text-2xl" /> {feature}
                            </li>

@@ -12,35 +12,29 @@ export default function PaymentPage() {
    const searchParams = useSearchParams();
    const fetchClientSecret = searchParams.get('clientSecret');
    const [clientSecret, setClientSecret] = useState<string | null>(null);
-   const [loading, setLoading] = useState<boolean>(true);
-   const [checkoutLoading, setCheckoutLoading] = useState<boolean>(true);
+   const [loading, setLoading] = useState<boolean>(true); 
    const router = useRouter();
-
    useEffect(() => {
       if (fetchClientSecret) {
+         // Simulate an async operation (like fetching the client secret)
          const getClientSecret = async () => {
-            setClientSecret(fetchClientSecret);
+            setClientSecret(fetchClientSecret); 
             setLoading(false);
          };
          getClientSecret();
       } else {
-         setLoading(false);
+         setLoading(true);
       }
    }, [fetchClientSecret]);
-
-   // Show the loading spinner until both `loading` and `checkoutLoading` are false
-   if (loading || checkoutLoading || clientSecret === null) {
-      return <Loading />;
+   if (loading) {
+      return <Loading/>;
    }
-
    if (!clientSecret) {
       router.push('/site/plans');
       return <div>Missing or invalid client secret</div>;
    }
    const options = {
       fetchClientSecret: () => Promise.resolve(clientSecret),
-      onLoaderStart: () => setCheckoutLoading(true),
-      onLoaderEnd: () => setCheckoutLoading(false),
    };
 
    return (
@@ -54,3 +48,5 @@ export default function PaymentPage() {
       </div>
    );
 }
+
+
