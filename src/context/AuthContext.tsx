@@ -84,8 +84,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       };
    }, [accessToken]);
 
-
-
    const fetchUserData = async (accessToken: string): Promise<User | null> => {
       setIsLoading(true);
       try {
@@ -115,9 +113,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const checkAndFetchUserData = async () => {
       const accessToken = getTokenFromStorage('access_token');
       const expireTokenTime = getTokenFromStorage('expire_data_token');
-
       if (!accessToken) return;
-
       const currentTime = Date.now();
       if (expireTokenTime && currentTime > Number(expireTokenTime)) {
          const newAccessToken = await refreshAccessToken();
