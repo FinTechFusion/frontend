@@ -26,14 +26,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const locale = useLocale();
    const t = useTranslations("plans");
 
-   useEffect(() => {
-      if (!user?.is_subscribed) {
-         const planId = sessionStorage.getItem("planId");
-         if (planId) {
-            createSubscription(planId);
-         }
-      }
-   }, []); 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
    });
@@ -80,15 +72,23 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const handlePurchase = async (planId: string) => {
       await createSubscription(planId);
    };
+   useEffect(() => {
+      const planId = sessionStorage.getItem("planId");
+      if (!user?.is_subscribed) {
+         if (planId) {
+            handlePurchase(planId);
+         }
+      }
+   }, []);
 
    if (loading || isLoading) {
       return <Loading />;
    }
-
    const filteredPlans = data?.filter((plan: PlanType) => {
       return plan.frequency === selectedPlanType ||
          (selectedPlanType === "monthly" && plan.frequency === "trial");
    }).filter((plan: PlanType) => plan.id !== excludedPlanId);
+
 
    return (
       <>
