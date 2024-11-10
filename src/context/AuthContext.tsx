@@ -76,13 +76,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             }
          }
       };
-
       window.addEventListener('storage', handleStorageChange);
-
       return () => {
          window.removeEventListener('storage', handleStorageChange);
       };
    }, [accessToken]);
+
+
 
    const fetchUserData = async (accessToken: string): Promise<User | null> => {
       setIsLoading(true);
@@ -129,7 +129,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          }
          checkAndFetchUserData();
       };
-
       loadUserData();
    }, []);
 
@@ -146,12 +145,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             router.push('/login');
             throw new Error('Refresh token not found');
          }
-
          const body = new URLSearchParams({
             grant_type: 'refresh_token',
             refresh_token: refreshToken,
          });
-
          const response = await fetch(`${API_BASE_URL}/oauth/token`, {
             method: 'POST',
             headers: {
@@ -163,14 +160,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          if (!response.ok) {
             throw new Error('Failed to refresh access token');
          }
-
          const newTokens = (await response.json()) as Tokens;
          saveTokenToStorage('access_token', newTokens.access_token);
          saveTokenToStorage('refresh_token', newTokens.refresh_token);
-
          const newExpireTime = Date.now() + 9 * 60 * 1000;
          saveTokenToStorage('expire_data_token', newExpireTime.toString());
-
          return newTokens.access_token;
       } catch (err) {
          throw err;

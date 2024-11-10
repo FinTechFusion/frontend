@@ -4,15 +4,12 @@ import confetti from 'canvas-confetti'
 import { LuCheckCircle } from "react-icons/lu";
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SuccessPayment() {
-   // const { fetchUserData } = useAuth();
-   // const accessToken = getTokenFromStorage("access_token");
-   const t = useTranslations("payment")
+   const { user } = useAuth();
+   const t = useTranslations("payment");
    useEffect(() => {
-      // if (accessToken) {
-      //    fetchUserData(accessToken)
-      // }
       // Trigger confetti effect on component mount
       confetti({
          particleCount: 120,
@@ -38,9 +35,13 @@ export default function SuccessPayment() {
                   <li className="text-lg py-2">{t("checkMail")}</li>
                </ul>
             </div>
-            <Link href='/dashboard'>
-               <button className="main-btn !w-full">{t("goToDashboard")}</button>
-            </Link>
+            <>
+               {user?.is_binance ? <Link href='/dashboard'>
+                  <button className="main-btn !w-full">{t("goToDashboard")}</button>
+               </Link> : <Link href='/site/exchange/connect'>
+                  <button className="main-btn !w-full">{t("connect_binance")}</button>
+               </Link>}
+            </>
          </div>
       </div>
    )

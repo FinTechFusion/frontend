@@ -312,6 +312,7 @@
       "exploreFeatures": "Explore your new features and start using our service",
       "checkMail": "Check your email for a welcome message and receipt",
       "goToDashboard": "Go To Dashboard",
+      "connect_binance":"Connect Binance",
       "paymentFailed": "Payment Failed",
       "possibleReasons": "Possible reasons for the payment failure:",
       "insufficientFunds": "Insufficient funds",
