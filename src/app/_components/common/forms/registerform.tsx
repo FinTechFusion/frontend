@@ -50,15 +50,12 @@ export default function RegisterForm() {
             },
             body: JSON.stringify(data),
          });
-
          const responseData = await response.json();
-
-         if (!response.ok) {
-            throw new Error(responseData.detail || t("occurError"));
-         }
-
+         // if (!response.ok) {
+         //    throw new Error(responseData.detail || t("occurError"));
+         // }
          if (!responseData.success) {
-            toast.error(responseData.detail[0]?.msg || responseData.detail);
+            toast.error(responseData.detail[0]?.msg);
          } else {
             toast.success(t("accountCreated"));
             route.push(`/verifyemail?email=${data.email}`);

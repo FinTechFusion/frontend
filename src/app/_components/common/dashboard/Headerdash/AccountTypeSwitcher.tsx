@@ -70,7 +70,6 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
                authorization: `Bearer ${accessToken}`,
             },
          });
-
          if (response.ok) {
             setIsDemo(newAccountType);
             await fetchAssets();

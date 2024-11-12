@@ -79,7 +79,7 @@ const HeaderDash = () => {
                   <div className="assets-info hidden lg:flex items-start gap-10">
                      <AssetInfo symbol="btc" price={btcInfo.price} changePercent={btcInfo.changePercent} />
                      <AssetInfo symbol="eth" price={ethInfo.price} changePercent={ethInfo.changePercent} />
-                     <AccountTypeSwitcher isDemo={user?.is_demo ?? false} balance={accountBalance} />
+                     <AccountTypeSwitcher isDemo={user?.is_demo || true} balance={accountBalance} />
                   </div>
                   <div className="flex gap-6 items-center">
                      <UserProfile signalCycles={user?.signal_cycles ?? 0} aiCycles={user?.ai_cycles ?? 0} />
