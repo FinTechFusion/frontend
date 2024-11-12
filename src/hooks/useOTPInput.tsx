@@ -6,15 +6,13 @@ interface UseOTPInputProps {
 
 export function useOTPInput({ length }: UseOTPInputProps) {
    const [values, setValues] = useState<string[]>(Array(length).fill(''));  // Array of strings for each digit
-   const inputRef = useRef<HTMLInputElement>(null);  // Single ref for the input
-
+   const inputRef = useRef<HTMLInputElement>(null); 
    useEffect(() => {
-      inputRef.current?.focus();  // Focus the input on mount
+      inputRef.current?.focus(); 
    }, []);
 
    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value;
-
       // Restrict input to digits only and to the specified length
       if (/^\d*$/.test(newValue) && newValue.length <= length) {
          // Split the input into an array of characters and fill any remaining spots with an empty string

@@ -67,7 +67,7 @@ function VerifyInput() {
 
    const handleVerify = (e: React.FormEvent) => {
       e.preventDefault();
-      const combinedValue = values;
+      const combinedValue = values.join('');
       if (combinedValue.length !== 6) {
          toast.error(t("EnterFullOTP"));
          return;
