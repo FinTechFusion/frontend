@@ -4,7 +4,7 @@ import '../../styles/globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { AuthProvider } from '@/context/AuthContext';
-import AuthGuard from "@/context/AuthGuard";
+import AuthGuard from "@/utils/AuthGuard";
 
 const cairo = Cairo({ subsets: ["arabic"], weight: ["200", "300", "400", "500", "700"] });
 

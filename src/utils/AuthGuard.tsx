@@ -11,7 +11,7 @@ interface AuthGuardProps {
    children: React.ReactNode;
 }
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-   const [isLoading, setIsLoading] = useState(false);
+   const [isLoading, setIsLoading] = useState(true);
    const router = useRouter();
    const pathname = usePathname();
    const accessToken = getTokenFromStorage("access_token");
@@ -20,7 +20,6 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const isAuthRoute = authRoutes.includes(pathname);
 
    const checkAuth = () => {
-      setIsLoading(true);
       if (!accessToken && isProtectedRoute) {
          sessionStorage.setItem("path", pathname);
          router.push(`/login`);
