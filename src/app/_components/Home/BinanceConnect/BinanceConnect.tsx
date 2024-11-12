@@ -1,11 +1,11 @@
 "use client"
-import Textbox from "../../common/Text/Textbox";
 import Image from "next/image";
 import binanceImage from "/public/assets/images/binancetest.jpg";
 import { Link } from '@/i18n/navigation';
 import { FaLink } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslations } from "next-intl";
+import Textbox from '@/app/_components/common/Text/Textbox';
 
 export default function BinanceConnect() {
   const { user } = useAuth();

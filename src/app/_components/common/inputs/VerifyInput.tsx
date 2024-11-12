@@ -79,7 +79,7 @@ function VerifyInput() {
       <>
          <Toast />
          <div className="flex flex-col items-start space-y-4">
-               <input type="text" className="bg-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-primary-700 h-10 w-full text-lg px-3" placeholder={t("enterOTPCode")} onChange={(e)=>handleChange(e)} ref={inputRef}  maxLength={6}/>
+            <input type="text" className="bg-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-primary-700 h-10 w-full text-lg px-3" placeholder={t("enterOTPCode")} onChange={(e) => handleChange(e)} ref={inputRef} maxLength={6} />
             {loadingbtn ? <SpinBtn content='loading' btnProps='w-full' /> : <button
                onClick={handleVerify}
                className="bg-primary-600 hover:bg-primary-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide"

@@ -33,16 +33,3 @@ const useFetch = (url: string, options?: FetchOptions): any => {
 
 export default useFetch;
 
-// utils/fetchData.ts
-export const fetchData = async (url: string, options?: RequestInit) => {
-   try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-         throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const { data } = await response.json();
-      return { data, error: null };
-   } catch (error) {
-      return { data: null, error: (error as Error).message };
-   }
-};
