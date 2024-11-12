@@ -11,41 +11,37 @@ interface AuthGuardProps {
    children: React.ReactNode;
 }
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-   const [isLoading, setIsLoading] = useState(true);
+   const [isLoading, setIsLoading] = useState(false);
    const router = useRouter();
    const pathname = usePathname();
+   const accessToken = getTokenFromStorage("access_token");
+   const existRoute = sessionStorage.getItem("path");
+   const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
+   const isAuthRoute = authRoutes.includes(pathname);
+
+   const checkAuth = () => {
+      setIsLoading(true);
+      if (!accessToken && isProtectedRoute) {
+         sessionStorage.setItem("path", pathname);
+         router.push(`/login`);
+      } else if (accessToken && isAuthRoute) {
+         router.push(existRoute || `/dashboard`);
+         sessionStorage.removeItem("path");
+      }
+      // Store /site/plans path if needed
+      if (pathname === "/site/plans") {
+         sessionStorage.setItem("path", pathname);
+      }
+      setIsLoading(false);
+   };
 
    useEffect(() => {
-      const checkAuth = () => {
-         const accessToken = getTokenFromStorage("access_token");
-         const existRoute = sessionStorage.getItem("path");
-
-         const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
-         const isAuthRoute = authRoutes.includes(pathname);
-
-         if (!accessToken && isProtectedRoute) {
-            sessionStorage.setItem("path", pathname);
-            router.push(`/login`);
-         } else if (accessToken && isAuthRoute) {
-            router.push(existRoute || `/dashboard`);
-            sessionStorage.removeItem("path");
-         }
-
-         // Store /site/plans path if needed
-         if (pathname === "/site/plans") {
-            sessionStorage.setItem("path", pathname);
-         }
-
-         setIsLoading(false);
-      };
-
       checkAuth();
    }, [router, pathname]);
 
    if (isLoading) {
       return <Loading />;
    }
-
    return <>{children}</>;
 };
 
