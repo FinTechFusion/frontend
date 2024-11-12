@@ -16,7 +16,7 @@ function VerifyInput() {
    const searchParams = useSearchParams();
    const email = searchParams.get('email');
    const [loadingbtn, SetLoading] = useState(false);
-   const { values, inputRefs, handleChange, handleKeyDown } = useOTPInput({ length: 6 });
+   const { values, inputRef, handleChange } = useOTPInput({ length: 6 });
    const t = useTranslations("auth");
    const locale = useLocale();
    async function sendCodeToApi(code: number) {
@@ -67,7 +67,7 @@ function VerifyInput() {
 
    const handleVerify = (e: React.FormEvent) => {
       e.preventDefault();
-      const combinedValue = values.join('');
+      const combinedValue = values;
       if (combinedValue.length !== 6) {
          toast.error(t("EnterFullOTP"));
          return;
@@ -79,21 +79,7 @@ function VerifyInput() {
       <>
          <Toast />
          <div className="flex flex-col items-start space-y-4">
-            <div className="flex gap-2">
-               {values.map((val, index) => (
-                  <input
-                     key={index}
-                     type="text"
-                     maxLength={1}
-                     value={val}
-                     ref={(el) => { inputRefs.current[index] = el; }}
-                     onChange={(e) => handleChange(e, index)}
-                     onKeyDown={(e) => handleKeyDown(e, index)}
-                     className="w-10 h-10 bg-gray-200 rounded text-center text-lg font-bold focus:outline-none focus:ring-1 focus:ring-primary-700"
-                     required
-                  />
-               ))}
-            </div>
+               <input type="text" className="bg-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-primary-700 h-10 w-full text-lg px-3" placeholder={t("enterOTPCode")} onChange={(e)=>handleChange(e)} ref={inputRef}  maxLength={6}/>
             {loadingbtn ? <SpinBtn content='loading' btnProps='w-full' /> : <button
                onClick={handleVerify}
                className="bg-primary-600 hover:bg-primary-700 rounded-md px-4 py-2 text-secondary capitalize text-xl cursor-pointer tracking-wide"
