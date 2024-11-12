@@ -18,14 +18,14 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
-   const { assetData, fetchAssets } = useAssetData();
+   const { fetchAssets } = useAssetData();
 
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
    const t = useTranslations("dashboard.accountTypes");
    const alertT = useTranslations('alerts');
    useEffect(() => {
-      setIsDemo(initialDemo); // Update isDemo when initialDemo changes
+      setIsDemo(initialDemo);
    }, [initialDemo]);
    const CheckConfirmAlert = (onConfirm: () => void, onCancel?: () => void) => {
       Swal.fire({
@@ -52,7 +52,6 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    function onConfirm() {
       router.push("/site/exchange/connect");
    }
-
    const handleToggleAccountType = async () => {
       setIsOpen(false);
       if (accessToken) {
