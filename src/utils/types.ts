@@ -60,6 +60,7 @@ export interface AuthContextType {
    logout: () => void;
    isLoading: boolean;
    error: string | null;
+   saveUserData:(access_token: string, refresh_token: string) =>any
    fetchUserData: (access_token: string) => any
 }
 export interface PlanType {

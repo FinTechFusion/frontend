@@ -13,7 +13,6 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const router = useRouter();
    const pathname = usePathname();
    const accessToken = getTokenFromStorage("access_token");
-   const existRoute = sessionStorage.getItem("path");
    const protectedRoutes = ['/dashboard', '/site/exchange', '/payment'];
    const authRoutes = ['/login', '/forget-password', '/reset-password'];
 
@@ -21,6 +20,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const isAuthRoute = authRoutes.includes(pathname);
 
    const checkAuth = () => {
+      const existRoute = sessionStorage.getItem("path");
       if (!accessToken && isProtectedRoute) {
          sessionStorage.setItem("path", pathname);
          router.push(`/login`);

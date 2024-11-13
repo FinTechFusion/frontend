@@ -82,7 +82,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       };
    }, [accessToken]);
 
-
+   const saveUserData = async (accessToken: string, refreshToken: string) => {
+      saveTokenToStorage('access_token', accessToken);
+      saveTokenToStorage('refresh_token', refreshToken);
+      const userData = await fetchUserData(accessToken);
+      setUser(userData);
+   }
 
    const fetchUserData = async (accessToken: string): Promise<User | null> => {
       setIsLoading(true);
@@ -172,13 +177,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    };
 
    return (
-      <AuthContext.Provider value={{ user, isLoading, error, login, logout, fetchUserData }}>
+      <AuthContext.Provider value={{ user, isLoading, error, login, logout,saveUserData ,fetchUserData }}>
          {children}
       </AuthContext.Provider>
    );
 };
-
-
 
 export const useAuth = (): AuthContextType => {
    const context = useContext(AuthContext);
