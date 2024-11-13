@@ -10,7 +10,6 @@ interface AuthGuardProps {
 }
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const [isLoading, setIsLoading] = useState(true);
-   const [isAuthorized, setIsAuthorized] = useState(false);
    const router = useRouter();
    const pathname = usePathname();
    const accessToken = getTokenFromStorage("access_token");
@@ -27,7 +26,6 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
          router.push(`/login`);
       } else if (accessToken && isAuthRoute) {
          router.push(existRoute || `/dashboard`);
-         setIsAuthorized(!isAuthorized);
          sessionStorage.removeItem("path");
       }
       // Store /site/plans path if needed
@@ -44,7 +42,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    if (isLoading) {
       return <Loading />;
    }
-   return <>{isAuthorized && children}</>;
+   return <>{children}</>;
 };
 
 export default AuthGuard;
