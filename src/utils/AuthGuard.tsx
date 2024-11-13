@@ -44,7 +44,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    if (isLoading) {
       return <Loading />;
    }
-   return <>{isAuthorized} && {children}</>;
+   return <>{isAuthorized && children}</>;
 };
 
 export default AuthGuard;
