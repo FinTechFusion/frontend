@@ -4,18 +4,20 @@ import Loading from '@/app/_components/common/loading/Loading';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { getTokenFromStorage } from "@/context/AuthContext";
 
-const protectedRoutes = ['/dashboard', '/site/exchange', '/payment'];
-const authRoutes = ['/login', '/forget-password', '/reset-password'];
 
 interface AuthGuardProps {
    children: React.ReactNode;
 }
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    const [isLoading, setIsLoading] = useState(true);
+   const [isAuthorized, setIsAuthorized] = useState(false);
    const router = useRouter();
    const pathname = usePathname();
    const accessToken = getTokenFromStorage("access_token");
    const existRoute = sessionStorage.getItem("path");
+   const protectedRoutes = ['/dashboard', '/site/exchange', '/payment'];
+   const authRoutes = ['/login', '/forget-password', '/reset-password'];
+
    const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
    const isAuthRoute = authRoutes.includes(pathname);
 
@@ -25,6 +27,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
          router.push(`/login`);
       } else if (accessToken && isAuthRoute) {
          router.push(existRoute || `/dashboard`);
+         setIsAuthorized(!isAuthorized);
          sessionStorage.removeItem("path");
       }
       // Store /site/plans path if needed
@@ -41,7 +44,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
    if (isLoading) {
       return <Loading />;
    }
-   return <>{children}</>;
+   return <>{isAuthorized} && {children}</>;
 };
 
 export default AuthGuard;
