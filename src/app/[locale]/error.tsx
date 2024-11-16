@@ -2,8 +2,6 @@
 import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-
-
 export default function Error() {
    const t = useTranslations("errorPage")
    return (
