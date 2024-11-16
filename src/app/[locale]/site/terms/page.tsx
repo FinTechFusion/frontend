@@ -37,7 +37,7 @@ export default function Page() {
       },
       {
          itemTitle: "limitationofLiability",
-         itemDescription: "limitationofLiabilityContent",
+         itemDescription: "limitationofLiabilityConetnt",
       },
       {
          itemTitle: "accountDeletion",

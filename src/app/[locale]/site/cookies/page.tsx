@@ -10,9 +10,9 @@ export default function Page() {
          <SectionHeading title={t("cookiesNotice")} />
          <TextInfo content={t("cookiesEffectiveData")} />
          <TextInfo content={t("effectiveDetails")} />
-         <Textbox titleClass="text-xl" title="cookies.whatCookies" description="cookies.cookiesDescription" />
-         <Textbox titleClass="text-xl" title="cookies.howControlCookies" description="cookies.cookiesControl" />
-         <Textbox titleClass="text-xl" title="cookies.contactUs" description="cookies.anyQuestions" />
+         <Textbox titleClass="text-xl font-semibold" title="cookies.whatCookies" description="cookies.cookiesDescription" descriptionClass="text-lg" />
+         <Textbox titleClass="text-xl font-semibold" title="cookies.howControlCookies" description="cookies.cookiesControl" />
+         <Textbox titleClass="text-xl font-semibold" title="cookies.contactUs" description="cookies.anyQuestions" />
       </section>
    )
 }
