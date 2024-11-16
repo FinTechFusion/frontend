@@ -22,7 +22,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
   const [symbolData, setSymbolData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string | null>(null);
-
   const { user } = useAuth();
   const t = useTranslations("dashboard");
   const locale = useLocale();

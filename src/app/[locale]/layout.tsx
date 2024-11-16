@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { AuthProvider } from '@/context/AuthContext';
 import AuthGuard from "@/utils/AuthGuard";
+import 'react-toastify/dist/ReactToastify.css';
 
 const cairo = Cairo({ subsets: ["arabic"], weight: ["200", "300", "400", "500", "700"] });
 

@@ -1,17 +1,19 @@
+"use client"
 import { useLocale } from 'next-intl';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function Toast() {
    const locale = useLocale();
    return (
       <ToastContainer
          position={locale === "ar" ? "top-right" : "top-left"}
-         autoClose={4000}
+         autoClose={3000}
+         closeOnClick
+         pauseOnHover={true}
          hideProgressBar={false}
          rtl={locale === "ar"}
-         draggable
          theme="light"
+         limit={1}
       />
    )
 }

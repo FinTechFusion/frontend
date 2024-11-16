@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
-import Textbox from "@/app/_components/common/Text/Textbox";
 import { API_BASE_URL } from "@/utils/api";
 import Image from "next/image";
 import Loading from "@/app/_components/common/loading/Loading";
