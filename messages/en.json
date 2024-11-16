@@ -204,7 +204,7 @@
    },
    "terms": {
       "termsHeading": "Terms of Use for FinTechFusion",
-      "effectiveData": "Effective Date: November 10, 2024",
+      "effectiveDate": "Effective Date: November 10, 2024",
       "introduction": "Introduction",
       "introductionContent": "FinTechFusion, based in the UAE, provides software tools for managing personal cryptocurrency holdings,By accessing our software, you agree to abide by these Terms of Use. These terms form a binding agreement between you (“Client”) and FinTechFusion.",
       "definitions": "Definitions",
@@ -222,7 +222,7 @@
       "intellectualRights": "Intellectual Property Rights",
       "intellectualRightsContent": "FinTechFusion owns all intellectual property associated with the software, including trademarks and content. Users are granted a limited, non-transferable license for personal use only. Any attempt to modify, reverse-engineer, or distribute the software is strictly prohibited.",
       "limitationofLiability": "Disclaimers and Limitation of Liability",
-      "limitationofLiabilityConetnt": "The software is provided on an “as-is” basis without warranties. FinTechFusion disclaims liability for any losses arising from cryptocurrency trading activities. Users assume all risks associated with software use, and FinTechFusion’s liability, if any, is limited to the amount paid by the user in the past 24 months .",
+      "limitationofLiabilityContent": "The software is provided on an “as-is” basis without warranties. FinTechFusion disclaims liability for any losses arising from cryptocurrency trading activities. Users assume all risks associated with software use, and FinTechFusion’s liability, if any, is limited to the amount paid by the user in the past 24 months .",
       "accountDeletion": "Termination and Account Deletion",
       "accountDeletionContent": "FinTechFusion reserves the right to suspend or terminate a Client Account for violations of these terms or if illegal activities are suspected. Users may also delete their accounts at any time by disconnecting linked exchanges and closing open transactions. Termination may result in the loss of account data.",
       "dataProcessing": "Privacy Policy and Data Processing",

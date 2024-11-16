@@ -37,7 +37,7 @@ export default function Page() {
       },
       {
          itemTitle: "limitationofLiability",
-         itemDescription: "limitationofLiabilityConetnt",
+         itemDescription: "limitationofLiabilityContent",
       },
       {
          itemTitle: "accountDeletion",
@@ -49,7 +49,7 @@ export default function Page() {
       },
       {
          itemTitle: "governingLaw",
-         itemsDescription: "LawAndJurisdictionContent",
+         itemDescription: "LawAndJurisdictionContent",
       },
       {
          itemTitle: "updatesAndModifications",
@@ -70,7 +70,7 @@ export default function Page() {
                   return (
                      <div className="item" key={index}>
                         <li className="text-xl font-semibold text-dark">{t(el.itemTitle)}</li>
-                        <p className="py-3 text-lg text-gray-600">{t(el.itemDescription)}</p>
+                        <p className="py-2 text-lg text-gray-600">{t(el.itemDescription)}</p>
                      </div>
                   )
                })}
