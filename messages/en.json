@@ -264,6 +264,20 @@
       "ContactUs": "Contact Us",
       "ContactUsContent": "Contact us at support@FinTechFusion.net for further details or privacy inquiries."
    },
+   "refund":{
+      "title": "UAE-Based Refund Policy for FinTechFusion",
+      "effectiveDate": "November 7, 2024",
+      "introduction": "This Refund Policy outlines the terms for requesting refunds for subscriptions and services with FinTechFusion. It is based on UAE consumer protection laws and best practices. Any capitalized terms used herein shall have the same meaning as defined in our Terms of Use.",
+      "monthlySubscription": "1. Refund for Monthly Subscription\nIf you terminate your monthly subscription (per Section 14.5.1 of the Terms of Use), you are eligible for a refund if you, as a consumer, exercise your right of withdrawal within fourteen (14) days from the first purchase. This aligns with UAE consumer protection standards. After this grace period, refunds for termination are not available. For subsequent purchases, a 24-hour grace period applies for refunds.",
+      "annualSubscription": "2. Refund for Annual Subscription\nFor first-time annual subscriptions, a 14-day grace period applies for a full refund, in line with UAE guidelines. After this period, refunds are calculated based on the remaining unused months, with partial refunds available if terminated within the first 180 days. For subsequent purchases, only a 24-hour grace period applies.",
+      "marketplaceAndAppsStore": "3. Refund for Marketplace Signals and Apps Store\nFor subscriptions to Marketplace Signals or the Apps Store, the following applies:\n- Within 14 days, you may request a refund. Full refunds apply within the first 24 hours; partial refunds are based on days used afterward.\n- No refunds are available after the 14-day grace period.",
+      "refundProcessByPaymentMethod": "4. Refund Process by Payment Method\n- Stripe: Refunds for payments made via credit/debit or other methods supported by Stripe are processed through Stripe.\n- Apple/Google: Refunds for purchases via Apple App Store or Google Play are managed by Apple/Google, following their policies.\n- Cryptocurrency: Refunds in cryptocurrency follow the original payment method.\n- Referral Bonuses: Refunds for subscription payments with referral bonuses follow the same rules as regular payments.",
+      "singleRefundRequestPolicy": "5. Single Refund Request Policy\nRefunds can only be requested once per disputed payment. Further disputes on a refunded transaction are not permitted.",
+      "currencyOfRefund": "6. Currency of Refund\nRefunds are issued in the original payment currency or its equivalent at the market rate on the refund date. Alternative compensation, such as discounts or extended subscriptions, may be offered with your consent.",
+      "processingTimes": "7. Processing Times\nProcessing times for refunds vary by provider. Contact your provider for specific timelines.",
+      "serviceProviderFees": "8. Service Provider Fees\nFinTechFusion is not responsible for additional fees charged by payment service providers during refund processing.",
+      "contactInfo": "For assistance, please consult the Help Center or contact support via support@FinTechFusion.net."
+   },
    "howItWork": {
       "signup": "Sign Up",
       "signup_info": "Create your account in minutes",
@@ -412,7 +426,8 @@
       "legal": {
          "terms": "Terms",
          "privacy": "Privacy",
-         "cookies": "Cookies"
+         "cookies": "Cookies",
+         "refund": "Refund Policy"
       }
    },
    "dashboard": {
@@ -523,6 +538,7 @@
          "spotStartegy": "Spot Startegy",
          "uninstall": "uninstall",
          "install": "Install",
+         "installed": "Installed",
          "fetchStrategyError": "Error fetching strategy, please try again later.",
          "installOneSignalOnly": "You must only install one signal strategy",
          "installOneAiOnly": "You must only install one AI strategy",

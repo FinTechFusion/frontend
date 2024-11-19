@@ -36,7 +36,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                   },
                }
             );
-            if (response.ok) {
+            if (!response.ok) {
                throw new Error("Failed to install startegy");
             }
             const responseData = await response.json();

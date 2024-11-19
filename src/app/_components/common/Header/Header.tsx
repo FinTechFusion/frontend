@@ -11,9 +11,7 @@ import LanguageSelector from '@/app/_components/selector/LanguageSelector';
 
 export default function Header() {
   const [accessToken] = useState(getTokenFromStorage("access_token"));
-  const {user} = useAuth();
   const [toggle, setToggle] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('header');
 
   useEffect(() => {
@@ -53,12 +51,25 @@ export default function Header() {
       <div className={`bg-primary-600 md:bg-secondary lg:flex lg:items-center lg:justify-center
         lg:static fixed right-0 top-[90px] z-10 bottom-0 transform transition-transform ease-in-out duration-300 min-h-screen lg:min-h-0 bg-teal-700 w-52 lg:w-auto lg:bg-transparent ${toggle ? 'translate-x-0 backdrop-blur-md' : 'translate-x-full lg:translate-x-0 '}`}>
         <ul className={`w-full lg:w-auto flex flex-col lg:flex-row items-center justify-center lg:text-black h-full gap-5`}>
-          <Link href='/' className={`mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary`} onClick={handleLinkClick}>{t("home")}</Link>
-          <Link href='/site/botsignal' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botsignal")}</Link>
-          <Link href='/site/botai' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botai")}</Link>
-          <Link href='/site/plans' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("plans")}</Link>
-          <Link href='/site/about' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("aboutus")}</Link>
-          {accessToken ? <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:hidden">{t("dashboard")}</Link> : <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:hidden'>{t("login")}</Link>}
+          <li>
+            <Link href='/' className={`mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary`} onClick={handleLinkClick}>{t("home")}</Link>
+          </li>
+          <li>
+            <Link href='/site/botsignal' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botsignal")}</Link>
+          </li>
+          <li>
+            <Link href='/site/botai' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("botai")}</Link>
+          </li>
+          <li>
+            <Link href='/site/plans' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("plans")}</Link>
+          </li>
+          <li>
+            <Link href='/site/about' className='mb-4 lg:mb-0 text-center text-xl capitalize md:text-dark lg:hover:text-primary-700 text-secondary' onClick={handleLinkClick}>{t("aboutus")}</Link>
+          </li>
+          {accessToken ? <li>
+            <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:hidden">{t("dashboard")}</Link>
+          </li> : <li>
+            <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:hidden'>{t("login")}</Link></li>}
         </ul>
       </div>
       <div className='auth flex justify-center items-center gap-5'>
@@ -70,7 +81,7 @@ export default function Header() {
         ) : (
           <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:flex hidden">{t("dashboard")}</Link>
         )}
-       <LanguageSelector/>
+        <LanguageSelector />
         <div className="block lg:hidden cursor-pointer text-4xl" onClick={toggleMenu}>
           {toggle ? <IoCloseSharp /> : <FaBars />}
         </div>

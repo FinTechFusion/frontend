@@ -22,7 +22,8 @@ export default function LanguageSelector() {
 
    return (
       <div className="flex items-center bg-gray-100 px-2 rounded-md">
-         <select
+         <select 
+            aria-label="Language selection"
             defaultValue={locale}
             onChange={onSelectChange}
             disabled={isPending}

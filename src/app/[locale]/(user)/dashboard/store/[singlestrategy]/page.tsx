@@ -9,6 +9,7 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
+import { SpinBtn } from "@/app/_components/common/Buttons/MainBtn";
 
 interface SingleStrategyItemProps {
   params: {
@@ -21,6 +22,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const accessToken = getTokenFromStorage("access_token");
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
+  const [installStrategy, setInstall] = useState<boolean>(false)
   const t = useTranslations("dashboard.strategies")
   const locale = useLocale();
 
@@ -52,6 +54,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       return toast.info(t("installOneAiOnly"));
     } else {
       try {
+        setInstall(true);
         const response = await fetch(
           `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
           {
@@ -69,10 +72,12 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           if (accessToken) {
             await fetchUserData(accessToken);
           }
-          // return toast.success(t("installSuccess"));
         }
       } catch (error) {
-        toast.error(t("somethingError"));
+        throw new Error(t("somethingError"));
+      }
+      finally {
+        setInstall(false);
       }
     }
   }
@@ -90,9 +95,8 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           <div className="mt-4 md:mt-0">
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{data.name}</h2>
             <p className="py-4 text-lg text-gray-500">{data.description}</p>
-            <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>
-              {t("install")}
-            </button>
+            {(user?.signal_strategy && data.bot_type === "signal")
+              ? <button className="main-btn md:w-fit w-full text-xl opacity-70 !cursor-default" disabled={true}> {t("installed")} </button> : installStrategy ? <SpinBtn content="loading" /> : <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>}
           </div>
         </div>
       </div>

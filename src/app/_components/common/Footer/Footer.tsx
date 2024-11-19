@@ -47,7 +47,7 @@ export default function Footer() {
                            <Link href="/site/contact" className="capitalize text-lg hover:text-primary-500">{t('company.contact')}</Link>
                         </li>
                         <li className="py-3">
-                         <Link href='/site/faq' className='capitalize text-lg hover:text-primary-500'>{t("company.faq")}</Link>
+                           <Link href='/site/faq' className='capitalize text-lg hover:text-primary-500'>{t("company.faq")}</Link>
                         </li>
                      </ul>
                   </div>
@@ -94,6 +94,9 @@ export default function Footer() {
                   </li>
                   <li>
                      <Link href="/site/cookies" className="capitalize text-lg hover:text-primary-500">{t('legal.cookies')}</Link>
+                  </li>
+                  <li>
+                     <Link href="/site/refund-policy" className="capitalize text-lg hover:text-primary-500">{t('legal.refund')}</Link>
                   </li>
                </ul>
             </div>
