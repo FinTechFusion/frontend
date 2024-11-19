@@ -7,7 +7,6 @@ import Image from "next/image";
 import Loading from "@/app/_components/common/loading/Loading";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
-import Toast from "@/app/_components/common/Tostify/Toast";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 
@@ -48,11 +47,9 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   // Handle installation of the strategy
   async function InstallStrategy() {
     if (data.bot_type === "signal" && signalStrategy != null) {
-      toast.info(t("installOneSignalOnly"));
-      return;
+      return toast.info(t("installOneSignalOnly"));
     } else if (data.bot_type === "ai" && aiStrategy != null) {
-      toast.info(t("installOneAiOnly"));
-      return;
+      return toast.info(t("installOneAiOnly"));
     } else {
       try {
         const response = await fetch(
@@ -65,15 +62,14 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           }
         );
         if (!response.ok) {
-          toast.error(t("errorInstall"));
-          return;
+          throw new Error(t("errorInstall"))
         }
         const responseData = await response.json();
         if (responseData.success) {
-          toast.success(t("installSuccess"));
           if (accessToken) {
-            fetchUserData(accessToken);
+            await fetchUserData(accessToken);
           }
+          // return toast.success(t("installSuccess"));
         }
       } catch (error) {
         toast.error(t("somethingError"));
@@ -81,8 +77,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
     }
   }
   return (
-    <>
-    <Toast />
     <div className="md:px-0 px-2">
       <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
         <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
@@ -118,7 +112,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         </ol>
       </div>
     </div>
-    </>
   );
 };
 export default SingleStrategy;

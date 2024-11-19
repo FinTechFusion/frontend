@@ -8,7 +8,6 @@ import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
-import Toast from "../../Tostify/Toast";
 import { useEffect, useState } from "react";
 import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
 import { useLocale, useTranslations } from "next-intl";
@@ -107,7 +106,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
   return (
     <>
-      <Toast />
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">{t("start_trading")}</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">

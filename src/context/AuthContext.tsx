@@ -99,11 +99,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                'Content-Type': 'application/json'
             },
          });
-         if (response.status === 401) {
-            refreshAccessToken();
-         }
          if (!response.ok) {
-            refreshAccessToken();
+            if (response.status === 401) {
+               await refreshAccessToken();
+            }
+            return null;
          }
          const { data } = await response.json();
          setUser(data);

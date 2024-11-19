@@ -4,7 +4,6 @@ import { MainBtn } from "../Buttons/MainBtn";
 import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
-import Toast from "../Tostify/Toast";
 import { useTranslations } from "next-intl";
 import { Link } from '@/i18n/navigation';
 
@@ -42,22 +41,22 @@ export default function UserStrategy({ type }: UserStrategyProps) {
             }
             const responseData = await response.json();
             if (responseData.success) {
-               toast.success(t("successInstalled"));
+               // toast.success(t("successInstalled"));
                if (accessToken) {
-                  fetchUserData(accessToken);
+                  await fetchUserData(accessToken);
                }
-               setCurrentStrategy(null); 
+               setCurrentStrategy(null);
+               return; 
             } else {
                toast.error(t("failedInstalled"));
             }
          } catch (error) {
-            toast.error(t("uninstallError"));
+            throw new Error(t("uninstallError"));
          } 
       }
    }
    return (
       <>
-         <Toast />
          {currentStrategy ? (
             <div className="user-strategy py-5">
                <div className="flex justify-between items-center py-3">

@@ -2,8 +2,6 @@
 import { API_BASE_URL } from "@/utils/api";
 import useFetch from "@/hooks/useFetch";
 import Loading from "@/app/_components/common/loading/Loading";
-import { toast } from "react-toastify";
-import Toast from "@/app/_components/common/Tostify/Toast";
 import Strategies from "@/app/_components/strategies/Strategies";
 import { useLocale } from 'next-intl';
 
@@ -15,12 +13,9 @@ export default function Page() {
    });
    if (loading) return <Loading />;
    if (error) {
-      return toast.error("Error fetching strategies, try again later");  
+       throw new Error("Error fetching strategies, try again later");  
    }
    return (
-      <>
-         <Toast />
-         <Strategies data={data} />
-      </>
+      <Strategies data={data} />
    );
 }

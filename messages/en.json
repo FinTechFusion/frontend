@@ -234,6 +234,36 @@
       "contactInformation": "Contact Information",
       "contactInformationContent": "For support, questions, or issues, users can reach FinTechFusion at support@FinTechFusion.net or via the help section in their account dashboard."
    },
+   "privacy": {
+      "privacyHeading": "Privacy Notice for FinTechFusion",
+      "effectiveDate": "Effective Date: November 10, 2024",
+      "introduction": "Introduction",
+      "introductionContent": "FinTechFusion is committed to protecting your privacy. This Privacy Notice explains how we collect, use, store, and share your personal data when you interact with our website, app, or software, including when you create an account, communicate with us, or subscribe to services. It covers various data types and provides details on our data handling practices.",
+      "controller": "Controller",
+      "controllerContent": "The controller for your data is FinTechFusion Technologies OÜ, located in Dubai. For privacy-related questions, you can reach us at info@FinTechFusion.net. As the data controller, we determine the purpose and means of processing your personal data .",
+      "SourcesOfPersonalData": "Categories and Sources of Personal Data",
+      "SourcesOfPersonalDataContent": "We may collect the following categories of personal data:\n\n- **Main Data**: Includes name, email address, user ID, and other account-specific details.\n\n- **Billing Data**: Information for payment processing, including payment method, billing address, and any necessary payment verification details.\n\n- **Transaction Data**: Data from linked exchange accounts, such as API keys, transaction histories, account statuses, and exchange-specific identifiers.\n\n- **Communication Data**: Records from interactions with our support team or social media accounts, including platform usernames, conversation history, and timestamps.\n\n- **Marketing Data**: Data on your engagement with marketing activities, including Google Analytics data, campaign interactions, preferences, and tracking IDs.\n\n- **Technical Data**: Device and browser information collected during interactions with our services, including IP address, device model, language settings, and browser version.\n\n- **Usage Data**: Tracks user interactions within the website and app, including visited pages and actions taken.\n\n- **Cookie Data**: Information collected via cookies on our website to optimize user experience. For more, see our Cookies Notice.",
+      "PurposesOfProcessingAndLegalBases": "Purposes of Processing and Legal Bases",
+      "PurposesOfProcessingAndLegalBasesContent": "We process your personal data for the following purposes:\n\n- **Account Management**: To register and maintain user accounts and offer access to FinTechFusion’s services.\n\n- **Billing and Payment Processing**: For collecting payments and maintaining transactional records.\n\n- **Customer Support**: To respond to inquiries and provide assistance.\n\n- **Marketing**: To send promotional materials (based on consent) and analyze engagement for improvement.\n\n- **Compliance and Legal Obligations**: For activities required by law or regulations.\n\nLegal bases include contractual necessity, legitimate interest, compliance with legal obligations, and user consent.",
+      "personalDataAndDataTransfers": "Recipients of Personal Data and Data Transfers",
+      "personalDataAndDataTransfersContent": "Your data may be shared with service providers (e.g., payment processors), regulators, and analytics providers. Data transfers outside the UAE occur only when necessary and are protected by data protection agreements to ensure compliance with international standards.",
+      "SecurityOfPersonalData": "Security of Personal Data",
+      "SecurityOfPersonalDataContent": "We use security measures, including encryption and access restrictions, to protect your personal data. While we strive to secure your data, no method is entirely foolproof, and we encourage you to safeguard your account credentials and enable two-factor authentication. FinTechFusion cannot be liable for unauthorized access beyond reasonable control.",
+      "DataRetention": "Data Retention",
+      "DataRetentionContent": "Personal data is retained only as long as necessary for the processing purposes, legal requirements, or until the user deletes the account. Specific retention periods apply for billing records, transaction histories, and customer service records.",
+      "AutomatedDecisionMaking": "Automated Decision-Making",
+      "AutomatedDecisionMakingContent": "Some FinTechFusion services utilize AI technologies for operational efficiency, such as chatbots. Automated processing of personal data will not result in legal consequences for users. For further inquiries, users may contact our support team.",
+      "dataSubjectRights": "Your Data Subject Rights",
+      "dataSubjectRightsContent": "Users have several rights regarding their personal data, including:\n\n- **Access**: Request copies of your data and information on processing.\n\n- **Rectification**: Request corrections to inaccurate or incomplete data.\n\n- **Objection**: Object to data processing based on legitimate interest or for direct marketing.\n\n- **Restriction**: Request to limit processing, for example, when accuracy is disputed.\n\n- **Erasure**: Request data deletion when no longer necessary or if processing is unlawful.\n\n- **Data Portability**: Request a copy of your data in a machine-readable format for transfer to another provider.\n\n- **Withdraw Consent**: Withdraw consent at any time for processing activities relying on consent.\n\n- **Complaint**: Submit complaints to relevant data protection authorities if necessary.",
+      "jurisdictionalConsiderations": "Jurisdictional Considerations",
+      "jurisdictionalConsiderationsContent": "As a UAE-based company, FinTechFusion adheres to UAE privacy laws. If you have specific jurisdictional requirements, please contact us to understand your additional rights.",
+      "thirdPartyServices": "External Links to Third-Party Services",
+      "thirdPartyServicesContent": "Our website and app may link to third-party websites, apps, and services not under FinTechFusion's control. We are not responsible for the data practices of these external services, and users are advised to review their privacy policies separately.",
+      "UpdatesToThePrivacyNotice": "Updates to the Privacy Notice",
+      "UpdatesToThePrivacyNoticeContent": "We review and update this Privacy Notice to reflect changes in data processing practices. Any major changes will be communicated via our website or email notifications.",
+      "ContactUs": "Contact Us",
+      "ContactUsContent": "Contact us at support@FinTechFusion.net for further details or privacy inquiries."
+   },
    "howItWork": {
       "signup": "Sign Up",
       "signup_info": "Create your account in minutes",
@@ -525,7 +555,8 @@
    },
    "errorPage": {
       "title": "Oops! Something went wrong.",
-      "description": "We 're sorry, but the page you were trying to access is not available."
+      "description": "We 're sorry, but the page you were trying to access is not available.",
+      "tryAgain": "Try again"
    },
    "NotFound": {
       "description": "Don't worry, our team is already working on it.Please try refreshing the page or come back later."
