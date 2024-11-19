@@ -36,17 +36,15 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                   },
                }
             );
-            if (!response.ok) {
+            if (response.ok) {
                throw new Error("Failed to install startegy");
             }
             const responseData = await response.json();
             if (responseData.success) {
-               // toast.success(t("successInstalled"));
                if (accessToken) {
-                  await fetchUserData(accessToken);
+                  fetchUserData(accessToken);
                }
                setCurrentStrategy(null);
-               return; 
             } else {
                toast.error(t("failedInstalled"));
             }
