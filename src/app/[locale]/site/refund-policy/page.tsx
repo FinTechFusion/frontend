@@ -28,7 +28,7 @@ export default function Page() {
       <div className="container mx-auto py-8 px-2">
          <h2 className="text-3xl font-medium capitalize text-dark">{t("title")}</h2>
          <p className="py-2 text-lg text-gray-500">{t("effectiveDate")}</p>
-         {/* <div className="list-content">
+         <div className="list-content">
             <ul className="terms-list-items ">
                {refundContent.map((el, index) => {
                   return (
@@ -39,6 +39,6 @@ export default function Page() {
                   )
                })}
             </ul>
-         </div> */}
+         </div>
       </div>)
 }

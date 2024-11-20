@@ -72,7 +72,7 @@ export default function Header() {
             <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:hidden'>{t("login")}</Link></li>}
         </ul>
       </div>
-      <div className='auth flex justify-center items-center gap-5'>
+      <div className='auth flex justify-center items-center gap-x-5'>
         {accessToken === null ? (
           <>
             <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:flex hidden'>{t("login")}</Link>

@@ -95,8 +95,9 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           <div className="mt-4 md:mt-0">
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{data.name}</h2>
             <p className="py-4 text-lg text-gray-500">{data.description}</p>
-            {(user?.signal_strategy && data.bot_type === "signal")
-              ? <button className="main-btn md:w-fit w-full text-xl opacity-70 !cursor-default" disabled={true}> {t("installed")} </button> : installStrategy ? <SpinBtn content="loading" /> : <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>}
+            <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>
+            {/* {(user?.signal_strategy && data.bot_type === "signal")
+              ? <button className="main-btn md:w-fit w-full text-xl opacity-70 !cursor-default" disabled={true}> {t("installed")} </button> : installStrategy ? <SpinBtn content="loading" /> : <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>} */}
           </div>
         </div>
       </div>
