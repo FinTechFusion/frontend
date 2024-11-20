@@ -6,7 +6,7 @@ export default function UserInfo({ user }: { user: User }) {
    return (
       <div className="md:col-span-8 col-span-12 text-start">
          <div className="user-data flex justify-start items-center">
-            <CiUser className="text-6xl" />
+            <CiUser className="text-6xl md:flex hidden" />
             <div className="flex flex-col justify-start items-start">
                <h3 className="username text-3xl pb-2 font-bold">
                   {`${first_name} ${last_name}`}

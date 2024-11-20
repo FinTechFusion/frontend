@@ -3,7 +3,6 @@ import binanceImg from "/public/assets/images/binanice.png"
 import { Link } from '@/i18n/navigation';
 import { IoIosLock } from "react-icons/io";
 import { useTranslations } from "next-intl";
-import DemoType from "@/app/_components/common/binance/DemoType";
 export default function Page() {
    const t = useTranslations("binance");
    return (
@@ -24,8 +23,9 @@ export default function Page() {
             </Link>
             <div className="connect-info">
                <span className="block py-3 text-lg">{t("donthaveExchanges")}</span>
-               <DemoType />
-            </div>
+               <Link href="/dashboard">
+                  <b className="text-primary-700 text-xl cursor-pointer">{t("startAtDemo")}</b>
+               </Link>            </div>
             <p className="py-8 text-center text-dark text-lg flex justify-center items-start w-4/5"><span className="text-2xl"><IoIosLock /></span>{t("accessTransfer")}</p>
          </div>
       </div>
