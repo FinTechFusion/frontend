@@ -9,14 +9,14 @@ import Textbox from '@/app/_components/common/Text/Textbox';
 import { Link } from '@/i18n/navigation';
 import { MainBtn } from '@/app/_components/common/Buttons/MainBtn';
 import Loading from '@/app/_components/common/loading/Loading';
-import { useLocale } from 'next-intl';
+// import { useLocale } from 'next-intl';
 
 export default function ConnectStatus() {
    const accessToken = getTokenFromStorage("access_token");
    const searchParams = useSearchParams();
    const code = searchParams.get('code');
-   const locale = useLocale();
-   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}}`,
+   // const locale = useLocale();
+   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}`,
       {
          method: 'GET',
          headers: {
