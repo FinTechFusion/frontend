@@ -16,7 +16,7 @@ export default function ConnectStatus() {
    const searchParams = useSearchParams();
    const code = searchParams.get('code');
    const locale = useLocale();
-   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}?lang=${locale}`,
+   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}}`,
       {
          method: 'GET',
          headers: {
