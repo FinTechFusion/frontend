@@ -88,11 +88,11 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       await createSubscription(planId);
    };
    useEffect(() => {
-      const planId = sessionStorage.getItem("planId");
+      const planId = sessionStorage.getItem("plan");
       if (!user?.is_subscribed && planId) {
          handlePurchase(planId).then(() => {
             // Clear the session storage item to prevent infinite requests
-            sessionStorage.removeItem("planId");
+            sessionStorage.removeItem("plan");
          });
       }
    }, []); 
