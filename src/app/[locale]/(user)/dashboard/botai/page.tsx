@@ -4,7 +4,7 @@ import UserStrategy from "@/app/_components/common/user/UserStrategy";
 
 export default function page() {
   return (
-    <>
+    <div className="botai">
       <UserStrategy type="ai" />
       <div style={{ height: '60vh' }} className="my-6 pe-3">
         <TradingViewWidget />
@@ -12,6 +12,6 @@ export default function page() {
       <div className="tradingbot-form">
         <TradingBotForm type="ai" />
       </div>
-    </>
+    </div>
   )
 } 

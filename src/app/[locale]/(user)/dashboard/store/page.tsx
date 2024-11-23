@@ -13,7 +13,7 @@ export default function Page() {
    });
    if (loading) return <Loading />;
    if (error) {
-       throw new Error("Error fetching strategies, try again later");  
+      throw new Error("Error fetching strategies, try again later");
    }
    return (
       <Strategies data={data} />

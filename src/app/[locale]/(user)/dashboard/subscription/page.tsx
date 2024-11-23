@@ -6,7 +6,6 @@ import UserSubscription from "@/app/_components/common/user/setting/UserSubscrip
 
 export default function page() {
    const { selectedPlanType, handleTabChange } = ToggleChange();
-
    return (
       <div className="md:px-1 px-2">
          <UserSubscription />

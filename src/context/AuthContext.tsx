@@ -101,9 +101,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          });
          if (!response.ok) {
             if (response.status === 401) {
-               await refreshAccessToken();
+               refreshAccessToken();
             }
-            return null;
          }
          const { data } = await response.json();
          setUser(data);

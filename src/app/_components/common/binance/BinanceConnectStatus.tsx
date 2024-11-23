@@ -3,11 +3,9 @@ import { useAuth } from "@/context/AuthContext"
 import Textbox from '@/app/_components/common/Text/Textbox';
 import { MainBtn } from '@/app/_components/common/Buttons/MainBtn';
 import { Link } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
 
 export default function BinanceConnectStatus() {
    const { user } = useAuth();
-   const t = useTranslations("dashboard")
 
    return (
       !(user?.is_binance) &&

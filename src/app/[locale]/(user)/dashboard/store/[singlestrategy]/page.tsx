@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
@@ -9,7 +8,6 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
-import { SpinBtn } from "@/app/_components/common/Buttons/MainBtn";
 
 interface SingleStrategyItemProps {
   params: {

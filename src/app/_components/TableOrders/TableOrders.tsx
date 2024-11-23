@@ -124,7 +124,7 @@ const TableOrders = () => {
       }
    };
 
-   // Fetch profit based on order ID
+// Fetch profit based on order ID
 const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
    try {
       const response = await fetch(`${API_BASE_URL}/users/me/orders/${orderId}/trades`, {
@@ -133,7 +133,6 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
             Authorization: `Bearer ${accessToken}`,
          }
       });
-
       if (!response.ok) {
          throw new Error('Failed to fetch profit');
       }
@@ -152,16 +151,10 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
          const buyPrice = data.items[i].price;
          const sellPrice = data.items[i + 1].price;
          // Calculate profit for this pair
-         let pairProfit = (sellPrice - buyPrice) / 100;
-         // Adjust if the pairProfit multiplied by 100 is odd
-         if (Math.floor(pairProfit * 100) % 2 !== 0) {
-            pairProfit = parseFloat(pairProfit.toFixed(5).slice(0, -1));
-         }
-         // Add the adjusted pair profit to total profit
+         let pairProfit = ((sellPrice - buyPrice) / buyPrice) * 100;
          totalProfit += pairProfit;
       }
-      // Return total profit with fixed precision of 6 decimals
-      return parseFloat(totalProfit.toFixed(6));
+      return parseFloat(totalProfit.toFixed(2));
    }
    catch (error) {
       console.error(`Error fetching profit`, error);
