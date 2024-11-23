@@ -23,16 +23,12 @@ export default function useSubscribe() {
 
    const createSubscription = async (planId: string) => {
       const accessToken = getTokenFromStorage("access_token");
-
       if (!accessToken) {
          // Save planId in sessionStorage and redirect to login
-         sessionStorage.setItem("planId", planId);
          router.push("/login");
          return;
       }
-
       setIsLoading(true);
-
       try {
          const endpoint = `${API_BASE_URL}/users/me/subscription?lang=${locale}`;
          const method = user?.is_subscribed ? "PATCH" : "POST";
@@ -55,7 +51,6 @@ export default function useSubscribe() {
 
          // Handle free trial subscription
          if (result.data.plan === "beginner_trial") {
-            sessionStorage.removeItem("planId");
             toast.success(t("subscribeSuccess"));
             fetchUserData(accessToken); // Refresh user data
             return;
