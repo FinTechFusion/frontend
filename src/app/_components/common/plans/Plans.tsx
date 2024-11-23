@@ -12,6 +12,7 @@ import BenfitsSubscription from '../supscription/BenfitsSubscription';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { useEffect, useState } from 'react';
+import useSubscribe from '@/hooks/useSubscribe';
 
 interface PlanCardProps {
    selectedPlanType: string;
@@ -20,55 +21,53 @@ interface PlanCardProps {
 
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
-   const [isLoading, setIsLoading] = useState(false);
+   // const [isLoading, setIsLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
    const locale = useLocale();
    const t = useTranslations("plans");
-
+   const { createSubscription, isLoading } = useSubscribe();
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
    });
 
-   const createSubscription = async (planId: string) => {
-      if (accessToken) {
-         setIsLoading(true);
-         try {
-            const response = await fetch(`${API_BASE_URL}/users/me/subscription?lang=${locale}`, {
-               method: `${user?.is_subscribed ? "PATCH" : "POST"}`,
-               headers: {
-                  'Content-Type': 'application/json',
-                  authorization: `Bearer ${accessToken}`
-               },
-               body: JSON.stringify({ plan: planId })
-            });
-            const result = await response.json();
-            console.log(result)
-            if (!result.success) {
-               return toast.info(result?.detail);
-            }
-            if (result.data.plan === "beginner_trial") {
-               toast.success(t("subscribeSuccess"));
-               if (accessToken) {
-                  fetchUserData(accessToken);
-               }
-               return;
-            }
-            if (result.success && result.data.client_secret) {
-               router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
-               sessionStorage.removeItem("planId");
-            }
-         } catch (error) {
-            console.error(`Error creating subscription: ${error}`);
-         } finally {
-            setIsLoading(false);
-         }
-      } else {
-         sessionStorage.setItem("planId", planId);
-         router.push('/login');
-      }
-   };
-
+   // const createSubscription = async (planId: string) => {
+   //    if (accessToken) {
+   //       setIsLoading(true);
+   //       try {
+   //          const response = await fetch(`${API_BASE_URL}/users/me/subscription?lang=${locale}`, {
+   //             method: `${user?.is_subscribed ? "PATCH" : "POST"}`,
+   //             headers: {
+   //                'Content-Type': 'application/json',
+   //                authorization: `Bearer ${accessToken}`
+   //             },
+   //             body: JSON.stringify({ plan: planId })
+   //          });
+   //          const result = await response.json();
+   //          if (!result.success) {
+   //             return toast.info(result?.detail);
+   //          }
+   //          if (result.data.plan === "beginner_trial") {
+   //             toast.success(t("subscribeSuccess"));
+   //             if (accessToken) {
+   //                fetchUserData(accessToken);
+   //             }
+   //             return;
+   //          }
+   //          if (result.success && result.data.client_secret) {
+   //             router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
+   //             sessionStorage.removeItem("planId");
+   //          }
+   //       } catch (error) {
+   //          console.error(`Error creating subscription: ${error}`);
+   //       } finally {
+   //          setIsLoading(false);
+   //       }
+   //    } else {
+   //       sessionStorage.setItem("planId", planId);
+   //       router.push('/login');
+   //    }
+   // };
    const handlePurchase = async (planId: string) => {
       await createSubscription(planId);
    };
@@ -81,7 +80,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          });
       }
    }, []); 
-
    if (loading || isLoading) {
       return <Loading />;
    }
@@ -89,7 +87,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       return plan.frequency === selectedPlanType ||
          (selectedPlanType === "monthly" && plan.frequency === "trial");
    }).filter((plan: PlanType) => plan.id !== excludedPlanId);
-
 
    return (
       <>

@@ -4,10 +4,10 @@ import { getTokenFromStorage } from "@/context/AuthContext";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import Logo from '../Logo';
-import { useAuth } from "@/context/AuthContext";
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import LanguageSelector from '@/app/_components/selector/LanguageSelector';
+import  useSubscribe from '@/hooks/useSubscribe';
 
 export default function Header() {
   const [accessToken] = useState(getTokenFromStorage("access_token"));
@@ -44,7 +44,7 @@ export default function Header() {
   const toggleMenu = () => {
     setToggle(prev => !prev);
   };
-
+  const {createSubscription}=useSubscribe();
   return (
     <header className='bg-secondary flex justify-between items-center gap-10 md:px-12 px-3 py-2 shadow z-50 h-[90px]'>
       <Logo />
@@ -76,7 +76,7 @@ export default function Header() {
         {accessToken === null ? (
           <>
             <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:flex hidden'>{t("login")}</Link>
-            <Link href='/register' className='hidden md:flex rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>{t("freetrial")}</Link>
+            <Link href='/register' className='hidden md:flex rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out' onClick={()=>createSubscription("beginner_trial")}>{t("freetrial")}</Link>
           </>
         ) : (
           <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:flex hidden">{t("dashboard")}</Link>
