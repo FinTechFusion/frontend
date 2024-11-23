@@ -25,6 +25,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const accessToken = getTokenFromStorage("access_token");
    const locale = useLocale();
    const t = useTranslations("plans");
+   const planId = sessionStorage.getItem("planId");
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
@@ -67,12 +68,13 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          router.push('/login');
       }
    };
-      const planId = sessionStorage.getItem("planId");
    useEffect(() => {
       const handleStorageChange = (event: StorageEvent) => {
          if (event.key === "planId") {
             if (event.newValue) {
-               createSubscription(planId)
+               if (!user?.is_subscribed && planId) {
+                  createSubscription(planId).finally(() => sessionStorage.removeItem("planId"));
+               }
             }
          }
       };
@@ -81,6 +83,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          window.removeEventListener('storage', handleStorageChange);
       };
    }, [planId]);
+
    const handlePurchase = async (planId: string) => {
       await createSubscription(planId);
    };
