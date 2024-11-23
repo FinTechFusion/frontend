@@ -47,12 +47,12 @@ function VerifyInput() {
             saveTokenToStorage("expire_data_token", newTime.toString());
             saveUserData(access_token,refresh_token);
             // check if user choose plan before regiter checkout after verify
-            // const planExist = sessionStorage.getItem("planId");
-            // if (planExist) {
-            //    route.push("/site/plans");
-            // } else {
-            //    route.push(`/site/exchange`);
-            // }
+            const planExist = sessionStorage.getItem("plan");
+            if (planExist) {
+               route.push("/site/plans");
+            } else {
+               route.push(`/site/exchange`);
+            }
             return toast.success(t("verify_email_success"));
          } else {
             return toast.error(responseData.detail);

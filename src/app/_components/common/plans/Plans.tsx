@@ -56,7 +56,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             }
             if (result.success && result.data.client_secret) {
                router.push(`/site/payment?clientSecret=${encodeURIComponent(result.data.client_secret)}`);
-               sessionStorage.removeItem("planId");
+               sessionStorage.removeItem("plan");
             }
          } catch (error) {
             console.error(`Error creating subscription: ${error}`);
@@ -64,7 +64,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             setIsLoading(false);
          }
       } else {
-         sessionStorage.setItem("planId", planId);
+         sessionStorage.setItem("plan", planId);
          router.push('/login');
       }
    };
