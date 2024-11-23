@@ -43,12 +43,11 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                body: JSON.stringify({ plan: planId })
             });
             const result = await response.json();
-            console.log(result)
             if (!result.success) {
                return toast.info(result?.detail);
             }
             if (result.data.plan === "beginner_trial") {
-               toast.success(t("subscribeSuccess"));
+               // toast.success(t("subscribeSuccess"));
                if (accessToken) {
                   fetchUserData(accessToken);
                }
@@ -68,7 +67,20 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          router.push('/login');
       }
    };
-
+      const planId = sessionStorage.getItem("planId");
+   useEffect(() => {
+      const handleStorageChange = (event: StorageEvent) => {
+         if (event.key === "planId") {
+            if (event.newValue) {
+               createSubscription(planId)
+            }
+         }
+      };
+      window.addEventListener('storage', handleStorageChange);
+      return () => {
+         window.removeEventListener('storage', handleStorageChange);
+      };
+   }, [planId]);
    const handlePurchase = async (planId: string) => {
       await createSubscription(planId);
    };
