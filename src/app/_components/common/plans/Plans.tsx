@@ -92,7 +92,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       if (!user?.is_subscribed && planId) {
          handlePurchase(planId).then(() => {
             // Clear the session storage item to prevent infinite requests
-            sessionStorage.removeItem("plan");
+            sessionStorage.removeItem("planId");
          });
       }
    }, []); 
