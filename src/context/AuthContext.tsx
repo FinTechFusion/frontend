@@ -138,7 +138,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
    const logout = () => {
       clearTokensFromStorage();
-      sessionStorage.clear();
+      // sessionStorage.clear();
       setUser(null);
       router.push('/');
    };

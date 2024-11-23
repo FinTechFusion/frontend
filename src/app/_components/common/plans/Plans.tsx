@@ -70,10 +70,10 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    };
    useEffect(() => {
       const handleStorageChange = (event: StorageEvent) => {
-         if (event.key === "planId") {
+         if (event.key === "plan") {
             if (event.newValue) {
                if (!user?.is_subscribed && planId) {
-                  createSubscription(planId).finally(() => sessionStorage.removeItem("planId"));
+                  createSubscription(planId).finally(() => sessionStorage.removeItem("plan"));
                }
             }
          }
@@ -89,10 +89,10 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    };
    useEffect(() => {
       const planId = sessionStorage.getItem("plan");
-      if (!user?.is_subscribed && planId) {
+      if (planId) {
          handlePurchase(planId).then(() => {
             // Clear the session storage item to prevent infinite requests
-            sessionStorage.removeItem("planId");
+            sessionStorage.removeItem("plan");
          });
       }
    }, []); 
