@@ -55,6 +55,7 @@ export default function useSubscribe() {
 
          // Handle free trial subscription
          if (result.data.plan === "beginner_trial") {
+            sessionStorage.removeItem("planId");
             toast.success(t("subscribeSuccess"));
             fetchUserData(accessToken); // Refresh user data
             return;
