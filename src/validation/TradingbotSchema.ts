@@ -8,10 +8,6 @@ const tradingbotSchema = z.object({
     quantity: z
       .number({ message: "quantity.required" })
       .positive({ message: "quantity.positive" }),
-   profit_threshold: z
-      .number({ message: "profit_threshold.required" })
-      .positive({ message: "profit_threshold.positive" })
-      .max(100, { message: "profit_threshold.max" }),
    trailing_stop_loss: z
       .number({ message: "trailing_stop_loss.required" })
       .positive({ message: "trailing_stop_loss.positive" })

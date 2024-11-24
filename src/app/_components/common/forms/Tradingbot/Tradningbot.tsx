@@ -21,6 +21,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
   const [symbolData, setSymbolData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string | null>(null);
+  const [signalProfitRange, setSignalProfitRange] = useState("N/A");
+  const [aiProfitRange, setAiProfitRange] = useState("N/A");
   const { user } = useAuth();
   const t = useTranslations("dashboard");
   const locale = useLocale();
@@ -52,7 +54,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
       });
       const responseData = await response.json();
       if (responseData.success) {
-        toast.success(validationT("ordersuccess"));
+        // toast.success(validationT("ordersuccess"));
         setOrderId(responseData?.data?.id);
         reset();
       } else {
@@ -73,6 +75,39 @@ export default function TradingBotForm({ type }: tradingBotType) {
     const { data } = await response.json();
     return data;
   }
+  async function FetchSignalProfitRange() {
+    if (type === "signal" && user?.signal_cycles != null) {
+      const response = await fetch(`${API_BASE_URL}/binance/strategies/${user?.signal_strategy}`, {
+        method: 'GET',
+      });
+      const { data } = await response.json();
+      setSignalProfitRange(data?.start_range + " to " + data?.end_range);
+    }
+  }
+  async function FetchAiProfitRange() {
+    if (type === "ai" && user?.ai_strategy != null) {
+      const response = await fetch(`${API_BASE_URL}/binance/strategies/${user?.ai_strategy}`, {
+        method: 'GET',
+      });
+      const { data } = await response.json();
+      setAiProfitRange(data?.start_range + " to " + data?.end_range);
+    }
+  }
+  useEffect(() => {
+    if (type === "signal" && user?.signal_strategy) {
+      FetchSignalProfitRange();
+    }
+    else{
+        setSignalProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
+    }
+    if (type === "ai" && user?.ai_strategy) {
+      setAiProfitRange();
+    }
+    else {
+      setAiProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
+    }
+  }, [user?.signal_strategy,user?.ai_strategy]);
+
   useEffect(() => {
     const fetchData = async () => {
       if (currentSymbol !== null) {
@@ -164,14 +199,21 @@ export default function TradingBotForm({ type }: tradingBotType) {
           />
           <Input label={t("side")} value={t("buy")} type="text" name="buy" placeholder="" readOnly={true} />
           <Input label={t("orderType")} value={t("spot")} type="text" name="spot" placeholder="" readOnly={true} />
-          <Input
+          {type === "signal" ? <Input
             label={t("profitThreshold")}
-            name="profit_threshold"
-            type="number"
-            placeholder={t("enter_profit_threshold")}
-            register={register}
-            error={translateErrorMessage(errors.profit_threshold?.message)}
-          />
+            name="profit_range"
+            type="text"
+            placeholder=""
+            readOnly={true}
+            value={signalProfitRange}
+          /> : <Input
+            label={t("profitThreshold")}
+            name="profit_range"
+            type="text"
+            placeholder=""
+            readOnly={true}
+            value={aiProfitRange}
+          />}
           <Input
             label={t("TrailingStopLoss")}
             name="trailing_stop_loss"
