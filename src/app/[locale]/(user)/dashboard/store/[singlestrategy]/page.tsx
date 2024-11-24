@@ -72,10 +72,9 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             await fetchUserData(accessToken);
           }
           if (data.bot_type === "signal") {
-            router.push(`/dashboard/botsignal}`)
+            router.push(`/dashboard/botsignal`)
           } else {
-            router.push(`/dashboard/botai}`)
-
+            router.push(`/dashboard/botai`)
           }
         }
       } catch (error) {

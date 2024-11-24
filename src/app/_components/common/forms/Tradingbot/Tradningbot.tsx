@@ -81,7 +81,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         method: 'GET',
       });
       const { data } = await response.json();
-      setSignalProfitRange(data?.start_range + " to " + data?.end_range);
+      setSignalProfitRange(data?.start_range + " - " + data?.end_range);
     }
   }
   async function FetchAiProfitRange() {
@@ -90,7 +90,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         method: 'GET',
       });
       const { data } = await response.json();
-      setAiProfitRange(data?.start_range + " to " + data?.end_range);
+      setAiProfitRange(data?.start_range + " - " + data?.end_range);
     }
   }
   useEffect(() => {
