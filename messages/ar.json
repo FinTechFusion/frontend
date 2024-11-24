@@ -459,7 +459,7 @@
       "orderCols": {
          "symbol": "الرمز",
          "quantity": "الكمية",
-         "profit_threshold": "حد الربح",
+         "profit_threshold": "نطاق الربح",
          "trailing_stop_loss": "وقف الخسارة المتحرك",
          "cycles": "عدد الدورات",
          "strategy": "الاستراتيجية",

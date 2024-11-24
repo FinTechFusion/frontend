@@ -8,6 +8,7 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
+import { useRouter } from "@/i18n/routing";
 
 interface SingleStrategyItemProps {
   params: {
@@ -23,7 +24,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const [installStrategy, setInstall] = useState<boolean>(false)
   const t = useTranslations("dashboard.strategies")
   const locale = useLocale();
-
+  const router = useRouter();
   // Fetch strategy details
   const { data, loading, error } = useFetch(
     `${API_BASE_URL}/binance/strategies/${params.singlestrategy}?lang=${locale}`,
@@ -69,6 +70,12 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         if (responseData.success) {
           if (accessToken) {
             await fetchUserData(accessToken);
+          }
+          if (data.bot_type === "signal") {
+            router.push(`/dashboard/botsignal}`)
+          } else {
+            router.push(`/dashboard/botai}`)
+
           }
         }
       } catch (error) {
