@@ -101,7 +101,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         setSignalProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
     }
     if (type === "ai" && user?.ai_strategy) {
-      setAiProfitRange();
+      FetchAiProfitRange();
     }
     else {
       setAiProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
