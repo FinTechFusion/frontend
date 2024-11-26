@@ -25,7 +25,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const accessToken = getTokenFromStorage("access_token");
    const locale = useLocale();
    const t = useTranslations("plans");
-   const planId = sessionStorage.getItem("plan");
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
@@ -69,20 +68,22 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       }
    };
    useEffect(() => {
-      const handleStorageChange = (event: StorageEvent) => {
-         if (event.key === "plan") {
-            if (event.newValue) {
-               if (!user?.is_subscribed && planId) {
-                  createSubscription(planId).finally(() => sessionStorage.removeItem("plan"));
-               }
-            }
+      console.log("Subscribe to free trial");
+      const checkPlan = () => {
+         const planId = sessionStorage.getItem("plan");
+         if (!user?.is_subscribed && planId) {
+            createSubscription(planId).finally(() => sessionStorage.removeItem("plan"));
          }
       };
-      window.addEventListener('storage', handleStorageChange);
-      return () => {
-         window.removeEventListener('storage', handleStorageChange);
-      };
-   }, [planId]);
+
+      // Check immediately in case `plan` already exists
+      checkPlan();
+
+      // Optionally poll `sessionStorage` if necessary
+      const interval = setInterval(checkPlan, 1000); // Check every second (adjust as needed)
+      return () => clearInterval(interval);
+   }, [user]);
+
 
    const handlePurchase = async (planId: string) => {
       await createSubscription(planId);
