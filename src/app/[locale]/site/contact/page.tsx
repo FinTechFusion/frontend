@@ -30,7 +30,7 @@ export default function Page() {
                <div className="flex flex-col justify-start ">
                   <h3 className="text-2xl font-bold">{t("telgram")}</h3>
                   <p className="text-lg py-3 text-gray-800">{t("chatTelgram")}</p>
-                  <Link href="https://t.me/FinTechFusio0" target="_blank">
+                  <Link href="" target="_blank">
                      <button className="w-fit rounded-md px-4 py-2 text-dark bg-secondary text-lg tracking-wide border hover:bg-dark hover:text-secondary">{t("openTelgram")}</button>
                   </Link>
                </div>
