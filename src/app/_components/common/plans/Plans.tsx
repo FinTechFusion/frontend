@@ -25,7 +25,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const accessToken = getTokenFromStorage("access_token");
    const locale = useLocale();
    const t = useTranslations("plans");
-   const planId = sessionStorage.getItem("planId");
+   const planId = sessionStorage.getItem("plan");
 
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {
       method: "GET",
@@ -64,7 +64,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
             setIsLoading(false);
          }
       } else {
-         sessionStorage.setItem("plan", planId);
+         sessionStorage.setItem("planId", planId);
          router.push('/login');
       }
    };
@@ -88,24 +88,23 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       await createSubscription(planId);
    };
    useEffect(() => {
-      const planId = sessionStorage.getItem("plan");
+      const planId = sessionStorage.getItem("planId");
       if (planId) {
          handlePurchase(planId).then(() => {
             // Clear the session storage item to prevent infinite requests
-            sessionStorage.removeItem("plan");
+            sessionStorage.removeItem("planId");
          });
       }
    }, []); 
 
-   if (loading || isLoading) {
-      return <Loading />;
-   }
    const filteredPlans = data?.filter((plan: PlanType) => {
       return plan.frequency === selectedPlanType ||
          (selectedPlanType === "monthly" && plan.frequency === "trial");
    }).filter((plan: PlanType) => plan.id !== excludedPlanId);
 
-
+   if (loading || isLoading) {
+      return <Loading />;
+   }
    return (
       <>
          <Toast />

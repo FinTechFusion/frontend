@@ -47,7 +47,7 @@ function VerifyInput() {
             saveTokenToStorage("expire_data_token", newTime.toString());
             saveUserData(access_token,refresh_token);
             // check if user choose plan before regiter checkout after verify
-            const planExist = sessionStorage.getItem("plan");
+            const planExist = sessionStorage.getItem("planId");
             if (planExist) {
                route.push("/site/plans");
             } else {
