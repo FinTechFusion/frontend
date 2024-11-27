@@ -11,7 +11,6 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Order } from '@/utils/types';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
-import Toast from './../common/Tostify/Toast';
 import ReactPaginate from 'react-paginate';
 
 const TableOrders = () => {
@@ -60,7 +59,6 @@ const TableOrders = () => {
       else {
          toast.info(t("cantDeleteOrder"))
       }
-
    };
 
    const columnDefs = useMemo<ColDef[]>(() => [
@@ -176,7 +174,6 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
    if (loading) return <Loading />;
    return (
       <>
-         <Toast />
          <div className="mt-5">
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 w-fit">{t("currentOrders")}</h2>
             <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>

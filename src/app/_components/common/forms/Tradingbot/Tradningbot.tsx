@@ -9,7 +9,7 @@ import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
+// import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
 import { useLocale, useTranslations } from "next-intl";
 
 type tradingBotType = {
@@ -20,7 +20,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   const [currentSymbol, setCurrentSymbol] = useState<string | null>(null);
   const [symbolData, setSymbolData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [orderId, setOrderId] = useState<string | null>(null);
+  // const [orderId, setOrderId] = useState<string | null>(null);
   const [signalProfitRange, setSignalProfitRange] = useState("N/A");
   const [aiProfitRange, setAiProfitRange] = useState("N/A");
   const { user } = useAuth();
@@ -54,8 +54,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
       });
       const responseData = await response.json();
       if (responseData.success) {
-        // toast.success(validationT("ordersuccess"));
-        setOrderId(responseData?.data?.id);
+        toast.success(validationT("ordersuccess"));
+        // setOrderId(responseData?.data?.id);
         reset();
       } else {
         toast.error(responseData?.detail);
@@ -233,9 +233,9 @@ export default function TradingBotForm({ type }: tradingBotType) {
         </div>
         {loading ? <SpinBtn content="loading" btnProps="w-fit" /> : <MainBtn content="start" btnProps="w-fit" />}
       </form>
-      <>
+      {/* <>
         {orderId && <BotLogs orderId={orderId} />}
-      </>
+      </> */}
     </>
   )
 }

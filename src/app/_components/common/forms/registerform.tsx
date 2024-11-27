@@ -1,18 +1,18 @@
 "use client";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerType } from "@/validation/registerSchema";
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import Input from "./input/input";
 import useTurnstile from "@/hooks/useTurnstile";
 import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { API_BASE_URL } from "@/utils/api";
 import Toast from "../Tostify/Toast";
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from "next-intl";
 
 export default function RegisterForm() {
    const t = useTranslations("auth");
@@ -25,14 +25,21 @@ export default function RegisterForm() {
       resolver: zodResolver(registerSchema),
    });
 
-   const [phone_number, setPhoneNumber] = useState('');
-   const [turnstileToken, setTurnstileToken] = useState('');
-   const [isLoading, setIsLoading] = useState(false);
+   const [phone_number, setPhoneNumber] = useState<string>("");
+   const [turnstileToken, setTurnstileToken] = useState<string>("");
+   const [isLoading, setIsLoading] = useState<boolean>(false);
+   const [checked, setChecked] = useState<boolean>(false);
+   const [showAgreementError, setShowAgreementError] = useState<boolean>(false);
 
    const handlePhoneChange = (phone: string) => {
       const formattedPhone = `+${phone}`;
       setPhoneNumber(formattedPhone);
-      setValue('phone_number', formattedPhone, { shouldValidate: true });
+      setValue("phone_number", formattedPhone, { shouldValidate: true });
+   };
+
+   const handleAgreement = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      if (e.target.checked) setShowAgreementError(false); // Reset error when checked
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
@@ -41,19 +48,25 @@ export default function RegisterForm() {
          return;
       }
 
+      if (!checked) { // Ensure the agreement is checked
+         setShowAgreementError(true);
+         toast.error(t("agreementRequired"));
+         return;
+      }
+
+      setShowAgreementError(false); // Reset error when valid
       setIsLoading(true);
+
       try {
          const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}&lang=${locale}`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-               'Content-Type': 'application/json',
+               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
          });
+
          const responseData = await response.json();
-         // if (!response.ok) {
-         //    throw new Error(responseData.detail || t("occurError"));
-         // }
          if (!responseData.success) {
             toast.error(responseData.detail[0]?.msg);
          } else {
@@ -67,19 +80,15 @@ export default function RegisterForm() {
       }
    };
 
-   const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || '0x4AAAAAAAaTEPkTQRU9GjKy';
-
+   const sitekey: string = process.env.NEXT_PUBLIC_SITEKEY || "0x4AAAAAAAaTEPkTQRU9GjKy";
    useTurnstile(sitekey, (token: string) => setTurnstileToken(token), "light");
 
-   // Error message translation mapping
    const translateErrorMessage = (errorKey: string | undefined) => {
-      if (!errorKey) return '';
+      if (!errorKey) return "";
       return validationT(errorKey);
    };
 
    return (
-      <>
-         <Toast />
          <form onSubmit={handleSubmit(submitForm)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                <Input
@@ -106,17 +115,19 @@ export default function RegisterForm() {
             />
             <div className="pb-4">
                <PhoneInput
-                  country={'sa'}
+                  country={"sa"}
                   value={phone_number}
                   onChange={handlePhoneChange}
                   enableSearch={true}
                   inputProps={{
                      required: true,
-                     className: `w-full py-2 border-2 rounded-md ${locale === 'ar' ? 'pr-10 pl-4' : 'pl-10 pr-4'}`,
+                     className: `w-full py-2 border-2 rounded-md ${locale === "ar" ? "pr-10 pl-4" : "pl-10 pr-4"}`,
                   }}
                   containerClass="w-full"
                />
-               {errors.phone_number && <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>}
+               {errors.phone_number && (
+                  <span className="text-red-500 text-sm pt-2">{errors.phone_number.message}</span>
+               )}
             </div>
             <Input
                label={t("password")}
@@ -125,9 +136,34 @@ export default function RegisterForm() {
                error={translateErrorMessage(errors.password?.message)}
                placeholder={t("passwordPlaceHolder")}
             />
+            <label
+               htmlFor="confirm-condition"
+               className={`${showAgreementError ? "text-red-600" : "text-dark"} flex items-center gap-x-1 text-lg pb-3`}
+            >
+               <input
+                  onChange={handleAgreement}
+                  type="checkbox"
+                  id="confirm-condition"
+                  className="accent-primary-700"
+               />
+               <span>
+                  {t("agreementCreation")}{" "}
+                  <span className="text-medium">
+                     <Link href="/site/terms">{t("TermsandConditions")}</Link>
+                  </span>{" "}
+                  {t("and")}{" "}
+                  <span className="text-medium">
+                     <Link href="/site/privacy">{t("privacyPolicy")}</Link>
+                  </span>
+               </span>
+            </label>
             <div id="turnstile-container" className="cf-turnstile w-100"></div>
             <div className="register-btn">
-               {isLoading ? <SpinBtn content="loading" btnProps="w-full" /> : <MainBtn content="auth.create" btnProps="w-full" />}
+               {isLoading ? (
+                  <SpinBtn content="loading" btnProps="w-full" />
+               ) : (
+                  <MainBtn content="auth.create" btnProps="w-full" />
+               )}
             </div>
             <p className="pt-2 text-lg">
                {t("alreadyhaveaccount")}
@@ -136,6 +172,5 @@ export default function RegisterForm() {
                </Link>
             </p>
          </form>
-      </>
    );
 }
