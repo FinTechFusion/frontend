@@ -11,8 +11,8 @@ import useTurnstile from "@/hooks/useTurnstile";
 import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
 import { toast } from "react-toastify";
 import { API_BASE_URL } from "@/utils/api";
-import Toast from "../Tostify/Toast";
 import { useLocale, useTranslations } from "next-intl";
+import  Toast from '@/app/_components/common/Tostify/Toast';
 
 export default function RegisterForm() {
    const t = useTranslations("auth");
@@ -50,7 +50,6 @@ export default function RegisterForm() {
 
       if (!checked) { // Ensure the agreement is checked
          setShowAgreementError(true);
-         toast.error(t("agreementRequired"));
          return;
       }
 
@@ -89,6 +88,8 @@ export default function RegisterForm() {
    };
 
    return (
+      <>
+         <Toast />
          <form onSubmit={handleSubmit(submitForm)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                <Input
@@ -172,5 +173,6 @@ export default function RegisterForm() {
                </Link>
             </p>
          </form>
+      </>
    );
 }
