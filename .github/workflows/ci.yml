@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - prod
+  pull_request_review:
+    types:
+      - submitted
+
+jobs:
+  intercept-pr:
+    if: ${{ github.event.action == 'opened' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check PR author
+        run: |
+          if [[ "${{ github.actor }}" == *"[bot]" || "${{ github.actor }}" == "${{ vars.RAILWAY_OWNER }}" ]]; then
+            exit 1
+          fi
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get install -y gh
+
+      - name: Authenticate
+        run: |
+          echo "${{ secrets.RAILWAY_OWNER_GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Close original PR
+        run: |
+          gh pr close ${{ github.event.pull_request.number }}
+
+      - name: Create new PR
+        run: |
+          gh pr create --title "${{ github.event.pull_request.title }}" --body "${{ github.event.pull_request.body }}" --base "${{ github.event.pull_request.base.ref }}" --head "${{ github.event.pull_request.head.ref }}"
+
+  merge-on-approval:
+    if: ${{ github.event.review.state == 'approved' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get install -y gh
+
+      - name: Authenticate
+        run: |
+          echo "${{ secrets.RAILWAY_OWNER_GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Merge the PR
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} --merge --repo ${{ github.repository }}
