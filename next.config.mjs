@@ -2,8 +2,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+export default withNextIntl({
    reactStrictMode: false,
    productionBrowserSourceMaps: false,
    images: {
@@ -11,10 +10,16 @@ const nextConfig = {
          {
             protocol: 'https',
             hostname: 'storage.fintechfusion.net',
-            pathname: '/**', 
+            pathname: '/**',
          },
       ],
    },
-};
-
-export default withNextIntl(nextConfig);
+   async rewrites() {
+      return [
+         {
+            source: '/api/:path*',
+            destination: 'http://api:8000/:path*', // Proxy to backend
+         },
+      ];
+   },
+});
