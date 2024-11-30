@@ -7,14 +7,21 @@ import Textbox from "@/app/_components/common/Text/Textbox";
 export default function page() {
   return (
     <div className="botai">
-      {/* <UserStrategy type="ai" />
+            {/* <UserStrategy type="ai" />
       <div style={{ height: '60vh' }} className="my-6 pe-3">
         <TradingViewWidget />
       </div>
       <div className="tradingbot-form">
         <TradingBotForm type="ai" />
       </div> */}
-      <Textbox title="Our Ai Bot is coming soon!" description="Get ready for an intelligent conversation experience. Our Al bot will revolutionize how you interact with our webapp." />
+
+
+
+
+      
+      <div className="text-center mx-auto">
+        <Textbox title="Our Ai Bot is coming soon!" description="Get ready for an intelligent conversation experience. Our Al bot will revolutionize how you interact with our webapp." />
+      </div>
     </div>
   )
 } 
