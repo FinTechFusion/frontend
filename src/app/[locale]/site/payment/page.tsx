@@ -7,11 +7,19 @@ import Loading from '@/app/_components/common/loading/Loading';
 import { useRouter } from '@/i18n/routing';
 
 const isProduction = process.env.NODE_ENV === 'production';
+
 const stripeKey = isProduction
   ? process.env.NEXT_PROD_STRIPE_PUBLISHABLE_KEY
   : process.env.NEXT_DEV_STRIPE_PUBLISHABLE_KEY;
+  
+console.log(isProduction)
+console.log(stripeKey)
 
-const stripePromise = loadStripe(stripeKey as string);
+if (!stripeKey) {
+   throw new Error('Stripe publishable key is not set in environment variables');
+}
+
+const stripePromise = loadStripe(stripeKey);
 
 export default function PaymentPage() {
    const searchParams = useSearchParams();
@@ -53,5 +61,3 @@ export default function PaymentPage() {
       </div>
    );
 }
-
-
