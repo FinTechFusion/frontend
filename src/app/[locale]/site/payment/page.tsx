@@ -6,7 +6,12 @@ import { loadStripe } from '@stripe/stripe-js';
 import Loading from '@/app/_components/common/loading/Loading';
 import { useRouter } from '@/i18n/routing';
 
-const stripePromise = loadStripe(process.env.NEXT_DEV_STRIPE_PUBLISHABLE_KEY as string);
+const isProduction = process.env.NODE_ENV === 'production';
+const stripeKey = isProduction
+  ? process.env.NEXT_PROD_STRIPE_PUBLISHABLE_KEY
+  : process.env.NEXT_DEV_STRIPE_PUBLISHABLE_KEY;
+
+const stripePromise = loadStripe(stripeKey as string);
 
 export default function PaymentPage() {
    const searchParams = useSearchParams();

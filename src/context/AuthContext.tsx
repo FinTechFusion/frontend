@@ -39,11 +39,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const [error, setError] = useState<string | null>(null);
    const router = useRouter();
 
+   // useEffect(() => {
+   //    const interval = setInterval(() => {
+   //       checkAndFetchUserData();
+   //    }, 60000);
+   // }, []);
+
+   // Token refresh setup
    useEffect(() => {
-      const interval = setInterval(() => {
-         checkAndFetchUserData();
-      }, 60000);
-   }, []);
+     let refreshInterval: NodeJS.Timeout;
+     const setupRefreshInterval = () => {
+        const expireTokenTime = getTokenFromStorage('expire_data_token');
+        if (expireTokenTime) {
+           const timeUntilExpiry = Number(expireTokenTime) - Date.now();
+           const refreshTime = Math.max(timeUntilExpiry - 1 * 60 * 1000, 0); // Refresh 1 minute before expiry
+           refreshInterval = setTimeout(async () => {
+              await refreshAccessToken();
+              setupRefreshInterval(); // Setup next interval after successful refresh
+           }, refreshTime);
+        }
+     };
+     setupRefreshInterval();
+     return () => clearTimeout(refreshInterval);
+  }, []);
+
+
+
    const login = async (accessToken: string, refreshToken: string) => {
       try {
          saveTokenToStorage('access_token', accessToken);

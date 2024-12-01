@@ -1,6 +1,5 @@
 "use client"
 import Image from "next/image";
-import Link from "next/link";
 import Binance from "@/app/_components/common/Binance";
 import binanceImg from "/public/assets/images/binanice.png"
 import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
@@ -8,6 +7,8 @@ import { API_BASE_URL } from '@/utils/api';
 import useFetch from "@/hooks/useFetch";
 import Loading from '@/app/_components/common/loading/Loading';
 import { useLocale, useTranslations } from "next-intl";
+import { IoClose } from "react-icons/io5";
+import { Link } from "@/i18n/navigation";
 
 export default function Page() {
    const t = useTranslations("binance");
@@ -19,8 +20,11 @@ export default function Page() {
          <div className="opacity-25">
             <Binance />
          </div>
-         <aside className="absolute top-0 bottom-0 right-0 bg-secondary lg:w-1/3 md:w-1/2 w-full p-6 shadow">
-            <div className="flex justify-between items-center">
+         <aside className={`absolute top-0 bottom-0 ${locale === "en" ? "left-0" : "right-0"} bg-secondary lg:w-1/3 md:w-1/2 w-full p-6 shadow`}>
+            <Link href='/site/exchange'>
+               <IoClose className={`text-3xl font-bold absolute top-3 ${locale === "en" ? "right-2" : "left-2"} cursor-pointer text-secondary bg-red-600 rounded`} />
+            </Link>
+            <div className="flex justify-between items-center pt-5">
                <h2 className="text-2xl font-medium capitalize">{t("connectExchange")}</h2>
                <div className="binance-logo">
                   <Image
