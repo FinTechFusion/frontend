@@ -21,7 +21,6 @@ export default function Page() {
                      title="botAiPage.unlockPowerTitle"
                      description="botAiPage.unlockPowerDescription"
                   />
-
                   <Link href="/dashboard/botai">
                      <MainBtn content="botAiPage.tryBotAi" btnProps="w-fit" />
                   </Link>
