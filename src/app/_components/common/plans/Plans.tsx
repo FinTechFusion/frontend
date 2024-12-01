@@ -68,17 +68,14 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       }
    };
    useEffect(() => {
-      console.log("Subscribe to free trial");
       const checkPlan = () => {
          const planId = sessionStorage.getItem("plan");
          if (!user?.is_subscribed && planId) {
             createSubscription(planId).finally(() => sessionStorage.removeItem("plan"));
          }
       };
-
       // Check immediately in case `plan` already exists
       checkPlan();
-
       // Optionally poll `sessionStorage` if necessary
       const interval = setInterval(checkPlan, 1000); // Check every second (adjust as needed)
       return () => clearInterval(interval);
@@ -111,10 +108,15 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          <Toast />
          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
             {filteredPlans?.map((plan: PlanType, index: number) => (
-               <div className="planCard shadow-sm border border-gray-200 px-8 py-10 rounded-[14px] h-full" key={index}>
+               <div className="relative shadow-sm border border-gray-200 px-8 py-10 rounded-[14px] h-full" key={index}>
                   <h2 className="text-2xl font-medium pb-4">
                      {plan.id === "beginner_trial" ? t("freeTrial") : plan.name}
                   </h2>
+                  {(plan?.id === "essential_monthly" || plan?.id === "essential_yearly") && (
+                     <div className={`absolute top-0 ${locale == "en" ? "right-0" :"left-0"} bg-primary-600 rounded`}>
+                        <p className='text-secondary text-lg p-2'>{t("mostPopular")}</p>
+                     </div>
+                  )}
                   <span className="text-gray-500 text-lg pt-5">
                      <b className="text-gray-950 text-3xl">{plan.price}/{plan.frequency === "monthly" || plan.frequency === "trial" ? t("mo") : t("yearly")}</b>
                      <span className="text-2xl text-gray-600">{" "}{t("AED")}</span>

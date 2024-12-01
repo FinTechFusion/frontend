@@ -105,7 +105,7 @@
       "unlockPowerDescription": "AI bot is designed to provide most accurate trading signals based on the user’s chosen strategy. By constantly analyzing real-time market conditions, it distributes trades across different price levels to reduce risk and improve performance. It is pre-trained and tested to ensure users get the best trading signals tailored to their strategies, helping them achieve optimal trading results while dealing with market volatility.",
       "tryBotAi": "Try Bot AI",
       "exploreBotAiTitle": "Explore Bot AI",
-      "exploreBotAiDescription": "Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions. Check out the video below to see it in action.",
+      "exploreBotAiDescription": "Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions.",
       "keyFeaturesTitle": "Key Features:",
       "realTimeAnalysis": "Real-time market analysis and insights",
       "personalizedRecommendations": "Personalized trading recommendations",
@@ -343,7 +343,6 @@
       "resetCodeSent": "Reset Code Sent To Email",
       "errorOccuredSentCode": "An error occurred while sending the reset code"
    },
-   "toast": {},
    "plans": {
       "freeTrial": "Free Trial",
       "monthly": "monthly",
@@ -353,7 +352,8 @@
       "AED": "AED",
       "subscribePlan": "Subscribe",
       "includes": "Includes : ",
-      "subscribeSuccess": "You subscribed to the plan successfully"
+      "subscribeSuccess": "You subscribed to the plan successfully",
+      "mostPopular": "Most Popular"
    },
    "subscriptionBenefits": {
       "whySubscripe": "Why Subscribe?",
@@ -532,6 +532,11 @@
       "logout": "Logout",
       "botlogs": {
          "title": "Bot Logs"
+      },
+      "commingSoon": {
+         "title": "Our Ai Bot is coming soon!",
+         "description": "Bot AI is a powerful AI-driven trading assistant that can help you make more informed and profitable trading decisions",
+         "stayUpdated": "Stay Updated"
       },
       "strategies": {
          "failedInstalled": "Failed to install strategy",
