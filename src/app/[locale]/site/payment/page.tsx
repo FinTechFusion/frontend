@@ -9,9 +9,9 @@ import { useRouter } from '@/i18n/routing';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const stripeKey = isProduction
-  ? process.env.NEXT_PROD_STRIPE_PUBLISHABLE_KEY
-  : process.env.NEXT_DEV_STRIPE_PUBLISHABLE_KEY;
-  
+   ? process.env.NEXT_PUBLIC_PROD_STRIPE_PUBLISHABLE_KEY
+   : process.env.NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY;
+
 console.log(isProduction)
 console.log(stripeKey)
 
