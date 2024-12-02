@@ -25,7 +25,7 @@ export default function Page() {
       className="my-4"
       />
       <Textbox mainClass="text-center" titleClass="!text-primary-700" title="dashboard.commingSoon.title" description="dashboard.commingSoon.description" descriptionClass="text-xl md:w-2/3 text-center mx-auto p" />
-      <b className="md:text-2xl text-secondary bg-gradient-to-r from-primary-500 to-primary-600 bg-primary-500 rounded p-2">{t("stayUpdated")}</b>
+      <b className="md:text-2xl text-secondary bg-gradient-to-r from-primary-500 to-primary-600 bg-primary-500 rounded p-3">{t("stayUpdated")}</b>
     </div>
   )
 } 

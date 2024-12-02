@@ -12,9 +12,6 @@ const stripeKey = isProduction
    ? process.env.NEXT_PUBLIC_PROD_STRIPE_PUBLISHABLE_KEY
    : process.env.NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY;
 
-console.log(isProduction)
-console.log(stripeKey)
-
 if (!stripeKey) {
    throw new Error('Stripe publishable key is not set in environment variables');
 }
