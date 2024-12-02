@@ -12,6 +12,7 @@ import { Order } from '@/utils/types';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
+import Toast from '@/app/_components/common/Tostify/Toast';
 
 const TableOrders = () => {
    const accessToken = getTokenFromStorage("access_token");
@@ -45,13 +46,18 @@ const TableOrders = () => {
                },
             });
             const responseData = await response.json();
-            if (response.ok) {
+            if (!response.ok) {
+               throw new Error(t("failedDeleteOrder"));
+            }
+            if (responseData.success) {
                toast.success(t("deleteOrderSuccess"));
+               setTimeout(async () => {
+                  await fetchUserOrders();
+               }, 500);
             }
             else {
-               toast.error(responseData.detail);
+               toast.error(responseData.detail || responseData.detail[0]?.msg);
             }
-            await fetchUserOrders();
          } catch (error) {
             toast.error(t("failedDeleteOrder"));
          }
@@ -174,6 +180,7 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
    if (loading) return <Loading />;
    return (
       <>
+         <Toast />
          <div className="mt-5">
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700 w-fit">{t("currentOrders")}</h2>
             <p className="py-4 text-lg text-gray-500">{t("manageOrders")}</p>

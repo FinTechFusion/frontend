@@ -64,10 +64,9 @@ export default function RegisterForm() {
             },
             body: JSON.stringify(data),
          });
-
          const responseData = await response.json();
          if (!responseData.success) {
-            toast.error(responseData.detail[0]?.msg);
+            return toast.error(responseData.detail[0]?.msg || responseData.detail);
          } else {
             toast.success(t("accountCreated"));
             route.push(`/verifyemail?email=${data.email}`);

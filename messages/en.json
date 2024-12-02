@@ -540,7 +540,7 @@
       },
       "strategies": {
          "failedInstalled": "Failed to install strategy",
-         "successInstalled": "Strategy uninstalled successfully",
+         "successInstalled": "Strategy installed successfully",
          "uninstallError": "Error occurred while uninstalling, try again later",
          "strategy_used": "Strategy Used",
          "spotStartegy": "Spot Startegy",
