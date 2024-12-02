@@ -5,12 +5,12 @@ import UserStrategy from "@/app/_components/common/user/UserStrategy";
 export default function page() {
   return (
     <div className="botsignal">
-      <UserStrategy type="ai" />
+      <UserStrategy type="signal" />
       <div style={{ height: '60vh' }} className="my-6 pe-3">
         <TradingViewWidget />
       </div>
       <div className="tradingbot-form">
-        <TradingBotForm type="ai" />
+        <TradingBotForm type="signal" />
       </div>
     </div>
   )
