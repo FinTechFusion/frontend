@@ -41,10 +41,10 @@ export default function UserStrategy({ type }: UserStrategyProps) {
             }
             const responseData = await response.json();
             if (responseData.success) {
-               if (accessToken) {
-                  fetchUserData(accessToken);
-               }
                setCurrentStrategy(null);
+               if (accessToken) {
+                  await fetchUserData(accessToken);
+               };
             } else {
                toast.error(t("failedInstalled"));
             }

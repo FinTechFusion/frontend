@@ -59,7 +59,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         // setOrderId(responseData?.data?.id);
         reset();
       } else {
-        toast.error(responseData?.detail);
+        toast.error(responseData?.detail || responseData.detail[0]?.msg);
       }
     }
     catch (error) {

@@ -62,17 +62,6 @@ export default function Footer() {
                               className="rounded-md w-full border-none bg-transparent outline-none focus:border-none p-2"
                               required={true}
                            />
-                           {/* <button
-                              className={`absolute top-0 bottom-0 ${locale === 'ar' ? "left-0" : "right-0"} flex items-center justify-center`}
-                              type="submit"
-                           >
-                              {locale === "en" ? (
-                                 <FaArrowRight className="bg-primary-700 hover:bg-primary-800 text-secondary text-xl h-full w-10 cursor-pointer rounded-br-md" />
-                              ) : (
-                                    <FaArrowLeft className="bg-primary-700 hover:bg-primary-800 text-secondary text-xl h-full w-10 cursor-pointer rounded-tb-md" />
-                              )}
-                           </button> */}
-
                         </div>
                      </form>
                      <p className="text-base text-primary-50">{t('subscribe.description')}</p>
