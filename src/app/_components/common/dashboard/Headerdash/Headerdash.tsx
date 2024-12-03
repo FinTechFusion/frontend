@@ -23,7 +23,6 @@ const AssetInfo: React.FC<AssetInfoProps> = ({ symbol, price, changePercent }) =
    </div>
 );
 
-
 const UserProfile: React.FC<UserProfileProps> = ({ signalCycles, aiCycles }) => (
    <div className="user-profile hidden lg:flex items-center gap-6">
       <div className="signal-number">
@@ -66,7 +65,6 @@ const HeaderDash = () => {
          : assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(5))
       : '66617.9800';
 
-
    return (
       <>
          <Toast />
@@ -79,7 +77,7 @@ const HeaderDash = () => {
                   <div className="assets-info hidden lg:flex items-start gap-10">
                      <AssetInfo symbol="btc" price={btcInfo.price} changePercent={btcInfo.changePercent} />
                      <AssetInfo symbol="eth" price={ethInfo.price} changePercent={ethInfo.changePercent} />
-                     <AccountTypeSwitcher isDemo={user?.is_demo || true} balance={accountBalance} />
+                     <AccountTypeSwitcher isDemo={user?.is_demo ?? false} balance={accountBalance} />
                   </div>
                   <div className="flex gap-6 items-center">
                      <UserProfile signalCycles={user?.signal_cycles ?? 0} aiCycles={user?.ai_cycles ?? 0} />

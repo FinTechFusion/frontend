@@ -64,7 +64,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                   </Link>}
                </div>
                <hr />
-               <div className="md:w-1/3 my-5">
+               <div className="md:w-1/3 my-5 bg-gray-50 rounded-lg">
                   <div className="strategy-card p-4 shadow-sm">
                      <h3 className="text-3xl font-bold tracking-wide capitalize">
                         {currentStrategy}

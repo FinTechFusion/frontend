@@ -1,5 +1,5 @@
 "use client"
-import { getTokenFromStorage } from '@/context/AuthContext';
+import { getTokenFromStorage, useAuth } from '@/context/AuthContext';
 import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { useSearchParams } from 'next/navigation';
@@ -11,11 +11,13 @@ import { MainBtn } from '@/app/_components/common/Buttons/MainBtn';
 import Loading from '@/app/_components/common/loading/Loading';
 import { useLocale } from 'next-intl';
 import Error from '@/app/_components/Error/Error';
+import { useEffect } from 'react';
 
 export default function ConnectStatus() {
    const accessToken = getTokenFromStorage("access_token");
    const searchParams = useSearchParams();
    const code = searchParams.get('code');
+   const { fetchUserData } = useAuth();
    const locale = useLocale();
    const { data, error } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}&lang=${locale}`,
       {
@@ -25,6 +27,15 @@ export default function ConnectStatus() {
          },
       }
    );
+   useEffect(() => {
+      const fetchData = async () => {
+         if (data && accessToken) {
+            await fetchUserData(accessToken);
+         }
+      };
+      fetchData();
+   }, [data]);
+
    if(error){
       return <Error error={error} />;
    }
