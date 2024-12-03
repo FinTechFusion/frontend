@@ -1,7 +1,5 @@
 "use client"
-import { MainBtn } from "@/app/_components/common/Buttons/MainBtn";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 
 interface errorPageProps {
    error: Error,
@@ -9,7 +7,7 @@ interface errorPageProps {
 }
 
 export default function Error({ error, reset }: errorPageProps) {
-   const t = useTranslations("errorPage")
+   const t = useTranslations("errorPage");
    return (
       <div className="flex flex-col gap-y-5 justify-center items-center min-h-screen px-3 text-center">
          {/* <h2 className="text-3xl font-bold py-6">{t("title")}</h2> */}
