@@ -10,6 +10,7 @@ import { Link } from '@/i18n/navigation';
 import { MainBtn } from '@/app/_components/common/Buttons/MainBtn';
 import Loading from '@/app/_components/common/loading/Loading';
 import { useLocale } from 'next-intl';
+import Error from '@/app/_components/Error/Error';
 
 export default function ConnectStatus() {
    const accessToken = getTokenFromStorage("access_token");
@@ -25,7 +26,7 @@ export default function ConnectStatus() {
       }
    );
    if(error){
-      return <p>Error: {error}</p>;
+      return <Error error={error} />;
    }
    return (
       <>

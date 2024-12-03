@@ -580,7 +580,8 @@
    "errorPage": {
       "title": "Oops! Something went wrong.",
       "description": "We 're sorry, but the page you were trying to access is not available.",
-      "tryAgain": "Try again"
+      "tryAgain": "Try again",
+      "persistProblem": "If the problem persists, please contact our support team."
    },
    "NotFound": {
       "description": "Don't worry, our team is already working on it.Please try refreshing the page or come back later."
