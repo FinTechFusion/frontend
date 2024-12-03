@@ -10,7 +10,6 @@ import { useAssetData } from "@/context/AssetsContext";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 import Swal from 'sweetalert2';
-// import { CheckConfirmAlert } from "@/utils/CheckConfirmAlert";
 
 export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: AccountTypeProps) {
    const locale = useLocale();
@@ -24,9 +23,12 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const router = useRouter();
    const t = useTranslations("dashboard.accountTypes");
    const alertT = useTranslations('alerts');
+
+   // Synchronize `isDemo` state with `user?.is_demo`
    useEffect(() => {
-      setIsDemo(initialDemo);
-   }, [initialDemo]);
+      setIsDemo(user?.is_demo ?? initialDemo);
+   }, [user?.is_demo, initialDemo]);
+
    const CheckConfirmAlert = (onConfirm: () => void, onCancel?: () => void) => {
       Swal.fire({
          icon: "error",
@@ -49,34 +51,39 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
          }
       });
    };
-   function onConfirm() {
-      router.push("/site/exchange/connect");
-   }
+
    const handleToggleAccountType = async () => {
       setIsOpen(false);
-      if (!(user?.is_binance)) {
-         return CheckConfirmAlert(onConfirm);
+      if (!user?.is_binance) {
+         return CheckConfirmAlert(() => router.push("/site/exchange/connect"));
       }
+
+      if (!accessToken) {
+         return toast.error("Access token is missing.");
+      }
+
       try {
          setLoading(true);
          const newAccountType = !isDemo;
-         const response = await fetch(`${API_BASE_URL}/users/me/demo/${isDemo ? 'disable' : 'enable'}`, {
+         const endpoint = `${API_BASE_URL}/users/me/demo/${isDemo ? 'disable' : 'enable'}`;
+         const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
                authorization: `Bearer ${accessToken}`,
             },
          });
+
          if (response.ok) {
-            if (accessToken) {
-               await fetchUserData(accessToken);
-            }
+            await fetchUserData(accessToken);
             setIsDemo(newAccountType);
             await fetchAssets();
          } else {
-            return toast.error(t("failedUpdateType"));
+            toast.error(t("failedUpdateType"));
          }
       } catch (error) {
+         console.error("Failed to toggle account type:", error);
+         toast.error("An unexpected error occurred.");
       } finally {
          setLoading(false);
       }
@@ -85,12 +92,17 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    return (
       <div className="account-type relative">
          <Toast />
-         <h5 className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer">
+         <h5
+            className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+            role="button"
+            aria-expanded={isOpen}
+         >
             {isDemo ? t("demoAccount") : t("realAccount")}
             {isOpen ? (
-               <MdKeyboardArrowUp onClick={() => setIsOpen(false)} size={25} />
+               <MdKeyboardArrowUp size={25} aria-label="Close account type menu" />
             ) : (
-               <MdKeyboardArrowDown onClick={() => setIsOpen(true)} size={25} />
+               <MdKeyboardArrowDown size={25} aria-label="Open account type menu" />
             )}
          </h5>
          <div className="text-center">
@@ -111,7 +123,9 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
                         disabled={loading}
                      />
                      <div className="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:bg-primary-600"></div>
-                     <div className={`absolute ${locale === 'en' ? 'left-0.5' : 'right-0.5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}></div>
+                     <div
+                        className={`absolute ${locale === 'en' ? 'left-0.5' : 'right-0.5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}
+                     ></div>
                   </label>
                </div>
             </div>

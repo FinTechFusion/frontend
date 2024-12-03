@@ -10,7 +10,7 @@ export default function AccountSetting() {
    const t = useTranslations("dashboard");
    if (!user) return <Loading />;
    const { signal_cycles, ai_cycles, signal_strategy, ai_strategy, is_demo, is_verified, is_active, is_subscribed } = user;
-   
+
    return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
          {/* Subscription Box */}
@@ -44,20 +44,20 @@ export default function AccountSetting() {
             <h3 className="text-3xl font-medium mb-6 flex items-center gap-2 ">
                <FaGear className="mr-3" />{t("AccountSettings")}
             </h3>
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-6">
-               <div className="signalStrategy">
+            <div className="grid md:grid-cols-1 grid-cols-1 gap-6 mb-6">
+               <div className="flex flex-col gap-y-2">
                   <p className="text-xl font-medium mb-2 flex items-center gap-2">
                      <FaSignal className="mr-2" />{t("SignalStrategy")}
                   </p>
-                  <b className="capitalize text-lg text-center bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
+                  <b className="capitalize text-lg text-start bg-gray-100 w-fit text-primary-600 py-1 px-3 rounded-full">
                      {signal_strategy == null ? t("NoStrategy") : signal_strategy.replace(/_/g, ' ')}
                   </b>
                </div>
-               <div className="aiStrategy">
+               <div className="flex flex-col gap-y-2">
                   <p className="text-xl font-medium mb-2 flex items-center gap-2">
                      <FaRobot className="mr-2" /> {t("AIStrategy")}
                   </p>
-                  <b className="capitalize text-lg text-center bg-gray-100 text-primary-600 py-1 px-3 rounded-full">
+                  <b className="capitalize text-lg text-start bg-gray-100 w-fit text-primary-600 py-1 px-3 rounded-full">
                      {ai_strategy == null ? t("NoStrategy") : ai_strategy.replace(/_/g, ' ')}
                   </b>
                </div>
