@@ -9,9 +9,8 @@ export default function AccountSetting() {
    const { user } = useAuth();
    const t = useTranslations("dashboard");
    if (!user) return <Loading />;
-
    const { signal_cycles, ai_cycles, signal_strategy, ai_strategy, is_demo, is_verified, is_active, is_subscribed } = user;
-
+   
    return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
          {/* Subscription Box */}
@@ -40,14 +39,13 @@ export default function AccountSetting() {
                </div>
             </div>
          </div>
-
          {/* Account Setting */}
          <div className="account-setting bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="text-3xl font-medium mb-6 flex items-center gap-2 ">
                <FaGear className="mr-3" />{t("AccountSettings")}
             </h3>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-6">
-               <div>
+               <div className="signalStrategy">
                   <p className="text-xl font-medium mb-2 flex items-center gap-2">
                      <FaSignal className="mr-2" />{t("SignalStrategy")}
                   </p>
@@ -55,7 +53,7 @@ export default function AccountSetting() {
                      {signal_strategy == null ? t("NoStrategy") : signal_strategy.replace(/_/g, ' ')}
                   </b>
                </div>
-               <div>
+               <div className="aiStrategy">
                   <p className="text-xl font-medium mb-2 flex items-center gap-2">
                      <FaRobot className="mr-2" /> {t("AIStrategy")}
                   </p>

@@ -16,7 +16,7 @@ export default function ConnectStatus() {
    const searchParams = useSearchParams();
    const code = searchParams.get('code');
    const locale = useLocale();
-   const { data } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}&lang=${locale}`,
+   const { data, error } = useFetch(`${API_BASE_URL}/users/me/binance/link/callback?code=${code}&lang=${locale}`,
       {
          method: 'GET',
          headers: {
@@ -24,6 +24,9 @@ export default function ConnectStatus() {
          },
       }
    );
+   if(error){
+      return <p>Error: {error}</p>;
+   }
    return (
       <>
          {data ? <div className="container mx-auto">
