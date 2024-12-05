@@ -128,7 +128,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       createOrder(data);
     } else {
-      return toast.info(t("subscribeFirst"));
+      toast.info(t("subscribeFirst"));
     }
   };
   function checkSymbol(e: any) {
