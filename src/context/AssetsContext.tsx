@@ -4,6 +4,7 @@ import { API_BASE_URL } from '@/utils/api';
 import { createContext, useContext, useState, useMemo, ReactNode } from 'react';
 import { getTokenFromStorage } from '@/context/AuthContext';
 import { ApiError, AssetDataContextType, AssetInfo } from '../utils/types';
+import { useAuth } from '@/context/AuthContext';
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(undefined);
 
@@ -16,6 +17,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    const [assetLoading, setAssetLoading] = useState<boolean>(false);
    const [assetError, setAssetError] = useState<string | null>(null);
    const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
+   const { user } = useAuth();
    const accessToken = getTokenFromStorage("access_token");
    const fetchAssets = async () => {
       setAssetLoading(true);
@@ -87,7 +89,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
    };
    useMemo(() => {
       fetchAssets();
-   }, [currentOffset]);
+   }, [currentOffset || user?.is_demo]);
 
    const contextValue: AssetDataContextType = {
       assetData,

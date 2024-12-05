@@ -57,11 +57,9 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
       if (!user?.is_binance) {
          return CheckConfirmAlert(() => router.push("/site/exchange/connect"));
       }
-
       if (!accessToken) {
          return toast.error("Access token is missing.");
       }
-
       try {
          setLoading(true);
          const newAccountType = !isDemo;
@@ -73,16 +71,17 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
                authorization: `Bearer ${accessToken}`,
             },
          });
-
+         const responseData = await response.json();
          if (response.ok) {
             await fetchUserData(accessToken);
             setIsDemo(newAccountType);
-            await fetchAssets();
          } else {
             toast.error(t("failedUpdateType"));
          }
+         // if(responseData.success){
+         //    await fetchAssets();
+         // }
       } catch (error) {
-         console.error("Failed to toggle account type:", error);
          toast.error("An unexpected error occurred.");
       } finally {
          setLoading(false);

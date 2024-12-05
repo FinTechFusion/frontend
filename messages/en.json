@@ -502,6 +502,7 @@
       "TrailingStopLoss": "Trailing Stop Loss",
       "maxCycles": "Max Cycles",
       "start": "Start",
+      "subscribeFirst": "You must subscribe to a plan first",
       "currentOrders": "Your current orders",
       "manageOrders": "View and manage your active orders",
       "deleteOrderSuccess": "Order deleted successfully",

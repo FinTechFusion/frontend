@@ -500,6 +500,7 @@
       "TrailingStopLoss": "إيقاف الخسارة",
       "maxCycles": "الرصيد",
       "start": "ابدأ",
+      "subscribeFirst": "اشترك في خطة أولاً",
       "currentOrders": "طلباتك الحالية",
       "manageOrders": "عرض وإدارة طلباتك النشطة",
       "deleteOrderSuccess": "تم حذف الطلب بنجاج",
