@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 // import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
 import { useLocale, useTranslations } from "next-intl";
-import Toast from '@/app/_components/common/Tostify/Toast';
 
 type tradingBotType = {
   type: 'signal' | 'ai';
@@ -123,14 +122,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
     if (!errorKey) return '';
     return validationT(errorKey);
   };
-
-  const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
-      createOrder(data);
-    } else {
-      toast.info(t("subscribeFirst"));
-    }
-  };
   function checkSymbol(e: any) {
     const selectedSymbol = e.target.value;
     if (selectedSymbol === "usdt") {
@@ -139,10 +130,21 @@ export default function TradingBotForm({ type }: tradingBotType) {
       setCurrentSymbol(null);
     }
   }
+  const submitForm: SubmitHandler<tradingbotType> = async (data) => {
+    // Check user subscription status
+    const isSubscribed = user?.is_subscribed && !user?.is_demo;
+    const isDemo = user?.is_demo;
+
+    if (isSubscribed || isDemo) {
+      await createOrder(data);
+    } else {
+      toast.info(t("subscribeFirst"));
+      console.log("Toast fired for subscription message");
+    }
+  };
 
   return (
     <>
-    <Toast/>
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">{t("start_trading")}</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
