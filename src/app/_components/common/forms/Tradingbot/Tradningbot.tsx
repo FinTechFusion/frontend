@@ -9,7 +9,6 @@ import useFetch from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-// import BotLogs from '@/app/_components/common/dashboard/BotLogs/Botlogs';
 import { useLocale, useTranslations } from "next-intl";
 
 type tradingBotType = {
