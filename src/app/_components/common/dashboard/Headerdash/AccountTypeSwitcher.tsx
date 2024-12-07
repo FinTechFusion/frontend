@@ -78,9 +78,6 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
          } else {
             toast.error(t("failedUpdateType"));
          }
-         // if(responseData.success){
-         //    await fetchAssets();
-         // }
       } catch (error) {
          toast.error("An unexpected error occurred.");
       } finally {
