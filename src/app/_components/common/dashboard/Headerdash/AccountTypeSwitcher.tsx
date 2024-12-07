@@ -123,7 +123,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
                      />
                      <div className="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:bg-primary-600"></div>
                      <div
-                        className={`absolute ${locale === 'en' ? 'left-0.5' : 'right-0.5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}
+                        className={`absolute ${locale === 'en' ? 'left-0.5' : 'right-5'} top-0.5 w-5 h-5 bg-primary-700 peer-checked:bg-gray-200 rounded-full peer-checked:translate-x-full transition duration-300`}
                      ></div>
                   </label>
                </div>

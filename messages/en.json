@@ -548,6 +548,8 @@
          "uninstall": "uninstall",
          "install": "Install",
          "installed": "Installed",
+         "start_range": "Start range",
+         "end_range": "End range",
          "fetchStrategyError": "Error fetching strategy, please try again later.",
          "installOneSignalOnly": "You must only install one signal strategy",
          "installOneAiOnly": "You must only install one AI strategy",

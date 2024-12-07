@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          });
          if (!response.ok) {
             if (response.status === 401) {
-               refreshAccessToken();
+               await refreshAccessToken();
             }
          }
          const { data } = await response.json();
@@ -170,7 +170,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          const newTokens = (await response.json()) as Tokens;
          saveTokenToStorage('access_token', newTokens.access_token);
          saveTokenToStorage('refresh_token', newTokens.refresh_token);
-         const newExpireTime = Date.now() + 9 * 60 * 1000;
+         const newExpireTime = Date.now() + 29 * 60 * 1000;
          saveTokenToStorage('expire_data_token', newExpireTime.toString());
          return newTokens.access_token;
       } catch (err) {
