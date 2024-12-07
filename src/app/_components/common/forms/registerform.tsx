@@ -43,10 +43,10 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      if (!turnstileToken) {
-         toast.error(t("complete_captcha"));
-         return;
-      }
+      // if (!turnstileToken) {
+      //    toast.error(t("complete_captcha"));
+      //    return;
+      // }
       if (!checked) { // Ensure the agreement is checked
          setShowAgreementError(true);
          return;
@@ -54,7 +54,7 @@ export default function RegisterForm() {
       setShowAgreementError(false); // Reset error when valid
       setIsLoading(true);
       try {
-         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}&lang=${locale}`, {
+         const response = await fetch(`${API_BASE_URL}/auth/register?lang=${locale}`, {
             method: "POST",
             headers: {
                "Content-Type": "application/json",
