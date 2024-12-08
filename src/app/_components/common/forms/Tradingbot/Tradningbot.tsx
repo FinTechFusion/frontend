@@ -133,12 +133,10 @@ export default function TradingBotForm({ type }: tradingBotType) {
     // Check user subscription status
     const isSubscribed = user?.is_subscribed && !user?.is_demo;
     const isDemo = user?.is_demo;
-
     if (isSubscribed || isDemo) {
       await createOrder(data);
     } else {
       toast.info(t("subscribeFirst"));
-      console.log("Toast fired for subscription message");
     }
   };
 
@@ -154,7 +152,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             <select
               id="symbol"
               className={`main_input border translate-y-0 ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
-              {...register('symbol')}
+              {...register('secondarySymbol')}
               onChange={checkSymbol}
             >
               <option value="">{t("please_select")}</option>
@@ -177,7 +175,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               <select
                 id="symbol2"
                 className={`main_input border translate-y-0 ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
-                {...register("secondarySymbol")}
+                {...register("symbol")}
               >
                 <option value="">{t("please_select")}</option>
                 {symbolData?.map((asset: string, index: number) => (

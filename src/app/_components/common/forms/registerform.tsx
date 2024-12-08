@@ -19,6 +19,7 @@ export default function RegisterForm() {
    const validationT = useTranslations("validation");
    const route = useRouter();
    const locale = useLocale();
+   const isProduction = process.env.NODE_ENV === 'production';
 
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
@@ -43,10 +44,10 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      // if (!turnstileToken) {
-      //    toast.error(t("complete_captcha"));
-      //    return;
-      // }
+      if (!turnstileToken && isProduction) {
+         toast.error(t("complete_captcha"));
+         return;
+      }
       if (!checked) { // Ensure the agreement is checked
          setShowAgreementError(true);
          return;
@@ -54,7 +55,7 @@ export default function RegisterForm() {
       setShowAgreementError(false); // Reset error when valid
       setIsLoading(true);
       try {
-         const response = await fetch(`${API_BASE_URL}/auth/register?lang=${locale}`, {
+         const response = await fetch(`${API_BASE_URL}/auth/register?turnstile_token=${turnstileToken}&lang=${locale}`, {
             method: "POST",
             headers: {
                "Content-Type": "application/json",
