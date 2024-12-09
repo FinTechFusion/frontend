@@ -19,6 +19,7 @@ export default function RegisterForm() {
    const validationT = useTranslations("validation");
    const route = useRouter();
    const locale = useLocale();
+   const isProduction = process.env.NODE_ENV === 'production';
 
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
@@ -43,7 +44,7 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      if (!turnstileToken) {
+      if (!turnstileToken && isProduction) {
          toast.error(t("complete_captcha"));
          return;
       }

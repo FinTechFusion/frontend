@@ -17,10 +17,8 @@ export default function Sidebar() {
    const locale = useLocale();
    return (
       <div className={`min-h-screen bg-gray-100 px-3 md:flex fixed transform z-10 md:w-[18%] ${isVisible ? 'translate-x-0 ' : (locale === "en" ? "-translate-x-full" : "translate-x-full")} lg:translate-x-0`}>
-         <div className="sideBar">
-            <ul className="sideBar-List px-3 py-5">
-               <SidebarLink icon={<FaHouse />} content='dashboard' weight='font-semibold' path='/dashboard' />
-
+         <ul className=" px-3 py-5">
+            <SidebarLink icon={<FaHouse />} content='dashboard' weight='font-semibold' path='/dashboard' />
                <span onClick={() => toggleVisibility()}>
                   <IoClose className={`text-4xl font-bold absolute top-3 ${locale === "en" ? "right-2" : "left-2"} cursor-pointer text-red-600 flex lg:hidden`} />
                </span>
@@ -37,7 +35,6 @@ export default function Sidebar() {
                <SidebarLink icon={<FaGear className="px-2 text-4xl" />} content="settings" weight='font-normal' path="/dashboard/settings" />
                <SidebarLink icon={<IoMdContacts className="px-2 text-4xl" />} content="contactus" weight='font-normal' path="/site/contact" />
             </ul>
-         </div>
       </div>
    )
 };

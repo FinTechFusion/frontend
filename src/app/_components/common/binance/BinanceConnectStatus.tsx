@@ -6,7 +6,6 @@ import { Link } from '@/i18n/navigation';
 
 export default function BinanceConnectStatus() {
    const { user } = useAuth();
-
    return (
       !(user?.is_binance) &&
       <div className="binance-status bg-gray-100 p-6 rounded my-6 grid md:grid-cols-2 grid-cols-1 md:justify-between justify-start items-center md:gap-0 gap-2">

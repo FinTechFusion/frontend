@@ -86,6 +86,8 @@ export type Strategy = {
    description: string;
    whats_new: string[];
    banner_url: string;
+   start_range: string;
+   end_range: string;
 };
 export interface Order {
    id: string;

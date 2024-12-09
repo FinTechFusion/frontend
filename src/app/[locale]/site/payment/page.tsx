@@ -15,7 +15,6 @@ const stripeKey = isProduction
 if (!stripeKey) {
    throw new Error('Stripe publishable key is not set in environment variables');
 }
-
 const stripePromise = loadStripe(stripeKey);
 
 export default function PaymentPage() {
