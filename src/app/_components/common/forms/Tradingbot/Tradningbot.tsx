@@ -27,7 +27,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   const validationT = useTranslations("validation.tradingbot");
   const accessToken = getTokenFromStorage("access_token");
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<tradingbotType>({
+  const { register, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<tradingbotType>({
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
@@ -118,8 +118,26 @@ export default function TradingBotForm({ type }: tradingBotType) {
       setLoading(false);
     }
   }
+  const quantityAtRealCheck = (e: React.FocusEvent<HTMLInputElement>) => {
+    const value = + e.target.value; // Convert the value to a number
+    if ((!user?.is_demo) && value < 10) {
+      // Set the error if quantity is less than 10 for real users
+      setError("quantity", {
+        type: "manual",
+        message: "quantity.min",
+      })
+      } 
+    else {
+      clearErrors("quantity")
+    }
+  };
 
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
+   if (data?.quantity < 10 && !user?.is_demo) {
+    toast.warning(validationT("quantity.min"))
+    return; // Prevent form submission if there is an error in quantity
+  }
+
     const isSubscribed = user?.is_subscribed && !user?.is_demo;
     const isDemo = user?.is_demo;
     // Modify data if account is real
@@ -130,7 +148,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
     console.log(modifiedData);
 
     if (isSubscribed || isDemo) {
-      console.log("order created")
+      console.log("order created");
+      alert("Order created success")
       // await createOrder(data);
     } else {
       toast.info(t("subscribeFirst"));
@@ -201,6 +220,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             type="number"
             placeholder={t("quantity")}
             register={register}
+            onBlur={quantityAtRealCheck}
             error={translateErrorMessage(errors.quantity?.message)}
           />
           <Input label={t("side")} value={t("buy")} type="text" name="buy" placeholder="" readOnly={true} />

@@ -631,7 +631,7 @@
          "quantity": {
             "required": "Quantity is required",
             "positive": "Quantity must be greater than 0",
-            "quantityNotLess10": "quantity must not be less than 10"
+            "quantity": "Quantity must be at least 10 "
          },
          "trailing_stop_loss": {
             "required": "Trailing stop loss is required",

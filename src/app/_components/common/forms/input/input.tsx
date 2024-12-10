@@ -11,9 +11,9 @@ type InputProps<TFieldValue extends FieldValues> = {
    error?: string;
    value?: string;
    step?: string;
-   readOnly?: boolean; // New prop
+   readOnly?: boolean;
+   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
-
 const Input = <TFieldValue extends FieldValues>({
    label,
    type = "text",
@@ -24,9 +24,19 @@ const Input = <TFieldValue extends FieldValues>({
    onChange,
    onPaste,
    value,
+   onBlur,
    readOnly = false, // Default to false
    ...rest
 }: InputProps<TFieldValue>) => {
+   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (onBlur) {
+         onBlur(e); // Invoke the provided onBlur handler
+      }
+      if (register) {
+         register(name)?.onBlur?.(e); // Safely invoke register's onBlur if available
+      }
+   };
+
    const inputProps = register
       ? {
          ...register(name, { valueAsNumber: type === 'number' }),
@@ -52,11 +62,12 @@ const Input = <TFieldValue extends FieldValues>({
          )}
          <input
             type={type}
-            className={`main_input border-2 ${error && 'border-red-600 shadow'} ${readOnly ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+            className={`main_input border-2 ${error && 'border-red-600 shadow'} ${readOnly && 'bg-gray-100 cursor-not-allowed'}`}
             id={name}
             placeholder={placeholder}
             {...inputProps}
             {...rest}
+            onBlur={onBlurHandler}
             step={type === 'number' ? '0.1' : undefined}
          />
          {error && <span className="text-red-600 text-sm pt-2">{error}</span>}
