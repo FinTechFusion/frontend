@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 const tradingbotSchema = z.object({
-   secondarySymbol: z.string().optional(),
    symbol: z.string().refine((value) => value !== "", {
       message: "symbol.required",
    }),
-   quantity: z
+   secondarySymbol: z.string().optional(),
+    quantity: z
       .number({ message: "quantity.required" })
       .positive({ message: "quantity.positive" }),
    trailing_stop_loss: z

@@ -19,7 +19,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
   const [currentSymbol, setCurrentSymbol] = useState<string | null>(null);
   const [symbolData, setSymbolData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  // const [orderId, setOrderId] = useState<string | null>(null);
   const [signalProfitRange, setSignalProfitRange] = useState("N/A");
   const [aiProfitRange, setAiProfitRange] = useState("N/A");
   const { user } = useAuth();
@@ -40,33 +39,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
     },
     next: { revalidate: 60 }
   });
-  async function createOrder(data: any) {
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}}`, {
-        method: 'POST',
-        headers: {
-          'authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      const responseData = await response.json();
-      if (responseData.success) {
-        toast.success(validationT("ordersuccess"));
-        // setOrderId(responseData?.data?.id);
-        reset();
-      } else {
-        toast.error(responseData?.detail || responseData.detail[0]?.msg);
-      }
-    }
-    catch (error) {
-      toast.error(validationT("orderfailed"));
-    }
-    finally {
-      setLoading(false);
-    }
-  }
   async function FetchSymbols() {
     const response = await fetch(`${API_BASE_URL}/orders/symbols`, {
       method: 'GET',
@@ -96,8 +68,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
     if (type === "signal" && user?.signal_strategy) {
       FetchSignalProfitRange();
     }
-    else{
-        setSignalProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
+    else {
+      setSignalProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
     }
     if (type === "ai" && user?.ai_strategy) {
       FetchAiProfitRange();
@@ -105,8 +77,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     else {
       setAiProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
     }
-  }, [user?.signal_strategy,user?.ai_strategy]);
-
+  }, [user?.signal_strategy, user?.ai_strategy]);
   useEffect(() => {
     const fetchData = async () => {
       if (currentSymbol !== null) {
@@ -121,6 +92,50 @@ export default function TradingBotForm({ type }: tradingBotType) {
     if (!errorKey) return '';
     return validationT(errorKey);
   };
+  async function createOrder(data: any) {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}}`, {
+        method: 'POST',
+        headers: {
+          'authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const responseData = await response.json();
+      if (responseData.success) {
+        toast.success(validationT("ordersuccess"));
+        reset();
+      } else {
+        toast.error(responseData?.detail);
+      }
+    }
+    catch (error) {
+      toast.error(validationT("orderfailed"));
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+
+  const submitForm: SubmitHandler<tradingbotType> = async (data) => {
+    const isSubscribed = user?.is_subscribed && !user?.is_demo;
+    const isDemo = user?.is_demo;
+    // Modify data if account is real
+    const modifiedData = { ...data };
+    if (!user?.is_demo && data.secondarySymbol) {
+      modifiedData.symbol = data.secondarySymbol; // Use secondarySymbol as symbol
+    }
+    console.log(modifiedData);
+
+    if (isSubscribed || isDemo) {
+      console.log("order created")
+      // await createOrder(data);
+    } else {
+      toast.info(t("subscribeFirst"));
+    }
+  };
   function checkSymbol(e: any) {
     const selectedSymbol = e.target.value;
     if (selectedSymbol === "usdt") {
@@ -129,16 +144,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
       setCurrentSymbol(null);
     }
   }
-  const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    // Check user subscription status
-    const isSubscribed = user?.is_subscribed && !user?.is_demo;
-    const isDemo = user?.is_demo;
-    if (isSubscribed || isDemo) {
-      await createOrder(data);
-    } else {
-      toast.info(t("subscribeFirst"));
-    }
-  };
 
   return (
     <>
@@ -152,7 +157,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             <select
               id="symbol"
               className={`main_input border translate-y-0 ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
-              {...register('secondarySymbol')}
+              {...register('symbol')}
               onChange={checkSymbol}
             >
               <option value="">{t("please_select")}</option>
@@ -175,7 +180,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               <select
                 id="symbol2"
                 className={`main_input border translate-y-0 ${errors.symbol ? 'border-2 border-red-600 shadow' : ''}`}
-                {...register("symbol")}
+                {...register("secondarySymbol")}
               >
                 <option value="">{t("please_select")}</option>
                 {symbolData?.map((asset: string, index: number) => (
@@ -200,6 +205,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
           />
           <Input label={t("side")} value={t("buy")} type="text" name="buy" placeholder="" readOnly={true} />
           <Input label={t("orderType")} value={t("spot")} type="text" name="spot" placeholder="" readOnly={true} />
+
           {type === "signal" ? <Input
             label={t("profitThreshold")}
             name="profit_range"
@@ -234,9 +240,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
         </div>
         {loading ? <SpinBtn content="loading" btnProps="w-fit" /> : <MainBtn content="start" btnProps="w-fit" />}
       </form>
-      {/* <>
-        {orderId && <BotLogs orderId={orderId} />}
-      </> */}
     </>
   )
 }

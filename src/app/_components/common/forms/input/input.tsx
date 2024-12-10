@@ -38,7 +38,6 @@ const Input = <TFieldValue extends FieldValues>({
          onPaste,
          value,
          readOnly,
-
       };
 
    return (

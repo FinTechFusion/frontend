@@ -630,12 +630,8 @@
          },
          "quantity": {
             "required": "Quantity is required",
-            "positive": "Quantity must be greater than 0"
-         },
-         "profit_threshold": {
-            "required": "Profit threshold is required",
-            "positive": "Profit threshold must be greater than 0",
-            "max": "Profit threshold must be at most 100"
+            "positive": "Quantity must be greater than 0",
+            "quantityNotLess10": "quantity must not be less than 10"
          },
          "trailing_stop_loss": {
             "required": "Trailing stop loss is required",
