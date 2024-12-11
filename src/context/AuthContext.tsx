@@ -40,12 +40,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const router = useRouter();
 
    useEffect(() => {
+      console.log("Start checking ...");
       const interval = setInterval(() => {
          checkAndFetchUserData();
       }, 60000);
    }, []);
 
- 
    const login = async (accessToken: string, refreshToken: string) => {
       try {
          saveTokenToStorage('access_token', accessToken);
@@ -101,15 +101,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                'Content-Type': 'application/json'
             },
          });
+
          if (!response.ok) {
             if (response.status === 401) {
-               await refreshAccessToken();
+               const newAccessToken = await refreshAccessToken(); // Refresh token
+               return await fetchUserData(newAccessToken); // Retry fetching user data
             }
+            throw new Error('Failed to fetch user data');
          }
+
          const { data } = await response.json();
          setUser(data);
          return data;
       } catch (err) {
+         setError('Unable to fetch user data');
          return null;
       } finally {
          setIsLoading(false);
@@ -138,15 +143,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       loadUserData();
    }, []);
 
-   const logout = () => {
-      clearTokensFromStorage();
-      // sessionStorage.clear();
-      setUser(null);
-      router.push('/');
-   };
-
    const refreshAccessToken = async (): Promise<string> => {
       try {
+         console.log("start refresh token")
          const refreshToken = getTokenFromStorage('refresh_token');
          if (!refreshToken) {
             router.push('/login');
@@ -163,7 +162,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             },
             body: body.toString(),
          });
-
          if (!response.ok) {
             throw new Error('Failed to refresh access token');
          }
@@ -177,7 +175,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          throw err;
       }
    };
-
+   const logout = () => {
+      clearTokensFromStorage();
+      sessionStorage.clear();
+      setUser(null);
+      router.push('/');
+   };
    return (
       <AuthContext.Provider value={{ user, isLoading, error, login, logout,saveUserData ,fetchUserData }}>
          {children}
