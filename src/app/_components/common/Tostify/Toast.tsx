@@ -1,6 +1,8 @@
-import { ToastContainer } from 'react-toastify';
+"use client";
+import {ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocale } from 'next-intl';
+
 
 export default function Toast() {
    const locale = useLocale();

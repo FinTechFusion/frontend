@@ -17,7 +17,8 @@ const tradingbotSchema = z.object({
       .int({ message: "cycles.integer" })
       .positive({ message: "cycles.positive" })
       .max(100, { message: "cycles.max" }),
-});
+})
+
 
 
 type tradingbotType = z.infer<typeof tradingbotSchema>;
