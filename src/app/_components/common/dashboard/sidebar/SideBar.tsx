@@ -16,7 +16,7 @@ export default function Sidebar() {
    const t = useTranslations("dashboard.sidebar");
    const locale = useLocale();
    return (
-      <div className={`min-h-screen bg-gray-100 px-3 md:flex fixed transform z-10 md:w-[30%] ${isVisible ? 'translate-x-0' : (locale === "en" ? "-translate-x-full" : "translate-x-full")} lg:translate-x-0`}>
+      <div className={`min-h-screen bg-gray-100 px-3 md:flex fixed transform z-10 md:w-[30%] lg:w-[18%] ${isVisible ? 'translate-x-0' : (locale === "en" ? "-translate-x-full" : "translate-x-full")} lg:translate-x-0`}>
          <ul className=" px-3 py-5">
             <SidebarLink icon={<FaHouse />} content='dashboard' weight='font-semibold' path='/dashboard' />
                <span onClick={() => toggleVisibility()}>
