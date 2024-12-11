@@ -126,28 +126,55 @@ export default function TradingBotForm({ type }: tradingBotType) {
         type: "manual",
         message: "quantity.min",
       })
-      } 
+    }
     else {
       clearErrors("quantity")
     }
   };
-
-  const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-   if (data?.quantity < 10 && !user?.is_demo) {
-    toast.warning(validationT("quantity.min"))
-    return; // Prevent form submission if there is an error in quantity
+  async function calcQuantity(symbol: string) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/binance/${symbol}/ticker`, {
+        method: "GET",
+        headers: {
+          'authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        },
+      });
+      if (!response.ok) {
+        return toast.error(validationT("invalidErrOrSymbol"))
+      }
+      const data = await response.json();
+      if (!data?.success) {
+        toast.error(data.detail[0]?.msg || data.detail)
+      }
+      return data?.data?.last_price
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
+  const submitForm: SubmitHandler<tradingbotType> = async (data) => {
+    if (data?.quantity < 10 && !user?.is_demo) {
+      toast.warning(validationT("quantity.min"))
+      return; // Prevent form submission if there is an error in quantity
+    }
 
     const isSubscribed = user?.is_subscribed && !user?.is_demo;
     const isDemo = user?.is_demo;
     // Modify data if account is real
     const modifiedData = { ...data };
+
     if (!user?.is_demo && data.secondarySymbol) {
       modifiedData.symbol = data.secondarySymbol; // Use secondarySymbol as symbol
+      if (modifiedData?.secondarySymbol) {
+        const symbolPrice = await calcQuantity(modifiedData?.secondarySymbol);
+        modifiedData.quantity = (data.quantity / symbolPrice)
+      }
     }
+
     console.log(modifiedData);
 
-    if (isSubscribed || isDemo) {
+    if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       console.log("order created");
       alert("Order created success")
       // await createOrder(data);
