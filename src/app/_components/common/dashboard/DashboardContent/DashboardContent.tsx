@@ -1,11 +1,9 @@
 "use client";
-
 import { useAuth } from '@/context/AuthContext';
 import { useAssetData } from '@/context/AssetsContext';
 import BinanceConnectStatus from "../../binance/BinanceConnectStatus";
 import TokensTable from "../../binance/TokensTable";
 import PriceChangeLineChart from "../charts/LineChart";
-import Loading from '@/app/_components/common/loading/Loading';
 import { AssetData } from '@/utils/types';
 import Tradingopportunity from '../opportunity/Tradingopportunity';
 import PieChartDigram from '../charts/PieChart';
@@ -13,9 +11,6 @@ import PieChartDigram from '../charts/PieChart';
 function DashboardContent() {
    const { assetData } = useAssetData();
    const { user } = useAuth();
-   // if (!user) {
-   //    return <Loading />;
-   // }
    // Transform assetData to the format expected by PriceChangeLineChart
    const formattedData = assetData.map((item: AssetData) => ({
       symbol: item.symbol,
@@ -36,8 +31,7 @@ function DashboardContent() {
                {formattedData.length > 0 && <PriceChangeLineChart data={formattedData} />}
             </div>
          </>
-         {!user?.is_binance && <BinanceConnectStatus />
-         }
+         {!user?.is_binance && <BinanceConnectStatus />}
       </>
    );
 }
