@@ -76,7 +76,7 @@ export default function Header() {
         {accessToken === null ? (
           <>
             <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:flex hidden'>{t("login")}</Link>
-            <Link href='/register' className='hidden md:flex rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out' onClick={() => sessionStorage.setItem("plan", "beginner_trial")}>{t("freetrial")}</Link>
+            <Link href='/register' className='hidden md:flex rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>{t("freetrial")}</Link>
           </>
         ) : (
           <Link href='/dashboard' className="rounded-md bg-primary-600 hover:bg-primary-700 p-2 text-lg font-medium text-secondary shadow md:flex hidden">{t("dashboard")}</Link>

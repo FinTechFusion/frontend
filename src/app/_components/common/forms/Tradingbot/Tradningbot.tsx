@@ -95,7 +95,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   async function createOrder(data: any) {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}}`, {
+      const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}`, {
         method: 'POST',
         headers: {
           'authorization': `Bearer ${accessToken}`,
