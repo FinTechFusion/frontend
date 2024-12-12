@@ -93,6 +93,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     return validationT(errorKey);
   };
   async function createOrder(data: any) {
+    console.log("data sent to api " + data);
     setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}`, {
@@ -147,7 +148,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
       if (!data?.success) {
         toast.error(data.detail[0]?.msg || data.detail)
       }
-      return data?.data?.last_price
+      console.log(data?.data?.last_price)
+      return data?.data?.last_price;
     }
     catch (err) {
       console.log(err)
@@ -176,7 +178,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
     if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       console.log("order created");
-      await createOrder(data);
+      await createOrder(modifiedData);
     } else {
       toast.info(t("subscribeFirst"));
     }
