@@ -29,6 +29,9 @@ body {
    overflow-x: hidden;
    max-width: 100%;
 }
+body{
+   user-select: none;
+}
 section {
    margin: 48px 0px;
 }
@@ -60,6 +63,7 @@ ul li::marker {
 /* width */
 ::-webkit-scrollbar {
    width: 6px;
+   height:6px;
 }
 
 /* Track */

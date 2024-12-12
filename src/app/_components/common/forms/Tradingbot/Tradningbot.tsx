@@ -176,8 +176,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
     if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
       console.log("order created");
-      alert("Order created success")
-      // await createOrder(data);
+      await createOrder(data);
     } else {
       toast.info(t("subscribeFirst"));
     }

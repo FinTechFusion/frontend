@@ -19,11 +19,11 @@ export default function TokensTable() {
         <table className="min-w-full bg-white border shadow-sm">
           <thead>
             <tr>
-              <th className="py-2 px-4 border text-start">{t("symbol")}</th>
-              <th className="py-2 px-4 border text-start">{t("quantity")}</th>
-              <th className="py-2 px-4 border text-start">{t("price_change")}</th>
-              <th className="py-2 px-4 border text-start">{t("LastPrice")}</th>
-              <th className="py-2 px-4 border text-start">{t("total")}</th>
+              <th className="py-2 px-4 border text-start min-w-28 md:min-w-12">{t("symbol")}</th>
+              <th className="py-2 px-4 border text-start min-w-28 md:min-w-12">{t("quantity")}</th>
+              <th className="py-2 px-4 border text-start min-w-28 md:min-w-12">{t("price_change")}</th>
+              <th className="py-2 px-4 border text-start min-w-28 md:min-w-12">{t("LastPrice")}</th>
+              <th className="py-2 px-4 border text-start min-w-28 md:min-w-12">{t("total")}</th>
             </tr>
           </thead>
           <tbody className='table-body'>
@@ -59,7 +59,7 @@ export default function TokensTable() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName={"flex justify-end mt-4"}
+          containerClassName={"flex justify-end my-4"}
           pageClassName={"mx-1"}
           activeClassName={"font-bold bg-primary-600 w-6 h-6 text-secondary rounded-full flex justify-center items-center"}
           previousClassName={"mx-1"}
