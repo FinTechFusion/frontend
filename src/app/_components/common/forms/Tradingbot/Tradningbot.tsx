@@ -120,7 +120,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   }
   const quantityAtRealCheck = (e: React.FocusEvent<HTMLInputElement>) => {
     const value = + e.target.value; // Convert the value to a number
-    if ((!user?.is_demo) && value < 10) {
+    if ((!user?.is_demo) && value < 5) {
       // Set the error if quantity is less than 10 for real users
       setError("quantity", {
         type: "manual",
@@ -154,7 +154,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     }
   }
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    if (data?.quantity < 10 && !user?.is_demo) {
+    if (data?.quantity < 5 && !user?.is_demo) {
       toast.warning(validationT("quantity.min"))
       return; // Prevent form submission if there is an error in quantity
     }
