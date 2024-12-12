@@ -18,7 +18,7 @@ export default function Hero() {
                   <p className="bg-primary-50 my-3 text-primary-600 p-2 rounded-xl tracking-wide text-lg font-semibold">{t("heading")}</p>
                   <h1 className="font-semibold text-4xl tracking-wide capitalize text-dark">{t('title')}</h1>
                   <p className="text-gray-700 text-xl pb-4 pt-2">{t("description")}</p>
-                  <Link href="/dashboard" onClick={() => sessionStorage.setItem("plan", "beginner_trial")}>
+                  <Link href="/dashboard">
                      <MainBtn content="trail_btn" btnProps="w-fit" />
                   </Link>
                </div>
