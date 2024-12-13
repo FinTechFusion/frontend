@@ -24,9 +24,10 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       setAssetError(null);
       setErrorMessage(null);
       try {
+
          const response = await fetch(`${API_BASE_URL}/users/me/assets?limit=${limit}&offset=${currentOffset}`, {
             method: 'GET',
-            next: { revalidate: 120 },
+            next: { revalidate: 60 },
             headers: {
                authorization: `Bearer ${accessToken}`,
                'Content-Type': 'application/json'

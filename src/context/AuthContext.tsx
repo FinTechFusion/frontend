@@ -162,10 +162,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             },
             body: body.toString(),
          });
+         console.log(response)
          if (!response.ok) {
             throw new Error('Failed to refresh access token');
          }
          const newTokens = (await response.json()) as Tokens;
+         console.log(newTokens)
          saveTokenToStorage('access_token', newTokens.access_token);
          saveTokenToStorage('refresh_token', newTokens.refresh_token);
          const newExpireTime = Date.now() + 29 * 60 * 1000;
