@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 const BinancePopup = dynamic(() => import("./Popups/BinancePopup"), { ssr: false });
 import { Link } from '@/i18n/navigation';
-// import useSubscribe from '@/hooks/useSubscribe';
 
 export default function Hero() {
    const t = useTranslations('hero');

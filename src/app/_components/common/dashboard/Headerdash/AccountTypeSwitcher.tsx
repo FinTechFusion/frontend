@@ -74,6 +74,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
          // const responseData = await response.json();
          if (response.ok) {
             await fetchUserData(accessToken);
+            // await fetchAssets();
             setIsDemo(newAccountType);
          } else {
             toast.error(t("failedUpdateType"));

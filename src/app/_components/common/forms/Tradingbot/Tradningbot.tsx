@@ -93,7 +93,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     return validationT(errorKey);
   };
   async function createOrder(data: any) {
-    console.log("data sent to api " + data);
+    // console.log("data sent to api " + data);
     setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/users/me/orders/${type}?lang=${locale}`, {
@@ -109,7 +109,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         toast.success(validationT("ordersuccess"));
         reset();
       } else {
-        toast.error(responseData?.detail);
+        toast.error(responseData.detail || responseData.detail[0]?.msg);
       }
     }
     catch (error) {
@@ -142,13 +142,12 @@ export default function TradingBotForm({ type }: tradingBotType) {
         },
       });
       if (!response.ok) {
-        return toast.error(validationT("invalidErrOrSymbol"))
+        return toast.error(validationT("invalidErrOrSymbol"));
       }
       const data = await response.json();
       if (!data?.success) {
-        toast.error(data.detail[0]?.msg || data.detail)
+        toast.error(data.detail[0]?.msg || data.detail);
       }
-      console.log(data?.data?.last_price)
       return data?.data?.last_price;
     }
     catch (err) {
@@ -157,11 +156,11 @@ export default function TradingBotForm({ type }: tradingBotType) {
   }
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
     if (data?.quantity < 5 && !user?.is_demo) {
-      toast.warning(validationT("quantity.min"))
+      toast.warning(validationT("quantity.min"));
       return; // Prevent form submission if there is an error in quantity
     }
 
-    const isSubscribed = user?.is_subscribed && !user?.is_demo;
+    const isSubscribedAndReal = user?.is_subscribed && !user?.is_demo;
     const isDemo = user?.is_demo;
     // Modify data if account is real
     const modifiedData = { ...data };
@@ -170,14 +169,11 @@ export default function TradingBotForm({ type }: tradingBotType) {
       modifiedData.symbol = data.secondarySymbol; // Use secondarySymbol as symbol
       if (modifiedData?.secondarySymbol) {
         const symbolPrice = await calcQuantity(modifiedData?.secondarySymbol);
-        modifiedData.quantity = (data.quantity / symbolPrice)
+        modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(5);
       }
     }
 
-    console.log(modifiedData);
-
-    if ((user?.is_subscribed && !user?.is_demo) || user?.is_demo) {
-      console.log("order created");
+    if (isSubscribedAndReal || isDemo) {
       await createOrder(modifiedData);
     } else {
       toast.info(t("subscribeFirst"));

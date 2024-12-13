@@ -16,7 +16,7 @@ export default function Page() {
                />
             </div>
             <div className="features-list">
-               <h3 className="bg-gray-100 px-3 py-2 rounded-md w-fit me-12">{t("keyFeaturesTitle")}</h3>
+               <h3 className="bg-gray-100 text-xl font-medium px-3 py-2 rounded-md w-fit me-12">{t("keyFeaturesTitle")}</h3>
                <ul className="mt-2">
                   <li className="py-1"><IoIosCheckmark className="text-3xl inline-block text-primary-800" /> {t("feature1")}</li>
                   <li className="py-1"><IoIosCheckmark className="text-3xl inline-block text-primary-800" /> {t("feature2")}</li>
