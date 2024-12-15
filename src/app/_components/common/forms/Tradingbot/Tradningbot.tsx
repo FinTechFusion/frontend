@@ -10,6 +10,7 @@ import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import Toast from '@/app/_components/common/Tostify/Toast';
 
 type tradingBotType = {
   type: 'signal' | 'ai';
@@ -109,7 +110,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         toast.success(validationT("ordersuccess"));
         reset();
       } else {
-        toast.error(responseData.detail || responseData.detail[0]?.msg);
+        return toast.error(responseData.detail || responseData.detail[0]?.msg);
       }
     }
     catch (error) {
@@ -146,7 +147,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
       }
       const data = await response.json();
       if (!data?.success) {
-        toast.error(data.detail[0]?.msg || data.detail);
+        return toast.error(data.detail[0]?.msg || data.detail);
       }
       return data?.data?.last_price;
     }
@@ -169,14 +170,14 @@ export default function TradingBotForm({ type }: tradingBotType) {
       modifiedData.symbol = data.secondarySymbol; // Use secondarySymbol as symbol
       if (modifiedData?.secondarySymbol) {
         const symbolPrice = await calcQuantity(modifiedData?.secondarySymbol);
-        modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(5);
+        modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(4);
       }
     }
 
     if (isSubscribedAndReal || isDemo) {
       await createOrder(modifiedData);
     } else {
-      toast.info(t("subscribeFirst"));
+      return toast.info(t("subscribeFirst"));
     }
   };
   function checkSymbol(e: any) {
@@ -190,6 +191,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
   return (
     <>
+      <Toast />
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">{t("start_trading")}</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
