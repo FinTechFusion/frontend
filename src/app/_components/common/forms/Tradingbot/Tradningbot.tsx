@@ -243,7 +243,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
             label={t("quantity")}
             name="quantity"
             type="number"
-            placeholder={t("quantity")}
+            placeholder={t("tradingQuantity")}
             register={register}
             onBlur={quantityAtRealCheck}
             error={translateErrorMessage(errors.quantity?.message)}
