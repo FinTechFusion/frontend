@@ -480,7 +480,7 @@
       "DemoSpotWallet": "Demo Spot Wallet",
       "PriceChangeLineChart": "Price Change Trends of Your Assets",
       "symbol": "Symbol",
-      "quantity": "Quantity",
+      "quantity": "Enter amount by USDT",
       "price": "Price",
       "price_change": "Price Change Percent",
       "LastPrice": "Last Price",
