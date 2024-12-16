@@ -10,7 +10,7 @@ import { API_BASE_URL } from '@/utils/api';
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import Toast from '@/app/_components/common/Tostify/Toast';
+// import Toast from '@/app/_components/common/Tostify/Toast';
 
 type tradingBotType = {
   type: 'signal' | 'ai';
@@ -122,7 +122,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   }
   const quantityAtRealCheck = (e: React.FocusEvent<HTMLInputElement>) => {
     const value = + e.target.value; // Convert the value to a number
-    if ((!user?.is_demo) && value < 5) {
+    if ((!user?.is_demo) && value < 10) {
       // Set the error if quantity is less than 10 for real users
       setError("quantity", {
         type: "manual",
@@ -156,7 +156,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     }
   }
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
-    if (data?.quantity < 5 && !user?.is_demo) {
+    if (data?.quantity < 10 && !user?.is_demo) {
       toast.warning(validationT("quantity.min"));
       return; // Prevent form submission if there is an error in quantity
     }
@@ -191,7 +191,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
   return (
     <>
-      <Toast />
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">{t("start_trading")}</h3>
       <form className="w-full py-3" onSubmit={handleSubmit(submitForm)}>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5 justify-start items-start ">
