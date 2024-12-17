@@ -7,12 +7,12 @@ import Toast from '../Tostify/Toast';
 import { useOTPInput } from "@/hooks/useOTPInput";
 import React, { Suspense, useState } from 'react';
 import Loading from "../loading/Loading";
-import { saveTokenToStorage,useAuth } from "@/context/AuthContext";
+import { saveTokenToStorage, useAuth } from "@/context/AuthContext";
 import { SpinBtn } from '../Buttons/MainBtn';
 import { useLocale, useTranslations } from 'next-intl';
 
-function VerifyInput() {                        
-   const {saveUserData}=useAuth();
+function VerifyInput() {
+   const { saveUserData } = useAuth();
    const route = useRouter();
    const searchParams = useSearchParams();
    const email = searchParams.get('email');
@@ -45,7 +45,7 @@ function VerifyInput() {
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
 
             saveTokenToStorage("expire_data_token", newTime.toString());
-            saveUserData(access_token,refresh_token);
+            saveUserData(access_token, refresh_token);
             // check if user choose plan before regiter checkout after verify
             const planExist = sessionStorage.getItem("planId");
             if (planExist) {

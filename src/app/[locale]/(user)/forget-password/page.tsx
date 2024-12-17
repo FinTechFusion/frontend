@@ -1,7 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  useState, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { MainBtn, SpinBtn } from "@/app/_components/common/Buttons/MainBtn";
 import Textbox from "@/app/_components/common/Text/Textbox";
@@ -81,7 +81,7 @@ function Page() {
 
   return (
     <div className="min-h-screen bg-gray-100 w-full flex justify-center items-center">
-      <div className="md:w-1/2 w-full bg-secondary container mx-auto p-8 rounded flex flex-col items-start">
+      <div className="md:w-1/2 w-full bg-secondary container mx-auto md:p-8 p-4 rounded flex flex-col items-start">
         <Toast />
         <Image
           src={forgetImg}
@@ -97,7 +97,7 @@ function Page() {
           descriptionClass="text-lg pb-4"
         />
         <form onSubmit={handleSubmit(submitForm)}>
-          <div className="w-50">
+          <div className="w-72">
             <Input
               type="email"
               name="email"
