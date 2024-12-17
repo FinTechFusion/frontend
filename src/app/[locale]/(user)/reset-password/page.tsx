@@ -68,9 +68,9 @@ function ResetPasswordPage() {
    };
 
    return (
-      <div className="container mx-auto min-h-screen flex flex-col items-center justify-center py-10 lg:w-1/3 md:w-2/3 w-full px-3 md:px-0 ">
+      <div className="container mx-auto min-h-screen flex flex-col items-center justify-center py-10 lg:w-1/3 md:w-2/3 w-full px-3 md:px-0">
          <Toast />
-         <div className="p-8 border shadow-sm">
+         <div className="md:p-8 p-4 border shadow-sm">
             <Textbox
                mainClass="text-center"
                title="auth.resetPassword"
@@ -79,15 +79,15 @@ function ResetPasswordPage() {
                descriptionClass="text-lg w-3/4 mx-auto" />
             <form className="mx-auto" onSubmit={handleSubmit(onSubmit)}>
                <input type="text" className="bg-gray-100 rounded focus:outline-none focus:ring-1 focus:ring-primary-700 h-10 w-full text-lg px-3 mb-3 text-dark" placeholder={t("enterOTPCode")} ref={inputRef} onChange={(e) => handleChange(e)} maxLength={6} />
-                  <Input
-                     label={t("newPassword")}
-                     name="password"
-                     register={register}
-                     placeholder={t("newPasswordPlaceHolder")}
-                     type="password"
-                     error={translateErrorMessage(errors.password?.message)}
-                  />
-                  <MainBtn content="auth.reset" btnProps="w-full" />
+               <Input
+                  label={t("newPassword")}
+                  name="password"
+                  register={register}
+                  placeholder={t("newPasswordPlaceHolder")}
+                  type="password"
+                  error={translateErrorMessage(errors.password?.message)}
+               />
+               <MainBtn content="auth.reset" btnProps="w-full" />
             </form>
          </div>
       </div>
