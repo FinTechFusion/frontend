@@ -40,6 +40,13 @@ export default function TradingBotForm({ type }: tradingBotType) {
     },
     next: { revalidate: 60 }
   });
+  const { data: RealSymbol } = useFetch(`${API_BASE_URL}/orders/symbols`, {
+    method: 'GET',
+    headers: {
+      'authorization': `Bearer ${accessToken}`,
+    },
+    next: { revalidate: 60 }
+  });
   async function FetchSymbols() {
     const response = await fetch(`${API_BASE_URL}/orders/symbols`, {
       method: 'GET',
@@ -227,7 +234,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
                 {...register("secondarySymbol")}
               >
                 <option value="">{t("please_select")}</option>
-                {symbolData?.map((asset: string, index: number) => (
+                {RealSymbol?.map((asset: string, index: number) => (
                   <option key={index} value={asset}>
                     {asset?.toUpperCase()}
                   </option>
