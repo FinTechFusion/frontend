@@ -30,6 +30,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
 
   return (
     <html lang={params.locale} dir={params.locale === "en" ? "ltr" : "rtl"}>
+      <meta name="google-site-verification" content="E118GLWAyszxIiZi3ZAtKIa3XGIaP43ifPKClul_q88" />
       {/* Google Tag Manager Script */}
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
