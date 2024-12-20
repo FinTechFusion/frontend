@@ -12,17 +12,24 @@ import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useAssetData } from "@/context/AssetsContext";
 // import Toast from '@/app/_components/common/Tostify/Toast';
 
 type tradingBotType = {
   type: "signal" | "ai";
 };
+type Asset = {
+  symbol: string;
+  quantity: number;
+};
+
+
 
 export default function TradingBotForm({ type }: tradingBotType) {
   const [currentSymbol, setCurrentSymbol] = useState<string | null>(null);
   const [symbolData, setSymbolData] = useState([]);
-  const [userAssets, setUserAssets] = useState([]);
-
+  const [userAssets, setUserAssets] = useState<{ items: Asset[] } | null>(null);
+  // const { userHasUSDT } = useAssetData();
   const [loading, setLoading] = useState<boolean>(false);
   const [signalProfitRange, setSignalProfitRange] = useState("N/A");
   const [aiProfitRange, setAiProfitRange] = useState("N/A");
@@ -43,27 +50,29 @@ export default function TradingBotForm({ type }: tradingBotType) {
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
-
+  // console.log("user has " + userHasUSDT);
   async function FetchAssets() {
-      const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
-        method: "GET",
-        headers: {
-          'authorization': `Bearer ${accessToken}`,
-       },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch assets");
-      }
-      const {data}  = await response.json();
-      return data;
+    const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch assets");
+    }
+    const { data } = await response.json();
+    console.log("assets symbols"+ JSON.stringify(data,null,2))
+    return data;
   }
-  
+
   async function FetchSymbols() {
     if (!user?.is_demo) {
       const response = await fetch(`${API_BASE_URL}/orders/symbols`, {
         method: "GET",
       });
       const { data } = await response.json();
+      console.log("from /order/symbol"+data);
       return data;
     }
   }
@@ -102,7 +111,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     } else {
       setAiProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
     }
-  }, [user?.signal_strategy, user?.ai_strategy]);
+  }, [user?.signal_strategy, user?.ai_strategy,type]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -287,7 +296,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
           )}
 
           <Input
-            label={user?.is_demo ? t("quantity") : t("tradingQuantity") }
+            label={user?.is_demo ? t("quantity") : t("tradingQuantity")}
             name="quantity"
             type="number"
             placeholder={user?.is_demo ? t("quantity") : t("tradingQuantity")}
