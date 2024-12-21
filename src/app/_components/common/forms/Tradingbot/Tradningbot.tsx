@@ -38,7 +38,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
-
+console.log(currentSymbol);
   async function FetchAssets() {
     const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
       method: "GET",
@@ -253,7 +253,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
   };
   function checkSymbol(e: any) {
     const selectedSymbol = e.target.value;
-    if (selectedSymbol === "usdt") {
+    console.log(selectedSymbol)
+    if (selectedSymbol == "USDT") {
       setCurrentSymbol(selectedSymbol);
     } else {
       setCurrentSymbol(null);
@@ -295,7 +296,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
               </span>
             )}
           </div>
-          {currentSymbol === "usdt" && (
+          {currentSymbol == "USDT" && (
             <div className="second-symbol">
               <label
                 htmlFor="symbol2"
