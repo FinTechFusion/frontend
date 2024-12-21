@@ -168,11 +168,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          const newTokens = (await response.json()) as Tokens;
          saveTokenToStorage('access_token', newTokens.access_token);
          saveTokenToStorage('refresh_token', newTokens.refresh_token);
-         console.log("saved new token"+newTokens)
+         console.log("saved new token"+ newTokens)
 
          const newExpireTime = Date.now() + 29 * 60 * 1000;
          saveTokenToStorage('expire_data_token', newExpireTime.toString());
-         console.log("saved new token"+newExpireTime.toString())
+         console.log("saved new token "+newExpireTime.toString())
 
          return newTokens.access_token;
       } catch (err) {

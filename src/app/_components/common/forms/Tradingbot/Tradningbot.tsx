@@ -2,34 +2,22 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
-import {
-  tradingbotType,
-  tradingbotSchema,
-} from "@/validation/TradingbotSchema";
+import { tradingbotType,tradingbotSchema,} from "@/validation/TradingbotSchema";
 import { MainBtn, SpinBtn } from "../../Buttons/MainBtn";
 import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useAssetData } from "@/context/AssetsContext";
-// import Toast from '@/app/_components/common/Tostify/Toast';
 
 type tradingBotType = {
   type: "signal" | "ai";
 };
-type Asset = {
-  symbol: string;
-  quantity: number;
-};
-
-
 
 export default function TradingBotForm({ type }: tradingBotType) {
   const [currentSymbol, setCurrentSymbol] = useState<string | null>(null);
   const [symbolData, setSymbolData] = useState([]);
-  const [userAssets, setUserAssets] = useState<{ items: Asset[] } | null>(null);
-  // const { userHasUSDT } = useAssetData();
+  const [userAssets, setUserAssets] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [signalProfitRange, setSignalProfitRange] = useState("N/A");
   const [aiProfitRange, setAiProfitRange] = useState("N/A");
@@ -50,7 +38,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
-  // console.log("user has " + userHasUSDT);
+
   async function FetchAssets() {
     const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
       method: "GET",
@@ -62,20 +50,72 @@ export default function TradingBotForm({ type }: tradingBotType) {
       throw new Error("Failed to fetch assets");
     }
     const { data } = await response.json();
-    console.log("assets symbols"+ JSON.stringify(data,null,2))
     return data;
   }
 
-  async function FetchSymbols() {
+  async function FetchSupportedSymbols() {
     if (!user?.is_demo) {
       const response = await fetch(`${API_BASE_URL}/orders/symbols`, {
         method: "GET",
       });
+      if (!response.ok) {
+        throw new Error("Failed to fetch supported symbols");
+      }
       const { data } = await response.json();
-      console.log("from /order/symbol"+data);
       return data;
     }
   }
+
+  useEffect(() => {
+    async function GetSymbolIntersection() {
+      try {
+        // Fetch user's assets
+        const fetchedAssets: { items: { quantity: number; symbol: string }[] } =
+          await FetchAssets();
+        const supportedSymbols: string[] = await FetchSupportedSymbols();
+
+        // If the user is a demo user, we use demo assets
+        if (user?.is_demo) {
+          console.log("Demo work");
+          // Instead of stringify, extract just the asset symbols and set them to state
+          const demoAssets = fetchedAssets.items.map((item) =>
+            item.symbol.toUpperCase()
+          ); // Extract asset symbols
+          setUserAssets(demoAssets); // Set the state to an array of symbols
+          return;
+        }
+        // Extract symbols from user assets and normalize to lowercase
+        const assetSymbols = fetchedAssets.items
+          .map((asset) => asset.symbol?.toLowerCase())
+          .filter(Boolean); // Ensure no null/undefined symbols
+
+        // Extract and normalize supported symbols to lowercase
+        const supportedSymbolsList = supportedSymbols.map((symbol) =>
+          symbol.toLowerCase()
+        );
+
+        // Find intersection between user's assets and supported symbols
+        const intersection = assetSymbols.filter((symbol) =>
+          supportedSymbolsList.includes(symbol)
+        );
+
+        // Check if "usdt" exists in the user's assets
+        if (assetSymbols.includes("usdt")) {
+          if (!intersection.includes("usdt")) {
+            intersection.push("usdt");
+          }
+        }
+
+        setUserAssets(intersection); // Update the state with the intersection
+        return intersection;
+      } catch (error) {
+        console.error("Error fetching or processing symbols:", error);
+        return [];
+      }
+    }
+    GetSymbolIntersection();
+  }, [user?.is_demo]);
+
   async function FetchSignalProfitRange() {
     if (type === "signal" && user?.signal_cycles != null) {
       const response = await fetch(
@@ -111,25 +151,15 @@ export default function TradingBotForm({ type }: tradingBotType) {
     } else {
       setAiProfitRange("N/A"); // Reset to N/A if the strategy is uninstalled
     }
-  }, [user?.signal_strategy, user?.ai_strategy,type]);
+  }, [user?.signal_strategy, user?.ai_strategy, type]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (currentSymbol !== null) {
-        const symbolData = await FetchSymbols();
-        setSymbolData(symbolData);
-      }
+      const symbolData = await FetchSupportedSymbols();
+      console.log("supported " + symbolData);
+      setSymbolData(symbolData);
     };
     fetchData();
-  }, [currentSymbol]);
-
-  useEffect(() => {
-    async function fetchAssets() {
-      const assetsSymbols = await FetchAssets();
-      setUserAssets(assetsSymbols);
-      console.log(assetsSymbols);
-    }
-    fetchAssets();
   }, [user?.is_demo]);
 
   const translateErrorMessage = (errorKey: string | undefined) => {
@@ -249,13 +279,13 @@ export default function TradingBotForm({ type }: tradingBotType) {
               className={`main_input border translate-y-0 ${
                 errors.symbol ? "border-2 border-red-600 shadow" : ""
               }`}
-              {...register("symbol")}
+              {...register("symbol",{required:validationT("symbol.required")})}
               onChange={checkSymbol}
             >
               <option value="">{t("please_select")}</option>
-              {userAssets?.items?.map((asset: any, index: number) => (
+              {userAssets?.map((asset: any, index: number) => (
                 <option key={index} value={asset?.symbol}>
-                  {asset?.symbol?.toUpperCase()}
+                  {asset?.toUpperCase()}
                 </option>
               ))}
             </select>
