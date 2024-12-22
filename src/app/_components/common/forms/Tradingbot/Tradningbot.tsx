@@ -38,7 +38,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
-console.log(currentSymbol);
   async function FetchAssets() {
     const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
       method: "GET",
@@ -76,7 +75,7 @@ console.log(currentSymbol);
 
         // If the user is a demo user, we use demo assets
         if (user?.is_demo) {
-          console.log("Demo work");
+
           // Instead of stringify, extract just the asset symbols and set them to state
           const demoAssets = fetchedAssets.items.map((item) =>
             item.symbol.toUpperCase()
@@ -156,7 +155,6 @@ console.log(currentSymbol);
   useEffect(() => {
     const fetchData = async () => {
       const symbolData = await FetchSupportedSymbols();
-      console.log("supported " + symbolData);
       setSymbolData(symbolData);
     };
     fetchData();
@@ -233,12 +231,14 @@ console.log(currentSymbol);
     }
 
     const isSubscribedAndReal = user?.is_subscribed && !user?.is_demo;
-    const isDemo = user?.is_demo;
-    // Modify data if account is real
-    const modifiedData = { ...data };
+     const isDemo = user?.is_demo;
+     // Modify data if account is real
+     const modifiedData = { ...data,
+      symbol: data.symbol?.toLowerCase(),
+     };
 
     if (!user?.is_demo && data.secondarySymbol) {
-      modifiedData.symbol = data.secondarySymbol; // Use secondarySymbol as symbol
+      modifiedData.symbol = data.secondarySymbol.toLocaleLowerCase(); // Use secondarySymbol as symbol
       if (modifiedData?.secondarySymbol) {
         const symbolPrice = await calcQuantity(modifiedData?.secondarySymbol);
         modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(4);
@@ -250,10 +250,10 @@ console.log(currentSymbol);
     } else {
       return toast.info(t("subscribeFirst"));
     }
+    console.log(modifiedData)
   };
   function checkSymbol(e: any) {
     const selectedSymbol = e.target.value;
-    console.log(selectedSymbol)
     if (selectedSymbol == "USDT") {
       setCurrentSymbol(selectedSymbol);
     } else {
