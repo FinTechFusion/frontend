@@ -14,10 +14,6 @@ const cairo = Cairo({ subsets: ["arabic"], weight: ["200", "300", "400", "500", 
 export const metadata: Metadata = {
   title: "FinTechFusion",
   description: "FinTechFusion offers an advanced automated trading platform designed to empower cryptocurrency traders by leveraging cutting-edge algorithms and real-time market analysis.",
-  icons: {
-    icon: "/assets/images/facion.png",
-    shortcut: "/assets/images/facion.png",
-  },
 };
 
 type RootLayoutProps = {
