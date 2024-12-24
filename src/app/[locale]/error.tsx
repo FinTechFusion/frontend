@@ -14,7 +14,6 @@ export default function Error({ error, reset }: errorPageProps) {
       if (error && !hasReset) {
          reset();
          hasReset = true;
-         console.log("Error reset triggered");
       }
    }, []); // No dependencies, ensures one-time execution
 
