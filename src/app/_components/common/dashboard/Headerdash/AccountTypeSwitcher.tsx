@@ -17,7 +17,6 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
-   const { fetchAssets } = useAssetData();
 
    const accessToken = getTokenFromStorage("access_token");
    const router = useRouter();
@@ -89,7 +88,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
       <div className="account-type relative">
          <Toast />
          <h5
-            className="uppercase text-primary-600 flex items-center gap-1 cursor-pointer"
+            className="uppercase bg-primary-50 w-fit py-1 px-2 rounded text-primary-700 flex items-start gap-1 cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}
             role="button"
             aria-expanded={isOpen}

@@ -32,7 +32,7 @@ export default function Strategies({ data }: dataProps) {
       <div className="section-title pt-6 pb-3">
         <h3 className="text-2xl font-medium">{t("ourStrategies")}</h3>
       </div>
-      <div className="type-filter flex gap-4 mt-4">
+      {/* <div className="type-filter flex gap-4 mt-4">
         {strategyTypes.map((type, index) => (
           <button
             key={index}
@@ -44,7 +44,7 @@ export default function Strategies({ data }: dataProps) {
               : t("strategies.longTerm")}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <form className="searchForm mt-8">
         <input

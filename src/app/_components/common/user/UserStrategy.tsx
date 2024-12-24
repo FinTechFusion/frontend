@@ -15,13 +15,17 @@ export default function UserStrategy({ type }: UserStrategyProps) {
    const { user, fetchUserData } = useAuth(); 
    const accessToken = getTokenFromStorage("access_token");
    const [currentStrategy, setCurrentStrategy] = useState<string | null>(null);
-   const t = useTranslations("dashboard.strategies")
+   const [loading, setLoading] = useState(true); // Loading state
+   const t = useTranslations("dashboard.strategies");
+
    useEffect(() => {
+      setLoading(true); // Start loading
       if (type === "signal") {
          setCurrentStrategy(user?.signal_strategy || null);
       } else if (type === "ai") {
          setCurrentStrategy(user?.ai_strategy || null);
       }
+      setLoading(false); // End loading
    }, [user, type]);
 
    async function UnInstallStrategy() {
@@ -37,7 +41,7 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                }
             );
             if (!response.ok) {
-               throw new Error("Failed to install startegy");
+               throw new Error("Failed to install strategy");
             }
             const responseData = await response.json();
             if (responseData.success) {
@@ -49,19 +53,34 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                toast.error(t("failedInstalled"));
             }
          } catch (error) {
-            throw new Error(t("uninstallError"));
-         } 
+            toast.error(t("uninstallError"));
+         }
       }
    }
+
+   // Skeleton loader
+   const SkeletonLoader = () => (
+      <div className="animate-pulse rounded p-5 max-w-md shadow-sm mt-3">
+         <div className="bg-gray-200 h-8 w-1/3 rounded mb-4"></div>
+         <div className="bg-gray-200 h-6 w-full rounded mb-2"></div>
+         <div className="bg-gray-200 h-6 w-3/4 rounded"></div>
+         <div className="bg-gray-200 h-6 w-1/2 rounded mt-4"></div>
+      </div>
+   );
+
    return (
       <>
-         {currentStrategy ? (
+         {loading ? (
+            <SkeletonLoader />
+         ) : currentStrategy ? (
             <div className="user-strategy py-5">
                <div className="flex justify-between items-center py-3">
                   <h3 className="text-xl font-medium">{t("strategy_used")}</h3>
-                  {currentStrategy == null && <Link href="/dashboard/store">
-                     <MainBtn content="dashboard.choose_startegy" btnProps="w-fit text-sm" />
-                  </Link>}
+                  {currentStrategy == null && (
+                     <Link href="/dashboard/store">
+                        <MainBtn content="dashboard.choose_startegy" btnProps="w-fit text-sm" />
+                     </Link>
+                  )}
                </div>
                <hr />
                <div className="md:w-1/3 my-5 bg-gray-50 rounded-lg">
@@ -93,12 +112,12 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                </div>
             </div>
          ) : (
-               <div className="flex justify-start py-3">
-                  <Link href="/dashboard/store">
-                     <MainBtn content="dashboard.choose_startegy" btnProps="w-fit" />
-                  </Link>
-               </div>
-            )}
+            <div className="flex justify-start py-3">
+               <Link href="/dashboard/store">
+                  <MainBtn content="dashboard.choose_startegy" btnProps="w-fit" />
+               </Link>
+            </div>
+         )}
       </>
    );
 }
