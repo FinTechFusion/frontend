@@ -74,7 +74,7 @@ export default function Footer() {
                <div className="text-secondary flex items-center gap-1">
                   <FaRegCopyright /> {t('copyright')} {new Date().getFullYear()} 
                </div>
-               <ul className="flex text-primary-50 gap-5">
+               <ul className="flex md:flex-row flex-col items-center text-primary-50 gap-5">
                   <li>
                      <Link href="/site/terms" className="capitalize text-lg hover:text-primary-500">{t('legal.terms')}</Link>
                   </li>

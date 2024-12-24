@@ -250,7 +250,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
     } else {
       return toast.info(t("subscribeFirst"));
     }
-    console.log(modifiedData)
   };
   function checkSymbol(e: any) {
     const selectedSymbol = e.target.value;
