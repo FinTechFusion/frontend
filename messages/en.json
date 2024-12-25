@@ -628,7 +628,8 @@
       "tradingbot": {
          "symbol": {
             "required": "Please, Select Symbol",
-            "invalidErrOrSymbol": "Error occurred or Invalid Symbol , try later"
+            "enterSecondSymbol":"Please, Select Second Symbol",
+            "invalidErrorSymbol": "Error occurred or Invalid Symbol , try later"
          },
          "quantity": {
             "required": "Quantity is required",

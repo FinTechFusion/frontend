@@ -628,6 +628,7 @@
       "tradingbot": {
          "symbol": {
             "required": "يرجى اختيار الرمز",
+            "enterSecondSymbol": "يرجى اختيار الرمز الثاني",
             "invalidErrOrSymbol": "حدث خطأ أو رمز غير صالح، حاول لاحقًا"
          },
          "quantity": {

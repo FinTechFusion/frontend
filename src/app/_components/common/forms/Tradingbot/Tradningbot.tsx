@@ -219,6 +219,9 @@ export default function TradingBotForm({ type }: tradingBotType) {
   }
   async function calcQuantity(symbol: string) {
     try {
+      if(!symbol){
+        return toast.error(validationT("symbol.enterSecondSymbol"))
+      } 
       const response = await fetch(`${API_BASE_URL}/binance/${symbol}/ticker`, {
         method: "GET",
         headers: {
@@ -227,7 +230,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
         },
       });
       if (!response.ok) {
-        return toast.error(validationT("invalidErrOrSymbol"));
+        return toast.error(validationT("symbol.invalidErrorSymbol"));
       }
       const data = await response.json();
       if (!data?.success) {
@@ -253,13 +256,11 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
     if (!user?.is_demo || (!user?.is_demo && data.secondarySymbol)) {
       if(data?.secondarySymbol) modifiedData.symbol = data?.secondarySymbol.toLocaleLowerCase(); // Use secondarySymbol as symbol
-
-      if (modifiedData?.secondarySymbol) {
-        const symbolPrice = await calcQuantity(modifiedData?.secondarySymbol);
-        const stepSize = await getStepSize(modifiedData?.symbol);
+      const symbol = modifiedData?.symbol || modifiedData?.secondarySymbol || ""; // Fallback to an empty string
+        const symbolPrice = await calcQuantity(symbol);
+        const stepSize = await getStepSize(symbol);
         console.log(stepSize)
         modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(stepSize);
-      }
     }
 
     if (isSubscribedAndReal || isDemo) {
