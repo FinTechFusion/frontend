@@ -38,6 +38,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
     mode: "onBlur",
     resolver: zodResolver(tradingbotSchema),
   });
+
   async function FetchAssets() {
     const response = await fetch(`${API_BASE_URL}/users/me/assets`, {
       method: "GET",
@@ -72,14 +73,12 @@ export default function TradingBotForm({ type }: tradingBotType) {
         const fetchedAssets: { items: { quantity: number; symbol: string }[] } =
           await FetchAssets();
         const supportedSymbols: string[] = await FetchSupportedSymbols();
-
         // If the user is a demo user, we use demo assets
         if (user?.is_demo) {
-
           // Instead of stringify, extract just the asset symbols and set them to state
           const demoAssets = fetchedAssets.items.map((item) =>
             item.symbol.toUpperCase()
-          ); // Extract asset symbols
+          ); 
           setUserAssets(demoAssets); // Set the state to an array of symbols
           return;
         }
@@ -92,12 +91,10 @@ export default function TradingBotForm({ type }: tradingBotType) {
         const supportedSymbolsList = supportedSymbols.map((symbol) =>
           symbol.toLowerCase()
         );
-
         // Find intersection between user's assets and supported symbols
         const intersection = assetSymbols.filter((symbol) =>
           supportedSymbolsList.includes(symbol)
         );
-
         // Check if "usdt" exists in the user's assets
         if (assetSymbols.includes("usdt")) {
           if (!intersection.includes("usdt")) {
@@ -203,6 +200,23 @@ export default function TradingBotForm({ type }: tradingBotType) {
       clearErrors("quantity");
     }
   };
+  async function getStepSize(symbol:string) {
+    try{
+      const response = await fetch(`${API_BASE_URL}/binance/${symbol}/filter`,{
+        method:'GET',
+      });
+      const {data} = await response.json();
+      console.log(data?.step_size)
+      const decimalPlaces = data?.step_size.toString()
+      ? data?.step_size.toString().split('.')[1]?.length 
+      : 0;    
+      console.log("desimal places "+decimalPlaces)
+      return decimalPlaces;
+    }
+    catch(err){
+      console.error("error at calc step-size "+err)
+    }
+  }
   async function calcQuantity(symbol: string) {
     try {
       const response = await fetch(`${API_BASE_URL}/binance/${symbol}/ticker`, {
@@ -237,16 +251,20 @@ export default function TradingBotForm({ type }: tradingBotType) {
       symbol: data.symbol?.toLowerCase(),
      };
 
-    if (!user?.is_demo && data.secondarySymbol) {
-      modifiedData.symbol = data.secondarySymbol.toLocaleLowerCase(); // Use secondarySymbol as symbol
+    if (!user?.is_demo || (!user?.is_demo && data.secondarySymbol)) {
+      if(data?.secondarySymbol) modifiedData.symbol = data?.secondarySymbol.toLocaleLowerCase(); // Use secondarySymbol as symbol
+
       if (modifiedData?.secondarySymbol) {
         const symbolPrice = await calcQuantity(modifiedData?.secondarySymbol);
-        modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(4);
+        const stepSize = await getStepSize(modifiedData?.symbol);
+        console.log(stepSize)
+        modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(stepSize);
       }
     }
 
     if (isSubscribedAndReal || isDemo) {
-      await createOrder(modifiedData);
+      // await createOrder(modifiedData);
+      console.log(modifiedData);
     } else {
       return toast.info(t("subscribeFirst"));
     }
