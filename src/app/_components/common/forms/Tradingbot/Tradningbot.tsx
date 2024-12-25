@@ -201,6 +201,9 @@ export default function TradingBotForm({ type }: tradingBotType) {
     }
   };
   async function getStepSize(symbol:string) {
+    if(!symbol){
+      return toast.error(validationT("symbol.required"));
+    } 
     try{
       const response = await fetch(`${API_BASE_URL}/binance/${symbol}/filter`,{
         method:'GET',
@@ -220,7 +223,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   async function calcQuantity(symbol: string) {
     try {
       if(!symbol){
-        return toast.error(validationT("symbol.enterSecondSymbol"))
+        return toast.error(validationT("symbol.enterSecondSymbol"));
       } 
       const response = await fetch(`${API_BASE_URL}/binance/${symbol}/ticker`, {
         method: "GET",
@@ -262,9 +265,8 @@ export default function TradingBotForm({ type }: tradingBotType) {
         console.log(stepSize)
         modifiedData.quantity = +(data.quantity / symbolPrice).toFixed(stepSize);
     }
-
     if (isSubscribedAndReal || isDemo) {
-      // await createOrder(modifiedData);
+      await createOrder(modifiedData);
       console.log(modifiedData);
     } else {
       return toast.info(t("subscribeFirst"));
