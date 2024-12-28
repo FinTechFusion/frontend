@@ -19,7 +19,7 @@ export default function StrategieCard({ id, banner_url, name, start_range, end_r
          </div>
          <div className="flex flex-col">
             <h2 className="text-2xl font-medium py-2">{name}</h2>
-            <div className="flex md:flex-row flex-col justify-start items-start">
+            <div className="flex md:flex-row flex-col md:justify-between md:items-center">
                <p className="text-lg">{t("strategies.start_range")} <span className="text-primary-700 text-bold">{start_range}</span></p>
                <p className="text-lg">{t("strategies.end_range")} <span className="text-primary-700 text-bold">{end_range}</span></p>
             </div>

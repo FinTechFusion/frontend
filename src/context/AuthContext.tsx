@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const router = useRouter();
 
    useEffect(() => {
-      console.log("Start checking ...");
       const interval = setInterval(() => {
          checkAndFetchUserData();
       }, 60000);
@@ -50,6 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
          saveTokenToStorage('access_token', accessToken);
          saveTokenToStorage('refresh_token', refreshToken);
+         
          const userData = await fetchUserData(accessToken);
          setUser(userData);
          const storedPath = sessionStorage.getItem('path');
@@ -145,7 +145,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
    const refreshAccessToken = async (): Promise<string> => {
       try {
-         console.log("start refresh token")
          const refreshToken = getTokenFromStorage('refresh_token');
          if (!refreshToken) {
             router.push('/login');
@@ -168,7 +167,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
          const newTokens = (await response.json()) as Tokens;
          saveTokenToStorage('access_token', newTokens.access_token);
          saveTokenToStorage('refresh_token', newTokens.refresh_token);
-         console.log("saved new token"+ newTokens)
 
          const newExpireTime = Date.now() + 29 * 60 * 1000;
          saveTokenToStorage('expire_data_token', newExpireTime.toString());

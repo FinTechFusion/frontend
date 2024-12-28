@@ -64,6 +64,7 @@ const Input = <TFieldValue extends FieldValues>({
             type={type}
             className={`main_input border-2 ${error && 'border-red-600 shadow'} ${readOnly && 'bg-gray-100 cursor-not-allowed'}`}
             id={name}
+            autoComplete={name}
             placeholder={placeholder}
             {...inputProps}
             {...rest}

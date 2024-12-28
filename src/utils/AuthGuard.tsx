@@ -39,6 +39,21 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
       checkAuth();
    }, [router, pathname]);
 
+   useEffect(() => {
+      const handleBackButton = () => {
+         sessionStorage.removeItem("path");
+         router.push('/');
+      };
+    
+      // Add event listener for the back button
+      window.addEventListener("popstate", handleBackButton);
+    
+      return () => {
+        // Clean up the event listener when the component unmounts
+        window.removeEventListener("popstate", handleBackButton);
+      };
+    }, []);
+    
    if (isLoading) {
       return <Loading />;
    }

@@ -12,7 +12,7 @@ export default function StartTrading() {
             titleClass="text-secondary md:text-2xl hover:text-secondary"
             title="startTrading.elevateStrategies.title"
             description="startTrading.joinCommunity.description"
-            descriptionClass="text-secondary text-xl md:w-3/4"
+            descriptionClass="text-secondary text-xl md:w-3/4 leading-10"
          />
          <Link href="/dashboard" className="flex justify-center items-center">
             <button className="bg-secondary hover:bg-gray-100 text-dark flex items-center justify-center gap-2 rounded p-3 font-medium md:text-xl text-lg mb-4">

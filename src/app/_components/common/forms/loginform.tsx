@@ -41,7 +41,7 @@ export default function Loginform() {
          if (response.ok) {
             const { access_token, refresh_token } = responseData;
             const currentTime = Date.now();
-            const thirtyMinutesInMilliseconds = 30 * 60 * 1000;
+            const thirtyMinutesInMilliseconds = 28 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
             saveTokenToStorage("expire_data_token", newExpireTime.toString());
             login(access_token, refresh_token);
