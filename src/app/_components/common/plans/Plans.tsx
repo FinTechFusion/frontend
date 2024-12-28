@@ -42,11 +42,11 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                body: JSON.stringify({ plan: planId })
             });
             const result = await response.json();
+            console.log("result of subscribe "+result)
             if (!result.success) {
                return toast.info(result?.detail);
             }
             if (result.data.plan === "beginner_trial") {
-               // toast.success(t("subscribeSuccess"));
                if (accessToken) {
                   fetchUserData(accessToken);
                }
@@ -66,22 +66,9 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          router.push('/login');
       }
    };
-   // useEffect(() => {
-   //    const checkPlan = () => {
-   //       const planId = sessionStorage.getItem("plan");
-   //       if (!user?.is_subscribed && planId) {
-   //          createSubscription(planId).finally(() => sessionStorage.removeItem("plan"));
-   //       }
-   //    };
-   //    // Check immediately in case `plan` already exists
-   //    checkPlan();
-   //    // Optionally poll `sessionStorage` if necessary
-   //    const interval = setInterval(checkPlan, 1000); // Check every second (adjust as needed)
-   //    return () => clearInterval(interval);
-   // }, [user]);
-
 
    const handlePurchase = async (planId: string) => {
+      console.log(planId)
       await createSubscription(planId);
    };
    useEffect(() => {

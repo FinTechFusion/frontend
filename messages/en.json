@@ -11,8 +11,10 @@
    },
    "hero": {
       "heading": "Best Platform Cryptocurrency",
-      "title": "Meet your new crypto trading bots",
-      "description": "Meet your new trading edge Bot Signal and Bot AI. Simple, smart, and secure. Bot Signal finds opportunities. Bot AI predicts the market. Both designed to boost your profits with ease and safety in mind."
+      "title": "Meet your new ",
+      "title-part":"crypto trading bots",
+      "description": "Meet your new trading edge Bot Signal and Bot AI. Simple, smart, and secure. Bot Signal finds opportunities. Bot AI predicts the market. Both designed to boost your profits with ease and safety in mind.",
+      "trail_btn": "Start Trial"
    },
    "binanceBopup": {
       "newMsg": "New message!",

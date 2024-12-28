@@ -1,13 +1,14 @@
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class", // Can be 'media' or 'class', default is 'media'
   theme: {
-    darkMode: false,
     colors: {
       primary: colors.teal,
       secondary: colors.white,
@@ -17,21 +18,20 @@ const config: Config = {
       pink: colors.pink,
       red: colors.red,
     },
-    variants: {
-      extend: {
-        textColor: ['group-hover'],
-        backgroundImage: {
-          'notfound-pattern': "url('/assets/images/pattern-lines.png')",
-          'contact-backgroud': "url('/assets/images/contact-backgroud.jpeg')",
-        },
-        zIndex: {
-          '100': '100',
-        }
+    extend: {
+      textColor: {
+        "group-hover": "inherit", // Example for extending textColor
       },
-
+      backgroundImage: {
+        "notfound-pattern": "url('/assets/images/pattern-lines.png')",
+        "contact-backgroud": "url('/assets/images/contact-backgroud.jpeg')",
+      },
+      zIndex: {
+        "100": "100",
+      },
     },
-
   },
   plugins: [],
 };
+
 export default config;

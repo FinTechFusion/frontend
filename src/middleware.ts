@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 
 const supportedLocales = ['en', 'ar'];
 
-export default function middleware(req: any) {
+export default function middleware(req: NextRequest) {
    const { pathname, search } = req.nextUrl;
 
    // Split the pathname and check if the first part matches a locale
@@ -13,6 +13,7 @@ export default function middleware(req: any) {
 
    // Get the locale from the "NEXT_LOCALE" cookie
    const cookieLocale = req.cookies.get('NEXT_LOCALE')?.value || 'ar';
+   console.log(cookieLocale)
 
    // If the path doesn't start with a locale, redirect to the locale from the cookie
    if (!supportedLocales.includes(localeInPath)) {

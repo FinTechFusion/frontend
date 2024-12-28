@@ -21,7 +21,7 @@ export default function LanguageSelector() {
             onClick={() => switchLang(locale === "en" ? "ar" : "en")}
             className={`flex items-center gap-1 px-3 py-2 text-lg font-medium bg-gray-100 shadow-sm rounded-md outline-none`}>
             <TbWorld className={`flex  ${locale === 'ar'&& 'order-2'}`} />
-            <span>{locale === "en" ? "Arabic" : "English"}</span>
+            <span>{locale === "en" ? "عربي" : "English"}</span>
          </button>
       </div>
    );
