@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
 import { tradingbotType,tradingbotSchema,} from "@/validation/TradingbotSchema";
 import { MainBtn, SpinBtn } from "../../Buttons/MainBtn";
-import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
+import { getFromCookies, getTokenFromStorage, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
@@ -25,7 +25,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
   const t = useTranslations("dashboard");
   const locale = useLocale();
   const validationT = useTranslations("validation.tradingbot");
-  const accessToken = getTokenFromStorage("access_token");
+  const accessToken = getFromCookies("access_token");
 
   const {
     register,

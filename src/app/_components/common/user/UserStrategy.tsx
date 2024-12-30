@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { MainBtn } from "../Buttons/MainBtn";
-import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
+import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
@@ -13,7 +13,7 @@ type UserStrategyProps = {
 
 export default function UserStrategy({ type }: UserStrategyProps) {
    const { user, fetchUserData } = useAuth(); 
-   const accessToken = getTokenFromStorage("access_token");
+   const accessToken = getFromCookies("access_token");
    const [currentStrategy, setCurrentStrategy] = useState<string | null>(null);
    const [loading, setLoading] = useState(true); // Loading state
    const t = useTranslations("dashboard.strategies");
@@ -112,7 +112,8 @@ export default function UserStrategy({ type }: UserStrategyProps) {
                </div>
             </div>
          ) : (
-            <div className="flex justify-start py-3">
+            <div className="flex md:flex-row flex-col md:justify-between md:items-center py-8 gap-4 pe-2 border-b">
+               <h3 className="capitalize text-2xl font-medium">{t("choose_startegyForTrading")}</h3>
                <Link href="/dashboard/store">
                   <MainBtn content="dashboard.choose_startegy" btnProps="w-fit" />
                </Link>

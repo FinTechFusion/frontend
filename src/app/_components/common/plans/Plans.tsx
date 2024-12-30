@@ -4,7 +4,7 @@ import { API_BASE_URL } from '@/utils/api';
 import { FaCheck } from "react-icons/fa6";
 import Loading from '@/app/_components/common/loading/Loading';
 import { PlanType } from '@/utils/types';
-import { getTokenFromStorage } from '@/context/AuthContext';
+import { getFromCookies } from '@/context/AuthContext';
 import { toast } from 'react-toastify';
 import Toast from '../Tostify/Toast';
 import { useAuth } from '@/context/AuthContext';
@@ -22,7 +22,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
    const [isLoading, setIsLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
-   const accessToken = getTokenFromStorage("access_token");
+   const accessToken = getFromCookies("access_token");
    const locale = useLocale();
    const t = useTranslations("plans");
    const { data, loading } = useFetch(`${API_BASE_URL}/subscriptions/plans?lang=${locale}`, {

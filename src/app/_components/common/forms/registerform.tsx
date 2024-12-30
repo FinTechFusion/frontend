@@ -44,7 +44,7 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      if (!turnstileToken) {
+      if (!turnstileToken && isProduction) {
          toast.error(t("complete_captcha"));
          return;
       }

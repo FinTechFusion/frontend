@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import { MdDelete } from 'react-icons/md';
 import { API_BASE_URL } from '@/utils/api';
-import { getTokenFromStorage } from '@/context/AuthContext';
+import { getFromCookies } from '@/context/AuthContext';
 import Loading from '../common/loading/Loading';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -15,7 +15,7 @@ import ReactPaginate from 'react-paginate';
 import Toast from '@/app/_components/common/Tostify/Toast';
 
 const TableOrders = () => {
-   const accessToken = getTokenFromStorage("access_token");
+   const accessToken = getFromCookies("access_token");
    const [rowData, setRowData] = useState<Order[]>([]);
    const [limit] = useState<number>(5);
    const [currentPage, setCurrentPage] = useState<number>(0);
@@ -38,7 +38,7 @@ const TableOrders = () => {
    const handleDelete = async (order: any) => {
       if (order.status === "pending") {
          try {
-            const accessToken = getTokenFromStorage("access_token");
+            const accessToken = getFromCookies("access_token");
             const response = await fetch(`${API_BASE_URL}/users/me/orders/${order.id}?lang=${locale}`, {
                method: "DELETE",
                headers: {
