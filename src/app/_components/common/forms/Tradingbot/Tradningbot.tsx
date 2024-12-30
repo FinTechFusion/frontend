@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../input/input";
 import { tradingbotType,tradingbotSchema,} from "@/validation/TradingbotSchema";
 import { MainBtn, SpinBtn } from "../../Buttons/MainBtn";
-import { getFromCookies, getTokenFromStorage, useAuth } from "@/context/AuthContext";
+import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
