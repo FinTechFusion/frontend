@@ -21,7 +21,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
   const { user } = useAuth();
   const accessToken:any = getFromCookies("access_token");
-  // const [userHasUSDT, setUserHasUSDT] = useState<boolean>(false);
 
   const fetchAssets = async () => {
     if (!user || !accessToken) return;

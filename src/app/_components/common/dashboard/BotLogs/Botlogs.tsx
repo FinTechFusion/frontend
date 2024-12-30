@@ -1,16 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getTokenFromStorage } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { BotLogsProps, Log } from "@/utils/types";
 import { useTranslations } from 'next-intl';
+import { getFromCookies } from "@/context/AuthContext";
 
 
 export default function BotLogs({ orderId }: BotLogsProps) {
    const [logs, setLogs] = useState<Log[]>([]);
    const [rawOutput, setRawOutput] = useState<string[]>([]);
-   const accessToken = getTokenFromStorage("access_token");
+   const accessToken = getFromCookies("access_token");
    const t = useTranslations("dashboard.botlogs");
    async function fetchLogs(orderId: string) {
       try {
