@@ -6,7 +6,7 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { useRouter } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { toast } from "react-toastify";
 import { Tokens, AuthContextType, User } from "@/utils/types";
 import { API_BASE_URL } from "@/utils/api";
@@ -165,6 +165,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const userData = await fetchUserData(accessToken);
     setUser(userData);
   };
+
   // Utility function to remove tokens from localStorage
   const clearTokensFromStorage = (): void => {
     deleteCookie("access_token");
