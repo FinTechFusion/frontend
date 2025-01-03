@@ -93,7 +93,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         throw new Error("Failed to fetch user data");
       }
-
       const { data } = await response.json();
       setUser(data);
       return data;
@@ -166,6 +165,51 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(userData);
   };
 
+
+  // handle save user needed route at session storage if not logedin
+  const pathname = usePathname();
+  const protectedRoutes = ['/dashboard', '/site/exchange', '/payment'];
+  const authRoutes = ['/login', '/forget-password', '/reset-password'];
+
+  const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
+  const isAuthRoute = authRoutes.includes(pathname);
+  const accessToken = getFromCookies("access_token")
+  const checkAuth = () => {
+     const existRoute = sessionStorage.getItem("path");
+     if (!accessToken && isProtectedRoute) {
+        sessionStorage.setItem("path", pathname);
+        router.push(`/login`);
+        console.log("saved path and go to login")
+     } else if (accessToken && isAuthRoute) {
+        router.push(existRoute || `/dashboard`);
+        sessionStorage.removeItem("path");
+     }
+     // Store /site/plans path if needed
+     if (pathname === "/site/plans") {
+        sessionStorage.setItem("path", pathname);
+     }
+     setIsLoading(false);
+  };
+
+  useEffect(() => {
+     checkAuth();
+  }, [router, pathname]);
+
+  // useEffect(() => {
+  //    const handleBackButton = () => {
+  //       sessionStorage.removeItem("path");
+  //       router.push('/');
+  //    };
+   
+  //    // Add event listener for the back button
+  //    window.addEventListener("popstate", handleBackButton);
+   
+  //    return () => {
+  //      // Clean up the event listener when the component unmounts
+  //      window.removeEventListener("popstate", handleBackButton);
+  //    };
+  //  }, []);
+   
   // Utility function to remove tokens from localStorage
   const clearTokensFromStorage = (): void => {
     deleteCookie("access_token");

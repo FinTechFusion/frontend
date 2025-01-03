@@ -30,6 +30,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    });
 
    const createSubscription = async (planId: string) => {
+      console.log("start subscribe")
       if (accessToken) {
          setIsLoading(true);
          try {
@@ -42,7 +43,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                body: JSON.stringify({ plan: planId })
             });
             const result = await response.json();
-            console.log("result of subscribe "+result)
+            console.log("result of subscribe "+JSON.stringify(result))
             if (!result.success) {
                return toast.info(result?.detail);
             }
@@ -64,6 +65,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       } else {
          sessionStorage.setItem("planId", planId);
          router.push('/login');
+         return;
       }
    };
 
@@ -73,13 +75,13 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    };
    useEffect(() => {
       const planId = sessionStorage.getItem("planId");
-      if (planId) {
+      if (planId && accessToken) {
          handlePurchase(planId).then(() => {
-            // Clear the session storage item to prevent infinite requests
             sessionStorage.removeItem("planId");
          });
       }
-   }, []); 
+   }, [accessToken]);
+   
 
    const filteredPlans = data?.filter((plan: PlanType) => {
       return plan.frequency === selectedPlanType ||

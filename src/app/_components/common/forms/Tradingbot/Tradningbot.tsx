@@ -9,6 +9,7 @@ import { API_BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import Toast from "../../Tostify/Toast";
 
 type tradingBotType = {
   type: "signal" | "ai";
@@ -283,6 +284,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
 
   return (
     <>
+    <Toast/>
       <h3 className="text-xl font-medium capitalize text-dark w-fit py-2 border-b-2 border-primary-600">
         {t("start_trading")}
       </h3>
