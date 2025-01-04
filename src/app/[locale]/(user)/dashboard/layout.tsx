@@ -6,6 +6,7 @@ import Headerdash from "@/app/_components/common/dashboard/Headerdash/Headerdash
 import { AssetDataProvider } from "@/context/AssetsContext";
 import Toast from '@/app/_components/common/Tostify/Toast';
 
+
 export const metadata: Metadata = {
    title: "FinTech Fusion",
    description: "FinTechFusion offers an advanced automated trading platform designed to empower cryptocurrency traders by leveraging cutting-edge algorithms and real-time market analysis.",

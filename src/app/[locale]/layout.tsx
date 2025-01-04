@@ -4,7 +4,6 @@ import '../../styles/globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { AuthProvider } from '@/context/AuthContext';
-import AuthGuard from "@/utils/AuthGuard";
 
 import Script from 'next/script'; // Import Next.js Script component
 import 'react-toastify/dist/ReactToastify.css';
@@ -50,11 +49,9 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
         </noscript>
 
         <AuthProvider>
-          <AuthGuard>
             <NextIntlClientProvider locale={params.locale} messages={messages}>
               {children}
             </NextIntlClientProvider>
-          </AuthGuard>
         </AuthProvider>
       </body>
     </html>

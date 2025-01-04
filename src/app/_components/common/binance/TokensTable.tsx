@@ -50,8 +50,8 @@ export default function TokensTable() {
             )}
           </tbody>
         </table>
-
-        <ReactPaginate
+      </div>
+      <ReactPaginate
           previousLabel={t("previous")}
           nextLabel={t("next")}
           breakLabel={"..."}
@@ -66,7 +66,6 @@ export default function TokensTable() {
           nextClassName={"mx-1"}
           forcePage={currentPage}
         />
-      </div>
     </>
   );
 }

@@ -19,7 +19,6 @@ export default function Page() {
                <Loginform />
             </div>
          </div>
-
       </section>
    )
 }

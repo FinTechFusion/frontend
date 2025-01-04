@@ -1,6 +1,6 @@
 "use client"
 import Swal from 'sweetalert2'
-import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
+import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import Loading from '@/app/_components/common/loading/Loading';
 import CurrentPlan from '../../supscription/CurrentPlan';
@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 const UserSubscription = () => {
-   const accessToken = getTokenFromStorage("access_token");
+   const accessToken = getFromCookies("access_token");
    const { user, fetchUserData } = useAuth();
    const [subscriptionData, setSubscriptionData] = useState(null);
    const [isLoading, setIsLoading] = useState(false);

@@ -1,5 +1,4 @@
 "use client";
-
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, loginType } from "@/validation/loginSchema";
@@ -7,7 +6,7 @@ import { MainBtn, SpinBtn } from "../Buttons/MainBtn";
 import { Input } from "@/app/_components/common/forms";
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from "@/utils/api";
-import { saveTokenToStorage, useAuth } from "@/context/AuthContext";
+import { saveToCookies, useAuth } from "@/context/AuthContext";
 import Toast from "../Tostify/Toast";
 import { useState } from "react";
 import { useLocale, useTranslations } from 'next-intl';
@@ -40,10 +39,11 @@ export default function Loginform() {
          const responseData = await response.json();
          if (response.ok) {
             const { access_token, refresh_token } = responseData;
-            const currentTime = Date.now();
+            // Safely get current time
+            const currentTime = typeof window !== 'undefined' ? Date.now() : 0;  
             const thirtyMinutesInMilliseconds = 28 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
-            saveTokenToStorage("expire_data_token", newExpireTime.toString());
+            saveToCookies("expire_data_token", newExpireTime.toString());
             login(access_token, refresh_token);
             toast.success(t("loginSuccess"));
          } else {

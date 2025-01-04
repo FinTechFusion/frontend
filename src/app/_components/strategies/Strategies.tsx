@@ -25,7 +25,7 @@ export default function Strategies({ data }: dataProps) {
     return matchesType && matchesSearch;
   });
 
-  const strategyTypes: string[] = Array.from(new Set<string>(data?.map((strategy: Strategy) => strategy.type)));
+  // const strategyTypes: string[] = Array.from(new Set<string>(data?.map((strategy: Strategy) => strategy.type)));
   const t = useTranslations("dashboard");
   return (
     <div className="md:px-0 px-2">

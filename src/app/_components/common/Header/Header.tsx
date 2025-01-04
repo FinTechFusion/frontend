@@ -1,16 +1,15 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getTokenFromStorage } from "@/context/AuthContext";
+import { getFromCookies } from "@/context/AuthContext";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import Logo from '../Logo';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import LanguageSelector from '@/app/_components/selector/LanguageSelector';
-// import  useSubscribe from '@/hooks/useSubscribe';
 
 export default function Header() {
-  const [accessToken] = useState(getTokenFromStorage("access_token"));
+  const [accessToken] = useState(getFromCookies("access_token"));
   const [toggle, setToggle] = useState(false);
   const t = useTranslations('header');
 
@@ -73,7 +72,7 @@ export default function Header() {
         </ul>
       </div>
       <div className='auth flex justify-center items-center gap-x-5'>
-        {accessToken === null ? (
+        {!accessToken ? (
           <>
             <Link href='/login' className='rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 font-medium text-secondary shadow md:flex hidden'>{t("login")}</Link>
             <Link href='/register' className='hidden md:flex rounded-md bg-gray-100 px-4 py-2 font-medium text-primary-600 hover:bg-primary-600 hover:text-secondary transform transition-all ease-in-out'>{t("freetrial")}</Link>

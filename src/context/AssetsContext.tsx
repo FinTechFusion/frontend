@@ -2,7 +2,7 @@
 
 import { API_BASE_URL } from "@/utils/api";
 import { createContext, useContext, useState, useMemo, ReactNode } from "react";
-import { getTokenFromStorage } from "@/context/AuthContext";
+import { getFromCookies } from "@/context/AuthContext";
 import { ApiError, AssetDataContextType, AssetInfo } from "../utils/types";
 import { useAuth } from "@/context/AuthContext";
 
@@ -20,8 +20,7 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
   const [assetError, setAssetError] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<ApiError | null>(null);
   const { user } = useAuth();
-  const accessToken = getTokenFromStorage("access_token");
-  // const [userHasUSDT, setUserHasUSDT] = useState<boolean>(false);
+  const accessToken:any = getFromCookies("access_token");
 
   const fetchAssets = async () => {
     if (!user || !accessToken) return;

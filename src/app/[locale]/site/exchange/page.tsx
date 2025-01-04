@@ -25,7 +25,8 @@ export default function Page() {
                <span className="block py-3 text-lg">{t("donthaveExchanges")}</span>
                <Link href="/dashboard">
                   <b className="text-primary-700 text-xl cursor-pointer">{t("startAtDemo")}</b>
-               </Link>            </div>
+               </Link>           
+            </div>
             <p className="py-8 text-center text-dark text-lg flex justify-center items-start w-4/5"><span className="text-2xl"><IoIosLock /></span>{t("accessTransfer")}</p>
          </div>
       </div>

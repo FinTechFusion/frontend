@@ -8,13 +8,17 @@ import useFetch from "@/hooks/useFetch";
 import Loading from '@/app/_components/common/loading/Loading';
 import { useLocale, useTranslations } from "next-intl";
 import { IoClose } from "react-icons/io5";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Page() {
    const t = useTranslations("binance");
+   const router = useRouter();
    const locale = useLocale();
+   const {user} = useAuth();
    const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`);
-   if (loading) return <Loading />
+   if (loading) return <Loading />;
+   if(user?.is_binance) return router.push('/dashboard');
    return (
       <div className="relative">
          <div className="opacity-25">

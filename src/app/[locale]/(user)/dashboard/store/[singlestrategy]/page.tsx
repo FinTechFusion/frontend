@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
+import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import Image from "next/image";
 import Loading from "@/app/_components/common/loading/Loading";
@@ -18,7 +18,7 @@ interface SingleStrategyItemProps {
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user, fetchUserData } = useAuth();
-  const accessToken = getTokenFromStorage("access_token");
+  const accessToken = getFromCookies("access_token");
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
   const [installStrategy, setInstall] = useState<boolean>(false)

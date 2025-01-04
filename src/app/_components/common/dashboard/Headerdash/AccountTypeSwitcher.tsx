@@ -1,4 +1,4 @@
-import { getTokenFromStorage, useAuth } from "@/context/AuthContext";
+import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import { AccountTypeProps } from "@/utils/types";
 import { useRouter } from '@/i18n/navigation';
@@ -18,7 +18,7 @@ export default function AccountTypeSwitcher({ isDemo: initialDemo, balance }: Ac
    const [loading, setLoading] = useState(false);
    const { user, fetchUserData } = useAuth();
 
-   const accessToken = getTokenFromStorage("access_token");
+   const accessToken = getFromCookies("access_token");
    const router = useRouter();
    const t = useTranslations("dashboard.accountTypes");
    const alertT = useTranslations('alerts');

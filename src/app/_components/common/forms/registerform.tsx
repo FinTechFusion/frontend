@@ -20,7 +20,7 @@ export default function RegisterForm() {
    const route = useRouter();
    const locale = useLocale();
    const isProduction = process.env.NODE_ENV === 'production';
-
+   console.log("env type : "+isProduction)
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema),
@@ -44,14 +44,10 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      if (!turnstileToken) {
-         toast.error(t("complete_captcha"));
-         return;
-      }
-      if (!checked) { // Ensure the agreement is checked
-         setShowAgreementError(true);
-         return;
-      }
+      if (!turnstileToken && !isProduction) return toast.error(t("complete_captcha"));
+      // Ensure the agreement is checked
+      if (!checked) return setShowAgreementError(true);
+      
       setShowAgreementError(false); // Reset error when valid
       setIsLoading(true);
       try {
