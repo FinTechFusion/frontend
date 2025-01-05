@@ -18,7 +18,6 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-//
 export const saveToCookies = (
   key: string,
   value: string,
@@ -62,9 +61,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData = await fetchUserData(accessToken); 
       setUser(userData); 
       const storedPath = sessionStorage.getItem("path"); 
-      
-      // Remove the return statement and handle both cases the same way
+      //handle both cases the same way
       router.push(storedPath || '/dashboard');
+      console.log("go to dashboard")
       if (storedPath) {
         sessionStorage.removeItem("path");
       }
@@ -172,7 +171,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const isAuthRoute = authRoutes.includes(pathname);
   const accessToken = getFromCookies("access_token")
   const checkAuth = () => {
-     const existRoute = sessionStorage.getItem("path");
+    const existRoute = sessionStorage.getItem("path");
      if (!accessToken && isProtectedRoute) {
         sessionStorage.setItem("path", pathname);
         router.push(`/login`);
@@ -192,20 +191,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
      checkAuth();
   }, [router, pathname]);
 
-  // useEffect(() => {
-  //    const handleBackButton = () => {
-  //       sessionStorage.removeItem("path");
-  //       router.push('/');
-  //    };
-   
-  //    // Add event listener for the back button
-  //    window.addEventListener("popstate", handleBackButton);
-   
-  //    return () => {
-  //      // Clean up the event listener when the component unmounts
-  //      window.removeEventListener("popstate", handleBackButton);
-  //    };
-  //  }, []);
+  useEffect(() => {
+     const handleBackButton = () => {
+        sessionStorage.removeItem("path");
+        router.push('/');
+     };
+     // Add event listener for the back button
+     window.addEventListener("popstate", handleBackButton);
+     return () => {
+       // Clean up the event listener when the component unmounts
+       window.removeEventListener("popstate", handleBackButton);
+     };
+   }, []);
    
   // Utility function to remove tokens from localStorage
   const clearTokensFromStorage = (): void => {
