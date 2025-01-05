@@ -62,8 +62,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData = await fetchUserData(accessToken);
       setUser(userData);
       const storedPath = sessionStorage.getItem("path");
+      console.log("stored path "+storedPath)
       if (storedPath) {
-        router.push(storedPath);
+        router.push(storedPath || '/dashboard');
         sessionStorage.removeItem("path");
       } else {
         return router.push("/dashboard");
