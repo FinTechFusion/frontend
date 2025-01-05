@@ -21,6 +21,7 @@ interface PlanCardProps {
 function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    const router = useRouter();
    const [isLoading, setIsLoading] = useState(false);
+   const [Loader, setLoader] = useState(false);
    const { user, fetchUserData } = useAuth();
    const accessToken = getFromCookies("access_token");
    const locale = useLocale();
@@ -30,7 +31,6 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    });
 
    const createSubscription = async (planId: string) => {
-      console.log("start subscribe")
       if (accessToken) {
          setIsLoading(true);
          try {
@@ -70,14 +70,15 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
    };
 
    const handlePurchase = async (planId: string) => {
-      console.log(planId)
       await createSubscription(planId);
    };
    useEffect(() => {
       const planId = sessionStorage.getItem("planId");
       if (planId && accessToken) {
+         setLoader(true); // Start loading
          handlePurchase(planId).then(() => {
             sessionStorage.removeItem("planId");
+            setLoader(false); // Stop loading
          });
       }
    }, [accessToken]);
@@ -88,7 +89,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
          (selectedPlanType === "monthly" && plan.frequency === "trial");
    }).filter((plan: PlanType) => plan.id !== excludedPlanId);
 
-   if (loading || isLoading) {
+   if (loading || isLoading || Loader) {
       return <Loading />;
    }
    return (
