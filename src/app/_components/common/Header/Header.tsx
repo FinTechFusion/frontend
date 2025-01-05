@@ -9,10 +9,13 @@ import { useTranslations } from 'next-intl';
 import LanguageSelector from '@/app/_components/selector/LanguageSelector';
 
 export default function Header() {
-  const [accessToken] = useState(getFromCookies("access_token"));
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [toggle, setToggle] = useState(false);
   const t = useTranslations('header');
-
+  useEffect(() => {
+    const token = getFromCookies("access_token");
+    setAccessToken(token || null);
+  }, []);
   useEffect(() => {
     const body = document.body;
     if (toggle) {
