@@ -41,7 +41,6 @@ export const getFromCookies = (key: string) => {
   return getCookie(key);
 };
 
-const accessToken = getFromCookies("access_token");
 
 // Auth Provider Component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
@@ -55,6 +54,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       checkAndFetchUserData();
     }, 60000);
   }, []);
+
   const login = async (accessToken: string, refreshToken: string) => {
     try {
       saveToCookies("access_token", accessToken, 1800);
@@ -62,7 +62,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData = await fetchUserData(accessToken);
       setUser(userData);
       const storedPath = sessionStorage.getItem("path");
-      console.log("stored path "+storedPath)
       if (storedPath) {
         router.push(storedPath || '/dashboard');
         sessionStorage.removeItem("path");
@@ -73,8 +72,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       toast.error("Login failed");
     }
   };
-
-  // logout user if change accessToken
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
@@ -106,6 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const checkAndFetchUserData = async () => {
+    const accessToken = getFromCookies("access_token");
     const expireTokenTime = getFromCookies("expire_data_token");
     if (!accessToken) return;
     const currentTime = Date.now();
@@ -149,10 +147,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const newTokens = (await response.json()) as Tokens;
       saveToCookies("access_token", newTokens.access_token);
       saveToCookies("refresh_token", newTokens.refresh_token);
-      console.log("saved new token "+newTokens)
       const newExpireTime = Date.now() + 29 * 60 * 1000;
       saveToCookies("expire_data_token", newExpireTime.toString());
-      console.log("saved new token " + newExpireTime.toString());
 
       return newTokens.access_token;
     } catch (err) {
