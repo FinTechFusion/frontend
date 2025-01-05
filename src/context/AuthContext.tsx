@@ -55,23 +55,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }, 60000);
   }, []);
 
-  const login = async (accessToken: string, refreshToken: string) => {
-    try {
-      saveToCookies("access_token", accessToken, 1800);
-      saveToCookies("refresh_token", refreshToken, 1800);
-      const userData = await fetchUserData(accessToken);
-      setUser(userData);
-      const storedPath = sessionStorage.getItem("path");
+  const login = async (accessToken: string, refreshToken: string) => { 
+    try { 
+      saveToCookies("access_token", accessToken, 1800); 
+      saveToCookies("refresh_token", refreshToken, 1800); 
+      const userData = await fetchUserData(accessToken); 
+      setUser(userData); 
+      const storedPath = sessionStorage.getItem("path"); 
+      
+      // Remove the return statement and handle both cases the same way
+      router.push(storedPath || '/dashboard');
       if (storedPath) {
-        router.push(storedPath || '/dashboard');
         sessionStorage.removeItem("path");
-      } else {
-        return router.push("/dashboard");
       }
-    } catch (err) {
-      toast.error("Login failed");
-    }
-  };
+    } catch (err) { 
+      toast.error("Login failed"); 
+    } 
+}
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
