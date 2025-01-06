@@ -21,6 +21,8 @@ export default function Loginform() {
    const validationT = useTranslations("validation");
    const [isLoading, setIsLoading] = useState(false);
    const locale = useLocale();
+   const storedPath = sessionStorage.getItem("path"); 
+
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
       resolver: zodResolver(loginSchema),
@@ -44,8 +46,9 @@ export default function Loginform() {
             const thirtyMinutesInMilliseconds = 28 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
             saveToCookies("expire_data_token", newExpireTime.toString());
-            login(access_token, refresh_token);
             toast.success(t("loginSuccess"));
+            if(storedPath == null) router.push('/dashboard');
+            login(access_token, refresh_token);
          } else {
             if (responseData.class === "UserNotVerified") {
                router.push(`/verifyemail/?email=${data.email}`)
