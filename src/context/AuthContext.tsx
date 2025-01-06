@@ -128,9 +128,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const loadUserData = async () => {
       if (accessToken) {
+        console.log("user is auth")
+        setIsAuthenticated(true);
         await fetchUserData(accessToken);
       }
       checkAndFetchUserData();
+      setIsAuthenticated(false);  
+      console.log("user not auth")
     };
     loadUserData();
   }, []);
@@ -173,16 +177,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const userData = await fetchUserData(accessToken);
     setUser(userData);
   };
-  // Check authentication status on mount
-  useEffect(() => {
-    const accessToken = getFromCookies("access_token");
-    if (accessToken) {
-      setIsAuthenticated(true);
-      fetchUserData(accessToken);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, []);
+  // // Check authentication status on mount
+  // useEffect(() => {
+  //   const accessToken = getFromCookies("access_token");
+  //   if (accessToken) {
+  //     setIsAuthenticated(true);
+  //     fetchUserData(accessToken);
+  //   } else {
+  //     setIsAuthenticated(false);
+  //   }
+  // }, []);
 
   // handle save user needed route at session storage if not logedin
   const pathname = usePathname();
@@ -191,13 +195,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
   const isAuthRoute = authRoutes.includes(pathname);
-  const accessToken = getFromCookies("access_token")
+  const accessToken = getFromCookies("access_token");
+
   const checkAuth = () => {
     const existRoute = sessionStorage.getItem("path");
      if (!isAuthenticated && isProtectedRoute) {
         sessionStorage.setItem("path", pathname);
         router.push(`/login`);
      } else if (isAuthenticated && isAuthRoute) {
+      console.log('redirect to saved route or dashbaord')
         router.push(existRoute || `/dashboard`);
         sessionStorage.removeItem("path");
      }
@@ -210,7 +216,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
      checkAuth();
-  }, [isAuthenticated,router, pathname]);
+     console.log("handle authentication ")
+  }, [isAuthenticated]);
 
   useEffect(() => {
      const handleBackButton = () => {
