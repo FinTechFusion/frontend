@@ -3,45 +3,119 @@ import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 
 const supportedLocales = ['en', 'ar'];
-const protectedRoutes = ['/(en|ar)/dashboard/:path*']; // Protected routes with locales
 
-export default function middleware(req: NextRequest) {
-   const { pathname, search } = req.nextUrl;
+// Define public routes (routes that don't require authentication)
+const publicRoutes = [
+  '/login',
+  '/register',
+  '/verifyemail',
+  '/reset-password',
+  '/forget-password',
+  '/api', // Add if you have public API routes
+];
 
-   // Split the pathname and check if the first part matches a locale
-   const pathnameParts = pathname.split('/');
-   const localeInPath = pathnameParts[1];
+// Define protected routes (routes that require authentication)
+const protectedRoutes = [
+  '/dashboard',
+  '/site/exchange',
+  '/payment',
+];
 
-   // Get the locale from the "NEXT_LOCALE" cookie
-   const cookieLocale = req.cookies.get('NEXT_LOCALE')?.value;
-   const accessToken = req.cookies.get("access_token")?.value;
+const COOKIE_NAME = 'access_token';
 
-   // routes user can't access if logged in
-   const restrictedRoutes = [
-      `/${cookieLocale}/login`,
-      `/${cookieLocale}/register`,
-      `/${cookieLocale}/verifyemail`,
-      `/${cookieLocale}/reset-password`,
-      `/${cookieLocale}/forget-password`,
-    ];
-    if(accessToken && restrictedRoutes.some((route)=>req.nextUrl.pathname.startsWith(route))){
-      const dashboardUrl = new URL(`/${cookieLocale}/dashboard`, req.url);
-      return NextResponse.redirect(dashboardUrl);
-    }
-   if  (!accessToken && req.nextUrl.pathname.startsWith(`/${cookieLocale}/dashboard`)) {
-      const loginUrl = new URL(`/${cookieLocale}/login`, req.url);
+export default async function middleware(req: NextRequest) {
+  const { pathname, search } = req.nextUrl;
+  const pathnameParts = pathname.split('/');
+  const localeInPath = pathnameParts[1];
+
+  // Get cookies
+  const cookieLocale = req.cookies.get('NEXT_LOCALE')?.value;
+  const accessToken = req.cookies.get(COOKIE_NAME)?.value;
+
+  // Handle locale redirect first
+  if (!supportedLocales.includes(localeInPath)) {
+    const defaultLocale = cookieLocale || 'en';
+    const redirectUrl = new URL(`/${defaultLocale}${pathname}${search}`, req.url);
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // Early return for static assets and public API routes
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api/public') ||
+    pathname.includes('.')
+  ) {
+    return NextResponse.next();
+  }
+
+  // Check if the current path is a protected route
+  const isProtectedRoute = protectedRoutes.some(route =>
+    pathname.includes(`/${localeInPath}${route}`)
+  );
+
+  // Check if the current path is a public route that should be restricted when logged in
+  const isRestrictedWhenLoggedIn = publicRoutes.some(route =>
+    pathname.includes(`/${localeInPath}${route}`)
+  );
+
+  // Create response object to modify headers
+  const response = NextResponse.next();
+
+  // Add security headers
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set(
+    'Strict-Transport-Security',
+    'max-age=31536000; includeSubDomains'
+  );
+
+  // Handle authentication logic
+  if (isProtectedRoute) {
+    if (!accessToken) {
+      // Redirect to login with return URL
+      const loginUrl = new URL(
+        `/${localeInPath}/login?returnUrl=${encodeURIComponent(pathname)}`,
+        req.url
+      );
       return NextResponse.redirect(loginUrl);
-   }
-   // If the path doesn't start with a locale, redirect to the locale from the cookie
-   if (!supportedLocales.includes(localeInPath)) {
-      const redirectUrl = new URL(`/${cookieLocale}${pathname}${search}`, req.url);
-      return NextResponse.redirect(redirectUrl);
-   }
+    }
 
-   // If the locale is already in the path, continue with the intl middleware
-   return createMiddleware(routing)(req);
+   //  try {
+   //    // Optional: Verify token validity here if needed
+   //    // const isValidToken = await verifyToken(accessToken);
+   //    // if (!isValidToken) throw new Error('Invalid token');
+
+   //    // Add cache control headers to prevent caching of protected routes
+   //    // response.headers.set(
+   //    //   'Cache-Control',
+   //    //   'no-store, no-cache, must-revalidate, proxy-revalidate'
+   //    // );
+   //    // response.headers.set('Pragma', 'no-cache');
+   //    // response.headers.set('Expires', '0');
+   //  } catch (error) {
+   //    // If token verification fails, redirect to login
+   //    const loginUrl = new URL(`/${localeInPath}/login`, req.url);
+   //    return NextResponse.redirect(loginUrl);
+   //  }
+  }
+
+  // Redirect logged-in users away from auth pages
+  if (accessToken && isRestrictedWhenLoggedIn) {
+    const dashboardUrl = new URL(`/${localeInPath}/dashboard`, req.url);
+    return NextResponse.redirect(dashboardUrl);
+  }
+
+  // Apply intl middleware
+  return createMiddleware(routing)(req);
 }
 
 export const config = {
-   matcher: ['/', '/(en|ar)/:path*'],
+  matcher: [
+    // Match all pathnames except for:
+    // - API routes
+    // - Static files
+    // - _next
+    '/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)',
+  ],
 };

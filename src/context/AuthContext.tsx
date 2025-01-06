@@ -243,6 +243,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     clearTokensFromStorage();
     sessionStorage.clear();
     setUser(null);
+    setIsAuthenticated(false); // Update authentication state
     router.push("/");
   };
   return (
