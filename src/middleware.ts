@@ -80,24 +80,6 @@ export default async function middleware(req: NextRequest) {
       );
       return NextResponse.redirect(loginUrl);
     }
-
-   //  try {
-   //    // Optional: Verify token validity here if needed
-   //    // const isValidToken = await verifyToken(accessToken);
-   //    // if (!isValidToken) throw new Error('Invalid token');
-
-   //    // Add cache control headers to prevent caching of protected routes
-   //    // response.headers.set(
-   //    //   'Cache-Control',
-   //    //   'no-store, no-cache, must-revalidate, proxy-revalidate'
-   //    // );
-   //    // response.headers.set('Pragma', 'no-cache');
-   //    // response.headers.set('Expires', '0');
-   //  } catch (error) {
-   //    // If token verification fails, redirect to login
-   //    const loginUrl = new URL(`/${localeInPath}/login`, req.url);
-   //    return NextResponse.redirect(loginUrl);
-   //  }
   }
 
   // Redirect logged-in users away from auth pages
@@ -112,10 +94,6 @@ export default async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match all pathnames except for:
-    // - API routes
-    // - Static files
-    // - _next
-    '/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)',
+  '/', '/(en|ar)/:path*'
   ],
 };
