@@ -75,7 +75,7 @@ export default async function middleware(req: NextRequest) {
     if (!accessToken) {
       // Redirect to login with return URL
       const loginUrl = new URL(
-        `/${localeInPath}/login?returnUrl=${encodeURIComponent(pathname)}`,
+        `/${localeInPath}/login`,
         req.url
       );
       return NextResponse.redirect(loginUrl);
