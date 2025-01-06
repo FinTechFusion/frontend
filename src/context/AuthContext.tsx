@@ -44,6 +44,8 @@ export const getFromCookies = (key: string) => {
 // Auth Provider Component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Track authentication state
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -64,13 +66,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData = await fetchUserData(accessToken); 
       if (userData) {
         setUser(userData); 
+        setIsAuthenticated(true); // Update authentication state
         const storedPath = sessionStorage.getItem("path");  
         // Clear any stored path after use
         if (storedPath) {
           sessionStorage.removeItem("path");
         }
         // Use replace to prevent adding to browser history
-        router.replace(storedPath || '/dashboard');
+        router.push(storedPath || '/dashboard');
       } else {
         throw new Error("Failed to fetch user data");
       }
@@ -170,7 +173,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const userData = await fetchUserData(accessToken);
     setUser(userData);
   };
-
+  // Check authentication status on mount
+  useEffect(() => {
+    const accessToken = getFromCookies("access_token");
+    if (accessToken) {
+      setIsAuthenticated(true);
+      fetchUserData(accessToken);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
 
   // handle save user needed route at session storage if not logedin
   const pathname = usePathname();
@@ -182,11 +194,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const accessToken = getFromCookies("access_token")
   const checkAuth = () => {
     const existRoute = sessionStorage.getItem("path");
-     if (!accessToken && isProtectedRoute) {
+     if (!isAuthenticated && isProtectedRoute) {
         sessionStorage.setItem("path", pathname);
         router.push(`/login`);
-        console.log("saved path and go to login")
-     } else if (accessToken && isAuthRoute) {
+     } else if (isAuthenticated && isAuthRoute) {
         router.push(existRoute || `/dashboard`);
         sessionStorage.removeItem("path");
      }
@@ -199,7 +210,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
      checkAuth();
-  }, [router, pathname]);
+  }, [isAuthenticated,router, pathname]);
 
   useEffect(() => {
      const handleBackButton = () => {
