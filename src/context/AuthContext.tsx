@@ -56,21 +56,31 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async (accessToken: string, refreshToken: string) => { 
     try { 
+      setIsLoading(true);
       saveToCookies("access_token", accessToken, 1800); 
       saveToCookies("refresh_token", refreshToken, 1800); 
+      
+      // Await user data fetch before routing
       const userData = await fetchUserData(accessToken); 
-      setUser(userData); 
-      const storedPath = sessionStorage.getItem("path"); 
-      //handle both cases the same way
-      router.push(storedPath || '/dashboard');
-      console.log("go to dashboard")
-      if (storedPath) {
-        sessionStorage.removeItem("path");
+      if (userData) {
+        setUser(userData); 
+        const storedPath = sessionStorage.getItem("path");  
+        // Clear any stored path after use
+        if (storedPath) {
+          sessionStorage.removeItem("path");
+        }
+        // Use replace to prevent adding to browser history
+        router.replace(storedPath || '/dashboard');
+      } else {
+        throw new Error("Failed to fetch user data");
       }
     } catch (err) { 
       toast.error("Login failed"); 
+      setError(err instanceof Error ? err.message : "An unknown error occurred");
+    } finally {
+      setIsLoading(false);
     } 
-}
+  }
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
