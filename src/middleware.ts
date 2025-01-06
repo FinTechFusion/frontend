@@ -116,6 +116,7 @@ export const config = {
     // - API routes
     // - Static files
     // - _next
+    '/', 
     '/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)',
   ],
 };
