@@ -40,7 +40,6 @@ export const getFromCookies = (key: string) => {
   return getCookie(key);
 };
 
-
 // Auth Provider Component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -55,35 +54,45 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       checkAndFetchUserData();
     }, 60000);
   }, []);
+  const supportedLocales = ["en", "ar"];
 
-  const login = async (accessToken: string, refreshToken: string) => { 
-    try { 
+  const getCurrentLocale = () => {
+    const pathname = window.location.pathname;
+    const locale = pathname.split("/")[1]; // Extract locale from URL (e.g., '/en/dashboard' -> 'en')
+    return supportedLocales.includes(locale) ? locale : "en"; // Default to 'en' if locale is invalid
+  };
+  const login = async (accessToken: string, refreshToken: string) => {
+    try {
       setIsLoading(true);
-      saveToCookies("access_token", accessToken, 1800); 
-      saveToCookies("refresh_token", refreshToken, 1800); 
-      
+      saveToCookies("access_token", accessToken, 1800);
+      saveToCookies("refresh_token", refreshToken, 1800);
+
       // Await user data fetch before routing
-      const userData = await fetchUserData(accessToken); 
+      const userData = await fetchUserData(accessToken);
       if (userData) {
-        setUser(userData); 
+        setUser(userData);
         setIsAuthenticated(true); // Update authentication state
-        const storedPath = sessionStorage.getItem("path");  
+        const storedPath = sessionStorage.getItem("path");
         // Clear any stored path after use
         if (storedPath) {
           sessionStorage.removeItem("path");
         }
-        // Use replace to prevent adding to browser history
-        router.push(storedPath || '/dashboard');
+        // Get current locale
+        const currentLocale = getCurrentLocale();
+        const redirectPath = storedPath || "/dashboard";
+        window.location.href = `/${currentLocale}${redirectPath}`; // Include locale prefix
       } else {
         throw new Error("Failed to fetch user data");
       }
-    } catch (err) { 
-      toast.error("Login failed"); 
-      setError(err instanceof Error ? err.message : "An unknown error occurred");
+    } catch (err) {
+      toast.error("Login failed");
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
     } finally {
       setIsLoading(false);
-    } 
-  }
+    }
+  };
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
@@ -128,13 +137,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const loadUserData = async () => {
       if (accessToken) {
-        console.log("user is auth")
+        console.log("user is auth");
         setIsAuthenticated(true);
         await fetchUserData(accessToken);
       }
       checkAndFetchUserData();
-      setIsAuthenticated(false);  
-      console.log("user not auth")
+      setIsAuthenticated(false);
+      console.log("user not auth");
     };
     loadUserData();
   }, []);
@@ -190,10 +199,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   // handle save user needed route at session storage if not logedin
   const pathname = usePathname();
-  const protectedRoutes = ['/dashboard', '/site/exchange', '/payment'];
-  const authRoutes = ['/login', '/forget-password', '/reset-password'];
+  const protectedRoutes = ["/dashboard", "/site/exchange", "/payment"];
+  const authRoutes = ["/login", "/forget-password", "/reset-password"];
 
-  const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.includes(route)
+  );
   const isAuthRoute = authRoutes.includes(pathname);
   const accessToken = getFromCookies("access_token");
 
@@ -203,7 +214,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       sessionStorage.setItem("path", pathname);
       router.push(`/login`);
     } else if (isAuthenticated && isAuthRoute) {
-      console.log('redirect to saved route or dashbaord')
+      console.log("redirect to saved route or dashbaord");
       router.push(existRoute || `/dashboard`);
       sessionStorage.removeItem("path");
     }
@@ -215,23 +226,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
-     checkAuth();
-     console.log("handle authentication ")
+    checkAuth();
   }, [isAuthenticated]);
 
   useEffect(() => {
-     const handleBackButton = () => {
-        sessionStorage.removeItem("path");
-        router.push('/');
-     };
-     // Add event listener for the back button
-     window.addEventListener("popstate", handleBackButton);
-     return () => {
-       // Clean up the event listener when the component unmounts
-       window.removeEventListener("popstate", handleBackButton);
-     };
-   }, []);
-   
+    const handleBackButton = () => {
+      sessionStorage.removeItem("path");
+      router.push("/");
+    };
+    // Add event listener for the back button
+    window.addEventListener("popstate", handleBackButton);
+    return () => {
+      // Clean up the event listener when the component unmounts
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, []);
+
   // Utility function to remove tokens from localStorage
   const clearTokensFromStorage = (): void => {
     deleteCookie("access_token");
