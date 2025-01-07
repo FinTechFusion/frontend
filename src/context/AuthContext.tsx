@@ -199,19 +199,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const checkAuth = () => {
     const existRoute = sessionStorage.getItem("path");
-     if (!isAuthenticated && isProtectedRoute) {
-        sessionStorage.setItem("path", pathname);
-        router.push(`/login`);
-     } else if (isAuthenticated && isAuthRoute) {
+    if (!isAuthenticated && isProtectedRoute) {
+      sessionStorage.setItem("path", pathname);
+      router.push(`/login`);
+    } else if (isAuthenticated && isAuthRoute) {
       console.log('redirect to saved route or dashbaord')
-        router.push(existRoute || `/dashboard`);
-        sessionStorage.removeItem("path");
-     }
-     // Store /site/plans path if needed
-     if (pathname === "/site/plans") {
-        sessionStorage.setItem("path", pathname);
-     }
-     setIsLoading(false);
+      router.push(existRoute || `/dashboard`);
+      sessionStorage.removeItem("path");
+    }
+    // Store /site/plans path if needed
+    if (pathname === "/site/plans") {
+      sessionStorage.setItem("path", pathname);
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
