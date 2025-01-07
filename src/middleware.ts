@@ -32,12 +32,11 @@ export default async function middleware(req: NextRequest) {
   const cookieLocale = req.cookies.get('NEXT_LOCALE')?.value;
   const accessToken = req.cookies.get(COOKIE_NAME)?.value;
 
-  // Handle locale redirect first
-  if (!supportedLocales.includes(localeInPath)) {
-    const defaultLocale = cookieLocale || 'ar';
-    const redirectUrl = new URL(`/${defaultLocale}${pathname}${search}`, req.url);
+   // If the path doesn't start with a locale, redirect to the locale from the cookie
+   if (!supportedLocales.includes(localeInPath)) {
+    const redirectUrl = new URL(`/${cookieLocale}${pathname}${search}`, req.url);
     return NextResponse.redirect(redirectUrl);
-  }
+ }
 
   // Early return for static assets and public API routes
   if (
@@ -93,7 +92,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-  '/', '/(en|ar)/:path*'
-  ],
+    matcher: ['/', '/(en|ar)/:path*', '/site/:path*', '/dashboard/:path*'],
 };
