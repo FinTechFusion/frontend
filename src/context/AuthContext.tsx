@@ -142,8 +142,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         await fetchUserData(accessToken);
       }
       checkAndFetchUserData();
-      setIsAuthenticated(false);
-      console.log("user not auth");
+      // setIsAuthenticated(false);
     };
     loadUserData();
   }, []);
