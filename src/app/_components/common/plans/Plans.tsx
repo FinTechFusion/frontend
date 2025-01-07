@@ -34,6 +34,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       if (accessToken) {
          setIsLoading(true);
          try {
+            console.log("user is subscribed "+user?.is_subscribed)
             const response = await fetch(`${API_BASE_URL}/users/me/subscription?lang=${locale}`, {
                method: `${user?.is_subscribed ? "PATCH" : "POST"}`,
                headers: {
@@ -43,9 +44,8 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
                body: JSON.stringify({ plan: planId })
             });
             const result = await response.json();
-            console.log("result of subscribe "+JSON.stringify(result))
             if (!result.success) {
-               return toast.info(result?.detail);
+               return toast.info(result?.detail || result.detail[0]?.msg);
             }
             if (result.data.plan === "beginner_trial") {
                if (accessToken) {
@@ -77,6 +77,7 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
       if (planId && accessToken) {
          setLoader(true); // Start loading
          handlePurchase(planId).then(() => {
+            sessionStorage.removeItem("path")
             sessionStorage.removeItem("planId");
             setLoader(false); // Stop loading
          });
