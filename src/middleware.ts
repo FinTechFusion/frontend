@@ -38,14 +38,14 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(redirectUrl);
  }
 
-  // Early return for static assets and public API routes
-  if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/api/public') ||
-    pathname.includes('.')
-  ) {
-    return NextResponse.next();
-  }
+  // // Early return for static assets and public API routes
+  // if (
+  //   pathname.startsWith('/_next') ||
+  //   pathname.startsWith('/api/public') ||
+  //   pathname.includes('.')
+  // ) {
+  //   return NextResponse.next();
+  // }
 
   // Check if the current path is a protected route
   const isProtectedRoute = protectedRoutes.some(route =>
