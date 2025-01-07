@@ -41,11 +41,10 @@ function VerifyInput() {
          if (responseData) {
             const { access_token, refresh_token } = responseData;
             const currentTime = Date.now();
-            const thirtyMinutesInMilliseconds = 29 * 60 * 1000;
+            const thirtyMinutesInMilliseconds = 28 * 60 * 1000;
             const newTime: number = currentTime + thirtyMinutesInMilliseconds;
-
             saveToCookies("expire_data_token", newTime.toString());
-            saveUserData(access_token, refresh_token);
+            await saveUserData(access_token, refresh_token);
             // check if user choose plan before regiter checkout after verify
             const planExist = sessionStorage.getItem("planId");
             if (planExist) {

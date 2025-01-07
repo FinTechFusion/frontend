@@ -20,7 +20,7 @@ export default function RegisterForm() {
    const route = useRouter();
    const locale = useLocale();
    const isProduction = process.env.NODE_ENV === 'production';
-   console.log("env type : "+isProduction)
+   console.log("production env : "+isProduction)
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema),

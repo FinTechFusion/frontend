@@ -183,9 +183,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     saveToCookies("access_token", accessToken);
     saveToCookies("refresh_token", refreshToken);
     const userData = await fetchUserData(accessToken);
-    console.log("user data "+userData);
-    setUser(userData);
-    setIsAuthenticated(true); // Update authentication state
+    if(userData){
+      setUser(userData);
+      setIsAuthenticated(true); // Update authentication state
+    }
   };
 
   // handle save user needed route at session storage if not logedin
