@@ -34,7 +34,7 @@ export default async function middleware(req: NextRequest) {
 
   // Handle locale redirect first
   if (!supportedLocales.includes(localeInPath)) {
-    const defaultLocale = cookieLocale || 'en';
+    const defaultLocale = cookieLocale || 'ar';
     const redirectUrl = new URL(`/${defaultLocale}${pathname}${search}`, req.url);
     return NextResponse.redirect(redirectUrl);
   }
