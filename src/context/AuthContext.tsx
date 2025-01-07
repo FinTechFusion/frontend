@@ -227,7 +227,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     checkAuth();
-  }, [isAuthenticated]);
+  }, [isAuthenticated,pathname,router]);
 
   useEffect(() => {
     const handleBackButton = () => {
