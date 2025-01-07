@@ -135,6 +135,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
+    const accessToken = getFromCookies("access_token");
     const loadUserData = async () => {
       if (accessToken) {
         console.log("user is auth");
@@ -142,7 +143,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         await fetchUserData(accessToken);
       }
       checkAndFetchUserData();
-      // setIsAuthenticated(false);
     };
     loadUserData();
   }, []);
@@ -205,7 +205,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     pathname.includes(route)
   );
   const isAuthRoute = authRoutes.includes(pathname);
-  const accessToken = getFromCookies("access_token");
 
   const checkAuth = () => {
     const existRoute = sessionStorage.getItem("path");
@@ -251,9 +250,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     clearTokensFromStorage();
     sessionStorage.clear();
+    const currentLocale = getCurrentLocale();
+    window.location.href = `/${currentLocale}`; 
     setUser(null);
     setIsAuthenticated(false); // Update authentication state
-    router.push("/");
   };
   return (
     <AuthContext.Provider
