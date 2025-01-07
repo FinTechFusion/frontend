@@ -200,18 +200,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const pathname = usePathname();
   const protectedRoutes = ["/dashboard", "/site/exchange", "/payment"];
   const authRoutes = ["/login", "/forget-password", "/reset-password"];
+  const excludedRoutes = ["/site/exchange/connect/status"]; // Add this line
 
   const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.includes(route)
+    pathname.includes(route) && 
+    !excludedRoutes.some(excludedRoute => pathname.includes(excludedRoute))
   );
+  
   const isAuthRoute = authRoutes.includes(pathname);
+  const accessToken = getFromCookies("access_token");
 
   const checkAuth = () => {
+     // Check if the current route is in excluded routes
+  const isExcludedRoute = excludedRoutes.some(route => pathname.includes(route));
     const existRoute = sessionStorage.getItem("path");
-    if (!isAuthenticated && isProtectedRoute) {
+    if (!accessToken && isProtectedRoute && !isExcludedRoute) {
       sessionStorage.setItem("path", pathname);
       router.push(`/login`);
-    } else if (isAuthenticated && isAuthRoute) {
+    } else if (accessToken && isAuthRoute && !isExcludedRoute) {
       console.log("redirect to saved route or dashbaord");
       router.push(existRoute || `/dashboard`);
       sessionStorage.removeItem("path");
