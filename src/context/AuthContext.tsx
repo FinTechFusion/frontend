@@ -183,18 +183,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     saveToCookies("access_token", accessToken);
     saveToCookies("refresh_token", refreshToken);
     const userData = await fetchUserData(accessToken);
+    console.log("user data "+userData);
     setUser(userData);
+    setIsAuthenticated(true); // Update authentication state
   };
-  // // Check authentication status on mount
-  // useEffect(() => {
-  //   const accessToken = getFromCookies("access_token");
-  //   if (accessToken) {
-  //     setIsAuthenticated(true);
-  //     fetchUserData(accessToken);
-  //   } else {
-  //     setIsAuthenticated(false);
-  //   }
-  // }, []);
 
   // handle save user needed route at session storage if not logedin
   const pathname = usePathname();
