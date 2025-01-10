@@ -6,7 +6,7 @@ export default function page() {
   return (
     <div className="botsignal">
       <UserStrategy type="signal" />
-      <div style={{ height: '60vh' }} className="my-6 pe-3">
+      <div style={{ height: '60vh' }} className="mt-6 mb-16 pe-3">
         <TradingViewWidget />
       </div>
       <div className="tradingbot-form">
