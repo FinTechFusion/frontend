@@ -304,6 +304,7 @@
       "emailPlaceHolder": "Enter Your Email",
       "password": "Password",
       "passwordPlaceHolder": "Enter strong password",
+      "loginPassword":"Enter your password",
       "don'thaveaccount": "Don't have an account?",
       "forgetPassword": "Forgot Password?",
       "create": "Sign Up",
