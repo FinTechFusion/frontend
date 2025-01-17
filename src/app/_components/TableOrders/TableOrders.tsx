@@ -158,11 +158,10 @@ const fetchOrderProfit = async (orderId: string): Promise<number | string> => {
          let pairProfit = ((sellPrice - buyPrice) / buyPrice) * 100;
          totalProfit += pairProfit;
       }
-      return parseFloat(totalProfit.toFixed(2));
+      return totalProfit;
    }
    catch (error) {
-      console.error(`Error fetching profit`, error);
-      return 'Error fetching profit';
+      return toast.error('Error fetching profit');
    }
 };
    const handlePageClick = (event: any) => {

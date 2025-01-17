@@ -21,8 +21,7 @@ export default function Loginform() {
    const validationT = useTranslations("validation");
    const [isLoading, setIsLoading] = useState(false);
    const locale = useLocale();
-   const storedPath = sessionStorage.getItem("path"); 
-
+   
    const { register, handleSubmit, formState: { errors } } = useForm<loginType>({
       mode: "onBlur",
       resolver: zodResolver(loginSchema),

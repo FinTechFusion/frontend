@@ -49,32 +49,32 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fintechfusion.net';
 // Metadata configuration
 const metadataConfig: Record<string, LocaleMetadata> = {
   en: {
-    title: "FinTechFusion - Automated Trading Platform",
+    title: "FintechFusion",
     description: "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
     metadataBase: new URL(baseUrl),
     openGraph: {
-      title: "FinTechFusion - Automated Trading Platform",
+      title: "FinTechFusion",
       description: "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
       url: `${baseUrl}/en`,
-      siteName: "FinTechFusion",
+      siteName: "FintechFusion",
       images: [{
         url: '/assets/images/preview.png',
         width: 1200,
         height: 630,
-        alt: "FinTechFusion Logo and Tagline",
+        alt: "FintechFusion Logo and Tagline",
       }],
       locale: "en_US",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "FinTechFusion - Automated Trading Platform",
+      title: "FintechFusion - Automated Trading Platform",
       description: "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
       images: ['/assets/images/preview.png'],
     },
   },
   ar: {
-    title: "فنتك فيوجن - منصة التداول الآلية",
+    title: "فنتك فيوجن",
     description: "انضم إلى فين تك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
     metadataBase: new URL(baseUrl),
     openGraph: {
