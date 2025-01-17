@@ -9,7 +9,7 @@ import { Link } from '@/i18n/navigation';
 export default function Hero() {
    const t = useTranslations('hero');
    return (
-      <main className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-10" >
+      <main className="container mx-auto md:min-h-[vh] min-h-[95vh] mt-12" >
          <div className="flex flex-col justify-center items-center md:h-[60vh] h-[80vh]">
             <div className="grid md:grid-cols-2 grid-cols-1 gap-12 md:justify-between justify-start items-center">
                <div className="text-title mt-10 flex flex-col justify-start items-start w-full">

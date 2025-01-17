@@ -157,11 +157,12 @@ export default function TradingBotForm({ type }: tradingBotType) {
     };
     fetchData();
   }, [user?.is_demo]);
-
+  // handle translate error
   const translateErrorMessage = (errorKey: string | undefined) => {
     if (!errorKey) return "";
     return validationT(errorKey);
   };
+  // create trading order
   async function createOrder(data: any) {
     setLoading(true);
     try {
@@ -214,7 +215,6 @@ export default function TradingBotForm({ type }: tradingBotType) {
       const decimalPlaces = data?.step_size.toString()
       ? data?.step_size.toString().split('.')[1]?.length 
       : 0;    
-      console.log("desimal places "+decimalPlaces)
       return decimalPlaces;
     }
     catch(err){
@@ -245,6 +245,7 @@ export default function TradingBotForm({ type }: tradingBotType) {
       console.log(err);
     }
   }
+  // sumbit user trading form 
   const submitForm: SubmitHandler<tradingbotType> = async (data) => {
     if (data?.quantity < 10 && !user?.is_demo) {
       toast.warning(validationT("quantity.min"));

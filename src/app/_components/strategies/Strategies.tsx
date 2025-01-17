@@ -1,70 +1,36 @@
-"use client"
-import { Strategy } from '@/utils/types';
-import { useState } from 'react';
-import StrategieCard from './StrategieCard';
-import { useTranslations } from "next-intl";
+import { Strategy } from "@/utils/types";
+import StrategieCard from "./StrategieCard";
+import { useLocale, useTranslations } from "next-intl";
+import Loading from "../common/loading/Loading";
+import { API_BASE_URL } from "@/utils/api";
+import useFetch from "@/hooks/useFetch";
 
-interface dataProps {
-  data?: Strategy[]
-}
-export default function Strategies({ data }: dataProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedType, setSelectedType] = useState<string | null>(null);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value.toUpperCase());
-  };
-
-  const handleTypeClick = (type: string) => {
-    setSelectedType(type === selectedType ? null : type);
-  };
-
-  const filteredData = data?.filter((strategy: Strategy) => {
-    const matchesType = selectedType ? strategy.type === selectedType : true;
-    const matchesSearch = strategy.name.toUpperCase().includes(searchQuery);
-    return matchesType && matchesSearch;
-  });
-
-  // const strategyTypes: string[] = Array.from(new Set<string>(data?.map((strategy: Strategy) => strategy.type)));
+export default function Strategies() {
   const t = useTranslations("dashboard");
+  const locale = useLocale();
+
+  const { data, loading, error } = useFetch(`${API_BASE_URL}/binance/strategies?lang=${locale}`, {
+    method: "GET",
+    next: { revalidate: 180 },
+ });
+ if (loading) return <Loading />;
+ if (error) {
+    throw new Error("Error fetching strategies, try again later");
+ }
   return (
     <div className="md:px-0 px-2">
-      <div className="section-title pt-6 pb-3">
-        <h3 className="text-2xl font-medium">{t("ourStrategies")}</h3>
+      <div className="section-title pt-6">
+        <h3 className="text-2xl font-medium hover:text-primary-700">
+          {t("ourStrategies")}
+        </h3>
       </div>
-      {/* <div className="type-filter flex gap-4 mt-4">
-        {strategyTypes.map((type, index) => (
-          <button
-            key={index}
-            onClick={() => handleTypeClick(type)}
-            className={`px-4 py-2 text-xl border rounded capitalize ${selectedType === type ? "bg-primary-600 text-secondary" : "bg-gray-100"}`}
-          >
-            {type && type.replace(/_/g, ' ').startsWith("short")
-              ? t("strategies.shortTerm")
-              : t("strategies.longTerm")}
-          </button>
-        ))}
-      </div> */}
-
-      <form className="searchForm mt-8">
-        <input
-          type="search"
-          placeholder={t("searchStartegy")}
-          className="main_input border focus:border-primary-700 text-xl"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      </form>
-
-      <section className="store-strategies grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
-        {filteredData!.length > 0 ? (
-          filteredData?.map((el: Strategy) => (
-            <StrategieCard key={el.id} {...el} />
-          ))
+      <section className="store-strategies grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+        {data!.length > 0 ? (
+          data?.map((el: Strategy) => <StrategieCard key={el.id} {...el} />)
         ) : (
-            <p className="text-xl">{t("noStrategiesFound")}</p>
+          <p className="text-xl">{t("noStrategiesFound")}</p>
         )}
       </section>
     </div>
-  )
+  );
 }

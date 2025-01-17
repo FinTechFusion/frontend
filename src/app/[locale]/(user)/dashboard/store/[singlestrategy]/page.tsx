@@ -21,7 +21,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const accessToken = getFromCookies("access_token");
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
-  const [installStrategy, setInstall] = useState<boolean>(false)
   const t = useTranslations("dashboard.strategies")
   const locale = useLocale();
   const router = useRouter();
@@ -53,7 +52,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       return toast.info(t("installOneAiOnly"));
     } else {
       try {
-        setInstall(true);
         const response = await fetch(
           `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
           {
@@ -80,9 +78,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       } catch (error) {
         throw new Error(t("somethingError"));
       }
-      finally {
-        setInstall(false);
-      }
     }
   }
   return (
@@ -94,14 +89,12 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             alt={`${data.name} banner`}
             width={180}
             height={180}
-            className="h-full w-full"
+            className="h-full w-full rounded-md"
           />
           <div className="mt-4 md:mt-0">
             <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{data.name}</h2>
             <p className="py-4 text-lg text-gray-500">{data.description}</p>
             <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>
-            {/* {(user?.signal_strategy && data.bot_type === "signal")
-              ? <button className="main-btn md:w-fit w-full text-xl opacity-70 !cursor-default" disabled={true}> {t("installed")} </button> : installStrategy ? <SpinBtn content="loading" /> : <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>} */}
           </div>
         </div>
       </div>
