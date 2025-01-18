@@ -61,9 +61,6 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             },
           }
         );
-        if (!response.ok) {
-          throw new Error(t("errorInstall"))
-        }
         const responseData = await response.json();
         if (responseData.success) {
           if (accessToken) {
@@ -74,6 +71,8 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           } else {
             router.push(`/dashboard/botai`)
           }
+        }else{
+            if(responseData.class === "UserStrategyNotAvailable") return toast.info(t("subscribeFirst"))
         }
       } catch (error) {
         throw new Error(t("somethingError"));

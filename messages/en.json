@@ -544,6 +544,7 @@
          "stayUpdated": "Stay Updated"
       },
       "strategies": {
+         "subscribeFirst":"Subscribe to plan first",
          "failedInstalled": "Failed to install strategy",
          "successInstalled": "Strategy installed successfully",
          "uninstallError": "Error occurred while uninstalling, try again later",
