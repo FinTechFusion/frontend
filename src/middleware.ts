@@ -38,14 +38,6 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(redirectUrl);
  }
 
-  // // Early return for static assets and public API routes
-  // if (
-  //   pathname.startsWith('/_next') ||
-  //   pathname.startsWith('/api/public') ||
-  //   pathname.includes('.')
-  // ) {
-  //   return NextResponse.next();
-  // }
 
   // Check if the current path is a protected route
   const isProtectedRoute = protectedRoutes.some(route =>
@@ -64,19 +56,13 @@ export default async function middleware(req: NextRequest) {
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set(
-    'Strict-Transport-Security',
-    'max-age=31536000; includeSubDomains'
-  );
+  response.headers.set('Strict-Transport-Security','max-age=31536000; includeSubDomains');
 
   // Handle authentication logic
   if (isProtectedRoute) {
     if (!accessToken) {
       // Redirect to login with return URL
-      const loginUrl = new URL(
-        `/${localeInPath}/login`,
-        req.url
-      );
+      const loginUrl = new URL(`/${localeInPath}/login`,req.url);
       return NextResponse.redirect(loginUrl);
     }
   }
