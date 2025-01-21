@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
+import Toast from "@/app/_components/common/Tostify/Toast";
 
 interface SingleStrategyItemProps {
   params: {
@@ -81,6 +82,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   }
   return (
     <div className="md:px-0 px-2">
+      <Toast/>
       <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
         <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
           <Image
