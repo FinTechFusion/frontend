@@ -104,19 +104,30 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (!response.ok) {
         if (response.status === 401) {
-          const newAccessToken = await refreshAccessToken(); // Refresh token
-          return await fetchUserData(newAccessToken); // Retry fetching user data
+          try {
+            const newAccessToken = await refreshAccessToken();
+            if (newAccessToken) {
+              // Retry with new token
+              return await fetchUserData(newAccessToken);
+            }
+          } catch (refreshError) {
+            // Force logout if refresh fails
+            logout();
+            return null;
+          }
         }
         throw new Error("Failed to fetch user data");
       }
+      
       const { data } = await response.json();
       setUser(data);
       return data;
     } catch (err) {
-      setError("Unable to fetch user data");
+      console.error("User data fetch error:", err);
+      logout(); // Force logout on any error
       return null;
     } finally {
       setIsLoading(false);
@@ -211,7 +222,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       sessionStorage.setItem("path", pathname);
       router.push(`/login`);
     } else if (accessToken && isAuthRoute && !isExcludedRoute) {
-      console.log("redirect to saved route or dashbaord");
       router.push(existRoute || `/dashboard`);
       sessionStorage.removeItem("path");
     }
