@@ -16,7 +16,9 @@ export default function Page() {
    const router = useRouter();
    const locale = useLocale();
    const {user} = useAuth();
-   const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`);
+   const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`,{
+      method:'GET'
+   },[]);
    if (loading) return <Loading />;
    if(user?.is_binance) return router.push('/dashboard');
    return (

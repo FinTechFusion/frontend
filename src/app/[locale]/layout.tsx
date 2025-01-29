@@ -6,6 +6,7 @@ import { getMessages } from "next-intl/server";
 import { AuthProvider } from "@/context/AuthContext";
 import "../../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import AuthGuard from "../_components/guards/AuthGuard";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -37,71 +38,83 @@ type LocaleMetadata = {
     type: string;
   };
   twitter: {
-    card: 'summary_large_image';
+    card: "summary_large_image";
     title: string;
     description: string;
     images: string[];
   };
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fintechfusion.net';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://fintechfusion.net";
 
 // Metadata configuration
 const metadataConfig: Record<string, LocaleMetadata> = {
   en: {
     title: "FintechFusion",
-    description: "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
+    description:
+      "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
     metadataBase: new URL(baseUrl),
     openGraph: {
       title: "FinTechFusion",
-      description: "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
+      description:
+        "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
       url: `${baseUrl}/en`,
       siteName: "FintechFusion",
-      images: [{
-        url: '/assets/images/preview.png',
-        width: 1200,
-        height: 630,
-        alt: "FintechFusion Logo and Tagline",
-      }],
+      images: [
+        {
+          url: "/assets/images/preview.png",
+          width: 1200,
+          height: 630,
+          alt: "FintechFusion Logo and Tagline",
+        },
+      ],
       locale: "en_US",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: "FintechFusion - Automated Trading Platform",
-      description: "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
-      images: ['/assets/images/preview.png'],
+      description:
+        "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
+      images: ["/assets/images/preview.png"],
     },
   },
   ar: {
     title: "فنتك فيوجن",
-    description: "انضم إلى فين تك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
+    description:
+      "انضم إلى فينتك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
     metadataBase: new URL(baseUrl),
     openGraph: {
-      title: "فنتك فيوجن - منصة التداول الآلية",
-      description: "انضم إلى فين تك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
+      title: "فنتك فيوجن - وسيط بوتات التداول للعملات الرقمية",
+      description:
+        "انضم إلى فينتك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
       url: `${baseUrl}/ar`,
       siteName: "فنتك فيوجن",
-      images: [{
-        url: '/assets/images/preview.png',
-        width: 1200,
-        height: 630,
-        alt: "فنتك فيوجن شعار وعلامة",
-      }],
+      images: [
+        {
+          url: "/assets/images/preview.png",
+          width: 1200,
+          height: 630,
+          alt: "فنتك فيوجن شعار وعلامة",
+        },
+      ],
       locale: "ar_EG",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "فنتك فيوجن - منصة التداول الآلية",
-      description: "انضم إلى فين تك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
-      images: ['/assets/images/preview.png'],
+      title: "فنتك فيوجن - وسيط بوتات التداول للعملات الرقمية",
+      description:
+        "انضم إلى فين تك فيوجن لتجربة تداول فريدة. منصة متطورة تساعد المتداولين في العملات الرقمية باتخاذ قرارات أذكى باستخدام أحدث الخوارزميات.",
+      images: ["/assets/images/preview.png"],
     },
   },
 };
 
 // Generate metadata based on locale
-export async function generateMetadata({ params: { locale } }: RootLayoutProps): Promise<Metadata> {
+export async function generateMetadata({
+  params: { locale },
+}: RootLayoutProps): Promise<Metadata> {
   return metadataConfig[locale] as Metadata;
 }
 
@@ -145,9 +158,11 @@ export default async function RootLayout({
       </head>
       <body className={cairo.className}>
         <AuthProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-          </NextIntlClientProvider>
+          <AuthGuard>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </AuthGuard>
         </AuthProvider>
       </body>
     </html>

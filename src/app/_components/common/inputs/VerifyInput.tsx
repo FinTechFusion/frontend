@@ -50,7 +50,7 @@ function VerifyInput() {
             if (planExist) {
                route.push("/site/plans");
             } else {
-               route.push(`/site/exchange`);
+               route.push(`/site/exchange/connect`);
             }
             return toast.success(t("verify_email_success"));
          } else {

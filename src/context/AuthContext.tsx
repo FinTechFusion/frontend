@@ -6,7 +6,7 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { toast } from "react-toastify";
 import { Tokens, AuthContextType, User } from "@/utils/types";
 import { API_BASE_URL } from "@/utils/api";
@@ -43,11 +43,9 @@ export const getFromCookies = (key: string) => {
 // Auth Provider Component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Track authentication state
-
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,31 +54,44 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
   const supportedLocales = ["en", "ar"];
 
-  const getCurrentLocale = () => {
-    const pathname = window.location.pathname;
-    const locale = pathname.split("/")[1]; // Extract locale from URL (e.g., '/en/dashboard' -> 'en')
-    return supportedLocales.includes(locale) ? locale : "en"; // Default to 'en' if locale is invalid
-  };
+  // const getCurrentLocale = () => {
+  //   const pathname = window.location.pathname;
+  //   const locale = pathname.split("/")[1]; // Extract locale from URL (e.g., '/en/dashboard' -> 'en')
+  //   return supportedLocales.includes(locale) ? locale : "ar"; // Default to 'en' if locale is invalid
+  // };
+
   const login = async (accessToken: string, refreshToken: string) => {
     try {
       setIsLoading(true);
       saveToCookies("access_token", accessToken, 1800);
       saveToCookies("refresh_token", refreshToken, 1800);
 
-      // Await user data fetch before routing
+      // Fetch user data
       const userData = await fetchUserData(accessToken);
+
       if (userData) {
         setUser(userData);
-        setIsAuthenticated(true); // Update authentication state
+        // // Get the redirect path from the query parameters
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const redirectPath = urlParams.get("redirect");
+
+        // Get the stored path from sessionStorage
         const storedPath = sessionStorage.getItem("path");
-        // Clear any stored path after use
+
+        // Determine the final path to redirect to
+        let finalPath = "/dashboard"; // Default fallback
+        if (storedPath) {
+          finalPath = storedPath; // Use storedPath if it exists
+        }
+        // Log the final path for debugging
+        console.log("Final redirect path:", finalPath);
+        // Redirect to the final path
+        // window.location.href=finalPath;
+        router.push(finalPath)
+        // Clear the stored path after use
         if (storedPath) {
           sessionStorage.removeItem("path");
         }
-        // Get current locale
-        const currentLocale = getCurrentLocale();
-        const redirectPath = storedPath || "/dashboard";
-        window.location.href = `/${currentLocale}${redirectPath}`; // Include locale prefix
       } else {
         throw new Error("Failed to fetch user data");
       }
@@ -104,7 +115,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         if (response.status === 401) {
           try {
@@ -121,7 +132,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         throw new Error("Failed to fetch user data");
       }
-      
+
       const { data } = await response.json();
       setUser(data);
       return data;
@@ -149,8 +160,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const accessToken = getFromCookies("access_token");
     const loadUserData = async () => {
       if (accessToken) {
-        console.log("user is auth");
-        setIsAuthenticated(true);
         await fetchUserData(accessToken);
       }
       checkAndFetchUserData();
@@ -194,60 +203,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     saveToCookies("access_token", accessToken);
     saveToCookies("refresh_token", refreshToken);
     const userData = await fetchUserData(accessToken);
-    if(userData){
+    if (userData) {
       setUser(userData);
-      setIsAuthenticated(true); // Update authentication state
     }
   };
-
-  // handle save user needed route at session storage if not logedin
-  const pathname = usePathname();
-  const protectedRoutes = ["/dashboard", "/site/exchange", "/payment"];
-  const authRoutes = ["/login", "/forget-password", "/reset-password"];
-  const excludedRoutes = ["/site/exchange/connect/status"]; // Add this line
-
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.includes(route) && 
-    !excludedRoutes.some(excludedRoute => pathname.includes(excludedRoute))
-  );
-  
-  const isAuthRoute = authRoutes.includes(pathname);
-  const accessToken = getFromCookies("access_token");
-
-  const checkAuth = () => {
-     // Check if the current route is in excluded routes
-  const isExcludedRoute = excludedRoutes.some(route => pathname.includes(route));
-    const existRoute = sessionStorage.getItem("path");
-    if (!accessToken && isProtectedRoute && !isExcludedRoute) {
-      sessionStorage.setItem("path", pathname);
-      router.push(`/login`);
-    } else if (accessToken && isAuthRoute && !isExcludedRoute) {
-      router.push(existRoute || `/dashboard`);
-      sessionStorage.removeItem("path");
-    }
-    // Store /site/plans path if needed
-    if (pathname === "/site/plans") {
-      sessionStorage.setItem("path", pathname);
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    checkAuth();
-  }, [pathname,router]);
-
-  useEffect(() => {
-    const handleBackButton = () => {
-      sessionStorage.removeItem("path");
-      router.push("/");
-    };
-    // Add event listener for the back button
-    window.addEventListener("popstate", handleBackButton);
-    return () => {
-      // Clean up the event listener when the component unmounts
-      window.removeEventListener("popstate", handleBackButton);
-    };
-  }, []);
 
   // Utility function to remove tokens from localStorage
   const clearTokensFromStorage = (): void => {
@@ -259,10 +218,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     clearTokensFromStorage();
     sessionStorage.clear();
-    const currentLocale = getCurrentLocale();
-    window.location.href = `/${currentLocale}`; 
+    // const currentLocale = getCurrentLocale();
+    // window.location.href = `/${currentLocale}`;
+      router.push("/");
     setUser(null);
-    setIsAuthenticated(false); // Update authentication state
   };
   return (
     <AuthContext.Provider

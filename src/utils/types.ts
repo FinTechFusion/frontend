@@ -144,6 +144,10 @@ export interface Log {
 export interface BotLogsProps {
    orderId: string;
 }
+export interface SymbolsInfo {
+   symbol: string;
+   quantity: number;
+}
 export interface AssetInfo {
    symbol: string;
    last_price: number;
@@ -182,3 +186,44 @@ export interface AssetDataContextType {
    currentPage: number;
    handlePageClick: (event: any) => void;
 }
+export interface SingleStrategyItemProps {
+   params: {
+     singlestrategy: string;
+   };
+ }
+  // Define interfaces for the data structure
+export interface TradeData {
+   value: number;
+   timestamp: number;
+   date: string;
+ }
+
+ export interface ProfitabilityStats {
+   netProfit: string;
+   winRate: string;
+   lossRate: string;
+   avgProfit: string;
+   avgLoss: string;
+   roi: string;
+ }
+
+ export interface RiskStats {
+   sharpeRatio: string;
+   volatility: string;
+   profitFactor: string;
+   maxDrawdown: string;
+   riskToReward: string;
+ }
+
+ export interface PerformanceStats {
+   totalTrades: number;
+   avgTimePerCycle: number;
+   correlation: number;
+   cumulativeReturns: string;
+ }
+
+ export interface TradingStats {
+   profitability: ProfitabilityStats;
+   risk: RiskStats;
+   performance: PerformanceStats;
+ }

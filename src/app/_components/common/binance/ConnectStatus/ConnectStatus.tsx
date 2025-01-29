@@ -25,7 +25,7 @@ export default function ConnectStatus() {
          headers: {
             'authorization': `Bearer ${accessToken}`,
          },
-      }
+      },[]
    );
    useEffect(() => {
       const fetchData = async () => {

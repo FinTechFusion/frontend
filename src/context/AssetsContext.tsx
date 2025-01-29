@@ -3,7 +3,7 @@
 import { API_BASE_URL } from "@/utils/api";
 import { createContext, useContext, useState, useMemo, ReactNode } from "react";
 import { getFromCookies } from "@/context/AuthContext";
-import { ApiError, AssetDataContextType, AssetInfo } from "../utils/types";
+import { ApiError, AssetDataContextType, AssetInfo, SymbolsInfo } from "../utils/types";
 import { useAuth } from "@/context/AuthContext";
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(
@@ -42,7 +42,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       const responseData = await response.json();
       if (response.ok && responseData.success) {
         setCounts(responseData.data.total);
-
         const fetchTickers = responseData?.data?.items.map((asset: any) =>
           fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
             method: "GET",

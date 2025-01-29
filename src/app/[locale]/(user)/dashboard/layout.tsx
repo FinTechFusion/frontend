@@ -24,8 +24,9 @@ export default function UserDashboardLayout({ children }: DashboardLayoutProps) 
             <div className={`md:px-0 px-2 lg:max-w-[80%] w-full absolute ${locale === "en"?"right-0" :"left-0"}`}>
                <AssetDataProvider>
                   <Headerdash />
+                  {children}
+
                </AssetDataProvider>
-               {children}
             </div>
          </div>
       </SidebarProvider>

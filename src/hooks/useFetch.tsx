@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 type FetchOptions = RequestInit;
 
-const useFetch = (url: string, options?: FetchOptions): any => {
+const useFetch = (url: string, options?: FetchOptions,dependencies: any[] = []): any => {
    const [data, setData] = useState<null>(null);
    const [loading, setLoading] = useState<boolean>(true);
    const [error, setError] = useState<string | null>(null);
@@ -26,7 +26,7 @@ const useFetch = (url: string, options?: FetchOptions): any => {
 
    useEffect(() => {
       fetchData();
-   }, []);
+   },dependencies);
 
    return { data, loading, error, refetch: fetchData }; // Expose refetch as a property
 };
