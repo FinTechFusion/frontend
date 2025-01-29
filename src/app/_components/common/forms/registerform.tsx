@@ -19,9 +19,8 @@ export default function RegisterForm() {
    const validationT = useTranslations("validation");
    const route = useRouter();
    const locale = useLocale();
-   const isProduction = process.env.NODE_ENV === 'production';
-   console.log("production env : " +isProduction)
-   
+   const isENVEXIST = process.env.NEXT_PUBLIC_ENV;
+
    const { register, handleSubmit, setValue, formState: { errors } } = useForm<registerType>({
       mode: "onBlur",
       resolver: zodResolver(registerSchema),
@@ -45,7 +44,7 @@ export default function RegisterForm() {
    };
 
    const submitForm: SubmitHandler<registerType> = async (data) => {
-      if (!turnstileToken && !isProduction) return toast.error(t("complete_captcha"));
+      if (!turnstileToken && isENVEXIST?.trim() !== 'ENV') return toast.error(t("complete_captcha"));
       // Ensure the agreement is checked
       if (!checked) return setShowAgreementError(true);
       
