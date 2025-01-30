@@ -9,38 +9,39 @@ import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import Toast from "@/app/_components/common/Tostify/Toast";
 import { useAssetData } from "@/context/AssetsContext";
-import { AssetData, SingleStrategyItemProps, TradeData, TradingStats } from "@/utils/types";
-import {FiArrowUpRight,FiBarChart2,FiDollarSign,FiPieChart} from "react-icons/fi";
-import { FaRegClock } from "react-icons/fa6";
-
+import {AssetData,SingleStrategyItemProps,TradingStats} from "@/utils/types";
+import {FiArrowUpRight, FiBarChart2, FiDollarSign, FiPieChart,} from "react-icons/fi";
+import { FaRegClock, FaSpinner } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import FilterationLabels from "@/app/_components/strategies/FilterationLabels";
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user, fetchUserData } = useAuth();
+  const accessToken = getFromCookies("access_token");
   const { assetData, assetLoading } = useAssetData();
   const [selectedValue, setSelectedValue] = useState<string>(""); // Default value
+  const [isInstalling, setIsInstall] = useState<boolean>(false);
 
   const getSymbol = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSelectedValue(value);
-    console.log(value);
   };
-  console.log(params)
-  const accessToken = getFromCookies("access_token");
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
   const t = useTranslations("dashboard.strategies");
   const locale = useLocale();
   const router = useRouter();
   // get bianance backtest
-  const { data: backtestData ,loading} = useFetch(
+  const { data: backtestData, loading } = useFetch(
     `${API_BASE_URL}/binance/backtest/${selectedValue}/${params?.singlestrategy}`,
     {
       method: "GET",
       next: { revalidate: 120 },
       headers: {
-        'authorization': `Bearer ${accessToken}`,
-     },
-    },[selectedValue,params?.singlestrategy]
+        authorization: `Bearer ${accessToken}`,
+      },
+    },
+    [selectedValue, params?.singlestrategy]
   );
 
   // const calculateStandardDeviation = (values: number[]): number => {
@@ -55,7 +56,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
 
   const calculateStats = (data: any): TradingStats => {
     // if (!data) return { profitability: {}, risk: {}, performance: {} };
-  
+
     return {
       profitability: {
         netProfit: data.profitability?.net_profit?.toFixed(2) || "0.00",
@@ -74,78 +75,85 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       },
       performance: {
         totalTrades: data.performance?.total_trades || 0,
-        avgTimePerCycle: data.performance?.avg_time_per_cycle?.toFixed(2) || "0.00",
+        avgTimePerCycle:
+          data.performance?.avg_time_per_cycle?.toFixed(2) || "0.00",
         correlation: data.performance?.correlation?.toFixed(2) || "0.00",
-        cumulativeReturns: data.performance?.cumulative_returns?.toFixed(2) || "0.00",
+        cumulativeReturns:
+          data.performance?.cumulative_returns?.toFixed(2) || "0.00",
       },
     };
   };
-  
-// Use `calculateStats` with `backtestData`
-const { profitability, risk, performance } = backtestData
-  ? calculateStats(backtestData)
-  : { profitability: {}, risk: {}, performance: {} };
 
+  // Use `calculateStats` with `backtestData`
+  const { profitability, risk, performance } = backtestData
+    ? calculateStats(backtestData)
+    : { profitability: {}, risk: {}, performance: {} };
 
   // Fetch strategy details
-  // const { data, loading, error } = useFetch(
-  //   `${API_BASE_URL}/binance/strategies/${params.singlestrategy}?lang=${locale}`,
-  //   {
-  //     method: "GET",
-  //     next: { revalidate: 180 },
-  //   }
-  // );
+  const { data, error } = useFetch(
+    `${API_BASE_URL}/binance/strategies/${params.singlestrategy}?lang=${locale}`,
+    {
+      method: "GET",
+      next: { revalidate: 180 },
+    }
+  );
   // Update the state based on the user's installed strategies
-  // useEffect(() => {
-  //   if (user) {
-  //     setSignalStrategy(user.signal_strategy);
-  //     setAiStrategy(user.ai_strategy);
-  //   }
-  // }, [user]);
-  useEffect(()=>{
-    setSelectedValue(assetData[0]?.symbol)
-  },[])
+  useEffect(() => {
+    if (user) {
+      setSignalStrategy(user.signal_strategy);
+      setAiStrategy(user.ai_strategy);
+    }
+  }, [user]);
+  // set default first symbol at mount page
+  useEffect(() => {
+    setSelectedValue(assetData[0]?.symbol);
+  }, []);
+
   if (loading || assetLoading) return <Loading />;
-  // if (error) {
-  //   toast.error(t("fetchStrategyError"));
-  //   return null;
-  // }
+  // check there is error at fetch startegy details
+  if (error) {
+    toast.error(t("fetchStrategyError"));
+    return null;
+  }
   // Handle installation of the strategy
-  // async function InstallStrategy() {
-  //   if (data.bot_type === "signal" && signalStrategy != null) {
-  //     return toast.info(t("installOneSignalOnly"));
-  //   } else if (data.bot_type === "ai" && aiStrategy != null) {
-  //     return toast.info(t("installOneAiOnly"));
-  //   } else {
-  //     try {
-  //       const response = await fetch(
-  //         `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             authorization: `Bearer ${accessToken}`,
-  //           },
-  //         }
-  //       );
-  //       const responseData = await response.json();
-  //       if (responseData.success) {
-  //         if (accessToken) {
-  //           await fetchUserData(accessToken);
-  //         }
-  //         if (data.bot_type === "signal") {
-  //           router.push(`/dashboard/botsignal`);
-  //         } else {
-  //           router.push(`/dashboard/botai`);
-  //         }
-  //       } else {
-  //         if (responseData.class === "UserStrategyNotAvailable")
-  //           return toast.info(t("subscribeFirst"));
-  //       }
-  //     } catch (error) {
-  //       throw new Error(t("somethingError"));
-  //     }
-  //   }
-  // }
+  async function InstallStrategy() {
+    if (data.bot_type === "signal" && signalStrategy != null) {
+      return toast.info(t("installOneSignalOnly"));
+    } else if (data.bot_type === "ai" && aiStrategy != null) {
+      return toast.info(t("installOneAiOnly"));
+    } else {
+      try {
+        setIsInstall(true);
+        const response = await fetch(
+          `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
+          {
+            method: "POST",
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const responseData = await response.json();
+        if (responseData.success) {
+          if (accessToken) {
+            await fetchUserData(accessToken);
+          }
+          if (data.bot_type === "signal") {
+            router.push(`/dashboard/botsignal`);
+          } else {
+            router.push(`/dashboard/botai`);
+          }
+        } else {
+          if (responseData.class === "UserStrategyNotAvailable")
+            return toast.info(t("subscribeFirst"));
+        }
+      } catch (error) {
+        throw new Error(t("somethingError"));
+      } finally {
+        setIsInstall(false);
+      }
+    }
+  }
   // useEffect(() => {
   //   // const newData = generateDataForTimeframe(activeFilter);
   //   // setChartData(newData);
@@ -154,20 +162,36 @@ const { profitability, risk, performance } = backtestData
   return (
     <div className="md:px-0 px-2">
       <Toast />
-      <div className="w-32 mt-5">
-        <select
-          id="crypto-select"
-          className="block uppercase w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600"
-          value={selectedValue}
-          onChange={getSymbol}
+      <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-5">
+        <div className="md:w-32 w-full mt-5">
+          <select
+            id="crypto-select"
+            className="block uppercase w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600"
+            value={selectedValue}
+            onChange={getSymbol}
+          >
+            {assetData?.length > 0 &&
+              assetData.map((symbol: AssetData, index: number) => (
+                <option
+                  className="uppercase"
+                  key={index}
+                  value={symbol?.symbol}
+                >
+                  {symbol?.symbol}
+                </option>
+              ))}
+          </select>
+        </div>
+        <button
+          className="main-btn md:w-fit w-full text-xl"
+          onClick={InstallStrategy}
         >
-          {assetData?.length > 0 &&
-            assetData.map((symbol: AssetData, index: number) => (
-              <option className="uppercase" key={index} value={symbol?.symbol}>
-                {symbol?.symbol}
-              </option>
-            ))}
-        </select>
+          {isInstalling ? (
+            <FaSpinner className="spinner text-secondary w-6 h-6" />
+          ) : (
+            t("install")
+          )}
+        </button>
       </div>
       <div className="space-y-6 pt-6">
         {/* Profitability Cards */}
@@ -200,7 +224,9 @@ const { profitability, risk, performance } = backtestData
               <FiPieChart className="h-4 w-4 text-gray-500" />
             </div>
             <div>
-              <div className="text-2xl font-bold py-1">{profitability.winRate}%</div>
+              <div className="text-2xl font-bold py-1">
+                {profitability.winRate}%
+              </div>
               <div className="text-sm text-gray-500">
                 {performance.totalTrades} total trades
               </div>
@@ -236,37 +262,8 @@ const { profitability, risk, performance } = backtestData
           </div>
         </div>
       </div>
-      {/* <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
-        <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
-           <Image
-            src={data.banner_url}
-            alt={`${data.name} banner`}
-            width={180}
-            height={180}
-            className="h-full w-full rounded-md"
-          />
-          <div className="mt-4 md:mt-0">
-            <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{data.name}</h2>
-            <p className="py-4 text-lg text-gray-500">{data.description}</p>
-            <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>
-          </div>
-        </div>
-      </div>
-       <hr />
-      <div className="news-list p-3">
-        <h3 className="text-2xl font-medium py-3">{t("whatsnews")}</h3>
-        <ol className="list-decimal px-2">
-          {data.whats_new && data.whats_new.length > 0 ? (
-            data.whats_new.map((el: string, index: number) => (
-              <li className="py-3" key={index}>
-                {el}
-              </li>
-            ))
-          ) : (
-            <li className="py-3">{t("no_newupdates")}</li>
-          )}
-        </ol>
-      </div> */}
+      {/*  */}
+      <FilterationLabels/>
     </div>
   );
 };
