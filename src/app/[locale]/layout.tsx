@@ -50,12 +50,12 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://fintechfusion.net";
 // Metadata configuration
 const metadataConfig: Record<string, LocaleMetadata> = {
   en: {
-    title: "FintechFusion",
+    title: "Fintech Fusion",
     description:
       "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
     metadataBase: new URL(baseUrl),
     openGraph: {
-      title: "FinTechFusion",
+      title: "FinTech Fusion",
       description:
         "Join FinTechFusion for the ultimate trading experience. Powered by cutting-edge algorithms, our platform helps cryptocurrency traders make smarter decisions.",
       url: `${baseUrl}/en`,
