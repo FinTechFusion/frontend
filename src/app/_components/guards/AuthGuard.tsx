@@ -26,7 +26,6 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 // Safely access sessionStorage only on the client side
 const existRoute = typeof window !== "undefined" ? sessionStorage.getItem("path") : null;
   const checkAuth = () => {
-    console.log("work of check auth");
     // Check if the current route is in excluded routes
     // if (!accessToken && isProtectedRoute) {
     //     sessionStorage.setItem("path", pathname);
@@ -45,7 +44,6 @@ const existRoute = typeof window !== "undefined" ? sessionStorage.getItem("path"
   };
   useEffect(() => {
     if (redirect) {
-      console.log(redirect)
       // Save the preferred route to sessionStorage
       sessionStorage.setItem("path", redirect);
     }

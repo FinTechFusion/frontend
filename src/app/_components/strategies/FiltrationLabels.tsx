@@ -14,7 +14,7 @@ const timeFilters = [
     { label: "Overall", value: "Overall", days: 1000 }, // Overall timeframe
   ];
 
-export default function FilterationLabels() {
+export default function FiltrationLabels() {
    const [activeFilter, setActiveFilter] = useState('Overall');
    const t = useTranslations("dashboard.strategies");
    return (

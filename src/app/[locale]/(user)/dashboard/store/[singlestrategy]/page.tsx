@@ -13,7 +13,7 @@ import {AssetData,SingleStrategyItemProps,TradingStats} from "@/utils/types";
 import {FiArrowUpRight, FiBarChart2, FiDollarSign, FiPieChart,} from "react-icons/fi";
 import { FaRegClock, FaSpinner } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import FilterationLabels from "@/app/_components/strategies/FilterationLabels";
+import FiltrationLabels from "@/app/_components/strategies/FiltrationLabels";
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user, fetchUserData } = useAuth();
@@ -263,7 +263,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
         </div>
       </div>
       {/*  */}
-      <FilterationLabels/>
+      <FiltrationLabels/>
     </div>
   );
 };

@@ -82,12 +82,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         let finalPath = "/dashboard"; // Default fallback
         if (storedPath) {
           finalPath = storedPath; // Use storedPath if it exists
+          // Ensure the path starts with a slash
+          finalPath = finalPath.startsWith('/') ? finalPath : `/${finalPath}`;
         }
         // Log the final path for debugging
         console.log("Final redirect path:", finalPath);
         // Redirect to the final path
-        // window.location.href=finalPath;
-        router.push(finalPath)
+        router.push(finalPath);
         // Clear the stored path after use
         if (storedPath) {
           sessionStorage.removeItem("path");

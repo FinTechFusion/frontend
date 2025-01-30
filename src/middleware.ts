@@ -15,7 +15,7 @@ const routes = {
     "/api",
   ],
   protected: ["/dashboard", "/site/exchange", "/payment"],
-  excluded: ["/site/exchange/connect/status"],
+  // excluded: ["/site/exchange/connect/status"],
 };
 
 const COOKIE_NAME = "access_token";
@@ -39,19 +39,13 @@ export default async function middleware(req: NextRequest) {
   }
 
   // Enhanced route matching
-  const isProtectedRoute =
-    routes.protected.some(
-      (route) =>
-        pathname === `/${localeInPath}${route}` ||
-        pathname.startsWith(`/${localeInPath}${route}/`)
-    ) &&
-    !routes.excluded.some((excludedRoute) =>
-      pathname.includes(`/${localeInPath}${excludedRoute}`)
-    );
+  const isProtectedRoute = routes.protected.some((route) => pathname.includes(route));
+    // ) &&
+    // !routes.excluded.some((excludedRoute) =>
+    //   pathname.includes(`/${localeInPath}${excludedRoute}`)
+    // );
 
-  const isRestrictedWhenLoggedIn = routes.public.some((route) =>
-    pathname.includes(`/${localeInPath}${route}`)
-  );
+  const isRestrictedWhenLoggedIn = routes.public.some((route) => pathname.includes(`/${localeInPath}${route}`));
 
   const response = NextResponse.next();
 
