@@ -26,10 +26,6 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 // Safely access sessionStorage only on the client side
 const existRoute = typeof window !== "undefined" ? sessionStorage.getItem("path") : null;
   const checkAuth = () => {
-    if(existRoute){
-      console.log('find route and push')
-      router.push(existRoute);
-    }
     // Store /site/plans path if needed
     if (pathname === "/site/plans") {
       sessionStorage.setItem("path", pathname);
