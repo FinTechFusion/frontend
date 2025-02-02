@@ -369,7 +369,7 @@
    },
    "binance": {
       "connectAccount": "Connect Account To Start Trading",
-      "donthaveExchanges": "I don't have an exchange",
+      "donthaveExchanges": "I don't have an account on Binance",
       "startAtDemo": "Start Trading on the Demo",
       "accessTransfer": "FinTech Fusion will not have access to transfer or withdraw your assets",
       "connectExchange": "Connect Exchange",

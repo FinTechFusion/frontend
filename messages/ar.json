@@ -477,7 +477,7 @@
       },
       "DemoSpotWallet": "محفظة العرض التجريبي",
       "spotWallet": "المحفظة الفورية",
-      "passwordPlaceHolder": " تغير الأسعار للعملات",
+      "PriceChangeLineChart": "تغير الاسعار للعملات الخاصة بك",
       "symbol": "الرمز",
       "quantity": "الكمية",
       "tradingQuantity": "ادخل الكمية بقيمة USDT",

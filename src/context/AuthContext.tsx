@@ -6,11 +6,11 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { useRouter } from "@/i18n/navigation";
 import { toast } from "react-toastify";
 import { Tokens, AuthContextType, User } from "@/utils/types";
 import { API_BASE_URL } from "@/utils/api";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { useRouter } from "@/i18n/navigation";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -68,28 +68,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       // Fetch user data
       const userData = await fetchUserData(accessToken);
+      const storedPath = sessionStorage.getItem("path");
 
       if (userData) {
         setUser(userData);
-        // // Get the redirect path from the query parameters
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const redirectPath = urlParams.get("redirect");
-
-        // Get the stored path from sessionStorage
-        const storedPath = sessionStorage.getItem("path");
-
         // Determine the final path to redirect to
         let finalPath = "/dashboard"; // Default fallback
         if (storedPath) {
           finalPath = storedPath; // Use storedPath if it exists
-          // Ensure the path starts with a slash
-          finalPath = finalPath.startsWith('/') ? finalPath : `/${finalPath}`;
         }
         // Log the final path for debugging
         console.log("Final redirect path:", finalPath);
         // Redirect to the final path
-        router.push(finalPath);
         // Clear the stored path after use
+        setTimeout(()=>{
+          router.push(finalPath);
+        },100)
         if (storedPath) {
           sessionStorage.removeItem("path");
         }
@@ -98,9 +92,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     } catch (err) {
       toast.error("Login failed");
-      setError(
-        err instanceof Error ? err.message : "An unknown error occurred"
-      );
     } finally {
       setIsLoading(false);
     }
@@ -219,9 +210,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     clearTokensFromStorage();
     sessionStorage.clear();
-    // const currentLocale = getCurrentLocale();
-    // window.location.href = `/${currentLocale}`;
-      router.push("/");
+    router.push("/");
     setUser(null);
   };
   return (

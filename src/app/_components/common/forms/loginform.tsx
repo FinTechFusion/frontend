@@ -45,9 +45,9 @@ export default function Loginform() {
             const thirtyMinutesInMilliseconds = 28 * 60 * 1000;
             const newExpireTime = currentTime + thirtyMinutesInMilliseconds;
             saveToCookies("expire_data_token", newExpireTime.toString());
-            toast.success(t("loginSuccess"));
             // Call login from AuthContext, which will handle routing
             login(access_token, refresh_token);
+            toast.success(t("loginSuccess"));
          } else {
             if (responseData.class === "UserNotVerified") {
                router.push(`/verifyemail/?email=${data.email}`)

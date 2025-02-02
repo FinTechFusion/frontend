@@ -107,9 +107,9 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       setCurrentPage(selectedPage);
     }
   };
-  // useMemo(() => {
-  //   fetchAssets();
-  // }, [currentOffset, user?.is_demo]);
+  useMemo(() => {
+    fetchAssets();
+  }, [currentOffset, user?.is_demo]);
 
   const contextValue: AssetDataContextType = {
     assetData,
