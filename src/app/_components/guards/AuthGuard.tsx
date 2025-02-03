@@ -37,7 +37,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
  useEffect(() => {
    checkAuth();
- }, [router, pathname]);
+ }, [pathname]);
 
 //  if (isLoading) {
 //    return <Loading />;

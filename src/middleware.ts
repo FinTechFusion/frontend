@@ -61,7 +61,7 @@ export default function middleware(req: NextRequest) {
     loginUrl.searchParams.set("redirect", pathname.replace(`/${localeInPath}`, ""));
     return NextResponse.redirect(loginUrl);
   }
-
+  console.log("path name "+pathname)
   // Prevent logged-in users from accessing public pages (like login/register)
   if (accessToken && isRestrictedWhenLoggedIn) {
     console.log(pathname)

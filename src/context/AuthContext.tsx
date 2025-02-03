@@ -48,11 +48,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      checkAndFetchUserData();
-    }, 60000);
+    checkAndFetchUserData();
+   setInterval(() => {
+    checkAndFetchUserData();
+    }, 280000);
   }, []);
-  const supportedLocales = ["en", "ar"];
 
   // const getCurrentLocale = () => {
   //   const pathname = window.location.pathname;
@@ -84,6 +84,7 @@ const login = async (accessToken: string, refreshToken: string) => {
 
       // 🔥 Instead of using router.push(), add `redirect` param
       router.push(`/${finalPath}?redirect=${encodeURIComponent(finalPath)}`);
+      router.refresh();
     } else {
       throw new Error("Failed to fetch user data");
     }
@@ -136,11 +137,13 @@ const login = async (accessToken: string, refreshToken: string) => {
   };
 
   const checkAndFetchUserData = async () => {
+    console.log('check')
     const accessToken = getFromCookies("access_token");
     const expireTokenTime = getFromCookies("expire_data_token");
     if (!accessToken) return;
     const currentTime = Date.now();
     if (expireTokenTime && currentTime > Number(expireTokenTime)) {
+      console.log('call refresh')
       const newAccessToken = await refreshAccessToken();
       await fetchUserData(newAccessToken);
     }
@@ -183,7 +186,7 @@ const login = async (accessToken: string, refreshToken: string) => {
       saveToCookies("refresh_token", newTokens.refresh_token);
       const newExpireTime = Date.now() + 29 * 60 * 1000;
       saveToCookies("expire_data_token", newExpireTime.toString());
-
+      console.log('generate new tokens')
       return newTokens.access_token;
     } catch (err) {
       throw err;
@@ -196,6 +199,7 @@ const login = async (accessToken: string, refreshToken: string) => {
     if (userData) {
       setUser(userData);
     }
+    router.refresh();
   };
 
   // Utility function to remove tokens from localStorage
@@ -203,13 +207,13 @@ const login = async (accessToken: string, refreshToken: string) => {
     deleteCookie("access_token");
     deleteCookie("refresh_token");
     deleteCookie("expire_data_token");
-    localStorage.removeItem("expire_data_token");
   };
   const logout = () => {
     clearTokensFromStorage();
     sessionStorage.clear();
     router.push("/");
     setUser(null);
+    router.refresh();
   };
   return (
     <AuthContext.Provider
