@@ -3,7 +3,7 @@
 import { API_BASE_URL } from "@/utils/api";
 import { createContext, useContext, useState, useMemo, ReactNode } from "react";
 import { getFromCookies } from "@/context/AuthContext";
-import { ApiError, AssetDataContextType, AssetInfo, SymbolsInfo } from "../utils/types";
+import { ApiError, AssetDataContextType, AssetInfo } from "../utils/types";
 import { useAuth } from "@/context/AuthContext";
 
 const AssetDataContext = createContext<AssetDataContextType | undefined>(
@@ -57,11 +57,11 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                 symbol: asset.symbol,
                 quantity: asset.quantity,
                 price_change_percent:
-                  tickerData.data?.price_change_percent || "N/A",
+                  tickerData.data?.price_change_percent?.toFixed(2) || "N/A",
                 last_price:
                   asset.symbol.toUpperCase() === "USDT"
                     ? "1"
-                    : tickerData.data?.last_price || "N/A",
+                    : tickerData.data?.last_price?.toFixed(2) || "N/A",
               };
             })
             .catch((error) => {
@@ -79,9 +79,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
         );
 
         const results = await Promise.all(fetchTickers);
-        // const hasUSDT = results.some((asset) => asset.symbol === "USDT");
-        // setUserHasUSDT(hasUSDT);
-        // console.log("has usdt: " + hasUSDT);
         setAssetData(results);
       } else {
         const error: ApiError = {
@@ -107,9 +104,9 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       setCurrentPage(selectedPage);
     }
   };
-  useMemo(() => {
-    fetchAssets();
-  }, [currentOffset, user?.is_demo]);
+  // useMemo(() => {
+  //   fetchAssets();
+  // }, [currentOffset, user?.is_demo]);
 
   const contextValue: AssetDataContextType = {
     assetData,

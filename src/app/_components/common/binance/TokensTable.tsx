@@ -44,7 +44,7 @@ export default function TokensTable() {
                     {item.price_change_percent}
                   </td>
                   <td className="py-2 px-4 border">{item.last_price}</td>
-                  <td className="py-2 px-4 border">{(item.quantity * item.last_price).toFixed(3)}</td>
+                  <td className="py-2 px-4 border">{(item.quantity * item.last_price).toFixed(2)}</td>
                 </tr>
               ))
             )}

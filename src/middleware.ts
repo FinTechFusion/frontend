@@ -1,83 +1,78 @@
-import { NextRequest, NextResponse } from 'next/server';
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import { NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
-const supportedLocales = ['en', 'ar'];
+const supportedLocales = ["en", "ar"];
 
-// Centralized Route Configuration
 const routes = {
-  public: [
-    '/login', 
-    '/register', 
-    '/verifyemail', 
-    '/reset-password', 
-    '/forget-password', 
-    '/api'
-  ],
-  protected: [
-    '/dashboard', 
-    '/site/exchange', 
-    '/payment'
-  ],
-  excluded: [
-    '/site/exchange/connect/status'
-  ]
+  public: ["/login", "/register", "/verifyemail", "/reset-password", "/forget-password"],
+  protected: ["/dashboard", "/site/exchange"], // Now include /site/exchange in protected routes
+  excluded: ["/site/exchange/connect/status"] // Exclude specific routes
 };
 
-const COOKIE_NAME = 'access_token';
+const COOKIE_NAME = "access_token";
 
-export default async function middleware(req: NextRequest) {
+export default function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
-  const pathnameParts = pathname.split('/');
+  const pathnameParts = pathname.split("/");
   const localeInPath = pathnameParts[1];
 
-  // Validate locale
-  const cookieLocale = req.cookies.get('NEXT_LOCALE')?.value || 'en';
-  const accessToken = req.cookies.get(COOKIE_NAME)?.value;
+  const cookieLocale:any = req.cookies.get("NEXT_LOCALE")?.value;
+  const localeFallback = supportedLocales.includes(cookieLocale) ? cookieLocale : "ar";
 
-  // Redirect if no locale or invalid locale
+  const accessToken = req.cookies.get(COOKIE_NAME)?.value || null;
+  console.log('access Token = ' + accessToken);
+  console.log('Locale = ' + cookieLocale);
+
+  // Ensure valid locale in URL
   if (!supportedLocales.includes(localeInPath)) {
-    const redirectUrl = new URL(`/${cookieLocale}${pathname}${search}`, req.url);
+    const redirectUrl = new URL(`/${localeFallback}${pathname}${search}`, req.url);
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Enhanced route matching
-  const isProtectedRoute = routes.protected.some(route => 
-    pathname === `/${localeInPath}${route}` || 
-    pathname.startsWith(`/${localeInPath}${route}/`)
-  ) && !routes.excluded.some(excludedRoute => 
-    pathname.includes(`/${localeInPath}${excludedRoute}`)
+  // Check if the route is protected (excluding exempted routes)
+  const isProtectedRoute = routes.protected.some((route) =>
+    pathname === `/${localeInPath}${route}` || pathname.startsWith(`/${localeInPath}${route}/`)
   );
 
-  const isRestrictedWhenLoggedIn = routes.public.some(route => 
-    pathname.includes(`/${localeInPath}${route}`)
+  // Check if the user is trying to access a public page while logged in
+  const isRestrictedWhenLoggedIn = routes.public.some(route =>
+    pathname === `/${localeInPath}${route}` || pathname.startsWith(`/${localeInPath}${route}?`)
   );
 
-  const response = NextResponse.next();
-
-  // Security headers
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-
-  // Authentication checks
-  if (isProtectedRoute && !accessToken) {
+  // If user is not logged in and trying to access /site/exchange, redirect to login
+  if (pathname === `/${localeInPath}/site/exchange` && !accessToken) {
     const loginUrl = new URL(`/${localeInPath}/login`, req.url);
-    // Remove the locale prefix from the pathname
-    const pathWithoutLocale = pathname.split("/").slice(2).join("/");
-    loginUrl.searchParams.set("redirect", `/${pathWithoutLocale}`);
+    loginUrl.searchParams.set("redirect", pathname.replace(`/${localeInPath}`, ""));
     return NextResponse.redirect(loginUrl);
   }
 
+  // Security headers
+  const response = NextResponse.next();
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+
+  // Handle Authentication: Redirect unauthorized users to login
+  if (isProtectedRoute && !accessToken) {
+    console.log("🚨 Unauthorized access. Redirecting to login.");
+    const loginUrl = new URL(`/${localeInPath}/login`, req.url);
+    loginUrl.searchParams.set("redirect", pathname.replace(`/${localeInPath}`, ""));
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Prevent logged-in users from accessing public pages (like login/register)
   if (accessToken && isRestrictedWhenLoggedIn) {
-    const dashboardUrl = new URL(`/${localeInPath}/dashboard`, req.url);
-    return NextResponse.redirect(dashboardUrl);
+    console.log(pathname)
+    console.log(isRestrictedWhenLoggedIn)
+    console.log("🔄 Already logged in, redirecting to dashboard.");
+    return NextResponse.redirect(new URL(`/${localeInPath}/dashboard`, req.url));
   }
 
   return createMiddleware(routing)(req);
 }
 
 export const config = {
-  matcher: ['/', '/(en|ar)/:path*', '/site/:path*', '/dashboard/:path*'],
+  matcher: ["/", "/(en|ar)/:path*", "/(en|ar)/site/:path*", "/(en|ar)/dashboard/:path*"]
 };

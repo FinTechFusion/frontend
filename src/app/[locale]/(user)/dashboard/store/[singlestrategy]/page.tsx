@@ -210,7 +210,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
               </div>
               <div className="flex items-center text-primary-600">
                 <FiArrowUpRight className="h-4 w-4 mr-1" />
-                <span className="text-sm">+{profitability.roi}% ROI</span>
+                <span className="text-sm">+{profitability.roi}% <span className="text-dark">Return of investment</span></span>
               </div>
             </div>
           </div>

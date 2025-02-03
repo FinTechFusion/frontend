@@ -60,42 +60,40 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   //   return supportedLocales.includes(locale) ? locale : "ar"; // Default to 'en' if locale is invalid
   // };
 
-  const login = async (accessToken: string, refreshToken: string) => {
-    try {
-      setIsLoading(true);
-      saveToCookies("access_token", accessToken, 1800);
-      saveToCookies("refresh_token", refreshToken, 1800);
+const login = async (accessToken: string, refreshToken: string) => {
+  try {
+    setIsLoading(true);
+    saveToCookies("access_token", accessToken, 1800);
+    saveToCookies("refresh_token", refreshToken, 1800);
 
-      // Fetch user data
-      const userData = await fetchUserData(accessToken);
-      const storedPath = sessionStorage.getItem("path");
+    // Fetch user data
+    const userData = await fetchUserData(accessToken);
+    const storedPath = sessionStorage.getItem("path");
 
-      if (userData) {
-        setUser(userData);
-        // Determine the final path to redirect to
-        let finalPath = "/dashboard"; // Default fallback
-        if (storedPath) {
-          finalPath = storedPath; // Use storedPath if it exists
-        }
-        // Log the final path for debugging
-        console.log("Final redirect path:", finalPath);
-        // Redirect to the final path
-        // Clear the stored path after use
-        setTimeout(()=>{
-          router.push(finalPath);
-        },100)
-        if (storedPath) {
-          sessionStorage.removeItem("path");
-        }
-      } else {
-        throw new Error("Failed to fetch user data");
+    if (userData) {
+      setUser(userData);
+      
+      // Use sessionStorage path or default to "/dashboard"
+      let finalPath = storedPath || "/dashboard";
+
+      console.log("Final redirect path:", finalPath);
+
+      if (storedPath) {
+        sessionStorage.removeItem("path");
       }
-    } catch (err) {
-      toast.error("Login failed");
-    } finally {
-      setIsLoading(false);
+
+      // 🔥 Instead of using router.push(), add `redirect` param
+      router.push(`/${finalPath}?redirect=${encodeURIComponent(finalPath)}`);
+    } else {
+      throw new Error("Failed to fetch user data");
     }
-  };
+  } catch (err) {
+    toast.error("Login failed");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
