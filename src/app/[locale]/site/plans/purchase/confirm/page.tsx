@@ -16,7 +16,7 @@ export default function Page() {
       headers: {
          authorization: `Bearer ${accessToken}`
       }
-   });
+   },[]);
    if (loading) {
       return <Loading />;
    }

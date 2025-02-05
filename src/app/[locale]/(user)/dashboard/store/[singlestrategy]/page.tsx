@@ -2,45 +2,113 @@
 import { useState, useEffect } from "react";
 import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
-import Image from "next/image";
 import Loading from "@/app/_components/common/loading/Loading";
 import useFetch from "@/hooks/useFetch";
-import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import { useLocale } from 'next-intl';
+import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import Toast from "@/app/_components/common/Tostify/Toast";
-
-interface SingleStrategyItemProps {
-  params: {
-    singlestrategy: string;
-  };
-}
+import { useAssetData } from "@/context/AssetsContext";
+import {
+  AssetData,
+  resultBacktest,
+  SingleStrategyItemProps,
+} from "@/utils/types";
+import {
+  FiArrowUpRight,
+  FiBarChart2,
+  FiDollarSign,
+  FiPieChart,
+} from "react-icons/fi";
+import { FaRegClock, FaSpinner } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import FiltrationLabels from "@/app/_components/strategies/FiltrationLabels";
+import { CalculateNetProfitAndRIO } from "@/lib/backtest/NetProfitService";
+import CalculateBalance from "@/app/_components/common/dashboard/Store/Strategy/CalculateBalance";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { balanceSchema, balanceType } from "@/validation/balanceSchema";
+import { Input } from "@/app/_components/common/forms";
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user, fetchUserData } = useAuth();
   const accessToken = getFromCookies("access_token");
+  const { assetData, assetLoading } = useAssetData();
+  const [selectedValue, setSelectedValue] = useState<string>(""); // Default value
+  const [isInstalling, setIsInstall] = useState<boolean>(false);
+  const [initialUSDT, setinitialUSDT] = useState<number>(0);
+  const [resultBacktest, setResultBacktest] = useState<resultBacktest>({
+    finalBalance: "0",
+    netProfit: "0",
+    roi: "0",
+  });
+  const validationT = useTranslations("validation");
+  const { register, handleSubmit, formState: { errors },reset } = useForm<balanceType>({
+     mode: "onBlur",
+     resolver: zodResolver(balanceSchema),
+  });
+  const getSymbol = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedValue(value);
+  };
   const [signalStrategy, setSignalStrategy] = useState<string | null>(null);
   const [aiStrategy, setAiStrategy] = useState<string | null>(null);
-  const t = useTranslations("dashboard.strategies")
+  const t = useTranslations("dashboard.strategies");
   const locale = useLocale();
   const router = useRouter();
+
   // Fetch strategy details
-  const { data, loading, error } = useFetch(
+  const { data, error } = useFetch(
     `${API_BASE_URL}/binance/strategies/${params.singlestrategy}?lang=${locale}`,
     {
       method: "GET",
       next: { revalidate: 180 },
     }
   );
+
   // Update the state based on the user's installed strategies
   useEffect(() => {
-    if (user) {
+    if (user?.signal_strategy && user?.ai_strategy) {
       setSignalStrategy(user.signal_strategy);
       setAiStrategy(user.ai_strategy);
     }
   }, [user]);
-  if (loading) return <Loading />;
+
+  // set default first symbol at mount page
+  useEffect(() => {
+    if (assetData.length > 0 && assetData[0]?.symbol) {
+      setSelectedValue(assetData[0].symbol);
+    }
+  }, [assetData]);
+  // Ensure shouldFetch is either a string (valid URL) or null (prevent fetching)
+  const shouldFetch =
+    selectedValue !== "" && params?.singlestrategy
+      ? `${API_BASE_URL}/binance/backtest/${selectedValue}/${params.singlestrategy}`
+      : null;
+  const { data: backtestData, loading } = useFetch(
+    shouldFetch, // Pass null if no fetch is needed
+    {
+      method: "GET",
+      next: { revalidate: 120 },
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    },
+    [selectedValue, params?.singlestrategy]
+  );
+  const onSubmit:SubmitHandler<balanceType> = (data) => {
+    if (backtestData && backtestData["Total Trades"]) {
+      const result = CalculateNetProfitAndRIO(
+        data?.balance,
+        backtestData["Profitable Trades Details"]
+      );
+      setResultBacktest(result);
+      reset();
+    }
+  };
+
+  if (assetLoading) return <Loading />;
+  // check there is error at fetch startegy details
   if (error) {
     toast.error(t("fetchStrategyError"));
     return null;
@@ -53,6 +121,7 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       return toast.info(t("installOneAiOnly"));
     } else {
       try {
+        setIsInstall(true);
         const response = await fetch(
           `${API_BASE_URL}/users/me/strategy/${data.bot_type}/${data.id}/install`,
           {
@@ -68,52 +137,146 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             await fetchUserData(accessToken);
           }
           if (data.bot_type === "signal") {
-            router.push(`/dashboard/botsignal`)
+            router.push(`/dashboard/botsignal`);
           } else {
-            router.push(`/dashboard/botai`)
+            router.push(`/dashboard/botai`);
           }
-        }else{
-            if(responseData.class === "UserStrategyNotAvailable") return toast.info(t("subscribeFirst"))
+        } else {
+          if (responseData.class === "UserStrategyNotAvailable")
+            return toast.info(t("subscribeFirst"));
         }
       } catch (error) {
         throw new Error(t("somethingError"));
+      } finally {
+        setIsInstall(false);
       }
     }
   }
+   // Error message translation mapping
+   const translateErrorMessage = (errorKey: string | undefined) => {
+    if (!errorKey) return '';
+    return validationT(errorKey);
+ };
   return (
     <div className="md:px-0 px-2">
-      <Toast/>
-      <div className="heading-box flex flex-col md:flex-row justify-between md:items-center items-start py-5">
-        <div className="left flex flex-col md:flex-row justify-start items-start gap-5 md:w-4/5 w-full">
-          <Image
-            src={data.banner_url}
-            alt={`${data.name} banner`}
-            width={180}
-            height={180}
-            className="h-full w-full rounded-md"
-          />
-          <div className="mt-4 md:mt-0">
-            <h2 className="md:text-3xl text-2xl font-bold text-dark hover:text-primary-700">{data.name}</h2>
-            <p className="py-4 text-lg text-gray-500">{data.description}</p>
-            <button className="main-btn md:w-fit w-full text-xl" onClick={InstallStrategy}>{t("install")}</button>
+      <Toast />
+      <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-5 mb-6">
+        <div className="md:w-32 w-full mt-5">
+          <select
+            id="crypto-select"
+            className="block uppercase w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600"
+            value={selectedValue}
+            onChange={getSymbol}
+          >
+            {assetData?.length > 0 &&
+              assetData.map((symbol: AssetData, index: number) => (
+                <option
+                  className="uppercase"
+                  key={index}
+                  value={symbol?.symbol}
+                >
+                  {symbol?.symbol}
+                </option>
+              ))}
+          </select>
+        </div>
+        <button
+          className="main-btn md:w-fit w-full text-xl"
+          onClick={InstallStrategy}
+        >
+          {isInstalling ? (
+            <FaSpinner className="spinner text-secondary w-6 h-6" />
+          ) : (
+            t("install")
+          )}
+        </button>
+      </div>
+      <hr />
+      {/* calculate balance */}
+      <form
+      onSubmit={handleSubmit(onSubmit)}
+        className="flex md:flex-row flex-col md:justify-between md:items-center pt-5 gap-2"
+      >
+        <div className="md:w-1/3">
+        <Input
+          register={register}
+          name="balance"
+          type="number"
+          placeholder={t("enterBalnceByusdt")}
+          error={translateErrorMessage(errors.balance?.message)}
+        />
+        </div>
+        <button className="main-btn md:w-[250px]" type="submit">
+          {t("calculate")}
+        </button>
+      </form>
+      <div className="space-y-6 pt-6">
+        {/* Profitability Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Net Profit */}
+          <div className="p-4 bg-gray-50 shadow-md rounded-lg">
+            <div className="flex justify-between pb-2">
+              <span className="text-lg font-medium text-gray-800">
+                {t("Netprofit")}
+              </span>
+              <FiDollarSign className="h-4 w-4 text-primary-700" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold py-1">
+                $ {resultBacktest?.netProfit}
+              </div>
+            </div>
+          </div>
+
+          {/* Win Rate */}
+          <div className="p-4 bg-gray-50 shadow-md rounded-lg">
+            <div className="flex justify-between pb-2">
+              <span className="text-lg font-medium text-gray-800">
+                {t("winRate")}
+              </span>
+              <FiPieChart className="h-4 w-4 text-gray-500" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold py-1">100 %</div>
+              <div className="text-sm text-gray-500">
+                {backtestData && backtestData?.["Total Trades"] || 0} {t("totalTrades")}
+              </div>
+            </div>
+          </div>
+          {/* RIO */}
+          <div className="p-4 bg-gray-50 shadow-md rounded-lg">
+            <div className="flex justify-between pb-2">
+              <span className="text-lg font-medium text-gray-800">{t("ROI")}</span>
+              <FiPieChart className="h-4 w-4 text-gray-500" />
+            </div>
+            <div>
+              <div className="text-2xl text-primary-600 font-bold py-1">
+                {resultBacktest?.roi} %
+              </div>
+            </div>
+          </div>
+          {/* Average Time Per Cycle */}
+          <div className="p-4 bg-gray-50 shadow-md rounded-lg">
+            <div className="flex justify-between pb-2">
+              <span className="text-lg font-medium text-gray-800">
+                {t("averageTimePerCycle")}
+              </span>
+              <FaRegClock className="h-4 w-4 text-gray-500" />
+            </div>
+            <div className="text-2xl font-bold py1">
+              {backtestData && backtestData?.["Average Time Per Cycle (minutes)"] != null
+                ? (
+                    parseFloat(
+                      backtestData["Average Time Per Cycle (minutes)"]
+                    ) / 60
+                  ).toFixed(2)
+                : "0.00"}{" "}
+              {t("hr")}
+            </div>
           </div>
         </div>
       </div>
-      <hr />
-      <div className="news-list p-3">
-        <h3 className="text-2xl font-medium py-3">{t("whatsnews")}</h3>
-        <ol className="list-decimal px-2">
-          {data.whats_new && data.whats_new.length > 0 ? (
-            data.whats_new.map((el: string, index: number) => (
-              <li className="py-3" key={index}>
-                {el}
-              </li>
-            ))
-          ) : (
-            <li className="py-3">{t("no_newupdates")}</li>
-          )}
-        </ol>
-      </div>
+      {/* <FiltrationLabels /> */}
     </div>
   );
 };

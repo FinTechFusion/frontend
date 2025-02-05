@@ -30,14 +30,13 @@ function PlanContent({ selectedPlanType, excludedPlanId }: PlanCardProps) {
     `${API_BASE_URL}/subscriptions/plans?lang=${locale}`,
     {
       method: "GET",
-    }
+    },[]
   );
 
   const createSubscription = async (planId: string) => {
     if (accessToken) {
       setIsLoading(true);
       try {
-        console.log("user is subscribed " + user?.is_subscribed);
         const response = await fetch(
           `${API_BASE_URL}/users/me/subscription?lang=${locale}`,
           {

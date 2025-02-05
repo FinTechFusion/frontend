@@ -412,9 +412,9 @@ export default function TradingBotForm({ type }: tradingBotType) {
           />
         </div>
         {loading ? (
-          <SpinBtn content="loading" btnProps="w-fit" />
+          <SpinBtn content="loading" btnProps="w-fit my-2" />
         ) : (
-          <MainBtn content="start" btnProps="w-fit" />
+          <MainBtn content="start" btnProps="w-fit my-2" />
         )}
       </form>
     </>

@@ -21,11 +21,12 @@ export default function UserDashboardLayout({ children }: DashboardLayoutProps) 
       <SidebarProvider>
          <div className="flex justify-between">
             <Sidebar />
-            <div className={`md:px-0 px-2 lg:max-w-[80%] w-full absolute ${locale === "en"?"right-0" :"left-0"}`}>
+            <div className={`md:px-1 px-2 lg:max-w-[80%] w-full absolute ${locale === "en"?"right-0" :"left-0"}`}>
                <AssetDataProvider>
                   <Headerdash />
+                  {children}
+
                </AssetDataProvider>
-               {children}
             </div>
          </div>
       </SidebarProvider>

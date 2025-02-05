@@ -42,7 +42,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
       const responseData = await response.json();
       if (response.ok && responseData.success) {
         setCounts(responseData.data.total);
-
         const fetchTickers = responseData?.data?.items.map((asset: any) =>
           fetch(`${API_BASE_URL}/binance/${asset.symbol}/ticker`, {
             method: "GET",
@@ -58,11 +57,11 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
                 symbol: asset.symbol,
                 quantity: asset.quantity,
                 price_change_percent:
-                  tickerData.data?.price_change_percent || "N/A",
+                  tickerData.data?.price_change_percent?.toFixed(2) || "N/A",
                 last_price:
                   asset.symbol.toUpperCase() === "USDT"
                     ? "1"
-                    : tickerData.data?.last_price || "N/A",
+                    : tickerData.data?.last_price?.toFixed(2) || "N/A",
               };
             })
             .catch((error) => {
@@ -80,9 +79,6 @@ export const AssetDataProvider = ({ children }: { children: ReactNode }) => {
         );
 
         const results = await Promise.all(fetchTickers);
-        // const hasUSDT = results.some((asset) => asset.symbol === "USDT");
-        // setUserHasUSDT(hasUSDT);
-        // console.log("has usdt: " + hasUSDT);
         setAssetData(results);
       } else {
         const error: ApiError = {

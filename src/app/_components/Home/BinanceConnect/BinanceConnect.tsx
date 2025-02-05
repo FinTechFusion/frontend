@@ -20,7 +20,7 @@ export default function BinanceConnect() {
           <li className="text-lg py-1">{t("integrate_feat_3")}</li>
           <li className="text-lg py-1">{t("integrate_feat_4")}</li>
         </ul>
-        {!user?.is_binance ? <Link href="/site/exchange/connect">
+        {!user?.is_binance ? <Link href="/site/exchange">
           <button className="main-btn flex justify-center items-center gap-2">
             {t("connect_acc")}
             <FaLink className="pt-1" />

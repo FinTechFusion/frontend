@@ -17,7 +17,7 @@ const AssetInfo: React.FC<AssetInfoProps> = ({ symbol, price, changePercent }) =
       <div className="text-center">
          <span className="block py-1">{price} $</span>
          <span className={`text-${changePercent >= 0 ? 'primary-600' : 'red-600'}`}>
-            {changePercent} %
+            {changePercent.toFixed(2)} %
          </span>
       </div>
    </div>
@@ -55,15 +55,15 @@ const HeaderDash = () => {
    };
 
    // btcInfo and ethInfo default values now use numbers instead of strings
-   const btcInfo = getAssetInfo('btc') || { price: 63233.01, changePercent: 0.157 };
-   const ethInfo = getAssetInfo('eth') || { price: 2655.08, changePercent: 3.473 };
+   const btcInfo = getAssetInfo('btc') || { price: 63233.01, changePercent: 0.15 };
+   const ethInfo = getAssetInfo('eth') || { price: 2655.08, changePercent: 3.47 };
 
    // Fix reduce function to use correct types
    const accountBalance = assetData.length > 0
       ? (isNaN(assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0))
-         ? '66617.9800'
-         : assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(5))
-      : '66617.9800';
+         ? '66617.98'
+         : assetData.reduce((total: number, asset: any) => total + (asset.quantity * asset.last_price), 0).toFixed(2))
+      : '66617.98';
 
    return (
       <>

@@ -96,7 +96,7 @@ function Page() {
           description="auth.resetEmail"
           descriptionClass="text-lg pb-4"
         />
-        <form onSubmit={handleSubmit(submitForm)}>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit(submitForm)}>
           <div className="w-72">
             <Input
               type="email"

@@ -43,7 +43,7 @@ export default function CurrentPlan({ data, confirmdDeletePlan }: CurrentPlanPro
                      <span className="text-lg">{t("nextBilling")} {data?.expire_at.split('T')[0]}</span>
                   </div>
                   <div className="text-secondary">
-                     <h6 className="text-xl font-bold flex items-center gap-2" ><GiMoneyStack />{t("amount")} {data?.price} <span className="text-lg">{t("AED")}</span></h6>
+                     <h6 className="text-xl font-bold flex items-center gap-2" ><GiMoneyStack />{t("amount")} {data?.price?.toFixed(2)} <span className="text-lg">{t("AED")}</span></h6>
                   </div>
                </div>
                <div className="subscription-actions flex flex-col lg:items-center items-start gap-3">

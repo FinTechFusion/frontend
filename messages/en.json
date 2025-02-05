@@ -369,7 +369,7 @@
    },
    "binance": {
       "connectAccount": "Connect Account To Start Trading",
-      "donthaveExchanges": "I don't have an exchange",
+      "donthaveExchanges": "I don't have an account on Binance",
       "startAtDemo": "Start Trading on the Demo",
       "accessTransfer": "FinTech Fusion will not have access to transfer or withdraw your assets",
       "connectExchange": "Connect Exchange",
@@ -551,10 +551,12 @@
          "strategy_used": "Strategy Used",
          "spotStartegy": "Spot Startegy",
          "uninstall": "uninstall",
-         "install": "Install",
+         "install": "Install Startegy",
+         "installing": "installing",
          "installed": "Installed",
          "start_range": "Start range",
          "end_range": "End range",
+         "performanceOverview":"Performance Overview",
          "choose_startegyForTrading":"Choose strategy to start trading",
          "fetchStrategyError": "Error fetching strategy, please try again later.",
          "installOneSignalOnly": "You must only install one signal strategy",
@@ -565,7 +567,14 @@
          "whatsnews": "What's news",
          "no_newupdates": "No new updates",
          "longTerm": "Long Term",
-         "shortTerm": "Short Term"
+         "shortTerm": "Short Term",
+         "calculate":"Backtest strategy",
+         "totalTrades":"total trades",
+         "enterBalnceByusdt":"Enter balance By USDT",
+         "Netprofit":"Net profit",
+         "ROI":"Return of investment (ROI)",
+         "averageTimePerCycle":"Average time per cycle",
+         "hr":"hr"
       },
       "userCurrentPlan": {
          "thanksForSubscribe": "Thank you for subscribing to our plan! We appreciate your support and are excited to have you as part of the Fintech Fusion community.",
@@ -615,6 +624,11 @@
       },
       "password": {
          "min": "Password must be at least 8 characters"
+      },
+      "balance": {
+         "number":"balance is required",
+         "required": "You must enter balance",
+         "positive":"balance must be more than 0"
       },
       "contact": {
          "first_name": {

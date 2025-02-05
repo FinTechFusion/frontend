@@ -477,7 +477,7 @@
       },
       "DemoSpotWallet": "محفظة العرض التجريبي",
       "spotWallet": "المحفظة الفورية",
-      "passwordPlaceHolder": " تغير الأسعار للعملات",
+      "PriceChangeLineChart": "تغير الاسعار للعملات الخاصة بك",
       "symbol": "الرمز",
       "quantity": "الكمية",
       "tradingQuantity": "ادخل الكمية بقيمة USDT",
@@ -545,10 +545,12 @@
          "strategy_used": "الاستراتيجية المستخدمة",
          "spotStartegy": "استراتيجية فورية",
          "uninstall": "إلغاء التثبيت",
-         "install": "تثبيت",
+         "install": "تثبيت الاستراتيجية",
+         "installing": "جاري التحميل",
          "installed": "تم التثبيت",
          "start_range": "تبدأ من",
          "end_range": "تنتهي من",
+         "performanceOverview":"نظرة عامة على الأداء",
          "choose_startegyForTrading":"اختر الاستراتيجية المناسبة لك لبدء التداول",
          "fetchStrategyError": "حدث خطأ أثناء جلب الاستراتيجية، يرجى المحاولة مرة أخرى لاحقًا.",
          "installOneSignalOnly": "يجب تثبيت استراتيجية إشارات واحدة فقط.",
@@ -559,7 +561,15 @@
          "whatsnews": "ما الجديد",
          "no_newupdates": "لا يوجد اخبار في الوقت الحالي",
          "longTerm": "المدي البعيد",
-         "shortTerm": "المدي القريب"
+         "shortTerm": "المدي القريب",
+         "winRate":"نسبة النجاح",
+         "calculate":"إختبار أداء الإستراتيجية",
+         "totalTrades":"إجمالي الصفقات",
+         "enterBalnceByusdt":"ادخل الرصيد ب USDT",
+         "Netprofit":"الربح الصافي",
+         "ROI":"نسبة عائد الإستثمار",
+         "averageTimePerCycle":"متوسط وقت عملية تداول",
+         "hr":"ساعة"
       },
       "commingSoon": {
          "title": "بوت الذكاء الاصطناعي الخاص بنا قادم قريبًا!",
@@ -614,6 +624,11 @@
       },
       "password": {
          "min": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"
+      },
+      "balance": {
+         "number": "الرصيد مطلوب",
+         "required": "يجب إدخال الرصيد",
+         "positive": "يجب أن يكون أكثر من 0"
       },
       "contact": {
          "first_name": {

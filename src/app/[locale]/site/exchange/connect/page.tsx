@@ -13,12 +13,15 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Page() {
    const t = useTranslations("binance");
-   const router = useRouter();
+   // const router = useRouter();
    const locale = useLocale();
-   const {user} = useAuth();
-   const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`);
+   // const {user} = useAuth();
+   const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`,{
+      method:'GET',
+      next: { revalidate: 60 },
+   },[]);
    if (loading) return <Loading />;
-   if(user?.is_binance) return router.push('/dashboard');
+   // if(user?.is_binance) return router.push('/dashboard');
    return (
       <div className="relative">
          <div className="opacity-25">

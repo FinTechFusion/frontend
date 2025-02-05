@@ -27,7 +27,7 @@ export default function ContactForm() {
    };
 
    return (
-      <form onSubmit={handleSubmit(submitForm)}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit(submitForm)}>
          <Input
             label={t("nameLabel")}
             name="first_name"

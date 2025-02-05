@@ -11,7 +11,7 @@ export default withNextIntl({
       remotePatterns: [
          {
             protocol: 'https',
-            hostname: 'storage.fintechfusion.net',
+            hostname: "ff-storage-2.s3.amazonaws.com",
             pathname: '/**',
          },
       ],

@@ -6,11 +6,11 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { usePathname, useRouter } from "@/i18n/navigation";
 import { toast } from "react-toastify";
 import { Tokens, AuthContextType, User } from "@/utils/types";
 import { API_BASE_URL } from "@/utils/api";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { useRouter } from "@/i18n/navigation";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -43,56 +43,51 @@ export const getFromCookies = (key: string) => {
 // Auth Provider Component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Track authentication state
-
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    checkAndFetchUserData(); // Initial call
+    const intervalId = setInterval(() => {
       checkAndFetchUserData();
-    }, 60000);
+    }, 280000);
+  
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
-  const supportedLocales = ["en", "ar"];
+  
+const login = async (accessToken: string, refreshToken: string) => {
+  try {
+    setIsLoading(true);
+    saveToCookies("access_token", accessToken, 1800);
+    saveToCookies("refresh_token", refreshToken, 1800);
 
-  const getCurrentLocale = () => {
-    const pathname = window.location.pathname;
-    const locale = pathname.split("/")[1]; // Extract locale from URL (e.g., '/en/dashboard' -> 'en')
-    return supportedLocales.includes(locale) ? locale : "en"; // Default to 'en' if locale is invalid
-  };
-  const login = async (accessToken: string, refreshToken: string) => {
-    try {
-      setIsLoading(true);
-      saveToCookies("access_token", accessToken, 1800);
-      saveToCookies("refresh_token", refreshToken, 1800);
+    // Fetch user data
+    const userData = await fetchUserData(accessToken);
+    const storedPath = sessionStorage.getItem("path");
 
-      // Await user data fetch before routing
-      const userData = await fetchUserData(accessToken);
-      if (userData) {
-        setUser(userData);
-        setIsAuthenticated(true); // Update authentication state
-        const storedPath = sessionStorage.getItem("path");
-        // Clear any stored path after use
-        if (storedPath) {
-          sessionStorage.removeItem("path");
-        }
-        // Get current locale
-        const currentLocale = getCurrentLocale();
-        const redirectPath = storedPath || "/dashboard";
-        window.location.href = `/${currentLocale}${redirectPath}`; // Include locale prefix
-      } else {
-        throw new Error("Failed to fetch user data");
+    if (userData) {
+      setUser(userData);
+      
+      // Use sessionStorage path or default to "/dashboard"
+      let finalPath = storedPath || "/dashboard";
+
+      if (storedPath) {
+        sessionStorage.removeItem("path");
       }
-    } catch (err) {
-      toast.error("Login failed");
-      setError(
-        err instanceof Error ? err.message : "An unknown error occurred"
-      );
-    } finally {
-      setIsLoading(false);
+
+      // 🔥 Instead of using router.push(), add `redirect` param
+      router.push(`/${finalPath}?redirect=${encodeURIComponent(finalPath)}`);
+      router.refresh();
+    } else {
+      throw new Error("Failed to fetch user data");
     }
-  };
+  } catch (err) {
+    toast.error("Login failed");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
@@ -104,7 +99,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         if (response.status === 401) {
           try {
@@ -121,7 +116,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         throw new Error("Failed to fetch user data");
       }
-      
+
       const { data } = await response.json();
       setUser(data);
       return data;
@@ -134,30 +129,39 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const checkAndFetchUserData = async () => {
-    const accessToken = getFromCookies("access_token");
-    const expireTokenTime = getFromCookies("expire_data_token");
-    if (!accessToken) return;
-    const currentTime = Date.now();
-    if (expireTokenTime && currentTime > Number(expireTokenTime)) {
-      const newAccessToken = await refreshAccessToken();
-      await fetchUserData(newAccessToken);
-    }
-  };
-
+  const accessToken = getFromCookies("access_token");
   useEffect(() => {
-    const accessToken = getFromCookies("access_token");
     const loadUserData = async () => {
       if (accessToken) {
-        console.log("user is auth");
-        setIsAuthenticated(true);
         await fetchUserData(accessToken);
       }
-      checkAndFetchUserData();
     };
     loadUserData();
   }, []);
 
+  const checkAndFetchUserData = async () => {
+    console.log('check')
+    const accessToken = getFromCookies("access_token");
+    const expireTokenTime = getFromCookies("expire_data_token");
+    const expireTimeNumber = Number(expireTokenTime);
+
+    if (!accessToken) return;
+    const currentTime = Date.now();
+    if (expireTokenTime && currentTime > expireTimeNumber) {
+      try {
+        const newAccessToken = await refreshAccessToken();
+        if (newAccessToken) {
+          console.log("Token refreshed successfully. Fetching user data...");
+          await fetchUserData(newAccessToken);
+        } else {
+          logout(); // Clear cookies and redirect to login
+          console.warn("Failed to refresh token. User might need to log in again.");
+        }
+      } catch (error) {
+        console.error("Error refreshing access token:", error);
+      }
+    }
+  };
   const refreshAccessToken = async (): Promise<string> => {
     try {
       const refreshToken = getFromCookies("refresh_token");
@@ -184,7 +188,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       saveToCookies("refresh_token", newTokens.refresh_token);
       const newExpireTime = Date.now() + 29 * 60 * 1000;
       saveToCookies("expire_data_token", newExpireTime.toString());
-
+      console.log('generate new tokens')
       return newTokens.access_token;
     } catch (err) {
       throw err;
@@ -194,75 +198,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     saveToCookies("access_token", accessToken);
     saveToCookies("refresh_token", refreshToken);
     const userData = await fetchUserData(accessToken);
-    if(userData){
+    if (userData) {
       setUser(userData);
-      setIsAuthenticated(true); // Update authentication state
     }
   };
-
-  // handle save user needed route at session storage if not logedin
-  const pathname = usePathname();
-  const protectedRoutes = ["/dashboard", "/site/exchange", "/payment"];
-  const authRoutes = ["/login", "/forget-password", "/reset-password"];
-  const excludedRoutes = ["/site/exchange/connect/status"]; // Add this line
-
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.includes(route) && 
-    !excludedRoutes.some(excludedRoute => pathname.includes(excludedRoute))
-  );
-  
-  const isAuthRoute = authRoutes.includes(pathname);
-  const accessToken = getFromCookies("access_token");
-
-  const checkAuth = () => {
-     // Check if the current route is in excluded routes
-  const isExcludedRoute = excludedRoutes.some(route => pathname.includes(route));
-    const existRoute = sessionStorage.getItem("path");
-    if (!accessToken && isProtectedRoute && !isExcludedRoute) {
-      sessionStorage.setItem("path", pathname);
-      router.push(`/login`);
-    } else if (accessToken && isAuthRoute && !isExcludedRoute) {
-      router.push(existRoute || `/dashboard`);
-      sessionStorage.removeItem("path");
-    }
-    // Store /site/plans path if needed
-    if (pathname === "/site/plans") {
-      sessionStorage.setItem("path", pathname);
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    checkAuth();
-  }, [pathname,router]);
-
-  useEffect(() => {
-    const handleBackButton = () => {
-      sessionStorage.removeItem("path");
-      router.push("/");
-    };
-    // Add event listener for the back button
-    window.addEventListener("popstate", handleBackButton);
-    return () => {
-      // Clean up the event listener when the component unmounts
-      window.removeEventListener("popstate", handleBackButton);
-    };
-  }, []);
 
   // Utility function to remove tokens from localStorage
   const clearTokensFromStorage = (): void => {
     deleteCookie("access_token");
     deleteCookie("refresh_token");
     deleteCookie("expire_data_token");
-    localStorage.removeItem("expire_data_token");
   };
   const logout = () => {
     clearTokensFromStorage();
     sessionStorage.clear();
-    const currentLocale = getCurrentLocale();
-    window.location.href = `/${currentLocale}`; 
+    router.push("/");
     setUser(null);
-    setIsAuthenticated(false); // Update authentication state
+    router.refresh();
   };
   return (
     <AuthContext.Provider
