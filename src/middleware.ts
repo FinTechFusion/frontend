@@ -22,6 +22,7 @@ export default function middleware(req: NextRequest) {
 
    // If the path doesn't start with a locale, redirect to the locale from the cookie
    if (!supportedLocales.includes(localeInPath)) {
+    console.log('not support')
     const redirectUrl = new URL(`/${cookieLocale}${pathname}${search}`, req.url);
     return NextResponse.redirect(redirectUrl);
  }
@@ -67,5 +68,5 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(en|ar)/:path*', '/site/:path*', '/dashboard/:path*'],
+  matcher: ['/','/(en|ar)/:path*', '/site/:path*', '/dashboard/:path*'],
 };
