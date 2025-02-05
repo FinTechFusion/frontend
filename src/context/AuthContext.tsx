@@ -48,18 +48,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    checkAndFetchUserData();
-   setInterval(() => {
-    checkAndFetchUserData();
+    checkAndFetchUserData(); // Initial call
+    const intervalId = setInterval(() => {
+      checkAndFetchUserData();
     }, 280000);
+  
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
-
-  // const getCurrentLocale = () => {
-  //   const pathname = window.location.pathname;
-  //   const locale = pathname.split("/")[1]; // Extract locale from URL (e.g., '/en/dashboard' -> 'en')
-  //   return supportedLocales.includes(locale) ? locale : "ar"; // Default to 'en' if locale is invalid
-  // };
-
+  
 const login = async (accessToken: string, refreshToken: string) => {
   try {
     setIsLoading(true);
@@ -75,8 +71,6 @@ const login = async (accessToken: string, refreshToken: string) => {
       
       // Use sessionStorage path or default to "/dashboard"
       let finalPath = storedPath || "/dashboard";
-
-      console.log("Final redirect path:", finalPath);
 
       if (storedPath) {
         sessionStorage.removeItem("path");
@@ -94,7 +88,6 @@ const login = async (accessToken: string, refreshToken: string) => {
     setIsLoading(false);
   }
 };
-
 
   const fetchUserData = async (accessToken: string): Promise<User | null> => {
     setIsLoading(true);
@@ -136,30 +129,39 @@ const login = async (accessToken: string, refreshToken: string) => {
     }
   };
 
-  const checkAndFetchUserData = async () => {
-    console.log('check')
-    const accessToken = getFromCookies("access_token");
-    const expireTokenTime = getFromCookies("expire_data_token");
-    if (!accessToken) return;
-    const currentTime = Date.now();
-    if (expireTokenTime && currentTime > Number(expireTokenTime)) {
-      console.log('call refresh')
-      const newAccessToken = await refreshAccessToken();
-      await fetchUserData(newAccessToken);
-    }
-  };
-
+  const accessToken = getFromCookies("access_token");
   useEffect(() => {
-    const accessToken = getFromCookies("access_token");
     const loadUserData = async () => {
       if (accessToken) {
         await fetchUserData(accessToken);
       }
-      checkAndFetchUserData();
     };
     loadUserData();
   }, []);
 
+  const checkAndFetchUserData = async () => {
+    console.log('check')
+    const accessToken = getFromCookies("access_token");
+    const expireTokenTime = getFromCookies("expire_data_token");
+    const expireTimeNumber = Number(expireTokenTime);
+
+    if (!accessToken) return;
+    const currentTime = Date.now();
+    if (expireTokenTime && currentTime > expireTimeNumber) {
+      try {
+        const newAccessToken = await refreshAccessToken();
+        if (newAccessToken) {
+          console.log("Token refreshed successfully. Fetching user data...");
+          await fetchUserData(newAccessToken);
+        } else {
+          logout(); // Clear cookies and redirect to login
+          console.warn("Failed to refresh token. User might need to log in again.");
+        }
+      } catch (error) {
+        console.error("Error refreshing access token:", error);
+      }
+    }
+  };
   const refreshAccessToken = async (): Promise<string> => {
     try {
       const refreshToken = getFromCookies("refresh_token");
@@ -199,7 +201,6 @@ const login = async (accessToken: string, refreshToken: string) => {
     if (userData) {
       setUser(userData);
     }
-    router.refresh();
   };
 
   // Utility function to remove tokens from localStorage

@@ -18,7 +18,7 @@ export default function FiltrationLabels() {
    const [activeFilter, setActiveFilter] = useState('Overall');
    const t = useTranslations("dashboard.strategies");
    return (
-    <div className="flex justify-between items-center gap-3 w-full mt-12">
+    <div className="flex md:flex-row flex-col justify-between md:items-center items-start gap-3 w-full mt-12">
     <h2 className="text-xl font-semibold">{t('performanceOverview')}</h2>
       <div className="flex p-3 gap-2 bg-gray-100 rounded-lg">
       {timeFilters?.map((el) => {

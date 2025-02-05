@@ -192,38 +192,16 @@ export interface SingleStrategyItemProps {
    };
  }
   // Define interfaces for the data structure
-export interface TradeData {
-   value: number;
-   timestamp: number;
-   date: string;
- }
 
- export interface ProfitabilityStats {
-   netProfit: string;
-   winRate: string;
-   lossRate: string;
-   avgProfit: string;
-   avgLoss: string;
+ export interface resultBacktest {
    roi: string;
+   netProfit: string;
+   finalBalance: string;
  }
-
- export interface RiskStats {
-   sharpeRatio: string;
-   volatility: string;
-   profitFactor: string;
-   maxDrawdown: string;
-   riskToReward: string;
- }
-
- export interface PerformanceStats {
-   totalTrades: number;
-   avgTimePerCycle: number;
-   correlation: number;
-   cumulativeReturns: string;
- }
-
- export interface TradingStats {
-   profitability: ProfitabilityStats;
-   risk: RiskStats;
-   performance: PerformanceStats;
+ export interface ProfitTradesProps {
+   buyPrice: number,
+   buyDate: string,
+   sellPrice: number,
+   sellDate: string,
+   Profit: number,
  }

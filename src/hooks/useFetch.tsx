@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 type FetchOptions = RequestInit;
 
-const useFetch = (url: string, options?: FetchOptions,dependencies: any[] = []): any => {
+const useFetch = (url: any, options?: FetchOptions,dependencies: any[] = []): any => {
    const [data, setData] = useState<null>(null);
    const [loading, setLoading] = useState<boolean>(true);
    const [error, setError] = useState<string | null>(null);

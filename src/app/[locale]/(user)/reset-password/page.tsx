@@ -77,8 +77,8 @@ function ResetPasswordPage() {
                titleClass="hover:text-dark"
                description="auth.resetPasswordDescription"
                descriptionClass="text-lg w-3/4 mx-auto" />
-            <form className="mx-auto" onSubmit={handleSubmit(onSubmit)}>
-               <input type="text" className="bg-gray-100 rounded focus:outline-none focus:ring-1 focus:ring-primary-700 h-10 w-full text-lg px-3 mb-3 text-dark" placeholder={t("enterOTPCode")} ref={inputRef} onChange={(e) => handleChange(e)} maxLength={6} />
+            <form className="mx-auto flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+               <input type="text" className="bg-gray-100 rounded focus:outline-none focus:ring-1 focus:ring-primary-700 h-10 w-full text-lg px-3 text-dark" placeholder={t("enterOTPCode")} ref={inputRef} onChange={(e) => handleChange(e)} maxLength={6} />
                <Input
                   label={t("newPassword")}
                   name="password"

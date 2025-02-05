@@ -100,6 +100,7 @@ export default function RegisterForm() {
                   placeholder={t("lastName")}
                />
             </div>
+            <div className="py-2 email-input">
             <Input
                label={t("email")}
                register={register}
@@ -107,7 +108,8 @@ export default function RegisterForm() {
                error={translateErrorMessage(errors.email?.message)}
                placeholder={t("emailPlaceHolder")}
             />
-            <div className="pb-4">
+            </div>
+            <div className="py-4">
                <PhoneInput
                   country={"sa"}
                   value={phone_number}
@@ -140,7 +142,7 @@ export default function RegisterForm() {
                   id="confirm-condition"
                   className="accent-primary-700"
                />
-               <span>
+               <span className="py-2">
                   {t("agreementCreation")}{" "}
                   <span className="text-medium">
                      <Link href="/site/terms">{t("TermsandConditions")}</Link>

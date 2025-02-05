@@ -13,16 +13,13 @@ const routes = {
 const COOKIE_NAME = "access_token";
 
 export default function middleware(req: NextRequest) {
+  const accessToken = req.cookies.get(COOKIE_NAME)?.value || null;
   const { pathname, search } = req.nextUrl;
   const pathnameParts = pathname.split("/");
   const localeInPath = pathnameParts[1];
 
   const cookieLocale:any = req.cookies.get("NEXT_LOCALE")?.value;
   const localeFallback = supportedLocales.includes(cookieLocale) ? cookieLocale : "ar";
-
-  const accessToken = req.cookies.get(COOKIE_NAME)?.value || null;
-  console.log('access Token = ' + accessToken);
-  console.log('Locale = ' + cookieLocale);
 
   // Ensure valid locale in URL
   if (!supportedLocales.includes(localeInPath)) {
@@ -61,11 +58,8 @@ export default function middleware(req: NextRequest) {
     loginUrl.searchParams.set("redirect", pathname.replace(`/${localeInPath}`, ""));
     return NextResponse.redirect(loginUrl);
   }
-  console.log("path name "+pathname)
   // Prevent logged-in users from accessing public pages (like login/register)
   if (accessToken && isRestrictedWhenLoggedIn) {
-    console.log(pathname)
-    console.log(isRestrictedWhenLoggedIn)
     console.log("🔄 Already logged in, redirecting to dashboard.");
     return NextResponse.redirect(new URL(`/${localeInPath}/dashboard`, req.url));
   }
