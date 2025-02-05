@@ -569,6 +569,7 @@
          "longTerm": "Long Term",
          "shortTerm": "Short Term",
          "calculate":"Backtest strategy",
+         "winRate":"Win Rate",
          "totalTrades":"total trades",
          "enterBalnceByusdt":"Enter balance By USDT",
          "Netprofit":"Net profit",
