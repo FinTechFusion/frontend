@@ -3,7 +3,7 @@ import { createSharedPathnamesNavigation } from 'next-intl/navigation';
 
 export const routing = defineRouting({
    locales: ['en', 'ar'],
-   defaultLocale: 'ar'
+   defaultLocale: 'ar',
 });
 
 // Lightweight wrappers around Next.js' navigation APIs

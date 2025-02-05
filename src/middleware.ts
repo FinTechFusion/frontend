@@ -18,14 +18,14 @@ export default function middleware(req: NextRequest) {
   const pathnameParts = pathname.split("/");
   const localeInPath = pathnameParts[1];
 
-  const cookieLocale:any = req.cookies.get("NEXT_LOCALE")?.value;
-  const localeFallback = supportedLocales.includes(cookieLocale) ? cookieLocale : "ar";
+  const cookieLocale:any = req.cookies.get("NEXT_LOCALE")?.value || 'ar';
 
-  // Ensure valid locale in URL
-  if (!supportedLocales.includes(localeInPath)) {
-    const redirectUrl = new URL(`/${localeFallback}${pathname}${search}`, req.url);
+   // If the path doesn't start with a locale, redirect to the locale from the cookie
+   if (!supportedLocales.includes(localeInPath)) {
+    console.log('not support')
+    const redirectUrl = new URL(`/${cookieLocale}${pathname}${search}`, req.url);
     return NextResponse.redirect(redirectUrl);
-  }
+ }
 
   // Check if the route is protected (excluding exempted routes)
   const isProtectedRoute = routes.protected.some((route) =>
@@ -68,5 +68,5 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/(en|ar)/:path*", "/(en|ar)/site/:path*", "/(en|ar)/dashboard/:path*"]
+  matcher: ['/','/(en|ar)/:path*', '/site/:path*', '/dashboard/:path*'],
 };
