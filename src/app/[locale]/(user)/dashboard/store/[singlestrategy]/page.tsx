@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getFromCookies, useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api";
 import Loading from "@/app/_components/common/loading/Loading";
@@ -13,22 +13,20 @@ import {
   AssetData,
   resultBacktest,
   SingleStrategyItemProps,
+  Trade,
 } from "@/utils/types";
-import {
-  FiArrowUpRight,
-  FiBarChart2,
-  FiDollarSign,
-  FiPieChart,
-} from "react-icons/fi";
+import { FiDollarSign, FiPieChart } from "react-icons/fi";
 import { FaRegClock, FaSpinner } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import FiltrationLabels from "@/app/_components/strategies/FiltrationLabels";
 import { CalculateNetProfitAndRIO } from "@/lib/backtest/NetProfitService";
-import CalculateBalance from "@/app/_components/common/dashboard/Store/Strategy/CalculateBalance";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { balanceSchema, balanceType } from "@/validation/balanceSchema";
 import { Input } from "@/app/_components/common/forms";
+import ProfitChart from "@/app/_components/common/dashboard/charts/ProfitChart";
+import filterDataByTimeRange from "@/app/_components/strategies/filterDataByTimeRange";
+import FiltrationLabels from "@/app/_components/strategies/FiltrationLabels";
+type TimeRange = "1D" | "3D" | "7D" | "1M" | "3M" | "6M" | "1Y" | "Overall";
 
 const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { user, fetchUserData } = useAuth();
@@ -36,16 +34,22 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
   const { assetData, assetLoading } = useAssetData();
   const [selectedValue, setSelectedValue] = useState<string>(""); // Default value
   const [isInstalling, setIsInstall] = useState<boolean>(false);
-  const [initialUSDT, setinitialUSDT] = useState<number>(0);
   const [resultBacktest, setResultBacktest] = useState<resultBacktest>({
     finalBalance: "0",
     netProfit: "0",
     roi: "0",
   });
+  const [activeFilter, setActiveFilter] = useState<TimeRange>("Overall");
+
   const validationT = useTranslations("validation");
-  const { register, handleSubmit, formState: { errors },reset } = useForm<balanceType>({
-     mode: "onBlur",
-     resolver: zodResolver(balanceSchema),
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<balanceType>({
+    mode: "onBlur",
+    resolver: zodResolver(balanceSchema),
   });
   const getSymbol = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -59,13 +63,12 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
 
   // Fetch strategy details
   const { data, error } = useFetch(
-    `${API_BASE_URL}/binance/strategies/${params.singlestrategy}?lang=${locale}`,
+    `${API_BASE_URL}/binance/strategies/${params?.singlestrategy}?lang=${locale}`,
     {
       method: "GET",
       next: { revalidate: 180 },
     }
   );
-
   // Update the state based on the user's installed strategies
   useEffect(() => {
     if (user?.signal_strategy && user?.ai_strategy) {
@@ -81,11 +84,10 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
     }
   }, [assetData]);
   // Ensure shouldFetch is either a string (valid URL) or null (prevent fetching)
-  const shouldFetch =
-    selectedValue !== "" && params?.singlestrategy
+  const shouldFetch =params?.singlestrategy
       ? `${API_BASE_URL}/binance/backtest/${selectedValue}/${params.singlestrategy}`
       : null;
-  const { data: backtestData, loading } = useFetch(
+  const { data: backtestData} = useFetch(
     shouldFetch, // Pass null if no fetch is needed
     {
       method: "GET",
@@ -96,13 +98,18 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
     },
     [selectedValue, params?.singlestrategy]
   );
-  const onSubmit:SubmitHandler<balanceType> = (data) => {
-    if (backtestData && backtestData["Total Trades"]) {
+  // console.log(backtestData)
+
+  // if(loading) <Loading
+  const onSubmit: SubmitHandler<balanceType> = (data) => {
+    if (backtestData && backtestData?.total_trades) {
       const result = CalculateNetProfitAndRIO(
         data?.balance,
-        backtestData["Profitable Trades Details"]
+        backtestData?.profitable_trades
       );
+      console.log(result)
       setResultBacktest(result);
+      console.log(result);
       reset();
     }
   };
@@ -152,11 +159,20 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       }
     }
   }
-   // Error message translation mapping
-   const translateErrorMessage = (errorKey: string | undefined) => {
-    if (!errorKey) return '';
+  // Error message translation mapping
+  const translateErrorMessage = (errorKey: string | undefined) => {
+    if (!errorKey) return "";
     return validationT(errorKey);
- };
+  };
+  const filteredData: Trade[] = useMemo(() => {
+    return backtestData?.profitable_trades
+      ? filterDataByTimeRange(backtestData.profitable_trades, activeFilter)
+      : [];
+  }, [backtestData, activeFilter]);
+  
+  // Just use filteredData directly for the chart
+  const chartData = filteredData;
+  
   return (
     <div className="md:px-0 px-2">
       <Toast />
@@ -194,17 +210,17 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
       <hr />
       {/* calculate balance */}
       <form
-      onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex md:flex-row flex-col md:justify-between md:items-center pt-5 gap-2"
       >
         <div className="md:w-1/3">
-        <Input
-          register={register}
-          name="balance"
-          type="number"
-          placeholder={t("enterBalnceByusdt")}
-          error={translateErrorMessage(errors.balance?.message)}
-        />
+          <Input
+            register={register}
+            name="balance"
+            type="number"
+            placeholder={t("enterBalnceByusdt")}
+            error={translateErrorMessage(errors.balance?.message)}
+          />
         </div>
         <button className="main-btn md:w-[250px]" type="submit">
           {t("calculate")}
@@ -239,14 +255,17 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
             <div>
               <div className="text-2xl font-bold py-1">100 %</div>
               <div className="text-sm text-gray-500">
-                {backtestData && backtestData?.["Total Trades"] || 0} {t("totalTrades")}
+                {(backtestData && backtestData?.total_trades) || 0}{" "}
+                {t("totalTrades")}
               </div>
             </div>
           </div>
           {/* RIO */}
           <div className="p-4 bg-gray-50 shadow-md rounded-lg">
             <div className="flex justify-between pb-2">
-              <span className="text-lg font-medium text-gray-800">{t("ROI")}</span>
+              <span className="text-lg font-medium text-gray-800">
+                {t("ROI")}
+              </span>
               <FiPieChart className="h-4 w-4 text-gray-500" />
             </div>
             <div>
@@ -264,19 +283,21 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
               <FaRegClock className="h-4 w-4 text-gray-500" />
             </div>
             <div className="text-2xl font-bold py1">
-              {backtestData && backtestData?.["Average Time Per Cycle (minutes)"] != null
-                ? (
-                    parseFloat(
-                      backtestData["Average Time Per Cycle (minutes)"]
-                    ) / 60
-                  ).toFixed(2)
+              {backtestData && backtestData?.avg_time_per_cycle != null
+                ? (parseFloat(backtestData?.avg_time_per_cycle) / 60).toFixed(2)
                 : "0.00"}{" "}
               {t("hr")}
             </div>
           </div>
         </div>
       </div>
-      {/* <FiltrationLabels /> */}
+      {/* <PerformanceChart/> */}
+      <div className="w-full mt-12">
+        <FiltrationLabels
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
+      </div>
     </div>
   );
 };

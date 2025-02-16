@@ -198,10 +198,10 @@ export interface SingleStrategyItemProps {
    netProfit: string;
    finalBalance: string;
  }
- export interface ProfitTradesProps {
-   buyPrice: number,
-   buyDate: string,
-   sellPrice: number,
-   sellDate: string,
-   Profit: number,
+ export interface Trade {
+   buy_price: number;
+   buy_date: string;
+   sell_price: number;
+   sell_date: string;
+   profit: number;
  }
