@@ -11,6 +11,7 @@ const useFetch = (url: any, options?: FetchOptions,dependencies: any[] = []): an
    const fetchData = useCallback(async () => {
       try {
          setLoading(true);
+         if(!url) return;
          const response = await fetch(url, options);
          if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

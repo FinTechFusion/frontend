@@ -150,6 +150,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === "en" ? "ltr" : "rtl"}>
       <head>
+      <meta name="robots" content="noindex, nofollow"/>
         <meta
           name="google-site-verification"
           content="E118GLWAyszxIiZi3ZAtKIa3XGIaP43ifPKClul_q88"

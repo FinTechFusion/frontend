@@ -1,4 +1,10 @@
 User-agent: *
+Disallow: /en/forget-password
+Disallow: /ar/forget-password
+Disallow: /ar/reset-password
+Disallow: /en/reset-password
+Disallow: /en/verifyemail
+Disallow: /ar/verifyemail
 Disallow: /*clientSecret
 Disallow: /404
 Disallow: /500
