@@ -13,7 +13,6 @@ import {
   AssetData,
   resultBacktest,
   SingleStrategyItemProps,
-  Trade,
 } from "@/utils/types";
 import { FiDollarSign, FiPieChart } from "react-icons/fi";
 import { FaRegClock, FaSpinner } from "react-icons/fa6";
@@ -164,14 +163,14 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
     if (!errorKey) return "";
     return validationT(errorKey);
   };
-  const filteredData: Trade[] = useMemo(() => {
-    return backtestData?.profitable_trades
-      ? filterDataByTimeRange(backtestData.profitable_trades, activeFilter)
-      : [];
-  }, [backtestData, activeFilter]);
-  
+  // const filteredData: Trade[] = useMemo(() => {
+  //   return backtestData?.profitable_trades
+  //     ? filterDataByTimeRange(backtestData.profitable_trades, activeFilter)
+  //     : [];
+  // }, [backtestData, activeFilter]);
+
   // Just use filteredData directly for the chart
-  const chartData = filteredData;
+  // const chartData = filteredData;
   
   return (
     <div className="md:px-0 px-2">

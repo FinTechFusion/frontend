@@ -1,4 +1,6 @@
-import { ProfitTradesProps } from "@/utils/types";
+interface ProfitTradesProps {
+  Profit: number; // Profit percentage for each trade
+}
 
  function CalculateNetProfitAndRIO(initialUSDT: number, trades: ProfitTradesProps[]) {
   let balance: number = initialUSDT; // Start with initial capital
