@@ -13,7 +13,6 @@ import {
   AssetData,
   resultBacktest,
   SingleStrategyItemProps,
-  Trade,
 } from "@/utils/types";
 import { FiDollarSign, FiPieChart } from "react-icons/fi";
 import { FaRegClock, FaSpinner } from "react-icons/fa6";
