@@ -297,6 +297,8 @@ const SingleStrategy = ({ params }: SingleStrategyItemProps) => {
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
         />
+        {/* test  */}
+        {/* <ProfitChart trades={chartData} /> */}
       </div>
     </div>
   );
