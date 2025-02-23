@@ -38,7 +38,7 @@ export default function SuccessPayment() {
             <>
                {user?.is_binance ? <Link href='/dashboard'>
                   <button className="main-btn !w-full">{t("goToDashboard")}</button>
-               </Link> : <Link href='/site/exchange'>
+               </Link> : <Link href='/dashboard/connect-manual'>
                   <button className="main-btn !w-full">{t("connect_binance")}</button>
                </Link>}
             </>

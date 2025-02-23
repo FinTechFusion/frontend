@@ -14,7 +14,7 @@ export default function BinanceConnectStatus() {
           title="dashboard.binanceConnect"
           description="dashboard.connect_status_info"
         />
-        <Link href="/site/exchange/connect" className="md:text-end">
+        <Link href="/dashboard/connect-manual" className="md:text-end">
           <MainBtn content="connect_acc" btnProps="w-fit" />
         </Link>
       </div>
