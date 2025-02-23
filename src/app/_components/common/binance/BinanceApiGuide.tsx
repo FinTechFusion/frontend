@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { FaCopy } from "react-icons/fa6";
 import {
@@ -11,43 +11,50 @@ import {
 
 const BinanceApiGuide = () => {
   const t = useTranslations("dashboard.binanceApiGuide");
+  const locale = useLocale();
   const steps = [
     {
+      id:0,
       title: t("steps.0.title"),
       instructions: [t("steps.0.instructions.0"), t("steps.0.instructions.1")],
-      image: "/assets/images/login-EN.png",
+      imageEn: "/assets/images/login-EN.png",
+      imageAr: "/assets/images/login-AR.png",
       icon: <MdLock className="w-6 h-6" />,
     },
     {
+      id:1,
       title: t("steps.1.title"),
       instructions: [
         t("steps.1.instructions.0"),
         t("steps.1.instructions.1"),
         t("steps.1.instructions.2"),
       ],
-      image: "/assets/images/verify-EN.png",
+      imageEn: "/assets/images/verify-EN.png",
+      imageAr: "/assets/images/verify-AR.png",
       icon: <MdVpnKey className="w-6 h-6" />,
     },
     {
+      id:2,
       title: t("steps.2.title"),
       instructions: [
         t("steps.2.instructions.0"),
         t("steps.2.instructions.1"),
         t("steps.2.instructions.2"),
       ],
-      image: "/assets/images/KeyTypeEN.png",
+      imageEn: "/assets/images/KeyType-EN.png",
+      imageAr: "/assets/images/KeyType-AR.png",
       icon: <MdSecurity className="w-6 h-6" />,
     },
     {
+      id:3,
       title: t("steps.3.title"),
-      instructions: [
-        t("steps.3.instructions.0"),
-        t("steps.3.instructions.1"),
-      ],
-      image: "/assets/images/binanceAuthEn.png",
+      instructions: [t("steps.3.instructions.0"), t("steps.3.instructions.1")],
+      imageEn: "/assets/images/auth-EN.png",
+      imageAr: "/assets/images/auth-AR.png",
       icon: <MdSecurity className="w-6 h-6" />,
     },
     {
+      id:4,
       title: t("steps.4.title"),
       instructions: [
         t("steps.4.instructions.0"),
@@ -57,7 +64,8 @@ const BinanceApiGuide = () => {
         t("steps.4.instructions.4"),
         t("steps.4.instructions.5"),
       ],
-      image: "/assets/images/premission-EN.png",
+      imageEn: "/assets/images/premission-EN.png",
+      imageAr: "/assets/images/premission-AR.png",
       icon: <MdVpnKey className="w-6 h-6" />,
     },
   ];
@@ -131,11 +139,11 @@ const BinanceApiGuide = () => {
                   </div>
                   <div className="md:w-1/2 w-full">
                     <Image
-                      src={step.image}
+                      src={locale === "en" ? step?.imageEn : step?.imageAr}
                       width={200}
                       height={200}
                       alt={`Step ${index + 1} - ${step.title}`}
-                      className="rounded-lg border shadow-sm w-full h-[250px] object-contain"
+                      className={`rounded-lg border shadow-sm w-full  h-full object-contain `}
                     />
                   </div>
                 </div>
