@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
+import colors, { yellow } from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -17,6 +17,7 @@ const config: Config = {
       blue: colors.blue,
       pink: colors.pink,
       red: colors.red,
+      yellow:colors.yellow,
     },
     extend: {
       textColor: {

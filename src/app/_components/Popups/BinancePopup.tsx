@@ -54,7 +54,7 @@ export default function BinancePopup() {
                <div className="mt-5 sm:flex sm:gap-4">
                   <Link
                      className="inline-block w-full rounded-lg bg-primary-600 hover:bg-primary-700 px-5 py-3 text-center text-sm font-semibold text-secondary sm:w-auto tracking-wider"
-                     href="/site/exchange/connect"
+                     href="/dashboard/connect-manual"
                   >
                      {t("connect")}
                   </Link>
