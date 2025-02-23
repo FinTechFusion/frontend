@@ -15,7 +15,7 @@ const BinanceApiGuide = () => {
     {
       title: t("steps.0.title"),
       instructions: [t("steps.0.instructions.0"), t("steps.0.instructions.1")],
-      image: "/api/placeholder/600/300",
+      image: "/assets/images/login-EN.png",
       icon: <MdLock className="w-6 h-6" />,
     },
     {
@@ -25,7 +25,7 @@ const BinanceApiGuide = () => {
         t("steps.1.instructions.1"),
         t("steps.1.instructions.2"),
       ],
-      image: "/api/placeholder/600/300",
+      image: "/assets/images/verify-EN.png",
       icon: <MdVpnKey className="w-6 h-6" />,
     },
     {
@@ -57,7 +57,7 @@ const BinanceApiGuide = () => {
         t("steps.4.instructions.4"),
         t("steps.4.instructions.5"),
       ],
-      image: "/api/placeholder/600/300",
+      image: "/assets/images/premission-EN.png",
       icon: <MdVpnKey className="w-6 h-6" />,
     },
   ];

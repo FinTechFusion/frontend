@@ -13,15 +13,15 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Page() {
    const t = useTranslations("binance");
-   const router = useRouter();
+   // const router = useRouter();
    const locale = useLocale();
-   const {user} = useAuth();
-   const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`,{
-      method:'GET',
-      next: { revalidate: 60 },
-   },[]);
-   if (loading) return <Loading />;
-   if(user?.is_binance) return router.push('/dashboard');
+   // const {user} = useAuth();
+   // const { data, loading } = useFetch(`${API_BASE_URL}/users/me/binance/link`,{
+   //    method:'GET',
+   //    next: { revalidate: 60 },
+   // },[]);
+   // if (loading) return <Loading />;
+   // if(user?.is_binance) return router.push('/dashboard');
    return (
       <div className="relative">
          <div className="opacity-25">
@@ -55,7 +55,8 @@ export default function Page() {
             </div>
             <div className="connection mx-auto text-center">
                <p className="py-4 text-lg tracking-wider">{t("availableTypes")}</p>
-               <Link href={`${data?.authorization_url}`}>
+               {/* {`${data?.authorization_url}`} */}
+               <Link href="/dashboard/connect-manual">
                   <MainBtn content="binance.connect_binance" btnProps="w-fit" />
                </Link>
                <p className="py-5 w-1/2 text-center mx-auto capitalize">{t("donthaveBinance")} <Link href='https://accounts.binance.com/ar/register' target="_blank" className="text-primary-600 cursor-pointer">{t("createAccount")}</Link></p>
