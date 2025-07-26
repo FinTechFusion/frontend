@@ -143,7 +143,7 @@ const BinanceApiGuide = () => {
                       width={200}
                       height={200}
                       alt={`Step ${index + 1} - ${step.title}`}
-                      className={`rounded-lg border shadow-sm w-full  h-full object-contain `}
+                      className={`rounded-lg border shadow-sm w-full  h-full object-contain ${step?.id === 4 && 'scale-125 transform origin-center'}`}
                     />
                   </div>
                 </div>
